@@ -9,6 +9,127 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 		function __construct()
 		{
 			parent:: __construct();
+			$this->initialize_filter();
+		}
+
+		public function load_libraries($arr){
+
+			array_unshift($arr, "jquery","bootstrap");
+					
+			$libs['js_files']				=	array();		
+			$libs['css_files']				=	array();			
+			$libs['js_plugin_files']		=	array();
+			$libs['css_plugin_files']		=	array();
+
+			$asset_path		=	$this->config->item('asset_path');
+
+			$css_path		=	$this->config->item('asset_path');
+			$js_path		=	$this->config->item('js_path');
+			$plugin_path	=	$this->config->item('plugin_path');
+
+			$all_css		=	$this->config->item('css_files');
+			$all_js			=	$this->config->item('js_files');
+			$all_plugin_css	=	$this->config->item('plugin_css_files');
+			$all_plugin_js	=	$this->config->item('plugin_js_files');
+			//load css
+			foreach ($arr as $css) {
+				foreach($all_css as $all){
+					if($css==$all['title']){
+						$libs['css_files']			=	array_merge($libs['css_files'],array($all['file']));
+					}
+				}
+			}
+			//load js
+			foreach ($arr as $js) {
+				foreach($all_js as $all){
+					if($js==$all['title']){
+						$libs['js_files']			=	array_merge($libs['js_files'],array($all['file']));
+					}
+				}
+			}
+			//load plugin css
+			foreach ($arr as $css) {
+				foreach($all_plugin_css as $all){
+					if($css==$all['title']){
+						$libs['css_plugin_files']	=	array_merge($libs['css_plugin_files'],array($all['file']));
+					}
+				}
+			}
+			//load plugin js
+			foreach ($arr as $js) {
+				foreach($all_plugin_js as $all){
+					if($js==$all['title']){
+						$libs['js_plugin_files']	=	array_merge($libs['js_plugin_files'],array($all['file']));
+
+					}
+				}
+			}	
+			return 	$libs;
+		}
+
+		function initialize_filter()
+		{
+			if(!$this->session->userdata('filter_year'))
+			{
+				$filter_data = array(
+								'filter_county' => NULL,
+								'filter_year' => Date('Y'),
+								'filter_month' => NULL
+								);
+				$this->session->set_userdata($filter_data);
+			}
+		}
+
+		function set_filter_date()
+		{
+			$year = $this->input->post('year');
+			$month = $this->input->post('month');
+
+			if ($year) {
+				$return = $this->session->set_userdata('filter_year', $year);
+			} else {
+				if ($month=='all') {
+					$return = $this->session->set_userdata('filter_month', NULL);
+				}else {
+					$return = $this->session->set_userdata('filter_month', $month);
+				}
+			}
+			$this->load->model('template/template_model');
+			if(!$year)
+				$year = $this->session->userdata('filter_year');
+			if(!$month)
+				$month = $this->session->userdata('filter_month');
+
+			echo json_encode(array('year' => $year, 'prev_year' => $year-1, 'month' => $this->template_model->resolve_month($month) ));
+		}
+
+		function template($data)
+		{
+			$this -> load -> module('template');
+			$this -> template ->load_template($data);
+		}
+
+		function filter_regions($data=NULL)
+		{
+			if (!$data) {
+				
+			} else {
+				$this->session->set_userdata('county_filter', $data['county']);
+			}
+			
+			return TRUE;
+		}
+
+		function breadcrum()
+		{
+			
+		}
+
+		function display_time_period()
+		{
+			$display = array('year' => $this->session->userdata('filter_year'), 'month' => $this->session->userdata('filter_month') );
+
+			echo json_encode($display);
 		}
 	}
 ?>
