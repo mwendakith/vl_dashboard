@@ -5,16 +5,16 @@ CREATE PROCEDURE `proc_get_regional_age`
 BEGIN
   SET @QUERY =    "SELECT
                     `ac`.`name`,
-                    SUM((`vna`.`tests`)) AS `agegroups`
-                FROM `vl_national_age` `vna`
+                    SUM((`vca`.`tests`)) AS `agegroups`
+                FROM `vl_county_age` `vca`
                 JOIN `agecategory` `ac`
-                    ON `vna`.`age` = `ac`.`ID`
+                    ON `vca`.`age` = `ac`.`ID`
                 WHERE 1";
 
     IF (filter_month != 0 && filter_month != '') THEN
-       SET @QUERY = CONCAT(@QUERY, " AND `vna`.`county` = '",C_id,"' AND `vna`.`year` = '",filter_year,"' AND `vna`.`month`='",filter_month,"' ");
+       SET @QUERY = CONCAT(@QUERY, " AND `vca`.`county` = '",C_id,"' AND `vca`.`year` = '",filter_year,"' AND `vca`.`month`='",filter_month,"' ");
     ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `vna`.`county` = '",C_id,"' AND `vna`.`year` = '",filter_year,"' ");
+        SET @QUERY = CONCAT(@QUERY, " AND `vca`.`county` = '",C_id,"' AND `vca`.`year` = '",filter_year,"' ");
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`name` ");

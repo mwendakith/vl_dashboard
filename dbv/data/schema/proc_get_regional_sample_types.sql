@@ -6,13 +6,13 @@ BEGIN
   SET @QUERY =    "SELECT
 					`month`,
 					`year`,
-					`edta`,
-					`dbs`,
-					`plasma`
+					SUM(`edta`) AS `edta`,
+ 					SUM(`dbs`) AS `dbs`,
+ 					SUM(`plasma`) AS `plasma`
 				FROM `vl_county_summary`
                 WHERE 1";
 
-    SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_id,"' AND `year` = '",from_year,"' OR `year`='",to_year,"' ORDER BY `year` ASC, `month` ");
+    SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_id,"' AND `year` = '",from_year,"' OR `year`='",to_year,"' GROUP BY `year`, `month` ORDER BY `year` ASC, `month` ");
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

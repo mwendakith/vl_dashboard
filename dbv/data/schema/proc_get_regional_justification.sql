@@ -6,7 +6,7 @@ BEGIN
   SET @QUERY =    "SELECT
                     `vj`.`name`,
                     SUM((`vnj`.`tests`)) AS `justifications`
-                FROM `vl_national_justification` `vnj`
+                FROM `vl_county_justification` `vnj`
                 JOIN `viraljustifications` `vj` 
                     ON `vnj`.`justification` = `vj`.`ID`
                 WHERE 1";

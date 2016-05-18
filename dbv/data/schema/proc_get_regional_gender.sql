@@ -6,7 +6,7 @@ BEGIN
   SET @QUERY =    "SELECT
                     `g`.`name`,
                     SUM(`vng`.`tests`) AS `gender`
-                FROM `vl_national_gender` `vng`
+                FROM `vl_county_gender` `vng`
                 JOIN `gender` `g`
                     ON `vng`.`gender` = `g`.`ID`
                 WHERE 1";

@@ -25,7 +25,21 @@
 	     
 	        // Put the results in a div
 	        posting.done(function( data ) {
-	          // console.log(data);
+	        	$.get("<?php echo base_url();?>template/breadcrum", function(data){
+	        		$("#breadcrum").html(data);
+	        	});
+	        	
+	        	$("#vlOutcomes").html("<div>Loading...</div>");
+				$("#justification").html("<div>Loading...</div>");
+				$("#ageGroups").html("<div>Loading...</div>");
+				$("#gender").html("<div>Loading...</div>");
+				$("#samples").html("<div>Loading...</div>");
+		        // $("#county").load("<?php //echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+data); 
+				$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+null+"/"+null+"/"+data); 
+				$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+null+"/"+null+"/"+data); 
+				$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+null+"/"+null+"/"+data); 
+				$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>/"+null+"/"+null+"/"+data); 
+				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+data); 
 	        });
     	});
 	});

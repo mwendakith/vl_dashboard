@@ -30,7 +30,15 @@ class Template extends MY_Controller
 
 		$this->filter_regions($data);
 
-		echo TRUE;
+		echo $this->session->userdata('county_filter');
+	}
+
+	function breadcrum()
+	{
+		$this->load->model('template_model');
+		$county = $this->template_model->get_county_name($this->session->userdata('county_filter'));
+
+		echo "Kenya / <a href='javascript:void(0)' class='alert-link'><strong>".$county."</strong></a>";
 	}
 }
 ?>

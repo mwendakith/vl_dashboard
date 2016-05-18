@@ -22,5 +22,14 @@ class Template_model extends MY_Model
 		
 		return $dropdown;
 	}
+
+	function get_county_name($county_id)
+	{
+		$this->db->where('ID', $county_id);
+		$data = $this->db->get('countys')->result_array();
+		$name = $data[0]["name"];
+
+		return $name;
+	}
 }
 ?>

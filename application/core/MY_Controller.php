@@ -115,6 +115,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 				
 			} else {
 				$this->session->set_userdata('county_filter', $data['county']);
+				$this->session->set_userdata('filter_month', NULL);
 			}
 			
 			return TRUE;

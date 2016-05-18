@@ -69,8 +69,8 @@
 				</div>
 				<div class="navbar-collapse collapse navbar-responsive-collapse">
 					<ul class="nav navbar-nav">
-						<li class="active"><a href="javascript:void(0)">Active</a></li>
-						<li><a href="javascript:void(0)">Link</a></li>
+						<li class="active"><a href="<?php echo base_url();?>">Summary</a></li>
+						<li><a href="<?php echo base_url();?>suppression/nosuppression">No Suppression</a></li>
 						<li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
 							<b class="caret"></b></a>

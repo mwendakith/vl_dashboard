@@ -50,9 +50,8 @@
     </form>
   </div>
   <div class="col-md-3">
-    <div class="alert" style="background-color: #1BA39C;">
-      Kenya / Nairobi /
-      <a href="javascript:void(0)" class="alert-link"><strong> Embakasi</strong></a>
+    <div id="breadcrum" class="alert" style="background-color: #1BA39C;">
+      
     </div>
   </div>
   <div class="col-md-5" id="year-month-filter">
@@ -88,9 +87,6 @@
 </div>
 <script type="text/javascript">
   $().ready(function(){
-    
+    $("#breadcrum").html("<a href='javascript:void(0)' class='alert-link'><strong>Kenya</strong></a>");
   });
-
-  
-
 </script>
