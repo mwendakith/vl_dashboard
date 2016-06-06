@@ -1,7 +1,11 @@
-<??>
-<div id="justification_pie">
-	
+<div class="col-md-12">
+	<div class="panel panel-primary">
+		<div class="panel-body">
+			<div id="justification_pie"></div>
+		</div>
+	</div>
 </div>
+
 <script type="text/javascript">
 	$(function(){
 				$('#justification_pie').highcharts({
@@ -27,51 +31,7 @@
 			                    showInLegend: true
 			                }
 			            },
-			            series: [{
-			                name: 'Justifications',
-			                colorByPoint: true,
-			                data: [{
-			                    name: 'Routine VL',
-			                    y: 56.33
-			                }, {
-			                    name: 'Confirmation of treatment Failure',
-			                    y: 24.03,
-			                    sliced: true,
-			                    selected: true
-			                }, {
-			                    name: 'Clinical Failure',
-			                    y: 56.33
-			                }, {
-			                    name: 'Immunological Failure',
-			                    y: 24.03,
-			                    sliced: true,
-			                    selected: true
-			                }, {
-			                    name: 'Single Drug Substitution',
-			                    y: 56.33
-			                }, {
-			                    name: 'Pregnant Mother',
-			                    y: 24.03,
-			                    sliced: true,
-			                    selected: true
-			                }, {
-			                    name: 'Other',
-			                    y: 56.33
-			                }, {
-			                    name: 'No Data',
-			                    y: 24.03,
-			                    sliced: true,
-			                    selected: true
-			                },  {
-			                    name: 'Lactating Mothers',
-			                    y: 56.33
-			                }, {
-			                    name: 'Baseline',
-			                    y: 24.03,
-			                    sliced: true,
-			                    selected: true
-			                }]
-			            }]
+			            series: [<?php echo json_encode($suppressions['justification']); ?>]
 			        });
 		    });
 </script>

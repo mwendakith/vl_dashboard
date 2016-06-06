@@ -3,6 +3,15 @@
     <form action="<?php echo base_url();?>template/filter_region_data" method="post" id="filter_form">
       <div class="row">
         <div class="col-md-6">
+      <?php 
+        // echo "<pre>";print_r($_SERVER['REQUEST_URI']);die();
+        if ($_SERVER['REQUEST_URI']=='/dashboard/partner' || $_SERVER['REQUEST_URI']=='/dashboard/partner/nosuppression') {
+      ?>
+
+
+      <?php    # code...
+        } else {
+      ?>
           <select class="btn" style="background-color: #C5EFF7;" name="county">
             <option value="0" disabled="true" selected="true">Select County:</option>
             <option value="48">National</option>
@@ -10,6 +19,11 @@
             <?php echo $filter; ?>
             <!-- </optgroup> -->
           </select>
+      <?php
+        }
+      ?>
+        
+          
         </div>
         <div class="col-md-6">
           <button class="btn" type="submit" style="background-color: #81CFE0; margin-left: 0.5em;">Filter</button>
@@ -87,6 +101,19 @@
 </div>
 <script type="text/javascript">
   $().ready(function(){
-    $("#breadcrum").html("<a href='javascript:void(0)' class='alert-link'><strong>Kenya</strong></a>");
+    //Getting the URL dynamically
+    var url = $(location).attr('href');
+    // Getting the file name i.e last segment of URL (i.e. example.html)
+    var fn = url.split('/').indexOf("partner");
+    console.log(fn);
+    
+    if (fn==-1) {
+      $.get("<?php echo base_url();?>template/breadcrum", function(data){
+        $("#breadcrum").html(data);
+      });
+    } else {
+      $("#breadcrum").html("HTML");
+    }
+    
   });
 </script>

@@ -1,6 +1,12 @@
-<div id="vlOutcomes_pie" style="height: 350px;">
-
+<div class="panel-body">
+	<div id="vlOutcomes_pie" style="height: 350px;"></div>
 </div>
+<div>
+	<ul>
+		<?php echo $outcomes['ul'];?>
+	</ul>
+</div>
+
 <script type="text/javascript">
 	$(function () {
 				$('#vlOutcomes_pie').highcharts({

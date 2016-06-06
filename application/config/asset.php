@@ -70,6 +70,7 @@ $config['js_files']			=	array(
 								);
 $config['plugin_js_files']	=	array(
 									array('title'=> 'jquery',		'file'	=>	'jquery/jquery-2.2.3.min.js'),
+									array('title'=> 'bootstrap'	,	'file'	=>	'bootstrap/js/bootstrap.min.js'),
 									array('title'=> 'material',		'file'	=>	'bootstrap/js/material.min.js'),
 									array('title'=> 'ripples',		'file'	=>	'bootstrap/js/ripples.min.js'),
 									array('title'=> 'highstock',	'file'	=>	'highstock/js/highstock.js'),

@@ -21,5 +21,6 @@ BEGIN
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
+    
 END //
 DELIMITER ;

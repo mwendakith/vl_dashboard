@@ -9,9 +9,9 @@ class Summaries extends MY_Controller {
 		$this->load->model('summaries_model');
 	}
 	
-	function county_outcomes($year=NULL,$month=NULL)
+	function county_outcomes($year=NULL,$month=NULL,$partner=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->county_outcomes($year,$month);
+		$data['outcomes'] = $this->summaries_model->county_outcomes($year,$month,$partner);
 
     	$this->load->view('county_outcomes_view',$data);
 	}

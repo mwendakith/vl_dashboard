@@ -8,7 +8,7 @@ class Summaries_model extends MY_Model
 		parent:: __construct();
 	}
 
-	function county_outcomes($year=null,$month=null)
+	function county_outcomes($year=null,$month=null,$partner=NULL)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -21,8 +21,12 @@ class Summaries_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_county_outcomes`('".$year."','".$month."')";
-		echo "<pre>";print_r($sql);die();
+		if ($partner) {
+			$sql = "CALL `proc_get_partner_outcomes`('".$year."','".$month."')";
+		} else {
+			$sql = "CALL `proc_get_county_outcomes`('".$year."','".$month."')";
+		}
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		
 		$data['county_outcomes'][0]['name'] = 'Suspected treatment failure & greater 1000';
@@ -64,11 +68,12 @@ class Summaries_model extends MY_Model
 		} else {
 			$sql = "CALL `proc_get_regional_vl_outcomes`('".$county."','".$year."','".$month."')";
 		}
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$data['vl_outcomes']['name'] = 'Tests';
 		$data['vl_outcomes']['colorByPoint'] = true;
+		$data['ul'] = '';
 
 		$data['vl_outcomes']['data'][0]['name'] = 'Undetected';
 		$data['vl_outcomes']['data'][1]['name'] = 'less1000';
@@ -83,6 +88,10 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['data'][3]['y'] = $count;
 
 		foreach ($result as $key => $value) {
+			$data['ul'] .= '<li>Total Tests: '.$value['alltests'].'</li>';
+			$data['ul'] .= '<li>Suspected Failures: '.$value['sustxfail'].'</li>';
+			$data['ul'] .= '<li>Rejected: '.$value['rejected'].'</li>';
+			$data['ul'] .= '<li>Sites Sending: '.$value['sitessending'].'</li>';
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected'];
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less1000'];
 			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000'];
@@ -118,7 +127,7 @@ class Summaries_model extends MY_Model
 		} else {
 			$sql = "CALL `proc_get_regional_justification`('".$county."','".$year."','".$month."')";
 		}
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		
 		$data['justification']['name'] = 'Tests';
@@ -163,7 +172,7 @@ class Summaries_model extends MY_Model
 		} else {
 			$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."')";
 		}
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		
 		$data['age']['name'] = 'Tests';
@@ -210,7 +219,7 @@ class Summaries_model extends MY_Model
 		} else {
 			$sql = "CALL `proc_get_regional_gender`('".$county."','".$year."','".$month."')";
 		}
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		
 		$data['gender']['name'] = 'Tests';
@@ -256,7 +265,7 @@ class Summaries_model extends MY_Model
 		} else {
 			$sql = "CALL `proc_get_regional_sample_types`('".$county."','".$from."','".$to."')";
 		}
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		
 		$data['sample_types'][0]['name'] = 'EDTA';

@@ -111,19 +111,20 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 
 		function filter_regions($data=NULL)
 		{
+			// echo "<pre>";print_r($data);
 			if (!$data) {
 				
 			} else {
-				$this->session->set_userdata('county_filter', $data['county']);
-				$this->session->set_userdata('filter_month', NULL);
+				if ($data['county']==48) {
+					$this->session->set_userdata('county_filter', NULL);
+					$this->session->set_userdata('filter_month', NULL);
+				}else{
+					$this->session->set_userdata('county_filter', $data['county']);
+					$this->session->set_userdata('filter_month', NULL);
+				}
 			}
 			
 			return TRUE;
-		}
-
-		function breadcrum()
-		{
-			
 		}
 
 		function display_time_period()

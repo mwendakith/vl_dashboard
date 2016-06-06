@@ -8,7 +8,20 @@
 		display: inline;
 	}
 </style>
-<div class="row">
+<div class="row" id="first">
+	<!-- Map of the country -->
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="panel panel-primary">
+		  <div class="panel-heading">
+		  	Partner Outcomes <div class="display_date"></div>
+		  </div>
+		  <div class="panel-body" id="county">
+		    <div>Loading...</div>
+		  </div>
+		</div>
+	</div>
+</div>
+<div class="row" id="second">
 	<!-- Map of the country -->
 	<div class="col-md-3 col-sm-3 col-xs-12">
 		<div class="panel panel-primary">
@@ -60,7 +73,7 @@
 	</div>
 	
 </div>
-<div class="row">
+<div class="row" id="third">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-primary">
 		  <div class="panel-heading">
@@ -72,18 +85,6 @@
 		</div>
 	</div>
 </div>
-<div class="row">
-	<!-- Map of the country -->
-	<div class="col-md-12 col-sm-12 col-xs-12">
-		<div class="panel panel-primary">
-		  <div class="panel-heading">
-		  	County Outcomes <div class="display_date"></div>
-		  </div>
-		  <div class="panel-body" id="county">
-		    <div>Loading...</div>
-		  </div>
-		</div>
-	</div>
-</div>
+
 		
-<?php $this->load->view('summary_view_footer'); ?>
+<?php $this->load->view('partner_summary_view_footer'); ?>

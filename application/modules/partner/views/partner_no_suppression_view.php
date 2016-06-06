@@ -187,4 +187,4 @@
 		
 	</div>
 </div>
-<?php $this->load->view('nosuppression_view_footer')?>
+<?php $this->load->view('partner_nosuppression_view_footer')?>
