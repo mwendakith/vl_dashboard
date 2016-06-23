@@ -81,6 +81,7 @@
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>labs">Labs</a></li>
+						<li><a href="#">Facilities</a></li>
 					</ul>
 					<!-- <form class="navbar-form navbar-left" id="1267192336">
 						<div class="form-group">

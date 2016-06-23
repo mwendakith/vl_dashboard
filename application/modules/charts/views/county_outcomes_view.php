@@ -12,7 +12,7 @@
 			            text: ''
 			        },
 			        xAxis: {
-			            categories:<?php echo json_encode($outcomes['categories']);?>
+			            categories: <?php echo json_encode($outcomes['categories']);?>
 			        },
 			        yAxis: {
 			            min: 0,
@@ -36,7 +36,7 @@
 			            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
 			            borderColor: '#CCC',
 			            borderWidth: 1,
-			            shadow: false
+			            shadow: true
 			        },
 			        tooltip: {
 			            headerFormat: '<b>{point.x}</b><br/>',
@@ -46,7 +46,7 @@
 			            column: {
 			                stacking: 'normal',
 			                dataLabels: {
-			                    enabled: true,
+			                    enabled: false,
 			                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
 			                    style: {
 			                        textShadow: '0 0 3px black'
@@ -54,8 +54,8 @@
 			                }
 			            }
 			        },colors: [
-				        '#D91E18',
-				        '#1BBC9B'
+				        '#F22613',
+				        '#00B16A'
 				    ],
 			        series: <?php echo json_encode($outcomes['county_outcomes']);?>
 			    });

@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-md-6" id="container1" style="height:120px;"></div>
+	<div class="col-md-6" id="container1" style="height:100px;"></div>
 	<div class="col-md-6" id="container2" style="height:100px;"></div>
 	<div class="col-md-6" id="container3" style="height:100px;"></div>
 	<div class="col-md-6" id="container4" style="height:100px;"></div>
@@ -48,7 +48,7 @@
                     ani = markLine ? 'animate' : 'attr';
 
                 // Hide column
-                // point.graphic.hide();
+                point.graphic.hide();
 
                 if (!markLine) {
                     var path = inverted ? ['M', 0, 0, 'L', -5, -5, 'L', 5, -5, 'L', 0, 0, 'L', 0, 0 + xAxis.len] : ['M', 0, 0, 'L', -5, -5, 'L', -5, 5,'L', 0, 0, 'L', xAxis.len, 0];

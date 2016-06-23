@@ -30,14 +30,14 @@
 		</div>
 	</div>
 </div>
-
 <div class="row">
+	<!-- Map of the country -->
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-primary">
 		  <div class="panel-heading">
-		    Sample Types <div class="display_range"></div>
+		  	County Outcomes <div class="display_date"></div>
 		  </div>
-		  <div class="panel-body" id="samples">
+		  <div class="panel-body" id="county">
 		    <div>Loading...</div>
 		  </div>
 		</div>
@@ -97,13 +97,12 @@
 </div>
 
 <div class="row">
-	<!-- Map of the country -->
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-primary">
 		  <div class="panel-heading">
-		  	County Outcomes <div class="display_date"></div>
+		    Sample Types <div class="display_range"></div>
 		  </div>
-		  <div class="panel-body" id="county">
+		  <div class="panel-body" id="samples">
 		    <div>Loading...</div>
 		  </div>
 		</div>

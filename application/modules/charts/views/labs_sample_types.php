@@ -39,13 +39,13 @@
 	        },
 	        tooltip: {
 	            headerFormat: '<b>{point.x}</b><br/>',
-	            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+	            pointFormat: '{series.name}: {point.y}<br/>% contribution: {point.percentage:.1f}%'
 	        },
 	        plotOptions: {
 	            column: {
 	                stacking: 'normal',
 	                dataLabels: {
-	                    enabled: true,
+	                    enabled: false,
 	                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
 	                    style: {
 	                        textShadow: '0 0 3px black'
@@ -53,9 +53,9 @@
 	                }
 	            }
 	        },colors: [
-				        '#D91E18',
-				        '#1BBC9B',
-				        '#4183D7'
+				        '#52B3D9',
+				        '#E26A6A',
+				        '#913D88'
 				    ],
 	        series: <?php echo json_encode($trends['sample_types']);?>
 	    });
