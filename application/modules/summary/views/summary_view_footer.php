@@ -96,5 +96,11 @@
 		$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+year+"/"+month); 
 		$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>/"+year+"/"+month);
 	}
+
+	function ageModal()
+	{
+		$('#agemodal').modal('show');
+		$('#CatAge').load('<?php echo base_url();?>charts/summaries/agebreakdown');
+	}
 	
 </script>

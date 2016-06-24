@@ -31,13 +31,12 @@
 	</div>
 </div>
 <div class="row">
-	<!-- Map of the country -->
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-primary">
 		  <div class="panel-heading">
-		  	County Outcomes <div class="display_date"></div>
+		    Sample Types <div class="display_range"></div>
 		  </div>
-		  <div class="panel-body" id="county">
+		  <div class="panel-body" id="samples">
 		    <div>Loading...</div>
 		  </div>
 		</div>
@@ -79,6 +78,9 @@
 				  <div class="panel-body" id="ageGroups">
 				    <div>Loading...</div>
 				  </div>
+				  <div>
+				  	<button class="btn btn-primary" onclick="ageModal();">Click here for breakdown</button>
+				  </div>
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -95,18 +97,32 @@
 	</div>
 	
 </div>
-
 <div class="row">
+	<!-- Map of the country -->
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-primary">
 		  <div class="panel-heading">
-		    Sample Types <div class="display_range"></div>
+		  	County Outcomes <div class="display_date"></div>
 		  </div>
-		  <div class="panel-body" id="samples">
+		  <div class="panel-body" id="county">
 		    <div>Loading...</div>
 		  </div>
 		</div>
 	</div>
 </div>
-		
+
+<div class="modal fade" tabindex="-1" role="dialog" id="agemodal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Age Category Breakdown</h4>
+      </div>
+      <div class="modal-body" id="CatAge">
+        <p>Loading...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <?php $this->load->view('summary_view_footer'); ?>

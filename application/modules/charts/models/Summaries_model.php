@@ -38,7 +38,7 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		
-		$data['county_outcomes'][0]['name'] = 'Suspected treatment failure';
+		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
 		$data['county_outcomes'][1]['name'] = 'Suppresed';
 
 		$count = 0;
@@ -285,6 +285,7 @@ class Summaries_model extends MY_Model
 	{
 		$array1 = array();
 		$array2 = array();
+
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
@@ -302,12 +303,20 @@ class Summaries_model extends MY_Model
 			if ($county==null || $county=='null') {
 				$sql = "CALL `proc_get_national_sample_types`('".$from."','".$to."')";
 			} else {
-				$sql = "CALL `proc_get_regional_sample_types`('".$county."','".$from."','".$to."')";
+				$sql = "CALL `proc_get_regional_sample_types`('".$county."','".$from."')";
+				$sql2 = "CALL `proc_get_regional_sample_types`('".$county."','".$to."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);die();
-		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($sql);
+		$array1 = $this->db->query($sql)->result_array();
 		
+		if ($sql2) {
+			$this->db->close();
+			$array2 = $this->db->query($sql2)->result_array();
+		}
+
+		$result = array_merge($array1,$array2);
+		// echo "<pre>";print_r($result);die();
 		$data['sample_types'][0]['name'] = 'EDTA';
 		$data['sample_types'][1]['name'] = 'DBS';
 		$data['sample_types'][2]['name'] = 'Plasma';
