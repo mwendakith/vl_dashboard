@@ -53,7 +53,7 @@
 		<!-- Begining of the age gender suppresion failures -->
 		<div class="row">
 			<div class="col-md-7">
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 					<div class="panel-heading">
 					  By Gender <div class="display_date"></div>
 					</div>
@@ -63,7 +63,7 @@
 				</div>
 			</div>
 			<div class="col-md-5">
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 					<div class="panel-heading">
 					  By Age <div class="display_date"></div>
 					</div>
@@ -78,7 +78,7 @@
 		<div class="row">
 			<div class="col-md-7">
 				<!-- Begining of Justification -->
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 					<div class="panel-heading">
 						By Justification <div class="display_date"></div>
 					</div>
@@ -92,7 +92,7 @@
 			</div>
 			<div class="col-md-5">
 				<!-- Begining of Sample Types -->
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 						<div class="panel-heading">
 							By Sample Types <div class="display_date"></div>
 						</div>
@@ -111,7 +111,7 @@
 	</div>
 	<div class="col-md-5">
 		
-				<div class="panel panel-primary">
+				<div class="panel panel-default">
 				  <div class="panel-heading">
 				  	Facility <div class="display_date"></div>
 				  </div>
@@ -143,7 +143,7 @@
 
 		
 		<!-- Begining of Regimen -->
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 				<div class="panel-heading">
 					By Regimen <div class="display_date"></div>
 				</div>

@@ -53,12 +53,15 @@
 			#year-month-filter {
 				font-size: 12px;
 			}
+			.nav {
+				color: black;
+			}
 		</style>
 	</head>
 	<body>
 	<?php //echo "<pre>";print_r($_SERVER['REQUEST_URI']);die();?>
 		<!-- Begining of Navigation Bar -->
-		<div class="navbar navbar-primary">
+		<div class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -81,7 +84,10 @@
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>labs">Labs</a></li>
-						<li><a href="#">Facilities</a></li>
+						<!-- <li><a href="#">Facilities</a></li> -->
+						<li><a href="http://eid.nascop.org/vreports.php">Reports</a></li>
+						<li><a href="http://eid.nascop.org/login.php">Login</a></li>
+						<li><a href="http://eid.nascop.org">EID View</a></li>
 					</ul>
 					<!-- <form class="navbar-form navbar-left" id="1267192336">
 						<div class="form-group">

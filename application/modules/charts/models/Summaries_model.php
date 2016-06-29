@@ -10,7 +10,29 @@ class Summaries_model extends MY_Model
 
 	function turnaroundtime($year=null,$month=null,$county=null)
 	{
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+			}else {
+				$month = 0;
+			}
+		}
 
+		$sql = "CALL `proc_get_national_tat`('".$year."','".$month."')";
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		
+		foreach ($result as $key => $value) {
+			$data['tat1'] = (int) $value['tat1'];
+			$data['tat2'] = (int) $value['tat2'] + (int) $data['tat1'];
+			$data['tat3'] = (int) $value['tat3'] + (int) $data['tat2'];
+			$data['tat4'] = (int) $value['tat4'];
+		}
+		// echo "<pre>";print_r($data);die();
+		return $data;
 	}
 
 	function county_outcomes($year=null,$month=null,$partner=NULL)
@@ -78,15 +100,21 @@ class Summaries_model extends MY_Model
 
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."')";
+			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."')";
 		} else {
 			if ($county==null || $county=='null') {
 				$sql = "CALL `proc_get_national_vl_outcomes`('".$year."','".$month."')";
+				$sql2 = "CALL `proc_get_national_sitessending`('".$year."','".$month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_vl_outcomes`('".$county."','".$year."','".$month."')";
+				$sql2 = "CALL `proc_get_regional_sitessending`('".$county."','".$year."','".$month."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);
+		
 		$result = $this->db->query($sql)->result_array();
+		$this->db->close();
+		$sitessending = $this->db->query($sql2)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$data['vl_outcomes']['name'] = 'Tests';
 		$data['vl_outcomes']['colorByPoint'] = true;
@@ -106,14 +134,26 @@ class Summaries_model extends MY_Model
 
 		foreach ($result as $key => $value) {
 			$data['ul'] .= '<li>Total Tests: '.$value['alltests'].'</li>';
-			$data['ul'] .= '<li>Suspected Failures: '.$value['sustxfail'].'</li>';
+			$data['ul'] .= '<li>Suspected Failures: '.$value['sustxfail'].' <strong>('.(int) (($value['sustxfail']/$value['alltests'])*100).'%)</strong></li>';
 			$data['ul'] .= '<li>Rejected: '.$value['rejected'].'</li>';
-			$data['ul'] .= '<li>Sites Sending: '.(int) $value['sitessending'].'</li>';
+			
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected'];
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less1000'];
 			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000'];
 			$data['vl_outcomes']['data'][3]['y'] = (int) $value['above5000'];
 		}
+
+		$count = 1;
+		$sites = 0;
+		foreach ($sitessending as $key => $value) {
+			if ((int) $value['sitessending'] != 0) {
+				$sites = (int) $sites + (int) $value['sitessending'];
+				$count++;
+			}
+		}
+		$data['ul'] .= '<li>Sites Sending: '.(int) (@$sites / $count).'</li>';
+		$count = 1;
+		$sites = 0;
 
 		$data['vl_outcomes']['data'][3]['sliced'] = true;
 		$data['vl_outcomes']['data'][3]['selected'] = true;
@@ -285,6 +325,7 @@ class Summaries_model extends MY_Model
 	{
 		$array1 = array();
 		$array2 = array();
+		$sql2 = NULL;
 
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
@@ -298,7 +339,8 @@ class Summaries_model extends MY_Model
 		$from = $to-1;
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_sample_types`('".$partner."','".$from."','".$to."')";
+			$sql = "CALL `proc_get_partner_sample_types`('".$partner."','".$from."')";
+			$sql2 = "CALL `proc_get_partner_sample_types`('".$partner."','".$to."')";
 		} else {
 			if ($county==null || $county=='null') {
 				$sql = "CALL `proc_get_national_sample_types`('".$from."','".$to."')";

@@ -63,7 +63,8 @@ $config['plugin_path']		=	'assets/plugins/';
 $config['files_path']		=	'assets/files/';
 
 $config['css_files']		=	array(
-									array('title' => 'styles'	,	'file'	=>	'styles.css')
+									array('title' => 'styles'	,	'file'	=>	'styles.css'),
+									array('title' => 'custom'	,	'file'	=>	'custom.css')
 								);
 $config['js_files']			=	array(
 									

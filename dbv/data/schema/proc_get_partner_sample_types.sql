@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_partner_sample_types`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_partner_sample_types`
-(IN P_id INT(11), IN from_year INT(11), IN to_year INT(11))
+(IN P_id INT(11), IN filter_year INT(11))
 BEGIN
   SET @QUERY =    "SELECT
 					`month`,
@@ -12,7 +12,7 @@ BEGIN
 				FROM `vl_partner_summary`
                 WHERE 1";
 
-    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `year` = '",from_year,"' OR `year`='",to_year,"' GROUP BY `year`, `month` ORDER BY `year` ASC, `month` ");
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `year` = '",filter_year,"' GROUP BY `year`, `month` ORDER BY `year` ASC, `month` ");
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

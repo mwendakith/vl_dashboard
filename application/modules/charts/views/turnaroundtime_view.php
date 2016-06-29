@@ -74,7 +74,7 @@
         },
         yAxis: {
             min: 0,
-            max: 15,
+            max: <?php echo json_encode($outcomes['tat4']);?>,
             tickLength: 3,
             tickWidth: 1,
             tickColor: '#C0C0C0',
@@ -91,15 +91,15 @@
             },
             plotBands: [{
                 from: 0,
-                to: 5,
+                to: <?php echo json_encode($outcomes['tat1']);?>,
                 color: 'rgba(255,0,0,0.5)'
             }, {
-                from: 5,
-                to: 10,
+                from: <?php echo json_encode($outcomes['tat1']);?>,
+                to: <?php echo json_encode($outcomes['tat2']);?>,
                 color: 'rgba(255,255,0,0.5)'
             }, {
-                from: 10,
-                to: 15,
+                from: <?php echo json_encode($outcomes['tat2']);?>,
+                to: <?php echo json_encode($outcomes['tat3']);?>,
                 color: 'rgba(0,255,0,0.5)'
             }]
         },
@@ -123,7 +123,7 @@
     function (chart) {
         Highcharts.each(chart.series, function (serie) {
             var point = serie.points[0];
-            point.update(13);
+            point.update(<?php echo json_encode($outcomes['tat4']);?>);
         });
 
     });

@@ -141,16 +141,75 @@ class Labs_model extends MY_Model
 		$sql = "CALL `proc_get_labs_tat`('".$year."','".$month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
+		$lab = NULL;
+		$count = 1;
+		$tat1 = 0;
+		$tat2 = 0;
+		$tat3 = 0;
+		$tat4 = 0;
+		$tat = array();
 		
 		foreach ($result as $key => $value) {
-			$labname = strtolower(str_replace(" ", "_", $value['labname']));
+			if (($value['tat1']!=0) || ($value['tat2']!=0) || ($value['tat3']!=0) || ($value['tat4']!=0)) {
+				$labname = strtolower(str_replace(" ", "_", $value['labname']));
+				if ($lab) {
+					if ($lab==$value['labname']) {
+						$tat1 = $tat1+$value['tat1'];
+						$tat2 = $tat2+$value['tat2'];
+						$tat3 = $tat3+$value['tat3'];
+						$tat4 = $tat4+$value['tat4'];
+						$tat[$labname] = array(
+									'lab' => $labname,
+									'tat1' => $tat1,
+									'tat2' => $tat2,
+									'tat3' => $tat3,
+									'tat4' => $tat4,
+									'count' => $count
+									);
+						$count++;
+					} else {
+						$count = 1;
+						$tat1 = $value['tat1'];
+						$tat2 = $value['tat2'];
+						$tat3 = $value['tat3'];
+						$tat4 = $value['tat4'];
+						$lab = $value['labname'];
+						$tat[$labname] = array(
+									'lab' => $labname,
+									'tat1' => $tat1,
+									'tat2' => $tat2,
+									'tat3' => $tat3,
+									'tat4' => $tat4,
+									'count' => $count
+									);
+						$count++;
+					}
+				} else {
+					$lab = $value['labname'];
+					$tat1 = $tat1+$value['tat1'];
+					$tat2 = $tat2+$value['tat2'];
+					$tat3 = $tat3+$value['tat3'];
+					$tat4 = $tat4+$value['tat4'];
+					$tat[$labname] = array(
+								'lab' => $labname,
+								'tat1' => $tat1,
+								'tat2' => $tat2,
+								'tat3' => $tat3,
+								'tat4' => $tat4,
+								'count' => $count
+								);
 
-			$data[$labname]['tat1'] = (int) $value['tat1'];
-			$data[$labname]['tat2'] = (int) $value['tat2'] + (int) $value['tat1'];
-			$data[$labname]['tat3'] = (int) $value['tat3'] + (int) $data[$labname]['tat2'];
-			$data[$labname]['tat4'] = (int) $value['tat4'];
+					$count++;
+				}
+			}
 		}
-		// echo "<pre>";print_r($data);die();
+		// echo "<pre>";print_r($tat);die();
+		foreach ($tat as $key => $value) {
+			$data[$key]['tat1'] = ($value['tat1']/$value['count']);
+			$data[$key]['tat2'] = ($value['tat2']/$value['count']) + $data[$key]['tat1'];
+			$data[$key]['tat3'] = ($value['tat3']/$value['count']) + $data[$key]['tat2'];
+			$data[$key]['tat4'] = ($value['tat4']/$value['count']);
+		}
 		return $data;
 	}
 

@@ -7,16 +7,36 @@
 		width: 130px;
 		display: inline;
 	}
+	.title-name {
+		color: blue;
+	}
+	.key {
+		font-size: 11px;
+		margin-top: 0.5em;
+	}
+	.cr {
+		background-color: #F64747;
+	}
+	.rp {
+		background-color: #F9BF3B;
+	}
+	.pd {
+		background-color: #26C281;
+	}
+	.cd {
+		
+	}
 </style>
 <div class="row">
 	<!-- Map of the country -->
+	<div style="color:red;"><center>Click on Lab(s) on legend to view only for the lab(s) selected</center></div>
 	<div class="col-md-6 col-sm-12 col-xs-12">
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 		  <div class="panel-heading">
 		  	Labs Testing Trends <div class="display_date" ></div>
 		  </div>
 		  <div class="panel-body" id="test_trends">
-		  	<div>Loading...</div>
+		  	<center><div class="loader"></div></center>
 		  </div>
 		  
 		</div>
@@ -24,12 +44,12 @@
 	<!-- Map of the country -->
 	<!-- Map of the country -->
 	<div class="col-md-6 col-sm-12 col-xs-12">
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 		  <div class="panel-heading">
 		  	Labs Rejection Trends <div class="display_date" ></div>
 		  </div>
 		  <div class="panel-body" id="rejected">
-		  	<div>Loading...</div>
+		  	<center><div class="loader"></div></center>
 		  </div>
 		  
 		</div>
@@ -39,7 +59,7 @@
 </div>
 <div class="row">
 	<div class="col-md-5 col-sm-12 col-xs-12">
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 		  <div class="panel-heading">
 		    Sample Types Sent to Labs <div class="display_date" ></div>
 		  </div>
@@ -49,20 +69,31 @@
 		</div>
 	</div>
 	<div class="col-md-7 col-sm-12 col-xs-12">
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 		  <div class="panel-heading">
 		    Turn around Time <div class="display_date" ></div>
 		  </div>
 		  <div class="panel-body" id="ttime">
 		    <div>Loading...</div>
 		  </div>
+		  <div class="title-name">Key</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="key cr"><center>Collection Receipt (C-R)</center></div>
+					<div class="key rp"><center>Receipt to Processing (R-P)</center></div>
+				</div>
+				<div class="col-md-6">
+					<div class="key pd"><center>Processing Dispatch (P-D)</center></div>
+					<div class="key cd"><center>Collection Dispatch (C-D)</center></div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 <div class="row">
 	<!-- Map of the country -->
 	<div class="col-md-12 col-sm-12 col-xs-12">
-		<div class="panel panel-primary">
+		<div class="panel panel-default">
 		  <div class="panel-heading">
 		  	Results Outcomes <div class="display_date"></div>
 		  </div>

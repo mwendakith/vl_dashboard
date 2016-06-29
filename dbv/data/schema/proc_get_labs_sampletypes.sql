@@ -20,7 +20,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `vls`.`year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `lb`.`labname` ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `lb`.`labname` ORDER BY SUM(`dbs`+`plasma`+`edta`) DESC ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

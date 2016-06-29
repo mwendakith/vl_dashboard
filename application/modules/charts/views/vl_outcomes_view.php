@@ -8,6 +8,13 @@
 </div>
 
 <script type="text/javascript">
+	// $().ready(function() {
+	// 	$.get("<?php //echo base_url('charts/summaries/suppressiondata');?>", function(data) {
+
+	// 	});
+	// 	$("#samples").load("<?php //echo base_url('charts/summaries/sample_types'); ?>");
+	// });
+
 	$(function () {
 				$('#vlOutcomes_pie').highcharts({
 			        chart: {

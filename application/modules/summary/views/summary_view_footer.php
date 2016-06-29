@@ -40,11 +40,11 @@
 	        	});
 	        	
 	        	$("#nattat").html("<div>Loading...</div>");
-	        	$("#samples").html("<div>Loading...</div>");
-		        $("#vlOutcomes").html("<div>Loading...</div>");
-				$("#justification").html("<div>Loading...</div>");
-				$("#ageGroups").html("<div>Loading...</div>");
-				$("#gender").html("<div>Loading...</div>");
+	        	$("#samples").html("<center><div class='loader'></div></center>");
+		        $("#vlOutcomes").html("<center><div class='loader'></div></center>");
+				$("#justification").html("<center><div class='loader'></div></center>");
+				$("#ageGroups").html("<center><div class='loader'></div></center>");
+				$("#gender").html("<center><div class='loader'></div></center>");
 				// $("#county").load("<?php //echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+data);
 				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
 				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+data);
@@ -80,13 +80,13 @@
 			
 		});
  		
- 		$("#samples").html("<div>Loading...</div>");
 		$("#nattat").html("<div>Loading...</div>");
- 		$("#county").html("<div>Loading...</div>"); 
-		$("#vlOutcomes").html("<div>Loading...</div>");
-		$("#justification").html("<div>Loading...</div>");
-		$("#ageGroups").html("<div>Loading...</div>");
-		$("#gender").html("<div>Loading...</div>");
+ 		$("#samples").html("<center><div class='loader'></div></center>");
+ 		$("#county").html("<center><div class='loader'></div></center>"); 
+		$("#vlOutcomes").html("<center><div class='loader'></div></center>");
+		$("#justification").html("<center><div class='loader'></div></center>");
+		$("#ageGroups").html("<center><div class='loader'></div></center>");
+		$("#gender").html("<center><div class='loader'></div></center>");
 
 		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
 		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year);

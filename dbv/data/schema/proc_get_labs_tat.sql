@@ -5,10 +5,10 @@ CREATE PROCEDURE `proc_get_labs_tat`
 BEGIN
   SET @QUERY =    "SELECT 
                         `lb`.`labname`, 
-                        AVG(`vls`.`tat1`) AS `tat1`, 
-                        AVG(`vls`.`tat2`) AS `tat2`, 
-                        AVG(`vls`.`tat3`) AS `tat3`, 
-                        AVG(`vls`.`tat4`) AS `tat4` 
+                        `vls`.`tat1`, 
+                        `vls`.`tat2`, 
+                        `vls`.`tat3`, 
+                        `vls`.`tat4` 
                     FROM `vl_lab_summary` `vls` 
                     JOIN `labs` `lb` 
                         ON `vls`.`lab` = `lb`.`ID` WHERE 1";
@@ -19,7 +19,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `vls`.`year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `lb`.`labname` ");
+    SET @QUERY = CONCAT(@QUERY, " ORDER BY `lb`.`labname`ORDER BY `lb`.`labname`, `vls`.`month` ASC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
