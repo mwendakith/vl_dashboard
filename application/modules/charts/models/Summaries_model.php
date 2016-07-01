@@ -265,7 +265,75 @@ class Summaries_model extends MY_Model
 
 		$data['age']['data'][0]['sliced'] = true;
 		$data['age']['data'][0]['selected'] = true;
+		// echo "<pre>";print_r($data);
+		return $data;
+	}
 
+	function age_breakdown($year=null,$month=null,$county=null,$partner=null)
+	{
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
+		}
+		if (!$partner) {
+			$partner = $this->session->userdata('partner_filter');
+		}
+
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+			}else {
+				$month = 0;
+			}
+		}
+
+		if ($partner) {
+			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."')";
+		} else {
+			if ($county==null || $county=='null') {
+				$sql = "CALL `proc_get_national_age`('".$year."','".$month."')";
+			} else {
+				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."')";
+			}
+		}
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$data['children']['name'] = 'Tests';
+		$data['children']['colorByPoint'] = true;
+
+		$data['adults']['name'] = 'Tests';
+		$data['adults']['colorByPoint'] = true;
+
+		$count = 0;
+
+		foreach ($result as $key => $value) {
+			
+			if ($value['name']=='<2' || $value['name']=='2-9' || $value['name']=='10-14') {
+				$data['children']['data'][$key]['y'] = $count;
+				$data['children']['data'][$key]['name'] = $value['name'];
+				$data['children']['data'][$key]['y'] = (int) $value['agegroups'];
+
+			} else {
+				$data['adults']['data'][$key]['y'] = $count;
+				$data['adults']['data'][$key]['name'] = $value['name'];
+				$data['adults']['data'][$key]['y'] = (int) $value['agegroups'];
+			}
+			
+			
+		}
+
+		$data['children']['data'][0]['sliced'] = true;
+		$data['children']['data'][0]['selected'] = true;
+
+		$data['adults']['data'][0]['sliced'] = true;
+		$data['adults']['data'][0]['selected'] = true;
+		$data['children']['data'] = array_map('array_values', $data['children']['data']);
+		$data['children']['data'] = array_values($data['children']['data']);
+		$data['adults']['data'] = array_values($data['adults']['data']);
+		// echo "<pre>";print_r($data);
 		return $data;
 	}
 

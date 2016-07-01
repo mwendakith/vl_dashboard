@@ -11,8 +11,8 @@
             <!-- </optgroup> -->
           </select>
         </div>
-        <div class="col-md-6">
-          <button class="btn" type="submit" style="background-color: #81CFE0; margin-left: 0.5em;">Filter</button>
+        <!-- <div class="col-md-6">
+          <button class="btn" type="submit" style="background-color: #81CFE0; margin-left: 0.5em;">Filter</button> -->
           <!-- <select class="btn" style="background-color: #C5EFF7;">
             <option value="0" disabled="true" selected="true">Sub County:</option>
             <option>Nairobi</option>
@@ -22,7 +22,7 @@
             <option>Marsabit</option>
             <option>Embu</option>
           </select> -->
-        </div>
+        <!-- </div> -->
       </div>
       
       <!-- <div class="row">

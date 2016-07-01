@@ -2,7 +2,7 @@
   <div class="col-md-4">
     <form action="<?php echo base_url();?>template/filter_partner_data" method="post" id="filter_form">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <select class="btn" style="width:220px;background-color: #C5EFF7;" name="partner">
             <option value="0" disabled="true" selected="true">Select Partner:</option>
             <option value="NA">All Partners</option>
@@ -11,8 +11,8 @@
             <!-- </optgroup> -->
           </select>
         </div>
-        <div class="col-md-6">
-          <button class="btn" type="submit" style="background-color: #81CFE0; margin-left: 0.5em;">Filter</button>
+        <!-- <div class="col-md-6">
+          <button class="btn" type="submit" style="background-color: #81CFE0; margin-left: 0.5em;">Filter</button> -->
           <!-- <select class="btn" style="background-color: #C5EFF7;">
             <option value="0" disabled="true" selected="true">Sub County:</option>
             <option>Nairobi</option>
@@ -22,7 +22,7 @@
             <option>Marsabit</option>
             <option>Embu</option>
           </select> -->
-        </div>
+        <!-- </div> -->
       </div>
       
       <!-- <div class="row">

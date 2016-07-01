@@ -1,4 +1,3 @@
-
 <div id="ageGroups_pie">
 	
 </div>

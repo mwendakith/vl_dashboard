@@ -11,18 +11,11 @@
 		$(".display_date").load("<?php echo base_url('charts/summaries/display_date'); ?>");
 		$(".display_range").load("<?php echo base_url('charts/summaries/display_range'); ?>");
 
-		$('#filter_form').submit(function( event ) {
-         
-	        // Stop form from submitting normally
-	        event.preventDefault();
-	        
-	        // Get some values from elements on the page:
-	        var $form = $( this ),
-	        em = $form.find( "select[name='county']" ).val(),
-	        url = $form.attr( "action" );
-	        
-	        // Send the data using post
-	        var posting = $.post( url, { county: em } );
+		$("select").change(function(){
+			em = $(this).val();
+
+			// Send the data using post
+	        var posting = $.post( "<?php echo base_url();?>template/filter_county_data", { county: em } );
 	     
 	        // Put the results in a div
 	        posting.done(function( data ) {
@@ -53,7 +46,7 @@
 				$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+null+"/"+null+"/"+data); 
 				$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>/"+null+"/"+null+"/"+data); 
 	        });
-    	});
+		});
 	});
 
 	function date_filter(criteria, id)

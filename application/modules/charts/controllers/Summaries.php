@@ -46,8 +46,8 @@ class Summaries extends MY_Controller {
 
 	function agebreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->age($year,$month,$county,$partner);
-
+		$data['outcomes'] = $this->summaries_model->age_breakdown($year,$month,$county,$partner);
+		
 		$this->load->view('agegroupBreakdown',$data);
 	}
 
