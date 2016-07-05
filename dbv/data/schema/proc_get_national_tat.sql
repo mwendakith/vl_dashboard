@@ -4,10 +4,10 @@ CREATE PROCEDURE `proc_get_national_tat`
 (IN filter_year INT(11), IN filter_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
-                        AVG(`vls`.`tat1`) AS `tat1`, 
-                        AVG(`vls`.`tat2`) AS `tat2`, 
-                        AVG(`vls`.`tat3`) AS `tat3`, 
-                        AVG(`vls`.`tat4`) AS `tat4` 
+                        `vls`.`tat1`, 
+                        `vls`.`tat2`, 
+                        `vls`.`tat3`, 
+                        `vls`.`tat4` 
                     FROM `vl_national_summary` `vls` 
                     WHERE 1";
 

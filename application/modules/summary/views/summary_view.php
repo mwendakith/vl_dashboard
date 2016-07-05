@@ -24,21 +24,25 @@
 		margin-top: 0.5em;
 	}
 	.cr {
-		background-color: #F64747;
+		background-color: rgba(255, 0, 0, 0.498039);
 	}
 	.rp {
-		background-color: #F9BF3B;
+		background-color: rgba(255, 255, 0, 0.498039);
 	}
 	.pd {
-		background-color: #26C281;
+		background-color: rgba(0, 255, 0, 0.498039);
 	}
 	.cd {
-		
+		width: 0px;
+		height: 0px;
+		border-left: 8px solid transparent;
+		border-right: 8px solid transparent;
+		border-top: 8px solid black;
 	}
 </style>
 <div class="row">
 	<div class="col-md-12" id="nattatdiv">
-		<div class="col-md-6 col-md-offset-2">
+		<div class="col-md-6 col-md-offset-3">
 			<div class="col-md-4 title-name" id="title">
 				<center>National TAT <l style="color:red;">(Days)</l></center>
 			</div>
@@ -46,7 +50,7 @@
 				<div id="nattat"></div>
 			</div>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-3">
 			<div class="title-name">Key</div>
 			<div class="row">
 				<div class="col-md-6">
@@ -55,7 +59,7 @@
 				</div>
 				<div class="col-md-6">
 					<div class="key pd"><center>Processing Dispatch (P-D)</center></div>
-					<div class="key cd"><center>Collection Dispatch (C-D)</center></div>
+					<div class="key"><center><div class="cd"></div>Collection Dispatch (C-D)</center></div>
 				</div>
 			</div>
 		</div>

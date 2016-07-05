@@ -22,14 +22,39 @@ class Summaries_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_national_tat`('".$year."','".$month."')";
-		// echo "<pre>";print_r($sql);die();
+		
 		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$count = 0;
+		$tat1 = 0;
+		$tat2 = 0;
+		$tat3 = 0;
+		$tat4 = 0;
+		$tat = array();
 		
 		foreach ($result as $key => $value) {
-			$data['tat1'] = (int) $value['tat1'];
-			$data['tat2'] = (int) $value['tat2'] + (int) $data['tat1'];
-			$data['tat3'] = (int) $value['tat3'] + (int) $data['tat2'];
-			$data['tat4'] = (int) $value['tat4'];
+			if (($value['tat1']!=0) || ($value['tat2']!=0) || ($value['tat3']!=0) || ($value['tat4']!=0)) {
+				$count++;
+
+				$tat1 = $tat1+$value['tat1'];
+				$tat2 = $tat2+$value['tat2'];
+				$tat3 = $tat3+$value['tat3'];
+				$tat4 = $tat4+$value['tat4'];
+			}
+		}
+		$tat[] = array(
+					'tat1' => $tat1,
+					'tat2' => $tat2,
+					'tat3' => $tat3,
+					'tat4' => $tat4,
+					'count' => $count
+					);
+		// echo "<pre>";print_r($tat);die();
+		foreach ($tat as $key => $value) {
+			$data['tat1'] = round((@(int)$value['tat1']/@(int)$value['count']));
+			$data['tat2'] = round((@(int)$value['tat2']/@(int)$value['count']) + $data['tat1']);
+			$data['tat3'] = round((@(int)$value['tat3']/@(int)$value['count']) + $data['tat2']);
+			$data['tat4'] = round(@(int)$value['tat4']/@(int)$value['count']);
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
@@ -151,7 +176,7 @@ class Summaries_model extends MY_Model
 				$count++;
 			}
 		}
-		$data['ul'] .= '<li>Sites Sending: '.(int) (@$sites / $count).'</li>';
+		$data['ul'] .= '<li>Sites Sending: '.round(@$sites / $count).'</li>';
 		$count = 1;
 		$sites = 0;
 
@@ -328,12 +353,12 @@ class Summaries_model extends MY_Model
 		$data['children']['data'][0]['sliced'] = true;
 		$data['children']['data'][0]['selected'] = true;
 
-		$data['adults']['data'][0]['sliced'] = true;
-		$data['adults']['data'][0]['selected'] = true;
-		$data['children']['data'] = array_map('array_values', $data['children']['data']);
+		$data['adults']['data'][1]['sliced'] = true;
+		$data['adults']['data'][1]['selected'] = true;
+		
 		$data['children']['data'] = array_values($data['children']['data']);
 		$data['adults']['data'] = array_values($data['adults']['data']);
-		// echo "<pre>";print_r($data);
+		
 		return $data;
 	}
 
@@ -385,7 +410,7 @@ class Summaries_model extends MY_Model
 
 		$data['gender']['data'][0]['sliced'] = true;
 		$data['gender']['data'][0]['selected'] = true;
-
+		
 		return $data;
 	}
 

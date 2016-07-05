@@ -106,7 +106,13 @@
         legend: {
             enabled: false
         },
-
+        exporting: {
+            enabled: false
+        },colors: [
+            '#F64747',
+            '#F9BF3B',
+            '#26C281'
+        ],
         series: [{
             data: [92],
             color: '#000000',

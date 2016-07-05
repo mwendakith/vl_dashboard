@@ -205,10 +205,10 @@ class Labs_model extends MY_Model
 		}
 		// echo "<pre>";print_r($tat);die();
 		foreach ($tat as $key => $value) {
-			$data[$key]['tat1'] = ($value['tat1']/$value['count']);
-			$data[$key]['tat2'] = ($value['tat2']/$value['count']) + $data[$key]['tat1'];
-			$data[$key]['tat3'] = ($value['tat3']/$value['count']) + $data[$key]['tat2'];
-			$data[$key]['tat4'] = ($value['tat4']/$value['count']);
+			$data[$key]['tat1'] = round($value['tat1']/$value['count']);
+			$data[$key]['tat2'] = round(($value['tat2']/$value['count']) + $data[$key]['tat1']);
+			$data[$key]['tat3'] = round(($value['tat3']/$value['count']) + $data[$key]['tat2']);
+			$data[$key]['tat4'] = round($value['tat4']/$value['count']);
 		}
 		return $data;
 	}

@@ -19,7 +19,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `vls`.`year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " ORDER BY `lb`.`labname`ORDER BY `lb`.`labname`, `vls`.`month` ASC ");
+    SET @QUERY = CONCAT(@QUERY, " ORDER BY `lb`.`labname`, `vls`.`month` ASC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
