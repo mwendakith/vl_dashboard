@@ -18,6 +18,7 @@ class Template extends MY_Controller
 
 		$data['filter'] = $this->template_model->get_counties_dropdown();
 		$data['partner'] = $this->template_model->get_partners_dropdown();
+		$data['sites'] = $this->template_model->get_site_dropdown();
 		// $data['breadcrum'] = $this->breadcrum();
 		// echo "<pre>";print_r($data);die();
 		$this->load->view('template_view',$data);

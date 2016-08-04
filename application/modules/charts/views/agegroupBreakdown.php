@@ -17,7 +17,7 @@
                 type: 'pie'
 		            },
 		            title: {
-		                text: 'Children'
+		                text: 'Children (Total Tests: '+<?php echo $outcomes['ctotal'];?>+')'
 		            },
 		            tooltip: {
 		                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -49,7 +49,7 @@
                 type: 'pie'
 		            },
 		            title: {
-		                text: 'Adults'
+		                text: 'Adults (Total Tests: '+<?php echo $outcomes['atotal'];?>+')'
 		            },
 		            tooltip: {
 		                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

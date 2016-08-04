@@ -31,6 +31,14 @@ class Partner extends MY_Controller
 		$this -> template($this->data);
 	}
 
+	public function sites()
+	{
+		$this->load->module('charts/sites');
+
+		$this->data['content_view'] = 'partner/partner_sites_view';
+		$this -> template($this->data);
+	}
+
 	public function get_selected_partner()
 	{
 		if ($this->session->userdata('partner_filter')) {

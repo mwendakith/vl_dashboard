@@ -1,3 +1,28 @@
+<style type="text/css">
+    .title-name {
+        color: blue;
+    }
+    .key {
+        font-size: 11px;
+        margin-top: 0.5em;
+    }
+    .cr {
+        background-color: rgba(255,0,0,0.5);
+    }
+    .rp {
+        background-color: rgba(255,255,0,0.5);
+    }
+    .pd {
+        background-color: rgba(0,255,0,0.5);
+    }
+    .cd {
+        width: 0px;
+        height: 0px;
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid black;
+    }
+</style>
 <div class="row">
 	<div class="col-md-6" id="container1" style="height:100px;"></div>
 	<div class="col-md-6" id="container2" style="height:100px;"></div>
@@ -8,6 +33,19 @@
 	<div class="col-md-6" id="container7" style="height:100px;"></div>
 	<div class="col-md-6" id="container8" style="height:100px;"></div>
 	<div class="col-md-6" id="container9" style="height:100px;"></div>
+    <div class="col-md-6" style="border: 1px solid black">
+        <div class="title-name">Key</div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="key cr"><center>Collection Receipt (C-R)</center></div>
+                    <div class="key rp"><center>Receipt to Processing (R-P)</center></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="key pd"><center>Processing Dispatch (P-D)</center></div>
+                    <div class="key"><center><div class="cd"></div>Collection Dispatch (C-D)</center></div>
+                </div>
+            </div>
+    </div>
 </div>
 
 
@@ -84,7 +122,7 @@
         },
         yAxis: {
             min: 0,
-            max: <?php echo json_encode($trends['kemri_nairobi_lab']['tat4']);?>,
+            max: <?php echo json_encode($trends['kemri_nairobi_lab']['tat3']);?>,
             tickLength: 5,
             tickWidth: 1,
             tickColor: '#C0C0C0',
@@ -210,7 +248,7 @@ $('#container2').highcharts({
         },
         yAxis: {
             min: 0,
-            max: <?php echo json_encode($trends['kisumu_lab']['tat4']);?>,
+            max: <?php echo json_encode($trends['kisumu_lab']['tat3']);?>,
             tickLength: 5,
             tickWidth: 1,
             tickColor: '#C0C0C0',
@@ -333,7 +371,7 @@ $('#container3').highcharts({
         },
         yAxis: {
             min: 0,
-            max: <?php echo json_encode($trends['busia_lab']['tat4']);?>,
+            max: <?php echo json_encode($trends['busia_lab']['tat3']);?>,
             tickLength: 5,
             tickWidth: 1,
             tickColor: '#C0C0C0',
@@ -457,7 +495,7 @@ $('#container4').highcharts({
         },
         yAxis: {
             min: 0,
-            max: <?php echo json_encode($trends['kericho_lab']['tat4']);?>,
+            max: <?php echo json_encode($trends['kericho_lab']['tat3']);?>,
             tickLength: 5,
             tickWidth: 1,
             tickColor: '#C0C0C0',
@@ -583,7 +621,7 @@ $('#container5').highcharts({
         },
         yAxis: {
             min: 0,
-            max: <?php echo json_encode($trends['eldoret_lab']['tat4']);?>,
+            max: <?php echo json_encode($trends['eldoret_lab']['tat3']);?>,
             tickLength: 5,
             tickWidth: 1,
             tickColor: '#C0C0C0',
@@ -706,7 +744,7 @@ $('#container6').highcharts({
         },
         yAxis: {
             min: 0,
-            max: <?php echo json_encode($trends['coast_lab']['tat4']);?>,
+            max: <?php echo json_encode($trends['coast_lab']['tat3']);?>,
             tickLength: 5,
             tickWidth: 1,
             tickColor: '#C0C0C0',
@@ -830,7 +868,7 @@ $('#container7').highcharts({
         },
         yAxis: {
             min: 0,
-            max: <?php echo json_encode($trends['nhrl_nairobi']['tat4']);?>,
+            max: <?php echo json_encode($trends['nhrl_nairobi']['tat3']);?>,
             tickLength: 5,
             tickWidth: 1,
             tickColor: '#C0C0C0',
@@ -954,7 +992,7 @@ $('#container8').highcharts({
         },
         yAxis: {
             min: 0,
-            max: <?php echo json_encode($trends['nyumbani_lab']['tat4']);?>,
+            max: <?php echo json_encode($trends['nyumbani_lab']['tat3']);?>,
             tickLength: 5,
             tickWidth: 1,
             tickColor: '#C0C0C0',
@@ -1078,7 +1116,7 @@ $('#container9').highcharts({
         },
         yAxis: {
             min: 0,
-            max: <?php echo json_encode($trends['knh_lab']['tat4']);?>,
+            max: <?php echo json_encode($trends['knh_lab']['tat3']);?>,
             tickLength: 5,
             tickWidth: 1,
             tickColor: '#C0C0C0',

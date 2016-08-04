@@ -5,10 +5,11 @@ CREATE PROCEDURE `proc_get_national_age`
 BEGIN
   SET @QUERY =    "SELECT
                     `ac`.`name`,
+                    SUM(`vna`.`sustxfail`) AS `sustxfail`,
                     SUM((`vna`.`tests`)) AS `agegroups`
                 FROM `vl_national_age` `vna`
                 JOIN `agecategory` `ac`
-                    ON `vna`.`age` = `ac`.`ID`
+                    ON `vna`.`age` = `ac`.`subID`
                 WHERE 1";
 
     IF (filter_month != 0 && filter_month != '') THEN

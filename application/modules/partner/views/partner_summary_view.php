@@ -28,7 +28,7 @@
 		  <div class="panel-heading">
 		  	VL Outcomes <div class="display_date" ></div>
 		  </div>
-		  <div class="panel-body" id="vlOutcomes">
+		  <div id="vlOutcomes">
 		  	<center><div class="loader"></div></center>
 		  </div>
 		  
@@ -49,7 +49,7 @@
 	</div>
 	<div class="col-md-5">
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-7" style="padding-right:0px;">
 				<div class="panel panel-default">
 				  <div class="panel-heading">
 				    Age <div class="display_date"></div>
@@ -57,9 +57,12 @@
 				  <div class="panel-body" id="ageGroups">
 				    <center><div class="loader"></div></center>
 				  </div>
+				  <div>
+				  	<button class="btn btn-default" onclick="ageModal();">Click here for breakdown</button>
+				  </div>
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-5">
 				<div class="panel panel-default">
 				  <div class="panel-heading">
 				    Gender <div class="display_date"></div>
@@ -86,6 +89,20 @@
 		  </div>
 		</div>
 	</div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="agemodal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Age Category Breakdown</h4>
+      </div>
+      <div class="modal-body" id="CatAge">
+        <center><div class="loader"></div></center>
+      </div>
+    </div>
+  </div>
 </div>
 		
 <?php $this->load->view('partner_summary_view_footer'); ?>

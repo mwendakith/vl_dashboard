@@ -210,6 +210,7 @@ class Labs_model extends MY_Model
 			$data[$key]['tat3'] = round(($value['tat3']/$value['count']) + $data[$key]['tat2']);
 			$data[$key]['tat4'] = round($value['tat4']/$value['count']);
 		}
+		// echo "<pre>";print_r($data);
 		return $data;
 	}
 
@@ -231,8 +232,8 @@ class Labs_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		
-		$data['lab_outcomes'][0]['name'] = 'Suspected treatment failure & greater 1000';
-		$data['lab_outcomes'][1]['name'] = 'Detectable & less 1000';
+		$data['lab_outcomes'][0]['name'] = 'Not Suppressed';
+		$data['lab_outcomes'][1]['name'] = 'Suppressed';
 
 		$count = 0;
 		

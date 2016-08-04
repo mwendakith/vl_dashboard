@@ -5,10 +5,11 @@ CREATE PROCEDURE `proc_get_regional_age`
 BEGIN
   SET @QUERY =    "SELECT
                     `ac`.`name`,
+                    SUM(`vca`.`sustxfail`) AS `sustxfail`,
                     SUM((`vca`.`tests`)) AS `agegroups`
                 FROM `vl_county_age` `vca`
                 JOIN `agecategory` `ac`
-                    ON `vca`.`age` = `ac`.`ID`
+                    ON `vca`.`age` = `ac`.`subID`
                 WHERE 1";
 
     IF (filter_month != 0 && filter_month != '') THEN

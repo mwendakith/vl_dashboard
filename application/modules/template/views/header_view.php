@@ -53,15 +53,15 @@
 			#year-month-filter {
 				font-size: 12px;
 			}
-			/*.nav {
+			.nav {
 				color: black;
-			}*/
+			}
 		</style>
 	</head>
 	<body>
 	<?php //echo "<pre>";print_r($_SERVER['REQUEST_URI']);die();?>
 		<!-- Begining of Navigation Bar -->
-		<div class="navbar navbar-primary">
+		<div class="navbar navbar-default">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
@@ -69,10 +69,18 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<!-- <a class="navbar-brand" href="javascript:void(0)">Brand</a> -->
+					<a class="navbar-brand" href="javascript:void(0)" style="padding:0px;padding-top:4px;padding-left:4px;"><img src="<?php echo base_url();?>assets/img/nascoplogo.png" style="width:300px;height:auto;"/></a>
 				</div>
 				<div class="navbar-collapse collapse navbar-responsive-collapse">
 					<ul class="nav navbar-nav">
+						
+					</ul>
+					<!-- <form class="navbar-form navbar-left" id="1267192336">
+						<div class="form-group">
+							<input type="text" class="form-control col-md-8" placeholder="Search">
+						</div>
+					</form> -->
+					<ul class="nav navbar-nav navbar-right">
 						<li><a href="<?php echo base_url();?>">Summary</a></li>
 						<li><a href="<?php echo base_url();?>suppression/nosuppression">Non-Suppression</a></li>
 						<li class="dropdown">
@@ -81,20 +89,15 @@
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url();?>partner">Summary</a></li>
 								<li><a href="<?php echo base_url();?>partner/nosuppression">Non-Suppression</a></li>
+								<li><a href="<?php echo base_url();?>partner/sites">Partner Sites</a></li>
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>labs">Labs</a></li>
+						<li><a href="<?php echo base_url();?>sites">Sites</a></li>
 						<!-- <li><a href="#">Facilities</a></li> -->
 						<li><a href="http://eid.nascop.org/vreports.php">Reports</a></li>
 						<li><a href="http://eid.nascop.org/login.php">Login</a></li>
 						<li><a href="http://eid.nascop.org">EID View</a></li>
-					</ul>
-					<!-- <form class="navbar-form navbar-left" id="1267192336">
-						<div class="form-group">
-							<input type="text" class="form-control col-md-8" placeholder="Search">
-						</div>
-					</form> -->
-					<ul class="nav navbar-nav navbar-right">
 						<!-- <li><a href="javascript:void(0)">Link</a></li> -->
 						<li class="dropdown">
 							<!-- <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown

@@ -81,7 +81,7 @@
 		$("#ageGroups").html("<center><div class='loader'></div></center>");
 		$("#gender").html("<center><div class='loader'></div></center>");
 
-		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
+		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+year+"/"+month);
 		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year);
  		$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+year+"/"+month); 
 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+year+"/"+month);

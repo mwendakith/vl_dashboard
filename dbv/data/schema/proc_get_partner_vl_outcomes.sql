@@ -4,14 +4,16 @@ CREATE PROCEDURE `proc_get_partner_vl_outcomes`
 (IN P_id INT(11), IN filter_year INT(11), IN filter_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-       SUM(`Undetected`) AS `undetected`,
+       SUM(`confirmtx`) AS `confirmtx`,
+        SUM(`confirm2vl`) AS `confirm2vl`,
+        SUM(`Undetected`) AS `undetected`,
         SUM(`less1000`) AS `less1000`,
         SUM(`less5000`) AS `less5000`,
         SUM(`above5000`) AS `above5000`,
         SUM(`alltests`) AS `alltests`,
         SUM(`sustxfail`) AS `sustxfail`,
         SUM(`rejected`) AS `rejected`,
-        SUM(`sitessending`) AS `sitessending`
+        AVG(`sitessending`) AS `sitessending`
     FROM `vl_partner_summary`
     WHERE 1";
 

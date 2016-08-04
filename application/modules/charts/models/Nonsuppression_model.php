@@ -98,9 +98,10 @@ class Nonsuppression_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$data['categories'][0] = '';
-		$data['gnd_gr']['name'] = 'Susp. Tx. Fail';
+		$data['gnd_gr']['name'] = null;
 		$data['gnd_gr']['data'][0] = 0;
-			
+		$data['gnd_gr']['color'] = '#1BA39C';
+
 		foreach ($result as $key => $value) {
 			if ($value['name']=='F') {
 				$data['categories'][$key] = 'Female';
@@ -153,6 +154,7 @@ class Nonsuppression_model extends MY_Model
 		$data['categories'][0] = '';
 		$data['age_gr']['name'][0] = 'Age Groups';
 		$data['age_gr']['data'][0] = 0;
+		$data['age_gr']['color'] = '#19B5FE';
 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] = $value['name'];
@@ -206,6 +208,10 @@ class Nonsuppression_model extends MY_Model
 		$data['justification']['data'][0]['name'] = 'No Data';
 
 		foreach ($result as $key => $value) {
+			if($value['name'] == 'Routine VL'){
+				$data['justification']['data'][$key]['color'] = '#5C97BF';
+			}
+
 			$data['li'] .= '<a href="#" class="list-group-item"><strong>'.$value['name'].':-></strong>&nbsp;'.$value['sustxfail'].'</a>';
 			$data['justification']['data'][$key]['y'] = $count;
 			
@@ -253,6 +259,7 @@ class Nonsuppression_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 
+		$color = array('#6BB9F0', '#F2784B', '#1BA39C');
 		$data['sampletype']['name'] = 'Non Suppression';
 		$data['sampletype']['colorByPoint'] = true;
 
@@ -265,8 +272,9 @@ class Nonsuppression_model extends MY_Model
 			
 			$data['sampletype']['data'][$key]['name'] = $value['name'];
 			$data['sampletype']['data'][$key]['y'] = (int) $value['sustxfail'];
+			$data['sampletype']['data'][$key]['color'] = $color[$key];
 		}
-
+		
 		$data['sampletype']['data'][0]['sliced'] = true;
 		$data['sampletype']['data'][0]['selected'] = true;
 		// echo "<pre>";print_r($data);die();
@@ -309,6 +317,7 @@ class Nonsuppression_model extends MY_Model
 		$data['regimen']['colorByPoint'] = true;
 
 		$count = 0;
+		$color = array('#19B5FE', '#E26A6A', '#96281B', '#BE90D4', '#16A085', '#F2784B', '#26C281', '#C8F7C5', '#E9D460', '', '', '', '', '', '', '', '');
 
 		$data['li'] = '';
 		$data['regimen']['data'][0]['name'] = 'No Data';
@@ -320,6 +329,7 @@ class Nonsuppression_model extends MY_Model
 			
 			$data['regimen']['data'][$key]['name'] = $value['name'];
 			$data['regimen']['data'][$key]['y'] = (int) $value['sustxfail'];
+			$data['regimen']['data'][$key]['color'] = $color[$key];
 		}
 
 		$data['regimen']['data'][0]['sliced'] = true;
@@ -358,7 +368,7 @@ class Nonsuppression_model extends MY_Model
 				if ($county==null || $county=='null') {
 					foreach ($result as $key => $value)
 						{
-							if ($count<11) {
+							if ($count<16) {
 								$li .= '<a href="javascript:void(0);" class="list-group-item" onclick="county_filter('.$value['ID'].')"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a>';
 							}
 							// else {
@@ -369,7 +379,7 @@ class Nonsuppression_model extends MY_Model
 				} else {
 					foreach ($result as $key => $value)
 						{
-							if ($count<11) {
+							if ($count<16) {
 								if ($county == $value['ID']) {
 									$li .= '<pre><strong><a href="javascript:void(0);" class="list-group-item" onclick="county_filter('.$value['ID'].')">'.$count.'.&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a></strong></pre>';
 									$listed = TRUE;
@@ -433,7 +443,7 @@ class Nonsuppression_model extends MY_Model
 		if($result)
 			{
 				foreach ($result as $key => $value) {
-					$li .= '<a href="#" class="list-group-item"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.$value['sustxfail'].'</a>';
+					$li .= '<a href="#" class="list-group-item"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].'</a>';
 					$count++;
 				}
 			}else{

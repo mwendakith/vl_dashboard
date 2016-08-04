@@ -4,11 +4,12 @@ CREATE PROCEDURE `proc_get_partner_age`
 (IN P_id INT(11), IN filter_year INT(11), IN filter_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-                    `ac`.`name`,
+                    `ac`.`name`, 
+                    SUM(`vca`.`sustxfail`) AS `sustxfail`,
                     SUM((`vca`.`tests`)) AS `agegroups`
                 FROM `vl_partner_age` `vca`
                 JOIN `agecategory` `ac`
-                    ON `vca`.`age` = `ac`.`ID`
+                    ON `vca`.`age` = `ac`.`subID`
                 WHERE 1";
 
     IF (filter_month != 0 && filter_month != '') THEN

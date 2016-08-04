@@ -1,6 +1,11 @@
 <div id="gender_pie">
 
 </div>
+<div>
+    <ul>
+        <?php echo $outcomes['ul'];?>
+    </ul>
+</div>
 <script type="text/javascript">
 	 $(function () {
 			    $('#gender_pie').highcharts({
@@ -25,7 +30,10 @@
 		                    },
 		                    showInLegend: true
 		                }
-		            },
+		            },colors: [
+				        '#1BA39C',
+				        '#F2784B'
+				    ],
 		            series: [<?php echo json_encode($outcomes['gender']); ?>]
 		        });
 		    });

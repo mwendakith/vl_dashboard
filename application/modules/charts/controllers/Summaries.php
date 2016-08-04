@@ -40,7 +40,7 @@ class Summaries extends MY_Controller {
 	function age($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
 	{
 		$data['outcomes'] = $this->summaries_model->age($year,$month,$county,$partner);
-
+		
     	$this->load->view('agegroup_view',$data);
 	}
 

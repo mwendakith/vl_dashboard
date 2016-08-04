@@ -5,7 +5,8 @@ CREATE PROCEDURE `proc_get_partner_gender`
 BEGIN
   SET @QUERY =    "SELECT
                     `g`.`name`,
-                    SUM(`vng`.`tests`) AS `gender`
+                    SUM(`vng`.`tests`) AS `gender`, 
+                    SUM(`vng`.`sustxfail`) AS `sustxfail`
                 FROM `vl_partner_gender` `vng`
                 JOIN `gender` `g`
                     ON `vng`.`gender` = `g`.`ID`
