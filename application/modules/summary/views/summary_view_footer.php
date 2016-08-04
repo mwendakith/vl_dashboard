@@ -31,14 +31,16 @@
 					$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 	        	});
-	        	
+
+	        	// alert(data);
+	        	$('#heading').html('County Sites Outcomes <div class="display_date"></div>');
 	        	$("#nattat").html("<div>Loading...</div>");
 	        	$("#samples").html("<center><div class='loader'></div></center>");
 		        $("#vlOutcomes").html("<center><div class='loader'></div></center>");
 				$("#justification").html("<center><div class='loader'></div></center>");
 				$("#ageGroups").html("<center><div class='loader'></div></center>");
 				$("#gender").html("<center><div class='loader'></div></center>");
-				// $("#county").load("<?php //echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+data);
+				$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
 				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
 				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+data);
 				$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+null+"/"+null+"/"+data); 

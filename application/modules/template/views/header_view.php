@@ -94,7 +94,7 @@
 						</li>
 						<li><a href="<?php echo base_url();?>labs">Labs</a></li>
 						<li><a href="<?php echo base_url();?>sites">Sites</a></li>
-						<!-- <li><a href="#">Facilities</a></li> -->
+						<li><a href="<?php echo base_url();?>county">County View</a></li>
 						<li><a href="http://eid.nascop.org/vreports.php">Reports</a></li>
 						<li><a href="http://eid.nascop.org/login.php">Login</a></li>
 						<li><a href="http://eid.nascop.org">EID View</a></li>
@@ -117,3 +117,4 @@
 		<!-- End of Navigation Bar -->
 		<!-- Begining of Dashboard area -->
 		<div class="container-fluid">
+		

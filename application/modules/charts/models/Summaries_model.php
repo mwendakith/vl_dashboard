@@ -60,15 +60,13 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function county_outcomes($year=null,$month=null,$pfil=NULL,$partner=NULL)
+	function county_outcomes($year=null,$month=null,$pfil=null,$partner=null,$county=null)
 	{
-		if (!$partner) {
-			$partner = $this->session->userdata('partner_filter');
-		}
-		
+		//Initializing the value of the Year to the selected year or the default year which is current year
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
+		//Assigning the value of the month or setting it to the selected value
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
 				$month = $this->session->userdata('filter_month');
@@ -77,14 +75,29 @@ class Summaries_model extends MY_Model
 			}
 		}
 
-		if ($pfil) {
-			if ($partner) {
-				$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."')";
-			} else {
-				$sql = "CALL `proc_get_partner_outcomes`('".$year."','".$month."')";
-			}
+		// Assigning the value of the county
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
+		}
+		
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_filter');
+		}
+				
+		// echo "PFil: ".$pfil." --Partner: ".$partner." -- County: ".$county;
+		if ($county) {
+			$sql = "CALL `proc_get_county_sites_outcomes`('".$county."','".$year."','".$month."')";
 		} else {
-			$sql = "CALL `proc_get_county_outcomes`('".$year."','".$month."')";
+			if ($pfil==1) {
+				if ($partner) {
+					$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."')";
+				} else {
+					$sql = "CALL `proc_get_partner_outcomes`('".$year."','".$month."')";
+				}
+				
+			} else {
+				$sql = "CALL `proc_get_county_outcomes`('".$year."','".$month."')";
+			}
 		}
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
@@ -100,8 +113,8 @@ class Summaries_model extends MY_Model
 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
-			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['sustxfl'];
-			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['detectableNless1000'];
+			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
+			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
 		}
 		// echo "<pre>";print_r($data);
 		return $data;
@@ -144,24 +157,20 @@ class Summaries_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		$this->db->close();
 		$sitessending = $this->db->query($sql2)->result_array();
-		// echo "<pre>";print_r($result);die();
+		// echo "<pre>";print_r($sitessending);
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
 
 		$data['vl_outcomes']['name'] = 'Tests';
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = 'Undetected';
-		$data['vl_outcomes']['data'][1]['name'] = 'less1000';
-		$data['vl_outcomes']['data'][2]['name'] = 'less5000';
-		$data['vl_outcomes']['data'][3]['name'] = 'above5000';
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
 
 		$count = 0;
 
 		$data['vl_outcomes']['data'][0]['y'] = $count;
 		$data['vl_outcomes']['data'][1]['y'] = $count;
-		$data['vl_outcomes']['data'][2]['y'] = $count;
-		$data['vl_outcomes']['data'][3]['y'] = $count;
 
 		foreach ($result as $key => $value) {
 			$data['ul'] .= '<li>Total Tests: '.$value['alltests'].'</li>';
@@ -170,18 +179,14 @@ class Summaries_model extends MY_Model
 			$data['ul'] .= '<li>Confirmed Tx Failure: '.$value['confirmtx'].'</li>';
 			$data['ul'] .= '<li>Rejected: '.$value['rejected'].'</li>';
 						
-			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected'];
-			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less1000'];
-			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000'];
-			$data['vl_outcomes']['data'][3]['y'] = (int) $value['above5000'];
+			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
+			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less5000']+(int) $value['above5000'];
 
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
-			$data['vl_outcomes']['data'][1]['color'] = '#5C97BF';
-			$data['vl_outcomes']['data'][2]['color'] = '#6BB9F0';
-			$data['vl_outcomes']['data'][3]['color'] = '#F2784B';
+			$data['vl_outcomes']['data'][1]['color'] = '#F2784B';
 		}
 
-		$count = 1;
+		$count = 0;
 		$sites = 0;
 		foreach ($sitessending as $key => $value) {
 			if ((int) $value['sitessending'] != 0) {
@@ -189,12 +194,13 @@ class Summaries_model extends MY_Model
 				$count++;
 			}
 		}
+		// echo "<pre>";print_r($sites);echo "<pre>";print_r($count);echo "<pre>";print_r(round(@$sites / $count));die();
 		$data['ul'] .= '<li>Sites Sending: '.round(@$sites / $count).'</li>';
 		$count = 1;
 		$sites = 0;
 
-		$data['vl_outcomes']['data'][3]['sliced'] = true;
-		$data['vl_outcomes']['data'][3]['selected'] = true;
+		$data['vl_outcomes']['data'][0]['sliced'] = true;
+		$data['vl_outcomes']['data'][0]['selected'] = true;
 		
 		return $data;
 	}
@@ -285,66 +291,69 @@ class Summaries_model extends MY_Model
 		}
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-		// echo "<pre>";print_r($result);die();
-		// $data['age']['name'] = 'Tests';
-		// $data['age']['colorByPoint'] = true;
 
 		$count = 0;
-		$adults = 0;
-		$children = 0;
-		$asustx = 0;
-		$csustx = 0;
-		$data['ul'] = '';
-
-		foreach ($result as $key => $value) {
-			if ($value['name'] == '15-19' || $value['name'] == '20-24' || $value['name'] == '25+') {
-				$adults = (int) $adults + (int) $value['agegroups'];
-				$asustx = (int) $asustx + (int) $value['sustxfail'];
-			} else {
-				$children = (int) $children + (int) $value['agegroups'];
-				$csustx = (int) $csustx + (int) $value['sustxfail'];
-			}
-		}
-
-		$data['ul'] .= '<li><strong>Adults Suppresed: '.(int) ((($adults-$asustx)/$adults)*100).'%</strong></li>';
-		$data['ul'] .= '<li><strong>Children Suppresed: '.(int) ((($children-$csustx)/$children)*100).'%</strong></li>';
-
-		$data['ageGnd'][0]['y'] = $adults;
-		$data['ageGnd'][0]['color'] = '#86E2D5';
-		$data['ageGnd'][0]['drilldown']['name'] = 'Adults';
-		$data['ageGnd'][1]['y'] = $children;
-		$data['ageGnd'][1]['color'] = '#E26A6A';
-		$data['ageGnd'][1]['drilldown']['name'] = 'Children';
+		$loop = 0;
+		$name = '';
+		$nonsuppressed = 0;
+		$suppressed = 0;
 		
+		// echo "<pre>";print_r($result);die();
+		$data['ageGnd'][0]['name'] = 'Not Suppresed';
+		$data['ageGnd'][1]['name'] = 'Suppresed';
+
+		$count = 0;
+		
+		$data["ageGnd"][0]["data"][0]	= $count;
+		$data["ageGnd"][1]["data"][0]	= $count;
+		$data['categories'][0]			= 'No Data';
+
 		foreach ($result as $key => $value) {
-			if ($value['name'] == '15-19' || $value['name'] == '20-24' || $value['name'] == '25+') {
-				$data['ageGnd'][0]['drilldown']['categories'][$key] = $value['name'];
-				$data['ageGnd'][0]['drilldown']['data'][$key] = (int) $value['agegroups'];
-			} else {
-				$data['ageGnd'][1]['drilldown']['categories'][$key] = $value['name'];
-				$data['ageGnd'][1]['drilldown']['data'][$key] = (int) $value['agegroups'];
+			if ($value['name']=='Less 2') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='2-9') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='10-14') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='15-19') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='20-24') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='25+') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
 			}
-
-			// $data['age']['data'][$key]['y'] = $count;
-
-			// if ($value['name']=='0')
-			// 	$data['age']['data'][$key]['name'] = 'No Data';
-			// else
-			// 	$data['age']['data'][$key]['name'] = $value['name'];
-
-			// $data['age']['data'][$key]['y'] = (int) $value['agegroups'];
+			
+			$data['categories'][$loop] 			= $name;
+			$data["ageGnd"][0]["data"][$loop]	=  (int) $nonsuppressed;
+			$data["ageGnd"][1]["data"][$loop]	=  (int) $suppressed;
 		}
+		// die();
 		$data['ageGnd'][0]['drilldown']['color'] = '#913D88';
 		$data['ageGnd'][1]['drilldown']['color'] = '#96281B';
 
-		$data['ageGnd'][0]['drilldown']['categories'] = array_values($data['ageGnd'][0]['drilldown']['categories']);
-		$data['ageGnd'][1]['drilldown']['categories'] = array_values($data['ageGnd'][1]['drilldown']['categories']);
-		$data['ageGnd'][0]['drilldown']['data'] = array_values($data['ageGnd'][0]['drilldown']['data']);
-		$data['ageGnd'][1]['drilldown']['data'] = array_values($data['ageGnd'][1]['drilldown']['data']);
 		// echo "<pre>";print_r($data);die();
-		// $data['age']['data'][0]['sliced'] = true;
-		// $data['age']['data'][0]['selected'] = true;
-		// echo "<pre>";print_r($data);
+		$data['categories'] = array_values($data['categories']);
+		$data["ageGnd"][0]["data"] = array_values($data["ageGnd"][0]["data"]);
+		$data["ageGnd"][1]["data"] = array_values($data["ageGnd"][1]["data"]);
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
@@ -380,41 +389,54 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
+
 		$data['children']['name'] = 'Tests';
 		$data['children']['colorByPoint'] = true;
 
 		$data['adults']['name'] = 'Tests';
 		$data['adults']['colorByPoint'] = true;
 		$adults = 0;
+		$sadult = 0;
 		$children = 0;
+		$schildren = 0;
 		$count = 0;
 
 		foreach ($result as $key => $value) {
 			
-			if ($value['name']=='<2' || $value['name']=='2-9' || $value['name']=='10-14') {
-				$data['ctotal'] = (int) $children + (int) $value['agegroups'];
+			if ($value['name']=='Less 2' || $value['name']=='2-9' || $value['name']=='10-14') {
+				$data['ul']['children'] = '';
+				$children = (int) $children + (int) $value['agegroups'];
+				$schildren = (int) $schildren + (int) $value['suppressed'];
 				$data['children']['data'][$key]['y'] = $count;
 				$data['children']['data'][$key]['name'] = $value['name'];
 				$data['children']['data'][$key]['y'] = (int) $value['agegroups'];
 
-			} else {
-				$data['atotal'] = (int) $adults + (int) $value['agegroups'];
+			} else if ($value['name']=='15-19' || $value['name']=='20-24' || $value['name']=='25+') {
+				$data['ul']['adults'] = '';
+				$adults = (int) $adults + (int) $value['agegroups'];
+				$sadult = (int) $sadult + (int) $value['suppressed'];
 				$data['adults']['data'][$key]['y'] = $count;
 				$data['adults']['data'][$key]['name'] = $value['name'];
 				$data['adults']['data'][$key]['y'] = (int) $value['agegroups'];
 			}
-			
-			
 		}
+		// echo "<pre>";print_r($schildren);echo "</pre>";
+		// echo "<pre>";print_r($data);
+		$data['ctotal'] = $children;
+		$data['atotal'] = $adults;
+		
+		$data['ul']['children'] = '<li>Children Suppression : '.(int)(((int) $schildren/(int) $children)*100).'%</li>';
+		$data['ul']['adults'] = '<li>Adult Suppression : '.(int)(((int) $sadult/(int) $adults)*100).'%</li>';
+		$data['children']['data'] = array_values($data['children']['data']);
+		$data['adults']['data'] = array_values($data['adults']['data']);
 
 		$data['children']['data'][0]['sliced'] = true;
 		$data['children']['data'][0]['selected'] = true;
 
-		$data['adults']['data'][1]['sliced'] = true;
-		$data['adults']['data'][1]['selected'] = true;
-		
-		$data['children']['data'] = array_values($data['children']['data']);
-		$data['adults']['data'] = array_values($data['adults']['data']);
+		$data['adults']['data'][0]['sliced'] = true;
+		$data['adults']['data'][0]['selected'] = true;
+
+		// echo "<pre>";print_r($data);die();
 		
 		return $data;
 	}
@@ -447,31 +469,48 @@ class Summaries_model extends MY_Model
 		}
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-		$data['ul'] = '';
-				
-		$data['gender']['name'] = 'Tests';
-		$data['gender']['colorByPoint'] = true;
+		
+		$data['gender'][0]['name'] = 'Not Suppresed';
+		$data['gender'][1]['name'] = 'Suppresed';
 
 		$count = 0;
-		// echo "<pre>";print_r($result);die();
+		
+		$data["gender"][0]["data"][0]	= $count;
+		$data["gender"][1]["data"][0]	= $count;
+		$data['categories'][0]			= 'No Data';
+
 		foreach ($result as $key => $value) {
-
-			$data['gender']['data'][$key]['y'] = $count;
-
-			if ($value['name']=='F'){
-				$data['gender']['data'][$key]['name'] = 'Female';
-				$data['ul'] .= '<li><strong>Female Suppresed: '.(int) ((((int) $value['gender']-(int) $value['sustxfail'])/(int) $value['gender'])*100).'%</strong></li>';
-			}
-			else {
-				$data['gender']['data'][$key]['name'] = 'Male';
-				$data['ul'] .= '<li><strong>Male Suppresed: '.(int) ((((int) $value['gender']-(int) $value['sustxfail'])/(int) $value['gender'])*100).'%</strong></li>';
-			}
-
-			$data['gender']['data'][$key]['y'] = (int) $value['gender'];
+			$data['categories'][$key] 			= $value['name'];
+			$data["gender"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
+			$data["gender"][1]["data"][$key]	=  (int) $value['suppressed'];
 		}
 
-		$data['gender']['data'][0]['sliced'] = true;
-		$data['gender']['data'][0]['selected'] = true;
+		$data['gender'][0]['drilldown']['color'] = '#913D88';
+		$data['gender'][1]['drilldown']['color'] = '#96281B';
+				
+		// $data['gender']['name'] = 'Tests';
+		// $data['gender']['colorByPoint'] = true;
+
+		// $count = 0;
+		// // echo "<pre>";print_r($result);die();
+		// foreach ($result as $key => $value) {
+
+		// 	$data['gender']['data'][$key]['y'] = $count;
+
+		// 	if ($value['name']=='F'){
+		// 		$data['gender']['data'][$key]['name'] = 'Female';
+		// 		$data['ul'] .= '<li>Female Suppresed: '.(int) ((((int) $value['gender']-(int) $value['sustxfail'])/(int) $value['gender'])*100).'%</li>';
+		// 	}
+		// 	else {
+		// 		$data['gender']['data'][$key]['name'] = 'Male';
+		// 		$data['ul'] .= '<li>Male Suppresed: '.(int) ((((int) $value['gender']-(int) $value['sustxfail'])/(int) $value['gender'])*100).'%</li>';
+		// 	}
+
+		// 	$data['gender']['data'][$key]['y'] = (int) $value['gender'];
+		// }
+
+		// $data['gender']['data'][0]['sliced'] = true;
+		// $data['gender']['data'][0]['selected'] = true;
 		
 		return $data;
 	}

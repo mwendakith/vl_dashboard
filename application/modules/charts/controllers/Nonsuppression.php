@@ -61,6 +61,13 @@ class Nonsuppression extends MY_Controller
 		$this->load->view('county_listings',$data);
 	}
 
+	function site_listings($year=NULL,$month=NULL,$partner=NULL)
+	{
+		$data['facilities'] = $this->nonsuppression_model->facility_listing($year,$month);
+
+		$this->load->view('site_listings',$data);
+	}
+
 	function regimen_listings($year=NULL,$month=NULL,$county=NULL)
 	{
 		$data['regimens'] = $this->nonsuppression_model->regimen_listing($year,$month,$county);

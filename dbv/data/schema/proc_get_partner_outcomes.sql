@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_partner_outcomes`
 BEGIN
   SET @QUERY =    "SELECT
                     `p`.`name`,
-                    SUM((`vps`.`Undetected`+`vps`.`less1000`)) AS `detectableNless1000`,
-                    SUM((`vps`.`less5000`+`vps`.`above5000`)) AS `sustxfl`
+                    SUM((`vps`.`Undetected`+`vps`.`less1000`)) AS `suppressed`,
+                    SUM((`vps`.`less5000`+`vps`.`above5000`)) AS `nonsuppressed`
                 FROM `vl_partner_summary` `vps`
                     JOIN `partners` `p` ON `vps`.`partner` = `p`.`ID`
                 WHERE 1";
@@ -17,7 +17,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vps`.`partner` ORDER BY `detectableNless1000` DESC ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vps`.`partner` ORDER BY `suppressed` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

@@ -45,9 +45,9 @@
 	}
 
 </style>
-<!-- <div id="notification" style="margin-bottom: 1em;">
-  	
-</div> -->
+<div id="notification" style="margin-bottom: 1em;background-color:#E4F1FE;">
+  	Not Suppressed: XXXX
+</div>
 <div class="row">
 	<div class="col-md-7">
 		<!-- Begining of the age gender suppresion failures -->

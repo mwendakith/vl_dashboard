@@ -11,7 +11,8 @@ class Partner extends MY_Controller
 	function __construct()
 	{
 		parent:: __construct();
-		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom')));
+		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom','tablecloth')));
+		$this->session->set_userdata('county_filter', NULL);
 		$this->data['part'] = TRUE;
 	}
 
@@ -36,6 +37,7 @@ class Partner extends MY_Controller
 		$this->load->module('charts/sites');
 
 		$this->data['content_view'] = 'partner/partner_sites_view';
+		// echo "<pre>";print_r($this->data);die();
 		$this -> template($this->data);
 	}
 

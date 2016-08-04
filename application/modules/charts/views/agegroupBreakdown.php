@@ -1,9 +1,19 @@
 <div class="row">
 	<div class="col-md-6">
 		<div id="ageGroupsbreakdownChildren_pie"></div>
+		<div>
+			<ul>
+				<?php echo $outcomes['ul']['children'];?>
+			</ul>
+		</div>
 	</div>
 	<div class="col-md-6">
 		<div id="ageGroupsbreakdownAdults_pie"></div>
+		<div>
+			<ul>
+				<?php echo $outcomes['ul']['adults'];?>
+			</ul>
+		</div>
 	</div>
 </div>
 

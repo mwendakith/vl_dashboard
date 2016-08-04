@@ -1,97 +1,65 @@
-<div id="ageGroups_pie">
+<div id="ageGroups_pie" style="height:450px;">
 	
-</div>
-<div>
-    <ul>
-        <?php echo $outcomes['ul'];?>
-    </ul>
 </div>
 <script type="text/javascript">
 	$(function () {
-    console.log(Highcharts.getOptions());
-    var colors = Highcharts.getOptions().colors,
-        categories = ['Adults', 'Children'],
-        data = <?php echo json_encode($outcomes['ageGnd'])?>,
-        agecategories = [],
-        agegroups = [],
-        i,
-        j,
-        dataLen = data.length,
-        drillDataLen,
-        brightness;
-
-
-    // Build the data arrays
-    for (i = 0; i < dataLen; i += 1) {
-
-        // add agecategories data
-        agecategories.push({
-            name: categories[i],
-            y: data[i].y,
-            color: data[i].color
-        });
-
-        // add agegroups data
-        drillDataLen = data[i].drilldown.data.length;
-        for (j = 0; j < drillDataLen; j += 1) {
-            brightness = 0.2 - (j / drillDataLen) / 5;
-            agegroups.push({
-                name: data[i].drilldown.categories[j],
-                y: data[i].drilldown.data[j],
-                color: Highcharts.Color(data[i].color).brighten(brightness).get()
+                $('#ageGroups_pie').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: <?php echo json_encode($outcomes['categories']);?>,
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Tests'
+                        },
+                        stackLabels: {
+                            rotation: -75,
+                            enabled: true,
+                            style: {
+                                fontWeight: 'bold',
+                                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                            },
+                            y:-20
+                        }
+                    },
+                    legend: {
+                        align: 'right',
+                        x: -30,
+                        verticalAlign: 'bottom',
+                        y: 25,
+                        floating: true,
+                        backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+                        borderColor: '#CCC',
+                        borderWidth: 1,
+                        shadow: true
+                    },
+                    tooltip: {
+                        headerFormat: '<b>{point.x}</b><br/>',
+                        pointFormat: '{series.name}: {point.y}<br/>% contribution: {point.percentage:.1f}%'
+                    },
+                    plotOptions: {
+                        column: {
+                            stacking: 'normal',
+                            dataLabels: {
+                                enabled: false,
+                                color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                                style: {
+                                    textShadow: '0 0 3px black'
+                                }
+                            }
+                        }
+                    },colors: [
+                        '#F2784B',
+                        '#1BA39C'
+                    ],
+                    series: <?php echo json_encode($outcomes['ageGnd']);?>
+                });
             });
-        }
-    }
-
-    // Create the chart
-    $('#ageGroups_pie').highcharts({
-        chart: {
-            type: 'pie'
-        },
-        title: {
-            text: ''
-        },
-        subtitle: {
-            text: ''
-        },
-        yAxis: {
-            title: {
-                text: ''
-            }
-        },
-        plotOptions: {
-            pie: {
-                shadow: false,
-                center: ['50%', '50%']
-            }
-        },
-        tooltip: {
-            valueSuffix: null,
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        series: [{
-            name: 'Age Categories',
-            data: agecategories,
-            size: '60%',
-            dataLabels: {
-                formatter: function () {
-                    return this.y > 5 ? this.point.name : null;
-                },
-                color: '#ffffff',
-                distance: -30
-            }
-        }, {
-            name: 'Age Group',
-            data: agegroups,
-            size: '80%',
-            innerSize: '60%',
-            dataLabels: {
-                formatter: function () {
-                    // display only if larger than 1
-                    return this.y > 1 ? '<b>' + this.point.name + ':</b> ' + this.y + '' : null;
-                }
-            }
-        }]
-    });
-});
 </script>

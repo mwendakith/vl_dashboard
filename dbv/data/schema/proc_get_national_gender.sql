@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_national_gender`
 BEGIN
   SET @QUERY =    "SELECT
                     `g`.`name`,
-                    SUM(`vng`.`tests`) AS `gender`, 
-                    SUM(`vng`.`sustxfail`) AS `sustxfail`
+                    SUM(`vng`.`undetected`+`vng`.`less1000`) AS `suppressed`,
+                    SUM(`vng`.`less5000`+`vng`.`above5000`) AS `nonsuppressed`
                 FROM `vl_national_gender` `vng`
                 JOIN `gender` `g`
                     ON `vng`.`gender` = `g`.`ID`

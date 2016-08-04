@@ -16,9 +16,9 @@ class Summaries extends MY_Controller {
 		$this->load->view('turnaroundtime_view',$data);
 	}
 	
-	function county_outcomes($year=NULL,$month=NULL,$partner=NULL)
+	function county_outcomes($year=NULL,$month=NULL,$pfil=NULL,$partner=NULL,$county=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->county_outcomes($year,$month,$partner);
+		$data['outcomes'] = $this->summaries_model->county_outcomes($year,$month,$pfil,$partner,$county);
 
     	$this->load->view('county_outcomes_view',$data);
 	}
