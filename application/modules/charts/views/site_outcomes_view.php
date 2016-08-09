@@ -30,6 +30,7 @@
 			            }
 			        },
 			        legend: {
+			        	rotation: -45,
 			            align: 'right',
 			            x: -30,
 			            verticalAlign: 'top',

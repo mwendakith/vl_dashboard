@@ -99,9 +99,9 @@ class Summaries_model extends MY_Model
 				$sql = "CALL `proc_get_county_outcomes`('".$year."','".$month."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);echo "</pre>";
 		$result = $this->db->query($sql)->result_array();
-		
+		// echo "<pre>";print_r($result);die();
 		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
 		$data['county_outcomes'][1]['name'] = 'Suppresed';
 
@@ -257,6 +257,69 @@ class Summaries_model extends MY_Model
 		$data['justification']['data'][0]['sliced'] = true;
 		$data['justification']['data'][0]['selected'] = true;
 
+		return $data;
+	}
+
+	function justification_breakdown($year=null,$month=null,$county=null,$partner=null)
+	{
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
+		}
+		if (!$partner) {
+			$partner = $this->session->userdata('partner_filter');
+		}
+
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			$month = $this->session->userdata('filter_month');
+		}
+
+		if ($partner) {
+			$sql = "CALL `proc_get_partner_justification_breakdown`('6','".$partner."','".$year."','".$month."')";
+			$sql2 = "CALL `proc_get_partner_justification_breakdown`('9','".$partner."','".$year."','".$month."')";
+		} else {
+			if ($county==null || $county=='null') {
+				$sql = "CALL `proc_get_national_justification_breakdown`('6','".$year."','".$month."')";
+				$sql2 = "CALL `proc_get_national_justification_breakdown`('9','".$year."','".$month."')";
+			} else {
+				$sql = "CALL `proc_get_regional_justification_breakdown`('6','".$county."','".$year."','".$month."')";
+				$sql2 = "CALL `proc_get_regional_justification_breakdown`('9','".$county."','".$year."','".$month."')";
+			}
+		}
+		// echo "<pre>";print_r($sql);
+		// echo "<pre>";print_r($sql2);die();
+		
+		$preg_mo = $this->db->query($sql)->result_array();
+		$this->db->close();
+		$lac_mo = $this->db->query($sql2)->result_array();
+		// echo "<pre>";print_r($preg_mo);echo "</pre>";
+		// echo "<pre>";print_r($lac_mo);die();
+		$data['just_breakdown'][0]['name'] = 'Not Suppresed';
+		$data['just_breakdown'][1]['name'] = 'Suppresed';
+
+		$count = 0;
+		
+		$data["just_breakdown"][0]["data"][0]	= $count;
+		$data["just_breakdown"][1]["data"][0]	= $count;
+		$data['categories'][0]			= 'No Data';
+
+		foreach ($preg_mo as $key => $value) {
+			$data['categories'][0] 			= 'Pregnant Mothers';
+			$data["just_breakdown"][0]["data"][0]	=  (int) $value['less5000'] + (int) $value['above5000'];
+			$data["just_breakdown"][1]["data"][0]	=  (int) $value['Undetected'] + (int) $value['less1000'];
+		}
+
+		foreach ($lac_mo as $key => $value) {
+			$data['categories'][1] 			= 'Lactating Mothers';
+			$data["just_breakdown"][0]["data"][1]	=  (int) $value['less5000'] + (int) $value['above5000'];
+			$data["just_breakdown"][1]["data"][1]	=  (int) $value['Undetected'] + (int) $value['less1000'];
+		}
+
+		$data['just_breakdown'][0]['drilldown']['color'] = '#913D88';
+		$data['just_breakdown'][1]['drilldown']['color'] = '#96281B';
+				
 		return $data;
 	}
 
@@ -469,7 +532,7 @@ class Summaries_model extends MY_Model
 		}
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-		
+		// echo "<pre>";print_r($result);die();
 		$data['gender'][0]['name'] = 'Not Suppresed';
 		$data['gender'][1]['name'] = 'Suppresed';
 

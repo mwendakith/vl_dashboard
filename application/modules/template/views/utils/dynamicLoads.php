@@ -23,6 +23,8 @@
 			echo "<".$cssTag." rel='stylesheet' href='".base_url()."assets/plugins/".$file."'".$cssTagType."></".$cssTag.">\n";
 		}
 	}
+	echo "<".$cssTag." rel='stylesheet' href='//cdn.datatables.net/1.10.12/css/jquery.dataTables.css'".$cssTagType."></".$cssTag.">\n";
+	
 	if(is_array($js_plugin_files)){
 		foreach($js_plugin_files as $file){
 			echo "<".$jsTag." src='".base_url()."assets/plugins/".$file."'".$jsTagType."></".$jsTag.">\n";
@@ -34,4 +36,5 @@
 		}
 
 	}
+	echo "<".$jsTag." src='//cdn.datatables.net/1.10.12/js/jquery.dataTables.js'".$jsTagType."></".$jsTag.">\n";
 	

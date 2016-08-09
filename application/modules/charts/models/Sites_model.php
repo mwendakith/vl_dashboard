@@ -265,7 +265,7 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['ageGnd']['name'] = 'Not Suppresed';
+		$data['ageGnd']['name'] = 'Tests';
 		
 		$count = 0;
 		$categories = array('less2','less9','less14','less19','less24','over25');
@@ -289,7 +289,7 @@ class Sites_model extends MY_Model
 				$data["ageGnd"]["data"][5]	=  (int) $value['over25'];
 			}
 		}
-		$data['ageGnd']['drilldown']['color'] = '#96281B';
+		$data["ageGnd"]["color"] =  '#1BA39C';
 
 		return $data;
 	}
@@ -311,9 +311,25 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		foreach ($result as $key => $value) {
-			# code...
+		$data['Gnd']['name'] = 'Tests';
+		
+		$count = 0;
+		$categories = array('Male','Female');
+		
+		$data["Gnd"]["data"][0]	=  NULL;
+		$data["Gnd"]["data"][1]	=  NULL;
+		$data['categories'][0]		= 'No Data';
+
+		if ($result) {
+			foreach ($result as $key => $value) {
+				$data['categories']			= 	$categories;
+				$data["Gnd"]["data"][0]	=  (int) $value['male'];
+				$data["Gnd"]["data"][1]	=  (int) $value['female'];
+			}
 		}
+		$data["Gnd"]["color"] =  '#1BA39C';
+
+		return $data;
 	}
 }
 ?>

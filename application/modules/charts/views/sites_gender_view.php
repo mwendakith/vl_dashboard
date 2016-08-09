@@ -14,10 +14,7 @@
                 text: null
             },
             xAxis: {
-                categories: [
-                    'Male',
-                    'Female'
-                ],
+                categories: <?php echo json_encode($outcomes['categories']);?>,
                 crosshair: true
             },
             yAxis: {
@@ -29,7 +26,7 @@
             tooltip: {
                 headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                 pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                    '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+                    '<td style="padding:0"><b>{point.y:.1f} </b></td></tr>',
                 footerFormat: '</table>',
                 shared: true,
                 useHTML: true
@@ -41,11 +38,7 @@
                 }
             },
             // color: ['#1BA39C'],
-            series: [{
-                name: 'Tokyo',
-                data: [49.9, 71.5],
-                color: '#1BA39C'
-            }]
+            series: [<?php echo json_encode($outcomes['Gnd']);?>]
         });
     });
 </script>

@@ -4,8 +4,6 @@ CREATE PROCEDURE `proc_get_sites_gender`
 (IN S_id INT(11), IN filter_year INT(11), IN filter_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT  
-                      `month`, 
-                      `year`, `facility`, 
                       SUM(`maletest`) AS `male`, 
                       SUM(`femaletest`) AS `female` 
                 FROM `vl_site_summary` `vss`

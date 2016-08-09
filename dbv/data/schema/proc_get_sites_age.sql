@@ -4,9 +4,6 @@ CREATE PROCEDURE `proc_get_sites_age`
 (IN S_id INT(11), IN filter_year INT(11), IN filter_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT  
-                      `month`, 
-                      `year`, 
-                      `facility`, 
                       SUM(`less2`) AS `less2`, 
                       SUM(`less9`) AS `less9`, 
                       SUM(`less14`) AS `less14`, 
