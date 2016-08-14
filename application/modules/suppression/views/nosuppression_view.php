@@ -45,9 +45,9 @@
 	}
 
 </style>
-<!-- <div id="notification" style="margin-bottom: 1em;">
-  	
-</div> -->
+<div id="notification" style="margin-bottom: 1em;background-color:#E4F1FE;">
+  	Not Suppressed: XXXX
+</div>
 <div class="row">
 	<div class="col-md-7">
 		<!-- Begining of the age gender suppresion failures -->
@@ -127,6 +127,10 @@
 				    Loading...
 				  </div>
 				</div>
+				
+			</div>
+
+			<div class="col-md-6">
 				<div class="panel panel-default">
 				  <div class="panel-heading">
 				  	Patners <div class="display_date"></div>
@@ -135,41 +139,7 @@
 				    <div>Loading...</div>
 				  </div>
 				</div>
-				
-			</div>
-
-			<div class="col-md-6">
-				<div class="panel panel-default">
-				  <div class="panel-heading">
-				  	Facility <div class="display_date"></div>
-				  </div>
-				  <div class="panel-body">
-				    <div class="list-group">
-		  				<a href="#" class="list-group-item">Mbale Health Centre (Taita Taveta)</a>
-						<a href="#" class="list-group-item">10 Engineer VCT</a>
-						<a href="#" class="list-group-item">3KR Health Centre</a>
-						<a href="#" class="list-group-item">78 Tank Dispensary</a>
-						<a href="#" class="list-group-item">8th Street Clinic</a>
-						<a href="#" class="list-group-item">AAR City Centre Clinic</a>
-						<a href="#" class="list-group-item">AAR Clinic Sarit Centre</a>
-						<a href="#" class="list-group-item">AAR Kariobangi Clinic</a>
-						<a href="#" class="list-group-item">AAR MEDICAL CLINIC KISUMU </a>
-						<a href="#" class="list-group-item">AAR Medical Services (Kilindini)</a>
-						<a href="#" class="list-group-item">AAR Nakuru Clinic </a>
-						<a href="#" class="list-group-item">AAR Nyali Health Care</a>
-						<a href="#" class="list-group-item">AAR Thika Road Clinic</a>
-						<a href="#" class="list-group-item">Abakore Dispensary</a>
-						<a href="#" class="list-group-item">Abandoned Child Care </a>
-						<a href="#" class="list-group-item">Abel Migwi Johana Laboratory</a>
-						<a href="#" class="list-group-item">Aberdare  Medical & Surgical Clinic</a>
-						<!-- <a href="#" class="list-group-item">Aberdare Health Services</a>
-						<a href="#" class="list-group-item">Abidha Health Centre</a>
-						<a href="#" class="list-group-item">Able Medical Clinic</a> -->
-					</div>
-				  </div>
-				</div>
-
-				
+		
 			</div>
 		</div>
 		<!-- Begining of Regimen -->

@@ -4,6 +4,7 @@ CREATE PROCEDURE `proc_get_regional_sustxfail_notification`
 (IN C_id INT(11), IN filter_year INT(11), IN filter_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
+                        SUM(`sustxfail`) AS `sustxfail`, 
                         ((SUM(`sustxfail`)/SUM(`alltests`))*100) AS `sustxfail_rate` 
                     FROM `vl_county_summary`
                 WHERE 1";

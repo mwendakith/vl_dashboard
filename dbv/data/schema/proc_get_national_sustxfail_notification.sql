@@ -3,7 +3,8 @@ DELIMITER //
 CREATE PROCEDURE `proc_get_national_sustxfail_notification`
 (IN filter_year INT(11), IN filter_month INT(11))
 BEGIN
-  SET @QUERY =    "SELECT 
+  SET @QUERY =    "SELECT
+                        SUM(`sustxfail`) AS `sustxfail`, 
                         ((SUM(`sustxfail`)/SUM(`alltests`))*100) AS `sustxfail_rate` 
                     FROM `vl_national_summary`
                 WHERE 1";

@@ -76,14 +76,21 @@ $config['plugin_js_files']	=	array(
 									array('title'=> 'ripples',		'file'	=>	'bootstrap/js/ripples.min.js'),
 									array('title'=> 'highstock',	'file'	=>	'highstock/js/highstock.js'),
 									array('title'=> 'highmaps',		'file'	=>	'highmaps/js/modules/map.js'),
-									array('title'=> 'highcharts',	'file'	=>	'Highcharts/js/modules/exporting.js'),
 									array('title'=> 'highmaps',		'file'	=>	'highmaps/js/modules/mapdata/countries/ke/ke-all.js'),
+									array('title' => 'Kenya', 		'file' => 'highmaps/kenya.js'
+										),
+									array('title'=> 'tablecloth',		'file'	=>	'tablecloth/js/jquery.metadata.js'),
+									array('title'=> 'tablecloth',		'file'	=>	'tablecloth/js/jquery.tablesorter.min.js'),
+									array('title'=> 'tablecloth',		'file'	=>	'tablecloth/js/jquery.tablecloth.js')
 								);	
 $config['plugin_css_files']	=	array(
 									array('title'=> 'bootstrap'	,	'file'	=>	'bootstrap/css/bootstrap.min.css'),
 									array('title'=> 'material'	,	'file'	=>	'bootstrap/css/bootstrap-material-design.min.css'),
 									array('title'=> 'ripples',		'file'	=>	'bootstrap/css/ripples.min.css'),
 									array('title'=> 'bootstrap',	'file'	=>	'bootstrap/css/bootstrap-theme.min.css'),
+									array('title'=> 'bootstrap',	'file'	=>	'bootstrap/css/bootstrap-responsive.css'),
+									array('title'=> 'tablecloth',	'file'	=>	'tablecloth/css/tablecloth.css'),
+									array('title'=> 'tablecloth',	'file'	=>	'tablecloth/css/prettify.css')
 								);
 $config['plugin_php_files']	=	array(
 									// array('title'	=> 	'phpexcel'		,			'file'	=>	'PHPExcel/PHPExcel.php'),

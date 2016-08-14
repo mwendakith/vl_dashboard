@@ -7,25 +7,7 @@
 		width: 130px;
 		display: inline;
 	}
-	.title-name {
-		color: blue;
-	}
-	.key {
-		font-size: 11px;
-		margin-top: 0.5em;
-	}
-	.cr {
-		background-color: #F64747;
-	}
-	.rp {
-		background-color: #F9BF3B;
-	}
-	.pd {
-		background-color: #26C281;
-	}
-	.cd {
-		
-	}
+	
 </style>
 <div class="row">
 	<!-- Map of the country -->
@@ -76,17 +58,7 @@
 		  <div class="panel-body" id="ttime">
 		    <div>Loading...</div>
 		  </div>
-		  <div class="title-name">Key</div>
-			<div class="row">
-				<div class="col-md-6">
-					<div class="key cr"><center>Collection Receipt (C-R)</center></div>
-					<div class="key rp"><center>Receipt to Processing (R-P)</center></div>
-				</div>
-				<div class="col-md-6">
-					<div class="key pd"><center>Processing Dispatch (P-D)</center></div>
-					<div class="key cd"><center>Collection Dispatch (C-D)</center></div>
-				</div>
-			</div>
+		  
 		</div>
 	</div>
 </div>

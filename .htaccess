@@ -2,7 +2,7 @@ AddType text/cache-manifest .appcache
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  #RewriteBase /dashboard
+  #RewriteBase /vl_dashboard
 
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^ index.php [QSA,L]

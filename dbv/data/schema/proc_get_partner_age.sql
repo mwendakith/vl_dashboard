@@ -4,8 +4,10 @@ CREATE PROCEDURE `proc_get_partner_age`
 (IN P_id INT(11), IN filter_year INT(11), IN filter_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-                    `ac`.`name`,
-                    SUM((`vca`.`tests`)) AS `agegroups`
+                    `ac`.`name`, 
+                    SUM(`vca`.`tests`) AS `agegroups`,
+                    SUM(`vca`.`undetected`+`vca`.`less1000`) AS `suppressed`,
+                    SUM(`vca`.`less5000`+`vca`.`above5000`) AS `nonsuppressed`
                 FROM `vl_partner_age` `vca`
                 JOIN `agecategory` `ac`
                     ON `vca`.`age` = `ac`.`ID`
@@ -17,7 +19,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `vca`.`partner` = '",P_id,"' AND `vca`.`year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`name` ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`ID` ORDER BY `ac`.`ID` ASC ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

@@ -41,7 +41,7 @@
                 point.graphic.hide();
 
                 if (!markLine) {
-                    var path = inverted ? ['M', 0, 0, 'L', -5, -5, 'L', 5, -5, 'L', 0, 0, 'L', 0, 0 + xAxis.len] : ['M', 0, 0, 'L', -5, -5, 'L', -5, 5,'L', 0, 0, 'L', xAxis.len, 0];
+                    var path = inverted ? ['M', 0, 0, 'L', -3, -3, 'L', 3, -3, 'L', 0, 0, 'L', 0, 0 + xAxis.len] : ['M', 0, 0, 'L', -3, -3, 'L', -3, 3,'L', 0, 0, 'L', xAxis.len, 0];
                     markLine = this.markLine = chart.renderer.path(path)
                         .attr({
                             'fill': series.color,
@@ -74,15 +74,15 @@
         },
         yAxis: {
             min: 0,
-            max: <?php echo json_encode($outcomes['tat4']);?>,
+            max: <?php echo json_encode($outcomes['tat3']);?>,
             tickLength: 3,
             tickWidth: 1,
             tickColor: '#C0C0C0',
             gridLineColor: '#C0C0C0',
             gridLineWidth: 1,
-            minorTickInterval: 5,
+            minorTickInterval: 3,
             minorTickWidth: 1,
-            minorTickLength: 5,
+            minorTickLength: 3,
             minorGridLineWidth: 0,
 
             title: null,
@@ -114,7 +114,7 @@
             '#26C281'
         ],
         series: [{
-            data: [92],
+            data: [60],
             color: '#000000',
             dataLabels: {
                 enabled: true,

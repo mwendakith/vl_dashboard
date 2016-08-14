@@ -18,7 +18,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `vps`.`year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `p`.`name` ORDER BY `percentages` DESC  LIMIT 0, 5 ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `p`.`name` ORDER BY `percentages` DESC  LIMIT 0, 10 ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

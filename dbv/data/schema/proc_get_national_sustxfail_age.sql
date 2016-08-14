@@ -8,7 +8,7 @@ BEGIN
                         SUM(`vna`.`sustxfail`) AS `sustxfail` 
                     FROM `vl_national_age` `vna` 
                     JOIN `agecategory` `ac` 
-                        ON `vna`.`age` = `ac`.`ID`
+                        ON `vna`.`age` = `ac`.`subID`
                 WHERE 1";
 
     IF (filter_month != 0 && filter_month != '') THEN
