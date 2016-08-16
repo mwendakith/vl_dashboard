@@ -63,35 +63,37 @@ class Counties extends MY_Controller
 		$this->table->set_heading('Partner', 'Facility', 'Tests', 'Suppressed', 'Non Suppressed',
 		 'Rejected', 'Adults', 'Children');
 		$template = array(
-        'table_open'            => '<table  class="table table-bordered table-hover">',
+	        'table_open'            => '<table  class="table table-bordered table-hover">',
 
-        'thead_open'            => '<thead>',
-        'thead_close'           => '</thead>',
+	        'thead_open'            => '<thead>',
+	        'thead_close'           => '</thead>',
 
-        'heading_row_start'     => '<tr>',
-        'heading_row_end'       => '</tr>',
-        'heading_cell_start'    => '<th>',
-        'heading_cell_end'      => '</th>',
+	        'heading_row_start'     => '<tr>',
+	        'heading_row_end'       => '</tr>',
+	        'heading_cell_start'    => '<th>',
+	        'heading_cell_end'      => '</th>',
 
-        'tbody_open'            => '<tbody>',
-        'tbody_close'           => '</tbody>',
+	        'tbody_open'            => '<tbody>',
+	        'tbody_close'           => '</tbody>',
 
-        'row_start'             => '<tr>',
-        'row_end'               => '</tr>',
-        'cell_start'            => '<td>',
-        'cell_end'              => '</td>',
+	        'row_start'             => '<tr>',
+	        'row_end'               => '</tr>',
+	        'cell_start'            => '<td>',
+	        'cell_end'              => '</td>',
 
-        'row_alt_start'         => '<tr>',
-        'row_alt_end'           => '</tr>',
-        'cell_alt_start'        => '<td>',
-        'cell_alt_end'          => '</td>',
+	        'row_alt_start'         => '<tr>',
+	        'row_alt_end'           => '</tr>',
+	        'cell_alt_start'        => '<td>',
+	        'cell_alt_end'          => '</td>',
 
-        'table_close'           => '</table>'
-);
+	        'table_close'           => '</table>'
+		);
 
-$this->table->set_template($template);
-		echo $this->table->generate($data);
+	$this->table->set_template($template);
+	echo $this->table->generate($data);
+	
 	}
+
 
 	
 }

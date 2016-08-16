@@ -1,15 +1,19 @@
+<div class="col-md-12" id ="buttons">
+    
+        <button onclick="retrieve_map('Tests', 'counties_tests', '');">Tests</button>
+        <button onclick="retrieve_map('Suppressed', 'counties_suppressed', '%');">Suppressed</button>
+        <button  onclick="retrieve_map('Non Suppressed', 'counties_non_suppressed', '%');">Non Suppressed</button>
+        <button onclick="retrieve_map('Rejected', 'counties_rejects', '%');">Rejected</button>
+        <button onclick="retrieve_map('Pregnant Mothers', 'counties_pregnant', '');">Preganant mothers</button>
+        <button onclick="retrieve_map('Lactating Mothers', 'counties_lactating', '');">Lactating mothers</button>
+   
+</div>
 
 <div id="counties_map" style="height: 600px; " class="col-md-6">
 
 </div>
 
 <div id="table" class="col-md-6">
-    <button onclick="retrieve_map('Tests', 'counties_tests', '');">Tests</option>
-    <button onclick="retrieve_map('Suppressed', 'counties_suppressed', '%');">Suppressed</option>
-    <button onclick="retrieve_map('Non Suppressed', 'counties_non_suppressed', '%');">Non Suppressed</option>
-    <button onclick="retrieve_map('Rejected', 'counties_rejects', '%');">Rejected</option>
-    <button onclick="retrieve_map('Pregnant Mothers', 'counties_pregnant', '');">Preganant mothers</option>
-    <button onclick="retrieve_map('Lactating Mothers', 'counties_lactating', '');">Lactating mothers</option>
     
 
 </div>
@@ -24,22 +28,71 @@
 
 <script type="text/javascript">
 
-    var year = 2016;
-    var month = 0;
     function set_table(county_id, county_name){
         $("#county_details").empty().
         load("<?php echo base_url('charts/counties/county_details'); ?>/" + county_id);
 
-        $("#county_name").empty().append("<br /><br /><h1>" + county_name + "</h1>");
+        $("#county_name").empty().append("<br /><br /><h2>" + county_name + set_title() + "</h2>");
     }
+
+    function set_title(){
+
+        switch(
+            <?php 
+            if($this->session->userdata('filter_month'))
+                {echo $this->session->userdata('filter_month');
+            }else{ echo 0;} ?>
+            ){
+            case 1:
+                return ' Jan ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            case 2:
+                return ' Feb ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            case 3:
+                return ' Mar ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            case 4:
+                return ' Apr ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            case 5:
+                return ' May ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            case 6:
+                return ' Jun ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            case 7:
+                return ' Jul ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            case 8:
+                return ' Aug ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            case 9:
+                return ' Sep ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            case 10:
+                return ' Oct ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            case 11:
+                return ' Nov ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            case 12:
+                return ' Dec ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            default:
+                return ' ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                break;
+            
+        }
+    }
+
 
     // Uses the data to make the map
     function create_map(map_title, MapData, suffix){
         // Initiate the chart
         $('#counties_map').highcharts('Map', {
                 title: {
-                text: map_title + "<?php echo ' ' . $this->session->userdata('filter_month') . ' ' . 
-                $this->session->userdata('filter_year'); ?>"
+                text: map_title + set_title()
             },
              legend: {
                 enabled: true
@@ -77,9 +130,6 @@
                 enabled: true,
                 enableButtons: true
             },
-                      
-          
-          
        
         
         });
@@ -131,7 +181,6 @@
             }
             $(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 
-            alert(obj['month']);
             
         });
         
@@ -142,9 +191,11 @@
     // Creates the default map
     $(function () {
     
-        retrieve_map("Suppressed", "counties_suppressed", '%')
+        retrieve_map("Suppressed", "counties_suppressed", '%');
 
     });
+
+    
 
 </script>
 

@@ -18,9 +18,9 @@ class Counties_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 		
@@ -49,9 +49,9 @@ class Counties_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 		
@@ -83,9 +83,9 @@ class Counties_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 		
@@ -118,9 +118,9 @@ class Counties_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 		
@@ -184,9 +184,9 @@ class Counties_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 		
@@ -216,9 +216,9 @@ class Counties_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 		
@@ -226,7 +226,35 @@ class Counties_model extends MY_Model
 
 		$result = $this->db->query($sql)->result_array();
 		
-		return $result;
+		$data;
+		$i = 0;
+
+		foreach ($result as $key => $value) {
+			
+			$data[$i]['partner'] = $value['partner'];
+			$data[$i]['facility'] = $value['facility'];
+			$data[$i]['tests'] = $value['tests'];
+
+			if($value['tests'] == 0){
+					$data[$i]['suppressed'] = 0;
+					$data[$i]['non_suppressed'] = 0;
+					$data[$i]['rejected'] = $value['rejected'];
+				}
+			else{
+				$data[$i]['suppressed'] = $value['suppressed'] . " (" . round((int) $value['suppressed'] / $value['tests'] * 100) . "%)";
+				$data[$i]['non_suppressed'] = $value['non_suppressed'] . " (" . round((int) $value['non_suppressed'] / $value['tests'] * 100) . "%)";
+				$data[$i]['rejected'] = $value['rejected'] . " (" . round((int) $value['rejected'] / $value['tests'] * 100) . "%)";
+
+			}
+			
+			
+			$data[$i]['adults'] = $value['partner'];
+			$data[$i]['children'] = $value['partner'];
+			
+			$i++;
+		}		
+
+		return $data;
 	}
 	
 	
