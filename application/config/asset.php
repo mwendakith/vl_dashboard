@@ -77,6 +77,8 @@ $config['plugin_js_files']	=	array(
 									array('title'=> 'highstock',	'file'	=>	'highstock/js/highstock.js'),
 									array('title'=> 'highmaps',		'file'	=>	'highmaps/js/modules/map.js'),
 									array('title'=> 'highmaps',		'file'	=>	'highmaps/js/modules/mapdata/countries/ke/ke-all.js'),
+									array('title' => 'Kenya', 		'file' => 'highmaps/kenya.js'
+										),
 									array('title'=> 'tablecloth',		'file'	=>	'tablecloth/js/jquery.metadata.js'),
 									array('title'=> 'tablecloth',		'file'	=>	'tablecloth/js/jquery.tablesorter.min.js'),
 									array('title'=> 'tablecloth',		'file'	=>	'tablecloth/js/jquery.tablecloth.js')
