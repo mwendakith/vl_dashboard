@@ -13,6 +13,7 @@
 		<?php      	
 			$this->load->view('utils/dynamicLoads');
 		?>
+		<link rel=icon href="<?php echo base_url('assets/img/kenya-coat-of-arms.png');?>" type="image/png">
 		<title>
 			Dashboard
 		</title>
