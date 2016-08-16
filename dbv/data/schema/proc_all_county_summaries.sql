@@ -129,7 +129,7 @@ BEGIN
   SET @QUERY =    "SELECT `p`.`name` AS `partner`, `vf`.`name` AS `facility`, SUM(`vss`.`alltests`) AS `tests`, 
                   SUM(`vss`.`less1000` + `vss`.`undetected`) AS `suppressed`, 
                   SUM(`vss`.`less5000` + `vss`.`above5000`) AS `non_suppressed`,
-                  SUM(`vss`.`invalids`) AS `rejected`, SUM(`vss`.`adults`) AS `adults`, SUM(`vss`.`paeds`) AS `children`
+                  SUM(`vss`.`rejected`) AS `rejected`, SUM(`vss`.`adults`) AS `adults`, SUM(`vss`.`paeds`) AS `children`
                 FROM `vl_site_summary` `vss`
                 JOIN (`view_facilitys` `vf` CROSS JOIN `partners` `p`)
                 ON (`vss`.`facility`=`vf`.`ID` AND `p`.`ID`=`vf`.`partner`)
@@ -142,6 +142,8 @@ BEGIN
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " GROUP BY `vf`.`ID` ");
+
+    SET @QUERY = CONCAT(@QUERY, " ORDER BY `p`.`ID` ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
