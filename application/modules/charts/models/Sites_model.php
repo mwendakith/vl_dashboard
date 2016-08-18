@@ -54,7 +54,7 @@ class Sites_model extends MY_Model
 			$data["sites_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
 			$data["sites_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
 		}
-		// echo "<pre>";print_r($data);
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
