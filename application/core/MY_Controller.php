@@ -122,12 +122,12 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->set_userdata('county_filter', null);
 					$this->session->set_userdata('filter_month', null);
 					$this->session->set_userdata('partner_filter', null);
-					$this->session->set_userdata('site_filter', null);
+					$this->session->unset_userdata('site_filter');
 				}else{
 					$this->session->set_userdata('county_filter', $data['county']);
 					$this->session->set_userdata('filter_month', null);
 					$this->session->set_userdata('partner_filter', null);
-					$this->session->set_userdata('site_filter', null);
+					$this->session->unset_userdata('site_filter');
 				}
 			}
 			
@@ -142,12 +142,12 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->set_userdata('partner_filter', null);
 					$this->session->set_userdata('filter_month', null);
 					$this->session->set_userdata('county_filter', null);
-					$this->session->set_userdata('site_filter', null);
+					$this->session->unset_userdata('site_filter');
 				}else{
 					$this->session->set_userdata('partner_filter', $data['partner']);
 					$this->session->set_userdata('filter_month', null);
 					$this->session->set_userdata('county_filter', null);
-					$this->session->set_userdata('site_filter', null);
+					$this->session->unset_userdata('site_filter');
 				}
 			}
 			
@@ -160,7 +160,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 				
 			} else {
 				if ($data['site']=='NA') {
-					$this->session->set_userdata('site_filter', null);
+					$this->session->unset_userdata('site_filter');
 					$this->session->set_userdata('partner_filter', null);
 					$this->session->set_userdata('filter_month', null);
 					$this->session->set_userdata('county_filter', null);

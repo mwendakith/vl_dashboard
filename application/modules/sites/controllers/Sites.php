@@ -12,7 +12,7 @@ class Sites extends MY_Controller
 	function __construct()
 	{
 		parent:: __construct();
-		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom')));
+		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom','select2')));
 		$this->data['sit'] = TRUE;
 	}
 

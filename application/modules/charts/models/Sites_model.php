@@ -105,7 +105,9 @@ class Sites_model extends MY_Model
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
-
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
 		$data['year'] = $year;
 
 		$sql = "CALL `proc_get_sites_trends`('".$site."','".$year."')";
@@ -158,6 +160,9 @@ class Sites_model extends MY_Model
 				$month = 0;
 			}
 		}
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
 		
 		$sql = "CALL `proc_get_sites_sample_types`('".$site."','".$year."')";
 		
@@ -195,9 +200,9 @@ class Sites_model extends MY_Model
 
 	function sites_vloutcomes($year=null,$month=null,$site=null)
 	{
-		// if ($county==null || $county=='null') {
-		// 	$county = $this->session->userdata('county_filter');
-		// }
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
 		
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -260,6 +265,9 @@ class Sites_model extends MY_Model
 				$month = 0;
 			}
 		}
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
 
 		$sql = "CALL `proc_get_sites_age`('".$site."','".$year."','".$month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -305,6 +313,9 @@ class Sites_model extends MY_Model
 			}else {
 				$month = 0;
 			}
+		}
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
 		}
 
 		$sql = "CALL `proc_get_sites_gender`('".$site."','".$year."','".$month."')";
