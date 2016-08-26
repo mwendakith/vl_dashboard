@@ -13,6 +13,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			$this->data['part'] = FALSE;
 			$this->data['labs'] = FALSE;
 			$this->data['sit'] = FALSE;
+			$this->data['county'] = FALSE;
 		}
 
 		public function load_libraries($arr){

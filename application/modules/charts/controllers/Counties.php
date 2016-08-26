@@ -58,12 +58,14 @@ class Counties extends MY_Controller
 
 	function county_details($county = NULL, $year = NULL, $month = NULL)
 	{
-		$data = $this->counties_model->county_details($county, $year, $month);
+		$data['outcomes'] = $this->counties_model->county_details($county, $year, $month);
+		
+		$this->load->view('county_details', $data);
 	// 	$this->load->library('table');
 	// 	$this->table->set_heading('Partner', 'Facility', 'Tests', 'Suppressed', 'Non Suppressed',
 	// 	 'Rejected', 'Adults', 'Children');
 	// 	$template = array(
-	//         'table_open'            => '<table  class="table table-bordered table-hover">',
+	//         'table_open'            => '<table  id="example" cellspacing="1" cellpadding="3" class="table table-bordered table-hover" style="background:#CCC;">',
 
 	//         'thead_open'            => '<thead>',
 	//         'thead_close'           => '</thead>',

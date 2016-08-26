@@ -14,12 +14,10 @@ class County extends MY_Controller {
 
 	function index()
 	{
+		$this->data['county'] = TRUE;
 		$this->data['content_view'] = 'county/county_map';
 		$this -> template($this->data);
 	}
-
-
-
 }
 
 ?>
