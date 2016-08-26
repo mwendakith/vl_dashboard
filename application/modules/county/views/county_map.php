@@ -27,12 +27,13 @@
 </div>
 
 <script type="text/javascript">
-
+   
     function set_table(county_id, county_name){
         $("#county_details").empty().
         load("<?php echo base_url('charts/counties/county_details'); ?>/" + county_id);
 
         $("#county_name").empty().append("<br /><br /><h2>" + county_name + set_title() + "</h2>");
+
     }
 
     function set_title(){

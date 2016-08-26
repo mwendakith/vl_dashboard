@@ -253,8 +253,21 @@ class Counties_model extends MY_Model
 			
 			$i++;
 		}		
+		$table = '';
+		foreach ($data as $key => $value) {
+			$table .= '<tr>';
+			$table .= '<td>'.$value['partner'].'</td>';
+			$table .= '<td>'.$value['facility'].'</td>';
+			$table .= '<td>'.$value['tests'].'</td>';
+			$table .= '<td>'.$value['suppressed'].'</td>';
+			$table .= '<td>'.$value['non_suppressed'].'</td>';
+			$table .= '<td>'.$value['rejected'].'</td>';
+			$table .= '<td>'.$value['adults'].'</td>';
+			$table .= '<td>'.$value['children'].'</td>';
+			$table .= '</tr>';
+		}
 
-		return $data;
+		return $table;
 	}
 	
 	
