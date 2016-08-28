@@ -248,8 +248,8 @@ class Counties_model extends MY_Model
 			}
 			
 			
-			$data[$i]['adults'] = $value['partner'];
-			$data[$i]['children'] = $value['partner'];
+			$data[$i]['adults'] = $value['adults'];
+			$data[$i]['children'] = $value['children'];
 			
 			$i++;
 		}		
