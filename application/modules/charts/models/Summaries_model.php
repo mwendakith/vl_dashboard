@@ -256,7 +256,7 @@ class Summaries_model extends MY_Model
 
 		$data['justification']['data'][0]['sliced'] = true;
 		$data['justification']['data'][0]['selected'] = true;
-		echo "<pre>";print_r($data);die();
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
@@ -416,7 +416,7 @@ class Summaries_model extends MY_Model
 		$data['categories'] = array_values($data['categories']);
 		$data["ageGnd"][0]["data"] = array_values($data["ageGnd"][0]["data"]);
 		$data["ageGnd"][1]["data"] = array_values($data["ageGnd"][1]["data"]);
-		echo "<pre>";print_r($data);die();
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
