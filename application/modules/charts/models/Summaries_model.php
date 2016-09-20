@@ -116,7 +116,7 @@ class Summaries_model extends MY_Model
 			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
 			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
 		}
-		// echo "<pre>";print_r($data);
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
@@ -256,7 +256,7 @@ class Summaries_model extends MY_Model
 
 		$data['justification']['data'][0]['sliced'] = true;
 		$data['justification']['data'][0]['selected'] = true;
-
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
@@ -354,7 +354,7 @@ class Summaries_model extends MY_Model
 		}
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-
+		// echo "<pre>";print_r($result);die();
 		$count = 0;
 		$loop = 0;
 		$name = '';
