@@ -207,7 +207,48 @@ class Counties_model extends MY_Model
 		 // echo "<pre>";print_r($data);die();
 		return $data;
 
-	}		
+	}
+
+	function county_summary($county=NULL,$year=NULL,$month=NULL)
+	{  
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+		
+		$sql = "CALL `proc_get_county_summary`('".$county."','".$year."','".$month."')";
+		$result =  $this->db->query($sql)->row();
+
+		$data[0][0] = 'Tests';
+		$data[1][0] = 'Suppressed';
+		$data[2][0] = 'Non Suppressed';
+		$data[3][0] = 'Rejected';
+
+		$data[0][1] = $result->tests;
+		if($result->tests > 0){
+			$data[1][1] = $result->suppressed . " (" . round($result->suppressed / $result->tests * 100) . "%)";
+			$data[2][1] = $result->non_suppressed . " (" . round($result->non_suppressed / $result->tests * 100) . "%)";
+			$data[3][1] = $result->rejected . " (" . round($result->rejected / $result->tests * 100) . "%)";
+			
+		}
+		else{
+			$data[1][1] = $result->suppressed;
+			$data[2][1] = $result->non_suppressed;
+			$data[3][1] = $result->rejected;
+		}
+		
+
+		return $data;
+		
+		
+
+	}
 
 	function county_details($county=NULL,$year=NULL,$month=NULL)
 	{
@@ -248,8 +289,8 @@ class Counties_model extends MY_Model
 			}
 			
 			
-			$data[$i]['adults'] = $value['partner'];
-			$data[$i]['children'] = $value['partner'];
+			$data[$i]['adults'] = $value['adults'];
+			$data[$i]['children'] = $value['children'];
 			
 			$i++;
 		}		

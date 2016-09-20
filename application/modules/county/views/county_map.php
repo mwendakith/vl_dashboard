@@ -13,7 +13,11 @@
 
 </div>
 
-<div id="table" class="col-md-6">
+<div class="col-md-6">
+
+    <div id="Table_Title"></div>
+
+    <div id="table" ></div>
     
 
 </div>
@@ -28,9 +32,22 @@
 
 <script type="text/javascript">
 
+    var this_month = null;
+    var this_year = null;
+
+
+
+    function set_summary(county_id, county_name){
+        $("#table").empty().
+        load("<?php echo base_url('charts/counties/county_summary'); ?>/" + county_id + "/" + this_year + "/" + this_month);
+
+        $("#Table_Title").empty().append("<br /><h2>" + county_name + set_title() + "</h2>");
+    }
+
     function set_table(county_id, county_name){
+        set_summary(county_id, county_name);
         $("#county_details").empty().
-        load("<?php echo base_url('charts/counties/county_details'); ?>/" + county_id);
+        load("<?php echo base_url('charts/counties/county_details'); ?>/" + county_id + "/" + this_year + "/" + this_month);
 
         $("#county_name").empty().append("<br /><br /><h2>" + county_name + set_title() + "</h2>");
     }
@@ -38,49 +55,46 @@
     function set_title(){
 
         switch(
-            <?php 
-            if($this->session->userdata('filter_month'))
-                {echo $this->session->userdata('filter_month');
-            }else{ echo 0;} ?>
+            this_month
             ){
             case 1:
-                return ' Jan ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' Jan ' + this_year;
                 break;
             case 2:
-                return ' Feb ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' Feb ' + this_year;
                 break;
             case 3:
-                return ' Mar ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' Mar ' + this_year;
                 break;
             case 4:
-                return ' Apr ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' Apr ' + this_year;
                 break;
             case 5:
-                return ' May ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' May ' + this_year;
                 break;
             case 6:
-                return ' Jun ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' Jun ' + this_year;
                 break;
             case 7:
-                return ' Jul ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' Jul ' + this_year;
                 break;
             case 8:
-                return ' Aug ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' Aug ' + this_year;
                 break;
             case 9:
-                return ' Sep ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' Sep ' + this_year;
                 break;
             case 10:
-                return ' Oct ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' Oct ' + this_year;
                 break;
             case 11:
-                return ' Nov ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' Nov ' + this_year;
                 break;
             case 12:
-                return ' Dec ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' Dec ' + this_year;
                 break;
             default:
-                return ' ' + <?php echo $this->session->userdata('filter_year'); ?>;
+                return ' ' + this_year;
                 break;
             
         }
@@ -165,10 +179,14 @@
         if (criteria === "monthly") {
             year = null;
             month = id;
+            this_month = id;
         }else {
             year = id;
+            this_year = id;
             month = null;
         }
+
+       
 
         var posting = $.post( '<?php echo base_url();?>county/set_filter_date', { 'year': year, 'month': month } );
 
@@ -180,8 +198,6 @@
                 obj['month'] = "";
             }
             $(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
-
-            
         });
         
        
@@ -190,7 +206,12 @@
 
     // Creates the default map
     $(function () {
-    
+        this_month = <?php 
+            if($this->session->userdata('filter_month'))
+                {echo $this->session->userdata('filter_month');
+            }else{ echo 0;} ?>;
+
+        this_year = <?php echo $this->session->userdata('filter_year'); ?>;
         retrieve_map("Suppressed", "counties_suppressed", '%');
 
     });
