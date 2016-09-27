@@ -50,7 +50,7 @@
     </form>
   </div>
   <div class="col-md-3">
-    <div id="breadcrum" class="alert" style="background-color: #1BA39C;display:none;">
+    <div id="breadcrum" class="alert" style="background-color: #1BA39C;/*display:none;">
       
     </div>
   </div>
@@ -88,6 +88,19 @@
 <script type="text/javascript">
   $().ready(function(){
     $(".js-example-basic-single").select2();
-    $("#breadcrum").html("<a href='javascript:void(0)' class='alert-link'><strong>All Partners</strong></a>");
+    var url = $(location).attr('href');
+    // Getting the file name i.e last segment of URL (i.e. example.html)
+    var fn = url.split('/').indexOf("partner");
+    console.log(fn);
+    
+    if (fn==-1) {
+      $.get("<?php echo base_url();?>template/breadcrum", function(data){
+        $("#breadcrum").html(data);
+      });
+    } else {
+      $.get("<?php echo base_url();?>template/breadcrum/"+null+"/"+1, function(data){
+        $("#breadcrum").html(data);
+      });
+    }
   });
 </script>

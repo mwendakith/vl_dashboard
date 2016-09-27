@@ -13,9 +13,9 @@ class Sites extends MY_Controller
 		$this->load->model('sites_model');
 	}
 
-	function site_outcomes($year=NULL,$month=NULL,$site=NULL,$partner=NULL)
+	function site_outcomes($year=NULL,$month=NULL,$partner=NULL)
 	{
-		$data['outcomes'] = $this->sites_model->sites_outcomes($year,$month,$site,$partner);
+		$data['outcomes'] = $this->sites_model->sites_outcomes($year,$month,$partner);
 
     	$this->load->view('site_outcomes_view',$data);
 	}
@@ -27,7 +27,7 @@ class Sites extends MY_Controller
     	$this->load->view('partner_site__view',$data);
 	}
 
-	function site_trends($year=null,$month=null,$site)
+	function site_trends($year=null,$month=null,$site=null)
 	{
 		$data['trends'] = $this->sites_model->sites_trends($year,$month,$site);
 

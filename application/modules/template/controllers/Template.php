@@ -46,7 +46,7 @@ class Template extends MY_Controller
 		
 		$this->filter_partners($data);
 
-		echo $this->session->userdata('partner_filter');
+		echo json_encode($this->session->userdata('partner_filter'));
 		
 	}
 	function filter_site_data()
@@ -60,7 +60,17 @@ class Template extends MY_Controller
 		echo $this->session->userdata('site_filter');
 	}
 
-	function breadcrum($partner=NULL)
+	function filter_date_data()
+	{
+		$data = array(
+				'year' => $this->input->post('year'),
+				'month' => $this->input->post('month')
+			);
+		
+		echo $this->set_filter_date($data);
+	}
+
+	function breadcrum($data=null,$partner=NULL)
 	{
 		$this->load->model('template_model');
 		
@@ -72,11 +82,20 @@ class Template extends MY_Controller
 				echo "<a href='javascript:void(0)' class='alert-link'><strong>".$partner."</strong></a>";
 			}
 		} else {
-			if (!$this->session->userdata('county_filter')) {
-			echo "<a href='javascript:void(0)' class='alert-link'><strong>Kenya</strong></a>";
+			if (!$data) {
+				if (!$this->session->userdata('county_filter')) {
+					echo "<a href='javascript:void(0)' class='alert-link'><strong>Kenya</strong></a>";
+				} else {
+					$county = $this->template_model->get_county_name($this->session->userdata('county_filter'));
+					echo "Kenya / <a href='javascript:void(0)' class='alert-link'><strong>".$county."</strong></a>";
+				}
 			} else {
-				$county = $this->template_model->get_county_name($this->session->userdata('county_filter'));
-				echo "Kenya / <a href='javascript:void(0)' class='alert-link'><strong>".$county."</strong></a>";
+				if ($data == '48' || $data == 48) {
+					echo "<a href='javascript:void(0)' class='alert-link'><strong>Kenya</strong></a>";
+				} else {
+					$county = $this->template_model->get_county_name($data);
+					echo "Kenya / <a href='javascript:void(0)' class='alert-link'><strong>".$county."</strong></a>";
+				}
 			}
 		}
 	}

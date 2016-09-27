@@ -14,6 +14,7 @@ class Partner extends MY_Controller
 		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom','tablecloth','select2')));
 		$this->session->set_userdata('county_filter', NULL);
 		$this->data['part'] = TRUE;
+		$this->data['partner_select'] = $this->session->userdata('partner_filter');
 	}
 
 	public function index()
@@ -26,6 +27,7 @@ class Partner extends MY_Controller
 
 	public function nosuppression()
 	{
+		echo "<pre>";print_r($this->session->all_userdata());die();
 		$this->load->module('charts/nonsuppression');
 
 		$this->data['content_view'] = 'partner/partner_no_suppression_view';
@@ -56,9 +58,9 @@ class Partner extends MY_Controller
 		if ($this->session->userdata('partner_filter')) {
 			$partner = $this->session->userdata('partner_filter');
 		} else {
-			$partner = null;
+			$partner = 0;
 		}
-		 echo $partner;
+		echo json_encode($partner);
 	}
 }
 ?>
