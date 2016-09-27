@@ -121,7 +121,7 @@ class Labs_model extends MY_Model
 				$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
 			
 		}
-		 echo "<pre>";print_r($data);die();
+		//echo "<pre>";print_r($data);die();
 		return $data;
 	}
 

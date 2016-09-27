@@ -23,5 +23,15 @@ class Sites extends MY_Controller
 		$this->data['content_view'] = 'sites/sites_view';
 		$this -> template($this->data);
 	}
+
+	public function check_site_select()
+	{
+		if ($this->session->userdata('site_filter')) {
+			$site = $this->session->userdata('site_filter');
+		} else {
+			$site = 0;
+		}
+		echo json_encode($site);
+	}
 }
 ?>

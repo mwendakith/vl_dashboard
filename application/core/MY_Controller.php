@@ -85,18 +85,19 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			}
 		}
 
-		function set_filter_date()
+		function set_filter_date($data=null)
 		{
-			$year = $this->input->post('year');
-			$month = $this->input->post('month');
-
+			$year = $data['year'];
+			$month = $data['month'];
+			
 			if ($year) {
 				$return = $this->session->set_userdata('filter_year', $year);
+				$this->session->unset_userdata('filter_month');
 			} else {
 				if ($month=='all') {
-					$return = $this->session->set_userdata('filter_month', null);
+					$this->session->unset_userdata('filter_month');
 				}else {
-					$return = $this->session->set_userdata('filter_month', $month);
+					$this->session->set_userdata('filter_month', $month);
 				}
 			}
 			$this->load->model('template/template_model');
@@ -104,7 +105,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 				$year = $this->session->userdata('filter_year');
 			if(!$month)
 				$month = $this->session->userdata('filter_month');
-
+			
 			echo json_encode(array('year' => $year, 'prev_year' => $year-1, 'month' => $this->template_model->resolve_month($month) ));
 		}
 
@@ -140,7 +141,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 				
 			} else {
 				if ($data['partner']=='NA') {
-					$this->session->set_userdata('partner_filter', null);
+					$this->session->unset_userdata('partner_filter');
 					$this->session->set_userdata('filter_month', null);
 					$this->session->set_userdata('county_filter', null);
 					$this->session->unset_userdata('site_filter');

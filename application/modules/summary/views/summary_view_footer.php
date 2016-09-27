@@ -19,7 +19,7 @@
 	     
 	        // Put the results in a div
 	        posting.done(function( data ) {
-	        	$.get("<?php echo base_url();?>template/breadcrum", function(data){
+	        	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
 	        	$.get("<?php echo base_url();?>template/dates", function(data){

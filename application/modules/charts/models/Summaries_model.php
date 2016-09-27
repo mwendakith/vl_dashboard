@@ -152,8 +152,8 @@ class Summaries_model extends MY_Model
 				$sql2 = "CALL `proc_get_regional_sitessending`('".$county."','".$year."','".$month."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);
-		
+		// echo "<pre>";print_r($sql);echo "</pre>";
+		// echo "<pre>";print_r($sql2);echo "</pre>";die();
 		$result = $this->db->query($sql)->result_array();
 		$this->db->close();
 		$sitessending = $this->db->query($sql2)->result_array();
@@ -606,7 +606,8 @@ class Summaries_model extends MY_Model
 				$sql2 = "CALL `proc_get_regional_sample_types`('".$county."','".$to."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);
+		// echo "<pre>";print_r($sql);echo "</pre>";
+		// echo "<pre>";print_r($sql2);die();
 		$array1 = $this->db->query($sql)->result_array();
 		
 		if ($sql2) {
