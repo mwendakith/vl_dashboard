@@ -62,6 +62,7 @@ class Summaries_model extends MY_Model
 
 	function county_outcomes($year=null,$month=null,$pfil=null,$partner=null,$county=null)
 	{
+		// echo "Year:".$year.":--: Month:".$month.":--: County:".$county.":--: Partner:".$partner.":--: pfil:".$pfil;die();
 		//Initializing the value of the Year to the selected year or the default year which is current year
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -99,7 +100,7 @@ class Summaries_model extends MY_Model
 				$sql = "CALL `proc_get_county_outcomes`('".$year."','".$month."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);echo "</pre>";
+		// echo "<pre>";print_r($sql);echo "</pre>";die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
@@ -509,6 +510,9 @@ class Summaries_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_filter');
+		}
 
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -550,30 +554,6 @@ class Summaries_model extends MY_Model
 
 		$data['gender'][0]['drilldown']['color'] = '#913D88';
 		$data['gender'][1]['drilldown']['color'] = '#96281B';
-				
-		// $data['gender']['name'] = 'Tests';
-		// $data['gender']['colorByPoint'] = true;
-
-		// $count = 0;
-		// // echo "<pre>";print_r($result);die();
-		// foreach ($result as $key => $value) {
-
-		// 	$data['gender']['data'][$key]['y'] = $count;
-
-		// 	if ($value['name']=='F'){
-		// 		$data['gender']['data'][$key]['name'] = 'Female';
-		// 		$data['ul'] .= '<li>Female Suppresed: '.(int) ((((int) $value['gender']-(int) $value['sustxfail'])/(int) $value['gender'])*100).'%</li>';
-		// 	}
-		// 	else {
-		// 		$data['gender']['data'][$key]['name'] = 'Male';
-		// 		$data['ul'] .= '<li>Male Suppresed: '.(int) ((((int) $value['gender']-(int) $value['sustxfail'])/(int) $value['gender'])*100).'%</li>';
-		// 	}
-
-		// 	$data['gender']['data'][$key]['y'] = (int) $value['gender'];
-		// }
-
-		// $data['gender']['data'][0]['sliced'] = true;
-		// $data['gender']['data'][0]['selected'] = true;
 		
 		return $data;
 	}
@@ -586,6 +566,9 @@ class Summaries_model extends MY_Model
 
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
+		}
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_filter');
 		}
 
 		if ($year==null || $year=='null') {
