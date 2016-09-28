@@ -36,7 +36,7 @@ class Sites_model extends MY_Model
 		}
 		// $sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."')";
 		
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$data['sites_outcomes'][0]['name'] = 'Not Suppresed';
@@ -73,7 +73,7 @@ class Sites_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."')";
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($sql);die();
 		foreach ($result as $key => $value) {
@@ -111,7 +111,7 @@ class Sites_model extends MY_Model
 
 		$sql = "CALL `proc_get_sites_trends`('".$site."','".$year."')";
 
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		
@@ -165,7 +165,7 @@ class Sites_model extends MY_Model
 		
 		$sql = "CALL `proc_get_sites_sample_types`('".$site."','".$year."')";
 		
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$months = array(1,2,3,4,5,6,7,8,9,10,11,12);
@@ -215,7 +215,7 @@ class Sites_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_sites_vl_outcomes`('".$site."','".$year."','".$month."')";
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
@@ -269,7 +269,7 @@ class Sites_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_sites_age`('".$site."','".$year."','".$month."')";
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$data['ageGnd']['name'] = 'Tests';
@@ -318,7 +318,7 @@ class Sites_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_sites_gender`('".$site."','".$year."','".$month."')";
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$data['Gnd']['name'] = 'Tests';

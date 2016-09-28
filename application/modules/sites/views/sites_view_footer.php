@@ -1,7 +1,7 @@
 <script type="text/javascript">
 	$().ready(function(){
 		var site = <?php echo json_encode($this->session->userdata("site_filter")); ?>;
-		
+		console.log(site);
 		if (!site) {
     		$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>");
 			$("#first").show();
@@ -85,7 +85,7 @@
  			month = null;
  		}
 
- 		var posting = $.post( '<?php echo base_url();?>summary/set_filter_date', { 'year': year, 'month': month } );
+ 		var posting = $.post( '<?php echo base_url();?>summary/filter_date_data', { 'year': year, 'month': month } );
 
  		// Put the results in a div
 		posting.done(function( data ) {
