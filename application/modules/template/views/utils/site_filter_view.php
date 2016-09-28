@@ -69,7 +69,6 @@
     </div>
     <div class="filter">
       Month: 
-      <a href='javascript:void(0)' onclick='date_filter("monthly", "all")' class="alert-link"> All </a>|
       <a href='javascript:void(0)' onclick='date_filter("monthly", 1)' class='alert-link'> Jan </a>|
       <a href='javascript:void(0)' onclick='date_filter("monthly", 2)' class='alert-link'> Feb </a>|
       <a href='javascript:void(0)' onclick='date_filter("monthly", 3)' class='alert-link'> Mar </a>|

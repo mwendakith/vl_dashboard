@@ -58,7 +58,7 @@
 					  By Gender <div class="display_date"></div>
 					</div>
 				  	<div class="panel-body" id="genderGrp">
-				  		<div>Loading...</div>
+				  		<center><div class="loader"></div></center>
 				  	</div>
 				</div>
 			</div>
@@ -68,7 +68,7 @@
 					  By Age <div class="display_date"></div>
 					</div>
 				  	<div class="panel-body" id="ageGrp">
-					  		<div>Loading...</div>
+					  		<center><div class="loader"></div></center>
 					</div>
 				</div>
 			</div>
@@ -84,7 +84,7 @@
 					</div>
 					  <div class="panel-body">
 					  	<div class="row" id="justification">
-					  		<div>Loading...</div>
+					  		<center><div class="loader"></div></center>
 					  	</div>
 					 </div>
 				</div>
@@ -98,7 +98,7 @@
 						</div>
 					  <div class="panel-body">
 					  	<div class="row" id="sampleType">
-					  		<div>Loading...</div>
+					  		<center><div class="loader"></div></center>
 					  	</div>
 					 </div>
 				</div>
@@ -127,7 +127,7 @@
 				</div>
 			  <div class="panel-body">
 			  	<div class="row" id="regimen">
-			  		<div>Loading...</div>
+			  		<center><div class="loader"></div></center>
 			  	</div>
 			 </div>
 		</div>

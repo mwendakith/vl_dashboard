@@ -27,7 +27,7 @@ class Partner extends MY_Controller
 
 	public function nosuppression()
 	{
-		echo "<pre>";print_r($this->session->all_userdata());die();
+		// echo "<pre>";print_r($this->session->all_userdata());die();
 		$this->load->module('charts/nonsuppression');
 
 		$this->data['content_view'] = 'partner/partner_no_suppression_view';

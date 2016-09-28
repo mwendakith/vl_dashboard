@@ -41,7 +41,7 @@ class Nonsuppression_model extends MY_Model
 			$sql = "CALL `proc_get_regional_sustxfail_notification`('".$county."','".$year."','".$month."')";
 			// $data['county'] = $county;
 		}
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		
@@ -95,7 +95,7 @@ class Nonsuppression_model extends MY_Model
 			}
 		}
 		
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$data['categories'][0] = '';
@@ -149,7 +149,7 @@ class Nonsuppression_model extends MY_Model
 			}
 		}
 
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$data['categories'][0] = '';
@@ -196,7 +196,7 @@ class Nonsuppression_model extends MY_Model
 				$sql = "CALL `proc_get_regional_sustxfail_justification`('".$county."','".$year."','".$month."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 
@@ -256,7 +256,7 @@ class Nonsuppression_model extends MY_Model
 				$sql = "CALL `proc_get_regional_sustxfail_sampletypes`('".$county."','".$year."','".$month."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 
@@ -312,7 +312,7 @@ class Nonsuppression_model extends MY_Model
 				$sql = "CALL `proc_get_regional_sustxfail_regimen`('".$county."','".$year."','".$month."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		$data['regimen']['name'] = 'Non Suppression';
 		$data['regimen']['colorByPoint'] = true;
@@ -358,6 +358,7 @@ class Nonsuppression_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_counties_sustxfail`('".$year."','".$month."')";
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
 		// echo "<pre>";print_r($result);die();
@@ -436,7 +437,7 @@ class Nonsuppression_model extends MY_Model
 		} else {
 			$sql = "CALL `proc_get_regional_sustxfail_partner`('".$county."','".$year."','".$month."')";
 		}
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$li = '';
@@ -478,7 +479,7 @@ class Nonsuppression_model extends MY_Model
 			$sql = "CALL `proc_get_partner_sites_listing`('".$partner."','".$year."','".$month."')";
 		}
 		
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$li = '';
@@ -520,7 +521,7 @@ class Nonsuppression_model extends MY_Model
 		} else {
 			$sql = "CALL `proc_get_regional_sustxfail_rank_regimen`('".$county."','".$year."','".$month."')";
 		}
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
 		$li = '';

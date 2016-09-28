@@ -73,12 +73,20 @@ class Template extends MY_Controller
 	function breadcrum($data=null,$partner=NULL)
 	{
 		$this->load->model('template_model');
-		
+		$data = trim($data,"%22");
+		// echo $data;
 		if ($partner) {
-			if (!$this->session->userdata('partner_filter')) {
-			echo "<a href='javascript:void(0)' class='alert-link'><strong>All Partners</strong></a>";
+			if ($data==null || $data=='null') {
+				// echo "No partner is set";
+				if (!$this->session->userdata('partner_filter')) {
+					echo "<a href='javascript:void(0)' class='alert-link'><strong>All Partners</strong></a>";
+				} else {
+					$partner = $this->template_model->get_partner_name($this->session->userdata('partner_filter'));
+					echo "<a href='javascript:void(0)' class='alert-link'><strong>".$partner."</strong></a>";
+				}
 			} else {
-				$partner = $this->template_model->get_partner_name($this->session->userdata('partner_filter'));
+				// echo "A partner is set";
+				$partner = $this->template_model->get_partner_name($data);
 				echo "<a href='javascript:void(0)' class='alert-link'><strong>".$partner."</strong></a>";
 			}
 		} else {
