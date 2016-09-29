@@ -37,6 +37,13 @@ class Summaries extends MY_Controller {
     	$this->load->view('justification_view',$data);
 	}
 
+	function justificationbreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
+	{
+		$data['outcomes'] = $this->summaries_model->justification_breakdown($year,$month,$county,$partner);
+		
+		$this->load->view('justification_breakdown_view',$data);
+	}
+
 	function age($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
 	{
 		$data['outcomes'] = $this->summaries_model->age($year,$month,$county,$partner);

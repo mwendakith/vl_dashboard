@@ -6,7 +6,7 @@ BEGIN
   SET @QUERY =    "SELECT 
                     `view_facilitys`.`facilitycode` AS `MFLCode`, 
                     `view_facilitys`.`name`, 
-                    `view_facilitys`.`county`,
+                    `countys`.`name` AS `county`,
                     SUM(`vl_site_summary`.`alltests`) AS `tests`, 
                     SUM(`vl_site_summary`.`sustxfail`) AS `sustxfail`, 
                     SUM(`vl_site_summary`.`confirm2vl`) AS `repeatvl`, 
@@ -16,7 +16,8 @@ BEGIN
                     SUM(`vl_site_summary`.`paeds`) AS `paeds`, 
                     SUM(`vl_site_summary`.`maletest`) AS `maletest`, 
                     SUM(`vl_site_summary`.`femaletest`) AS `femaletest` FROM `vl_site_summary` 
-                  JOIN `view_facilitys` ON `vl_site_summary`.`facility` = `view_facilitys`.`ID` WHERE 1";
+                  LEFT JOIN `view_facilitys` ON `vl_site_summary`.`facility` = `view_facilitys`.`ID` 
+                  LEFT JOIN `countys` ON `view_facilitys`.`county` = `countys`.`ID`  WHERE 1";
 
     IF (filter_month != 0 && filter_month != '') THEN
        SET @QUERY = CONCAT(@QUERY, " AND `view_facilitys`.`partner` = '",P_id,"' AND `year` = '",filter_year,"' AND `month`='",filter_month,"' ");

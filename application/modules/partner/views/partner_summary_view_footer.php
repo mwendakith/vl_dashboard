@@ -176,4 +176,10 @@
 		$('#agemodal').modal('show');
 		$('#CatAge').load('<?php echo base_url();?>charts/summaries/agebreakdown');
 	}
+
+	function justificationModal()
+	{
+		$('#justificationmodal').modal('show');
+		$('#CatJust').load('<?php echo base_url();?>charts/summaries/justificationbreakdown');
+	}
 </script>

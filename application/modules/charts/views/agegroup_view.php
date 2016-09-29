@@ -11,7 +11,8 @@
                         text: ''
                     },
                     xAxis: {
-                        categories: <?php echo json_encode($outcomes['categories']);?>
+                        categories: <?php echo json_encode($outcomes['categories']);?>,
+                        crosshair: true
                     },
                     yAxis: {
                         min: 0,

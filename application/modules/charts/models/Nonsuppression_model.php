@@ -454,6 +454,50 @@ class Nonsuppression_model extends MY_Model
 		return $li;
 	}
 
+	function facility_listing($year=null,$month=null,$partner=NULL)
+	{
+		if (!$partner) {
+			$partner = $this->session->userdata('partner_filter');
+		}
+
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+			}else {
+				$month = 0;
+			}
+		}
+
+		
+		if ($partner==null || $partner=='null') {
+			$sql = "CALL `proc_get_sites_listing`('".$year."','".$month."')";
+		} else {
+			$sql = "CALL `proc_get_partner_sites_listing`('".$partner."','".$year."','".$month."')";
+		}
+		
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$li = '';
+		$count = 1;
+		if($result)
+			{
+				if ($count<16) {
+					foreach ($result as $key => $value) {
+						$li .= '<a href="#" class="list-group-item"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].'.&nbsp;'.(int) $value['non supp'].'%</a>';
+						$count++;
+					}
+				}
+			}else{
+				$li = 'No Data';
+			}
+
+		return $li;
+	}
+
 
 	function regimen_listing($year=null,$month=null,$county=null)
 	{

@@ -76,9 +76,9 @@
 			  <div class="panel-body" id="ageGroups">
 			    <center><div class="loader"></div></center>
 			  </div>
-			  <div>
+			  <!-- <div>
 			  	<button class="btn btn-default" onclick="ageModal();">Click here for breakdown</button>
-			  </div>
+			  </div> -->
 			</div>
 		</div>
 		<div class="col-md-4">

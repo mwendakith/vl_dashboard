@@ -1,6 +1,5 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
@@ -72,12 +71,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'default';
 $query_builder = TRUE;
-
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'vl_user',
-	'password' => 'vl_password',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'vl_kemri2',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

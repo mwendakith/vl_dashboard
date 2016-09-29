@@ -5,8 +5,10 @@
 		$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+null+"/"+null+"/"+null+"/"+1);
 		$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+null+"/"+null+"/"+null+"/"+1);
 		$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+null+"/"+null+"/"+null+"/"+1);
+		$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+null+"/"+null+"/"+1);
 
 		$(".display_date").load("<?php echo base_url('charts/nonsuppression/display_date'); ?>");
+
 
 		$("select").change(function(){
 			em = $(this).val();
@@ -34,12 +36,14 @@
 				$("#justification").html("<div>Loading...</div>");
 				$("#regimen").html("<div>Loading...</div>");
 				$("#sampleType").html("<div>Loading...</div>");
+				$("#sites_listing").html("<center><div class='loader'>Loading...</div></center>");
 				
 				$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+null+"/"+data);
 		 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+null+"/"+null+"/"+null+"/"+data);
 				$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+null+"/"+null+"/"+null+"/"+data);
 				$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+null+"/"+null+"/"+null+"/"+data);
 				$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+null+"/"+null+"/"+null+"/"+data);
+				$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+null+"/"+null+"/"+data);
 				
 	        });
 		});
@@ -95,6 +99,7 @@
 		$("#justification").html("<div>Loading...</div>");
 		$("#regimen").html("<div>Loading...</div>");
 		$("#sampleType").html("<div>Loading...</div>");
+		$("#sites_listing").html("<center><div class='loader'>Loading...</div></center>");
 
  		if (criteria === "monthly") {
  			year = null;
@@ -123,6 +128,7 @@
 			$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+year+"/"+month+"/"+null+"/"+partner);
 			$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+year+"/"+month+"/"+null+"/"+partner);
 			$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+year+"/"+month+"/"+null+"/"+partner);
+			$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+year+"/"+month+"/"+null);
 		});
 	}
 </script>

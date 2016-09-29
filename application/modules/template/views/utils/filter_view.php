@@ -3,7 +3,7 @@
     <form action="<?php echo base_url();?>template/filter_county_data" method="post" id="filter_form">
       <div class="row">
         <div class="col-md-6">
-          <select class="btn" style="background-color: #C5EFF7;" name="county">
+          <select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;" name="county">
             <option value="0" disabled="true" selected="true">Select County:</option>
             <option value="48">National</option>
             <!-- <optgroup value="Counties"> -->
@@ -87,6 +87,7 @@
 </div>
 <script type="text/javascript">
   $().ready(function(){
+    $(".js-example-basic-single").select2();
     //Getting the URL dynamically
     var url = $(location).attr('href');
     // Getting the file name i.e last segment of URL (i.e. example.html)

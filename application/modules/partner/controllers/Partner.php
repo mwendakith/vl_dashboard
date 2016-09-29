@@ -11,7 +11,7 @@ class Partner extends MY_Controller
 	function __construct()
 	{
 		parent:: __construct();
-		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom','tablecloth')));
+		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom','tablecloth','select2')));
 		$this->session->set_userdata('county_filter', NULL);
 		$this->data['part'] = TRUE;
 	}

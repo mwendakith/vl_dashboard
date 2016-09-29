@@ -81,7 +81,8 @@ $config['plugin_js_files']	=	array(
 										),
 									array('title'=> 'tablecloth',		'file'	=>	'tablecloth/js/jquery.metadata.js'),
 									array('title'=> 'tablecloth',		'file'	=>	'tablecloth/js/jquery.tablesorter.min.js'),
-									array('title'=> 'tablecloth',		'file'	=>	'tablecloth/js/jquery.tablecloth.js')
+									array('title'=> 'tablecloth',		'file'	=>	'tablecloth/js/jquery.tablecloth.js'),
+									array('title'=> 'select2',			'file'	=>	'select2/js/select2.min.js')
 								);	
 $config['plugin_css_files']	=	array(
 									array('title'=> 'bootstrap'	,	'file'	=>	'bootstrap/css/bootstrap.min.css'),
@@ -90,7 +91,8 @@ $config['plugin_css_files']	=	array(
 									array('title'=> 'bootstrap',	'file'	=>	'bootstrap/css/bootstrap-theme.min.css'),
 									array('title'=> 'bootstrap',	'file'	=>	'bootstrap/css/bootstrap-responsive.css'),
 									array('title'=> 'tablecloth',	'file'	=>	'tablecloth/css/tablecloth.css'),
-									array('title'=> 'tablecloth',	'file'	=>	'tablecloth/css/prettify.css')
+									array('title'=> 'tablecloth',	'file'	=>	'tablecloth/css/prettify.css'),
+									array('title'=> 'select2',		'file'	=>	'select2/css/select2.min.css')
 								);
 $config['plugin_php_files']	=	array(
 									// array('title'	=> 	'phpexcel'		,			'file'	=>	'PHPExcel/PHPExcel.php'),
