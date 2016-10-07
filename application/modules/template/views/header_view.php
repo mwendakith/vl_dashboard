@@ -70,7 +70,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="javascript:void(0)" style="padding:0px;padding-top:4px;padding-left:4px;"><img src="<?php echo base_url();?>assets/img/nascoplogo.png" style="width:300px;height:auto;"/></a>
+					<a class="navbar-brand" href="javascript:void(0)" style="padding:0px;padding-top:4px;padding-left:4px;"><img src="<?php echo base_url();?>assets/img/nascop_pepfar_logo.jpg" style="width:320px;height:54px;"/></a>
 				</div>
 				<div class="navbar-collapse collapse navbar-responsive-collapse">
 					<ul class="nav navbar-nav">
@@ -95,8 +95,8 @@
 						</li>
 						<li><a href="<?php echo base_url();?>labs">Labs</a></li>
 						<li><a href="<?php echo base_url();?>sites">Sites</a></li>
-						<li><a href="<?php echo base_url();?>county">County View</a></li>
-						<li><a href="http://eid.nascop.org/vreports.php">Reports</a></li>
+						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
+						<!--<li><a href="<?php echo base_url();?>county">County View</a></li>-->
 						<li><a href="http://eid.nascop.org/login.php">Login</a></li>
 						<li><a href="http://eid.nascop.org">EID View</a></li>
 						<!-- <li><a href="javascript:void(0)">Link</a></li> -->
