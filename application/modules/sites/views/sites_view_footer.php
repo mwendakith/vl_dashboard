@@ -85,7 +85,7 @@
  			month = null;
  		}
 
- 		var posting = $.post( '<?php echo base_url();?>summary/filter_date_data', { 'year': year, 'month': month } );
+ 		var posting = $.post( '<?php echo base_url();?>template/filter_date_data', { 'year': year, 'month': month } );
 
  		// Put the results in a div
 		posting.done(function( data ) {
