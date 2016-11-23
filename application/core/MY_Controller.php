@@ -72,6 +72,18 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			return 	$libs;
 		}
 
+		function clear_all_session_data()
+		{
+			$filter_data = array(
+								'county_filter',
+								'partner_filter',
+								'site_filter',
+								'filter_year',
+								'filter_month'
+								);
+			$this->session->unset_userdata($filter_data);
+		}
+
 		function initialize_filter()
 		{
 			if(!$this->session->userdata('filter_year'))

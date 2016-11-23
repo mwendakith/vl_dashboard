@@ -175,7 +175,9 @@ class Summaries_model extends MY_Model
 
 		foreach ($result as $key => $value) {
 			$data['ul'] .= '<li>Total Tests: '.$value['alltests'].'</li>';
-			$data['ul'] .= '<li>Suspected Tx Failures: '.$value['sustxfail'].' <strong>('.(int) (($value['sustxfail']/$value['alltests'])*100).'%)</strong></li>';
+			$data['ul'] .= '<li>Valid Outcomes: '.($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']).'</li>';
+			$data['ul'] .= '<li>Suspected Tx Failures: '.$value['sustxfail'].' <strong>('.(int) (($value['sustxfail']/($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']))*100).'%)</strong></li>';
+			$data['ul'] .= '<li>Invalid Outcomes: '.$value['invalids'].'</li>';
 			$data['ul'] .= '<li>Total Repeat VL: '.$value['confirm2vl'].'</li>';
 			$data['ul'] .= '<li>Confirmed Tx Failure: '.$value['confirmtx'].'</li>';
 			$data['ul'] .= '<li>Rejected: '.$value['rejected'].'</li>';

@@ -1,24 +1,11 @@
 <script type="text/javascript">
 	$().ready(function () {
-		var partner = <?php echo json_encode($partner_select);?>;
 		
-		if (partner) {
-			$("#second").show();
-			$("#third").show();
-
-			$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+partner);
-			$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+partner);
-			$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+null+"/"+null+"/"+null+"/"+partner);
-			$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+null+"/"+null+"/"+null+"/"+partner);
-			$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>/"+null+"/"+null+"/"+null+"/"+partner);
-			// $("#partner").load("<?php echo base_url('charts/sites/site_outcomes'); ?>/"+null+"/"+null+"/"+partner);
-		} else {
-			$("#second").hide();
-			$("#third").hide();
-			// fetching the partner outcomes
-			$("#partner").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+1);
-		}
-
+		$("#second").hide();
+		$("#third").hide();
+		// fetching the partner outcomes
+		$("#partner").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+1);
+		
 		// fetching the data for a specific partner
 		$("select").change(function(){
 			part = $(this).val();

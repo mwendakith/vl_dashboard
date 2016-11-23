@@ -1,12 +1,6 @@
 <script type="text/javascript">
 	$().ready(function() {
-		var partner = <?php echo json_encode($partner_select);?>;
-		
-		if (partner) {
-			part = partner;
-		} else {
-			part = 1;
-		}
+		part = 1;
 		// console.log(part);
 		//Selecting the appropriate partner and filling the breadcrum with their data
 		// $.get("<?php echo base_url();?>template/breadcrum/"+part+"/"+1, function(data){
