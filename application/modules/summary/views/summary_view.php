@@ -84,7 +84,7 @@
 		  <div class="panel-heading">
 		  	VL Outcomes <div class="display_date" ></div>
 		  </div>
-		  <div id="vlOutcomes">
+		  <div class="panel-body" id="vlOutcomes">
 		  	<center><div class="loader"></div></center>
 		  </div>
 		  

@@ -23,15 +23,6 @@ class Template_model extends MY_Model
 		return $dropdown;
 	}
 
-	function get_county_name($county_id)
-	{
-		$this->db->where('ID', $county_id);
-		$data = $this->db->get('countys')->result_array();
-		$name = $data[0]["name"];
-
-		return $name;
-	}
-
 	function get_partners_dropdown()
 	{
 		$dropdown = '';
@@ -54,6 +45,27 @@ class Template_model extends MY_Model
 		}
 
 		return $dropdown;
+	}
+
+	function get_regimen_dropdown()
+	{
+		$dropdown = '';
+		$county_data = $this->db->get('viralprophylaxis')->result_array();
+
+		foreach ($county_data as $key => $value) {
+			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
+		}
+		
+		return $dropdown;
+	}
+
+	function get_county_name($county_id)
+	{
+		$this->db->where('ID', $county_id);
+		$data = $this->db->get('countys')->result_array();
+		$name = $data[0]["name"];
+
+		return $name;
 	}
 
 	function get_partner_name($partner_id)
