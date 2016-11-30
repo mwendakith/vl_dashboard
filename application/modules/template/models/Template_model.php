@@ -59,6 +59,18 @@ class Template_model extends MY_Model
 		return $dropdown;
 	}
 
+	function get_age_dropdown()
+	{
+		$dropdown = '';
+		$regimen_data = $this->db->query("SELECT * FROM `agecategory` WHERE `ID` > '5'")->result_array();
+
+		foreach ($regimen_data as $key => $value) {
+			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
+		}
+		
+		return $dropdown;
+	}
+
 	function get_county_name($county_id)
 	{
 		$this->db->where('ID', $county_id);

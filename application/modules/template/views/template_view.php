@@ -1,17 +1,19 @@
 <?php
 	ob_start();
 	$this->load->view('header_view');
-	
+	// echo "<pre>";print_r($labs);print_r($part);print_r($sit);print_r($county);print_r($regimen);print_r($age);die();
 	if ($labs) {
 		$this->load->view('utils/date_filter_view');
 	}else if ($part) {
 		$this->load->view('utils/partner_filter_view');
 	}else if ($sit) {
 		$this->load->view('utils/site_filter_view');
-	}else if ($county) {
-		$this->load->view('utils/date_filter_view');
-	}else if ($regimen) {
+	}else if ($cout) {
+		$this->load->view('utils/filter_view');
+	}else if ($reg) {
 		$this->load->view('utils/regimen_filter_view');
+	}else if ($age) {
+		$this->load->view('utils/age_filter_view');
 	}else if ($contacts) {
 
 	}else {

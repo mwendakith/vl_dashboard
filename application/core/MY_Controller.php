@@ -13,9 +13,9 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			$this->data['part'] = FALSE;
 			$this->data['labs'] = FALSE;
 			$this->data['sit'] = FALSE;
-			$this->data['county'] = FALSE;
+			$this->data['cout'] = FALSE;
 			$this->data['contacts'] = FALSE;
-			$this->data['regimen'] = FALSE;
+			$this->data['reg'] = FALSE;
 			$this->data['age'] = FALSE;
 		}
 

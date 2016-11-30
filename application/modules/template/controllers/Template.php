@@ -20,6 +20,7 @@ class Template extends MY_Controller
 		$data['partner'] = $this->template_model->get_partners_dropdown();
 		$data['sites'] = $this->template_model->get_site_dropdown();
 		$data['regimen'] = $this->template_model->get_regimen_dropdown();
+		$data['age_filter'] = $this->template_model->get_age_dropdown();
 		// $data['breadcrum'] = $this->breadcrum();
 		// echo "<pre>";print_r($data);die();
 		$this->load->view('template_view',$data);
