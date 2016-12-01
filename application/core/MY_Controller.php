@@ -222,6 +222,31 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			return TRUE;
 		}
 
+		function filter_ages($data=NULL)
+		{
+			if (!$data) {
+				
+			} else {
+				if ($data['age_category']=='NA') {
+					$this->session->unset_userdata('age_category_filter');
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('partner_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+				}else{
+					$this->session->set_userdata('age_category_filter', $data['age_category']);
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('partner_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+				}
+			}
+			
+			return TRUE;
+		}
+
 		function display_time_period()
 		{
 			$display = array('year' => $this->session->userdata('filter_year'), 'month' => $this->session->userdata('filter_month') );

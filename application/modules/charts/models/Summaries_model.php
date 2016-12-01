@@ -576,7 +576,7 @@ class Summaries_model extends MY_Model
 
 		$data['gender'][0]['drilldown']['color'] = '#913D88';
 		$data['gender'][1]['drilldown']['color'] = '#96281B';
-		
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 

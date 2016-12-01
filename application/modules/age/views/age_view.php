@@ -5,7 +5,7 @@
 			  <div class="panel-heading">
 			    Age Outcomes <div class="display_date"></div>
 			  </div>
-			  <div class="panel-body" id="regimen_outcomes">
+			  <div class="panel-body" id="age_outcomes">
 			    <center><div class="loader"></div></center>
 			  </div>
 			</div>

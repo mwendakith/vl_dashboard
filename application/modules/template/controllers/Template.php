@@ -73,6 +73,17 @@ class Template extends MY_Controller
 		echo $this->session->userdata('regimen_filter');
 	}
 
+	function filter_age_category_data()
+	{
+		$data = array(
+				'age_category' => $this->input->post('age_cat')
+			);
+
+		$this->filter_ages($data);
+
+		echo $this->session->userdata('age_category_filter');
+	}
+
 	function filter_date_data()
 	{
 		$data = array(

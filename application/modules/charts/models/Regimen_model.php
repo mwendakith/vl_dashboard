@@ -63,7 +63,7 @@ class Regimen_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_vl_regimen_vl_outcomes`('".$regimen."','".$year."','".$month."')";
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
@@ -138,8 +138,28 @@ class Regimen_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_vl_regimen_gender`('".$regimen."','".$year."','".$month."')";
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$data['gender'][0]['name'] = 'Test';
+
+		$count = 0;
+		
+		$data["gender"][0]["data"][0]	= $count;
+		$data["gender"][0]["data"][1]	= $count;
+		$data['categories'][0]			= 'No Data';
+
+		foreach ($result as $key => $value) {
+			$data['categories'][0] 			= 'Male';
+			$data['categories'][1] 			= 'Female';
+			$data["gender"][0]["data"][0]	=  (int) $value['maletest'];
+			$data["gender"][0]["data"][1]	=  (int) $value['femaletest'];
+		}
+
+		// $data['gender'][0]['drilldown']['color'] = '#913D88';
+		// $data['gender'][0]['drilldown']['color'] = '#913D88';
+		
+		return $data;
 	}
 
 	function regimen_age($year=NULL,$month=NULL,$regimen=NULL)
@@ -159,8 +179,37 @@ class Regimen_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_vl_regimen_age`('".$regimen."','".$year."','".$month."')";
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$data['ageGnd'][0]['name'] = 'Test';
+
+		$count = 0;
+		
+		$data["ageGnd"][0]["data"][0]	= $count;
+		$data["ageGnd"][0]["data"][1]	= $count;
+		$data['categories'][0]			= 'No Data';
+
+		foreach ($result as $key => $value) {
+			$data['categories'][0] 			= 'No Age';
+			$data['categories'][1] 			= 'Less 2';
+			$data['categories'][2] 			= 'Less 9';
+			$data['categories'][3] 			= 'Less 14';
+			$data['categories'][4] 			= 'Less 19';
+			$data['categories'][5] 			= 'Less 24';
+			$data['categories'][6] 			= 'over 25';
+			$data["ageGnd"][0]["data"][0]	=  (int) $value['noage'];
+			$data["ageGnd"][0]["data"][1]	=  (int) $value['less2'];
+			$data["ageGnd"][0]["data"][2]	=  (int) $value['less9'];
+			$data["ageGnd"][0]["data"][3]	=  (int) $value['less14'];
+			$data["ageGnd"][0]["data"][4]	=  (int) $value['less19'];
+			$data["ageGnd"][0]["data"][5]	=  (int) $value['less24'];
+			$data["ageGnd"][0]["data"][6]	=  (int) $value['over25'];
+		}
+		// $data['gender'][0]['drilldown']['color'] = '#913D88';
+		// $data['gender'][0]['drilldown']['color'] = '#913D88';
+		
+		return $data;
 	}
 
 	function regimen_samples($year=NULL,$regimen=NULL)
