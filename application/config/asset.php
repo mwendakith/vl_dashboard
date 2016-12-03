@@ -76,6 +76,7 @@ $config['plugin_js_files']	=	array(
 									array('title'=> 'ripples',		'file'	=>	'bootstrap/js/ripples.min.js'),
 									array('title'=> 'highstock',	'file'	=>	'highstock/js/highstock.js'),
 									array('title'=> 'highmaps',		'file'	=>	'highmaps/js/modules/map.js'),
+									array('title'=> 'highmaps',		'file'	=>	'highmaps/js/modules/exporting.js'),
 									array('title'=> 'highmaps',		'file'	=>	'highmaps/js/modules/mapdata/countries/ke/ke-all.js'),
 									array('title' => 'Kenya', 		'file' => 'highmaps/kenya.js'
 										),

@@ -62,6 +62,7 @@ class Summaries_model extends MY_Model
 
 	function county_outcomes($year=null,$month=null,$pfil=null,$partner=null,$county=null)
 	{
+		// echo "Year:".$year.":--: Month:".$month.":--: County:".$county.":--: Partner:".$partner.":--: pfil:".$pfil;die();
 		//Initializing the value of the Year to the selected year or the default year which is current year
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -99,7 +100,7 @@ class Summaries_model extends MY_Model
 				$sql = "CALL `proc_get_county_outcomes`('".$year."','".$month."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);echo "</pre>";
+		// echo "<pre>";print_r($sql);echo "</pre>";die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
@@ -152,8 +153,8 @@ class Summaries_model extends MY_Model
 				$sql2 = "CALL `proc_get_regional_sitessending`('".$county."','".$year."','".$month."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);
-		
+		// echo "<pre>";print_r($sql);echo "</pre>";
+		// echo "<pre>";print_r($sql2);echo "</pre>";die();
 		$result = $this->db->query($sql)->result_array();
 		$this->db->close();
 		$sitessending = $this->db->query($sql2)->result_array();
@@ -173,11 +174,33 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['y'] = $count;
 
 		foreach ($result as $key => $value) {
-			$data['ul'] .= '<li>Total Tests: '.$value['alltests'].'</li>';
-			$data['ul'] .= '<li>Suspected Tx Failures: '.$value['sustxfail'].' <strong>('.(int) (($value['sustxfail']/$value['alltests'])*100).'%)</strong></li>';
-			$data['ul'] .= '<li>Total Repeat VL: '.$value['confirm2vl'].'</li>';
-			$data['ul'] .= '<li>Confirmed Tx Failure: '.$value['confirmtx'].'</li>';
-			$data['ul'] .= '<li>Rejected: '.$value['rejected'].'</li>';
+			$data['ul'] .= '<tr>
+	    		<td colspan="2">Total Tests:</td>
+	    		<td colspan="2">'.$value['alltests'].'</td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Outcomes:</td>
+	    		<td colspan="2">'.($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']).'</td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suspected Tx Failure:</td>
+	    		<td colspan="2">'.$value['sustxfail'].' <strong>('.(int) (($value['sustxfail']/($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']))*100).'%)</strong></td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invalid Outcomes:</td>
+	    		<td colspan="2">'.$value['invalids'].'</td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan="2">Total Repeat VL:</td>
+	    		<td colspan="2">'.$value['confirm2vl'].'</td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan="2">Confirmed Tx Failure:</td>
+	    		<td colspan="2">'.$value['confirmtx'].'</td>
+	    	</tr>
+	    	<tr>
+	    		<td>Rejected:</td>
+	    		<td>'.$value['rejected'].'</td>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less5000']+(int) $value['above5000'];
@@ -195,7 +218,7 @@ class Summaries_model extends MY_Model
 			}
 		}
 		// echo "<pre>";print_r($sites);echo "<pre>";print_r($count);echo "<pre>";print_r(round(@$sites / $count));die();
-		$data['ul'] .= '<li>Sites Sending: '.round(@$sites / $count).'</li>';
+		$data['ul'] .= '<td>Average Sites Sending Samples:</td><td>'.round(@$sites / $count).'</td></tr>';
 		$count = 1;
 		$sites = 0;
 
@@ -509,6 +532,9 @@ class Summaries_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_filter');
+		}
 
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -550,31 +576,7 @@ class Summaries_model extends MY_Model
 
 		$data['gender'][0]['drilldown']['color'] = '#913D88';
 		$data['gender'][1]['drilldown']['color'] = '#96281B';
-				
-		// $data['gender']['name'] = 'Tests';
-		// $data['gender']['colorByPoint'] = true;
-
-		// $count = 0;
-		// // echo "<pre>";print_r($result);die();
-		// foreach ($result as $key => $value) {
-
-		// 	$data['gender']['data'][$key]['y'] = $count;
-
-		// 	if ($value['name']=='F'){
-		// 		$data['gender']['data'][$key]['name'] = 'Female';
-		// 		$data['ul'] .= '<li>Female Suppresed: '.(int) ((((int) $value['gender']-(int) $value['sustxfail'])/(int) $value['gender'])*100).'%</li>';
-		// 	}
-		// 	else {
-		// 		$data['gender']['data'][$key]['name'] = 'Male';
-		// 		$data['ul'] .= '<li>Male Suppresed: '.(int) ((((int) $value['gender']-(int) $value['sustxfail'])/(int) $value['gender'])*100).'%</li>';
-		// 	}
-
-		// 	$data['gender']['data'][$key]['y'] = (int) $value['gender'];
-		// }
-
-		// $data['gender']['data'][0]['sliced'] = true;
-		// $data['gender']['data'][0]['selected'] = true;
-		
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
@@ -586,6 +588,9 @@ class Summaries_model extends MY_Model
 
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
+		}
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_filter');
 		}
 
 		if ($year==null || $year=='null') {
@@ -606,7 +611,8 @@ class Summaries_model extends MY_Model
 				$sql2 = "CALL `proc_get_regional_sample_types`('".$county."','".$to."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);
+		// echo "<pre>";print_r($sql);echo "</pre>";
+		// echo "<pre>";print_r($sql2);die();
 		$array1 = $this->db->query($sql)->result_array();
 		
 		if ($sql2) {

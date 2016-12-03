@@ -13,30 +13,29 @@ class Sites_model extends MY_Model
 	}
 
 
-	function sites_outcomes($year=null,$month=null,$site=null,$partner=null)
+	function sites_outcomes($year=null,$month=null,$partner=null)
 	{
-		if (!$partner) {
-			$partner = $this->session->userdata('partner_filter');
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_year');
 		}
-		
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."')";
-		} else if ($site) {
-			$sql = "CALL `proc_get_partner_outcomes`('".$year."','".$month."')";
-		} else {
+		}  else {
 			$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."')";
 		}
+		// $sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."')";
+		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -67,9 +66,9 @@ class Sites_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 
@@ -155,9 +154,9 @@ class Sites_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 		if ($site==null || $site=='null') {
@@ -209,9 +208,9 @@ class Sites_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 
@@ -260,9 +259,9 @@ class Sites_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 		if ($site==null || $site=='null') {
@@ -309,9 +308,9 @@ class Sites_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}
 		if ($site==null || $site=='null') {

@@ -18,8 +18,8 @@
  			year = id;
  			month = null;
  		}
-
- 		var posting = $.post( '<?php echo base_url();?>summary/set_filter_date', { 'year': year, 'month': month } );
+ 		// console.log(year+"<___>"+month);
+ 		var posting = $.post( '<?php echo base_url();?>template/filter_date_data', { 'year': year, 'month': month } );
 
  		// Put the results in a div
 		posting.done(function( data ) {

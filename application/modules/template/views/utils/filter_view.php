@@ -50,7 +50,7 @@
     </form>
   </div>
   <div class="col-md-3">
-    <div id="breadcrum" class="alert" style="background-color: #1BA39C;display:none;">
+    <div id="breadcrum" class="alert" style="background-color: #1BA39C;/*display:none;">
       
     </div>
   </div>
@@ -69,7 +69,6 @@
     </div>
     <div class="filter">
       Month: 
-      <a href='javascript:void(0)' onclick='date_filter("monthly", "all")' class="alert-link"> All </a>|
       <a href='javascript:void(0)' onclick='date_filter("monthly", 1)' class='alert-link'> Jan </a>|
       <a href='javascript:void(0)' onclick='date_filter("monthly", 2)' class='alert-link'> Feb </a>|
       <a href='javascript:void(0)' onclick='date_filter("monthly", 3)' class='alert-link'> Mar </a>|
@@ -92,7 +91,7 @@
     var url = $(location).attr('href');
     // Getting the file name i.e last segment of URL (i.e. example.html)
     var fn = url.split('/').indexOf("partner");
-    console.log(fn);
+    // console.log(fn);
     
     if (fn==-1) {
       $.get("<?php echo base_url();?>template/breadcrum", function(data){

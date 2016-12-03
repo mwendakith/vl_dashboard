@@ -1,97 +1,62 @@
 <script type="text/javascript">
 	$().ready(function() {
-		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+null+"/"+1);
- 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+null+"/"+null+"/"+null+"/"+1);
-		$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+null+"/"+null+"/"+null+"/"+1);
-		$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+null+"/"+null+"/"+null+"/"+1);
-		$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+null+"/"+null+"/"+null+"/"+1);
-		$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+null+"/"+null+"/"+1);
+		part = 1;
+		// console.log(part);
+		//Selecting the appropriate partner and filling the breadcrum with their data
+		// $.get("<?php echo base_url();?>template/breadcrum/"+part+"/"+1, function(data){
+	 	//    	$("#breadcrum").html(data);
+	 //    });
+	    //Fetching data for the above selected partner
+		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+null+"/"+part);
+ 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+null+"/"+null+"/"+null+"/"+part);
+		$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+null+"/"+null+"/"+null+"/"+part);
+		$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+null+"/"+null+"/"+null+"/"+part);
+		$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+null+"/"+null+"/"+null+"/"+part);
+		$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+null+"/"+null+"/"+part);
 
-		$(".display_date").load("<?php echo base_url('charts/nonsuppression/display_date'); ?>");
+		// $(".display_date").load("<?php echo base_url('charts/nonsuppression/display_date'); ?>");
 
-
+		// fetching the data for a specific partner
 		$("select").change(function(){
-			em = $(this).val();
-
+			part = $(this).val();
+			console.log(part);
 			// Send the data using post
-	        var posting = $.post( "<?php echo base_url();?>template/filter_partner_data", { partner: em } );
+	        var posting = $.post( "<?php echo base_url();?>template/filter_partner_data", { partner: part } );
 	        
 	        // Put the results in a div
 	        posting.done(function( data ) {
-	          	$.get("<?php echo base_url();?>template/breadcrum/"+1, function(data){
+	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+1, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
-	        	$.get("<?php echo base_url();?>template/dates", function(data){
-	        		obj = $.parseJSON(data);
+	    //     	$.get("<?php echo base_url();?>template/dates", function(data){
+	    //     		obj = $.parseJSON(data);
 			
-					if(obj['month'] == "null" || obj['month'] == null){
-						obj['month'] = "";
-					}
-					$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
+					// if(obj['month'] == "null" || obj['month'] == null){
+					// 	obj['month'] = "";
+					// }
+					// $(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 					
-	        	});
+	    //     	});
 
-	        	$("#genderGrp").html("<div>Loading...</div>"); 
-	        	$("#ageGrp").html("<div>Loading...</div>"); 
-				$("#justification").html("<div>Loading...</div>");
-				$("#regimen").html("<div>Loading...</div>");
-				$("#sampleType").html("<div>Loading...</div>");
-				$("#sites_listing").html("<center><div class='loader'>Loading...</div></center>");
+	        	$("#genderGrp").html("<center><div class='loader'></div></center>"); 
+	        	$("#ageGrp").html("<center><div class='loader'></div></center>"); 
+				$("#justification").html("<center><div class='loader'></div></center>");
+				$("#regimen").html("<center><div class='loader'></div></center>");
+				$("#sampleType").html("<center><div class='loader'></div></center>");
+				$("#sites_listing").html("<center><div class='loader'></div></center>");
 				
+				data = "<?php echo json_decode("+data+")?>";
+
 				$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+null+"/"+data);
 		 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+null+"/"+null+"/"+null+"/"+data);
 				$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+null+"/"+null+"/"+null+"/"+data);
 				$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+null+"/"+null+"/"+null+"/"+data);
 				$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+null+"/"+null+"/"+null+"/"+data);
 				$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+null+"/"+null+"/"+data);
-				
+	        	});
 	        });
 		});
-
-		// $('#filter_form').submit(function( event ) {
-         
-	 //        // Stop form from submitting normally
-	 //        event.preventDefault();
-	        
-	 //        // Get some values from elements on the page:
-	 //        var $form = $( this ),
-	 //        em = $form.find( "select[name='partner']" ).val(),
-	 //        url = $form.attr( "action" );
-	        
-	 //        // Send the data using post
-	 //        var posting = $.post( url, { county: em } );
-	     
-	 //        // Put the results in a div
-	 //        posting.done(function( data ) {
-	 //          	$.get("<?php echo base_url();?>template/breadcrum/"+1, function(data){
-	 //        		$("#breadcrum").html(data);
-	 //        	});
-	 //        	$.get("<?php echo base_url();?>template/dates", function(data){
-	 //        		obj = $.parseJSON(data);
-			
-		// 			if(obj['month'] == "null" || obj['month'] == null){
-		// 				obj['month'] = "";
-		// 			}
-		// 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
-					
-	 //        	});
-
-	 //        	$("#genderGrp").html("<div>Loading...</div>"); 
-	 //        	$("#ageGrp").html("<div>Loading...</div>"); 
-		// 		$("#justification").html("<div>Loading...</div>");
-		// 		$("#regimen").html("<div>Loading...</div>");
-		// 		$("#sampleType").html("<div>Loading...</div>");
-				
-		// 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+null+"/"+data);
-		//  		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+null+"/"+null+"/"+null+"/"+data);
-		// 		$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+null+"/"+null+"/"+null+"/"+data);
-		// 		$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+null+"/"+null+"/"+null+"/"+data);
-		// 		$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+null+"/"+null+"/"+null+"/"+data);
-				
-	 //        });
-  //   	});
-	});
-
+	
 	function date_filter(criteria, id)
  	{
  		$("#genderGrp").html("<div>Loading...</div>"); 
@@ -109,7 +74,7 @@
  			month = null;
  		}
 
- 		var posting = $.post( '<?php echo base_url();?>summary/set_filter_date', { 'year': year, 'month': month } );
+ 		var posting = $.post( '<?php echo base_url();?>template/filter_date_data', { 'year': year, 'month': month } );
 
  		// Put the results in a div
 		posting.done(function( data ) {
@@ -122,7 +87,10 @@
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
 		});
- 		$.get("<?php echo base_url('partner/get_selected_partner')?>", function(partner) {
+ 		$.get("<?php echo base_url('partner/check_partner_select')?>", function(data) {
+ 			data = "<?php echo json_decode("+data+")?>";
+ 			partner = data;
+ 			// console.log(partner);
 	 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+year+"/"+month+"/"+null+"/"+partner);
 	 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+year+"/"+month+"/"+null+"/"+partner);
 			$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+year+"/"+month+"/"+null+"/"+partner);

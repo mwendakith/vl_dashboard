@@ -2,12 +2,12 @@
 	$().ready(function(){
 		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
 		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>");
-		$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>"); 
 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>");
 		$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>"); 
 		$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>"); 
 		$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>");
-
+		$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>"); 
+		
 		$(".display_date").load("<?php echo base_url('charts/summaries/display_date'); ?>");
 		$(".display_range").load("<?php echo base_url('charts/summaries/display_range'); ?>");
 
@@ -19,7 +19,7 @@
 	     
 	        // Put the results in a div
 	        posting.done(function( data ) {
-	        	$.get("<?php echo base_url();?>template/breadcrum", function(data){
+	        	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
 	        	$.get("<?php echo base_url();?>template/dates", function(data){
@@ -40,13 +40,14 @@
 				$("#justification").html("<center><div class='loader'></div></center>");
 				$("#ageGroups").html("<center><div class='loader'></div></center>");
 				$("#gender").html("<center><div class='loader'></div></center>");
-				$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
+				
 				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
 				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+data);
 				$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+null+"/"+null+"/"+data); 
 				$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+null+"/"+null+"/"+data); 
 				$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+null+"/"+null+"/"+data); 
-				$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>/"+null+"/"+null+"/"+data); 
+				$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>/"+null+"/"+null+"/"+data);
+				$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
 	        });
 		});
 	});
@@ -85,11 +86,11 @@
 
 		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+year+"/"+month);
 		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year);
- 		$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+year+"/"+month); 
-		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+year+"/"+month);
+ 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+year+"/"+month);
 		$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+year+"/"+month); 
 		$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+year+"/"+month); 
 		$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>/"+year+"/"+month);
+		$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+year+"/"+month); 
 	}
 
 	function ageModal()
