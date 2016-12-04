@@ -1,5 +1,6 @@
 <script type="text/javascript">
 	$().ready(function() {
+		$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats");
 		$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends");
 		$("#test_trends").load("<?php echo base_url('charts/labs/testing_trends');?>");
 		$("#samples").load("<?php echo base_url();?>charts/labs/sample_types");
@@ -34,6 +35,7 @@
 		});
  		
  		
+ 		$("#lab_perfomance_stats").html("<div>Loading...</div>"); 
  		$("#rejected").html("<div>Loading...</div>"); 
 		$("#test_trends").html("<div>Loading...</div>");
 		$("#samples").html("<div>Loading...</div>");
@@ -43,6 +45,7 @@
 		$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends/"+year);
 		$("#test_trends").load("<?php echo base_url('charts/labs/testing_trends');?>/"+year);
 		$("#ttime").load("<?php echo base_url();?>charts/labs/turn_around_time/"+year+"/"+month);
+		$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats/"+year+"/"+month);
 		$("#samples").load("<?php echo base_url();?>charts/labs/sample_types/"+year+"/"+month);
 		$("#results").load("<?php echo base_url();?>charts/labs/results_outcome/"+year+"/"+month);
 	}

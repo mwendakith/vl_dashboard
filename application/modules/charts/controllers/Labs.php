@@ -13,6 +13,17 @@ class Labs extends MY_Controller
 		$this->load->model('labs_model');
 	}
 
+	function lab_performance_stats($year=NULL,$month=NULL)
+	{
+		$data['stats'] = $this->labs_model->lab_performance_stat($year,$month);
+
+		// $link = $year . '/' . $month;
+
+		// $data['link'] = "<a href='" . base_url('charts/LabPerformance/download_lab_performance_stats/' . $link) . "'>Download List</a>";
+
+		$this->load->view('lab_performance_stats_view', $data);
+	}
+
 	function testing_trends($year=NULL)
 	{
 		$data['trends'] = $this->labs_model->lab_testing_trends($year);

@@ -6,6 +6,56 @@ defined("BASEPATH") or exit("No direct script access allowed!");
 */
 class Labs_model extends MY_Model
 {
+
+	function lab_performance_stat($year=NULL,$month=NULL)
+	{
+		// echo round(3.6451895227869, 2, PHP_ROUND_HALF_UP);die();
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		$sql = "CALL `proc_get_vl_lab_performance_stats`('".$year."','".$month."');";
+
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);echo "</pre>";die();
+		$ul = '';
+		foreach ($result as $key => $value) {
+			$ul .= "<tr>
+						<td>".($key+1)."</td>
+						<td>".$value['name']."</td>
+						<td>".(int) $value['sitesending']."</td>
+						<td>".(int) $value['received']."</td>
+						<td>".(int) $value['rejected'] . " (" . 
+							round((($value['rejected']*100)/$value['alltests']), 2, PHP_ROUND_HALF_UP)."%)</td>
+						<td>".(int) $value['invalids']."</td>
+
+						<td>".(int) $value['alltests']."</td>
+						<td>".((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000'])."</td>
+						<td>".(int) $value['eqa']."</td>
+						<td>".(int) $value['confirmtx']."</td>
+						<td>".((int) $value['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx'])."</td>
+
+						<td>".( (int) $value['less5000'] + (int) $value['above5000'])."</td>
+						
+						<td>".round(((($value['less5000'] + $value['above5000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP)."%</td>
+
+						<td>".((int) $value['undetected'] + (int) $value['less1000'])."</td>
+
+						<td>".round(((($value['undetected'] + $value['less1000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP)."%</td>
+
+						
+					</tr>";
+		}
+
+		return $ul;
+	}
 	
 	function lab_testing_trends($year=NULL)
 	{
@@ -47,7 +97,22 @@ class Labs_model extends MY_Model
 		}
 
 		
-		// echo "<pre>";print_r($data);die();
+		$this->db->close();
+
+		$sql2 = "CALL `proc_get_avg_labs_testing_trends`('".$year."')";
+		$result2 = $this->db->query($sql2)->result_array();
+
+		$i = count($data['test_trends']);
+		$count = 0;
+		foreach ($result2 as $key => $value) {
+				
+			$data['test_trends'][$i]['name'] = 'National';
+			$data['test_trends'][$i]['data'][$count] = (int) $value['alltests'];
+			$count++;
+		}
+
+		
+		//echo "<pre>";print_r($result2);die();
 		return $data;
 	}
 
@@ -90,8 +155,22 @@ class Labs_model extends MY_Model
 			echo "<pre>";print_r("NO REJECTION TRENDS DATA FOUND FOR THE SELECTED PERIOD!");echo "</pre>";die();
 		}
 
+		$this->db->close();
+
+		$sql2 = "CALL `proc_get_avg_labs_testing_trends`('".$year."')";
+		$result2 = $this->db->query($sql2)->result_array();
+
+		$i = count($data['reject_trend']);
+		$count = 0;
+		foreach ($result2 as $key => $value) {
+				
+			$data['reject_trend'][$i]['name'] = 'National';
+			$data['reject_trend'][$i]['data'][$count] = (int) $value['rejected'];
+			$count++;
+		}
+
 		
-		// echo "<pre>";print_r($data);die();
+		//echo "<pre>";print_r($result2);die();
 		return $data;
 	}
 

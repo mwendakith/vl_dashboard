@@ -1,6 +1,6 @@
 <script type="text/javascript">
 	$(document).ready(function(){
-		var partner = <?php echo json_encode($partner_select);?>;
+		var partner = <?php echo json_encode($this->session->userdata("partner_select"));?>;
 		
 		if (partner) {
 			$("#sites_all").hide();

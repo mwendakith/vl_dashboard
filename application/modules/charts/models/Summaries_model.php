@@ -174,33 +174,51 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['y'] = $count;
 
 		foreach ($result as $key => $value) {
+			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
+			$less = (int) ($value['undetected']+$value['less1000']);
+			$greater = (int) ($value['less5000']+$value['above5000']);
+
 			$data['ul'] .= '<tr>
-	    		<td colspan="2">Total Tests:</td>
+	    		<td colspan="2">Cumulative Tests (All Samples Run):</td>
 	    		<td colspan="2">'.$value['alltests'].'</td>
 	    	</tr>
 	    	<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Outcomes:</td>
-	    		<td colspan="2">'.($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']).'</td>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Tests With Valid Outcomes:</td>
+	    		<td colspan="2">'.($total).'</td>
 	    	</tr>
+
 	    	<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suspected Tx Failure:</td>
-	    		<td colspan="2">'.$value['sustxfail'].' <strong>('.(int) (($value['sustxfail']/($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']))*100).'%)</strong></td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
+	    		<td>'.($greater).'</td>
+	    		<td>%Non Suppression</td>
+	    		<td>'.(int) (($greater/$total)*100).'%</td>
 	    	</tr>
+
 	    	<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invalid Outcomes:</td>
-	    		<td colspan="2">'.$value['invalids'].'</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
+	    		<td>'.($less).'</td>
+	    		<td>%Suppression</td>
+	    		<td>'.(int) (($less/$total)*100).'%</td>
 	    	</tr>
+
 	    	<tr>
-	    		<td colspan="2">Total Repeat VL:</td>
-	    		<td colspan="2">'.$value['confirm2vl'].'</td>
+	    		<td></td>
+	    		<td></td>
+	    		<td></td>
+	    		<td></td>
 	    	</tr>
+
 	    	<tr>
-	    		<td colspan="2">Confirmed Tx Failure:</td>
+	    		<td colspan="2">Confirmatory:</td>
 	    		<td colspan="2">'.$value['confirmtx'].'</td>
 	    	</tr>
+
 	    	<tr>
-	    		<td>Rejected:</td>
-	    		<td>'.$value['rejected'].'</td>';
+	    		<td>Rejected Samples:</td>
+	    		<td>'.$value['rejected'].'</td>
+	    		<td>%Rejection Rate</td>
+	    		<td>'.(int) (($value['rejected']/$value['received'])*100).'%</td>
+	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less5000']+(int) $value['above5000'];
@@ -218,7 +236,7 @@ class Summaries_model extends MY_Model
 			}
 		}
 		// echo "<pre>";print_r($sites);echo "<pre>";print_r($count);echo "<pre>";print_r(round(@$sites / $count));die();
-		$data['ul'] .= '<td>Average Sites Sending Samples:</td><td>'.round(@$sites / $count).'</td></tr>';
+		$data['ul'] .= "<tr> <td colspan=2>Average Sites Sending:</td><td colspan=2>".round(@$sites / $count)."</td></tr>";
 		$count = 1;
 		$sites = 0;
 
