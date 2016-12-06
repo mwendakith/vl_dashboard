@@ -169,8 +169,6 @@ class Labs_model extends MY_Model
 			$count++;
 		}
 
-		
-		//echo "<pre>";print_r($result2);die();
 		return $data;
 	}
 

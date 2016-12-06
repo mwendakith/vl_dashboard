@@ -10,7 +10,7 @@ class Labs extends MY_Controller
 	function __construct()
 	{
 		parent:: __construct();
-		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom')));
+		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom', 'tablecloth')));
 		$this->load->module('charts/labs');
 	}
 

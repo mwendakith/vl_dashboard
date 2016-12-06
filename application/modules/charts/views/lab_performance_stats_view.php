@@ -2,7 +2,7 @@
   
 </div> -->
 
-<table id="example" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="/*background:#CCC;">
+<table id="example" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered">
 	<thead>
 		<tr class="colhead">
 			<th rowspan="2">No</th>
@@ -32,7 +32,6 @@
 </table>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
-  	// $('#download_link').html("<?php echo $link;?>");
   	$('#example').DataTable();
 
     $("table").tablecloth({
