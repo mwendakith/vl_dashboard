@@ -33,7 +33,7 @@
             legend: {
                 layout: 'vertical',
                 align: 'right',
-                verticalAlign: 'top',
+                verticalAlign: 'center',
                 borderWidth: 0
             },
             series: <?php echo json_encode($trends['reject_trend']);?>
