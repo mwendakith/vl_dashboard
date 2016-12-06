@@ -33,7 +33,7 @@ class Labs_model extends MY_Model
 						<td>".(int) $value['sitesending']."</td>
 						<td>".(int) $value['received']."</td>
 						<td>".(int) $value['rejected'] . " (" . 
-							round((($value['rejected']*100)/$value['alltests']), 2, PHP_ROUND_HALF_UP)."%)</td>
+							round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP)."%)</td>
 						<td>".(int) $value['invalids']."</td>
 
 						<td>".(int) $value['alltests']."</td>
@@ -55,6 +55,76 @@ class Labs_model extends MY_Model
 		}
 
 		return $ul;
+	}
+
+	function download_lab_performance_stats($year, $month){
+
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		$sql = "CALL `proc_get_vl_lab_performance_stats`('".$year."','".$month."');";
+
+		$this->load->dbutil();
+        $this->load->helper('file');
+        $this->load->helper('download');
+        $delimiter = ",";
+        $newline = "\r\n";
+        $filename = "labs.csv";
+        $result = $this->db->query($sql)->result_array();
+        $sheet;
+
+        foreach ($result as $key => $value) {
+			$key;
+			$sheet[$key]['name'] = $value['name'];
+			$sheet[$key]['sites_sending'] = (int) $value['sitesending'];
+			$sheet[$key]['received'] = (int) $value['received'];
+			$sheet[$key]['rejected'] = (int) $value['rejected'];
+			$sheet[$key]['rejection_rate'] = round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP)."%";
+			$sheet[$key]['invalid_tests'] = (int) $value['invalids'];
+			$sheet[$key]['all_tests'] = (int) $value['alltests'];
+			$sheet[$key]['valid_tests'] = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
+			$sheet[$key]['eqa'] = (int) $value['eqa'];
+			$sheet[$key]['confirmatory_repeat_tests'] = (int) $value['confirmtx'];
+			$sheet[$key]['total_tests'] = ((int) $value['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx']);
+			$sheet[$key]['>1000_copies'] = ( (int) $value['less5000'] + (int) $value['above5000']);
+			$sheet[$key]['>1000_copies5'] = round(((($value['less5000'] + $value['above5000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP) . "%";
+			$sheet[$key]['<1000_copies'] = ((int) $value['undetected'] + (int) $value['less1000']);
+			$sheet[$key]['<1000_copies%'] = round(((($value['undetected'] + $value['less1000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP) . "%";
+						
+		}
+
+		// echo "<pre>";print_r($sheet);die();
+
+  //       $data = $this->dbutil->csv_from_result($sheet, $delimiter, $newline);
+  //       force_download($filename, $data);
+
+		 /** open raw memory as file, no need for temp files, be careful not to run out of memory thought */
+	    $f = fopen('php://memory', 'w');
+	    /** loop through array  */
+
+	    $b = array('Testing Lab', 'Facilities Served', 'Total Samples Received', 'Rejected Samples (on receipt at lab)', 'Rejection Rate', 'Redraws (after testing)', 'All Samples Run', 'Valid Test Results', 'EQA QA/IQC Tests', 'Confirmatory Repeat Tests', 'Total Tests Performed', '>1000 copies/ml', '%>1000 copies/ml', '<1000 copies/ml', '%<1000 copies/ml');
+
+	    fputcsv($f, $b, $delimiter);
+
+	    foreach ($sheet as $line) {
+	        /** default php csv handler **/
+	        fputcsv($f, $line, $delimiter);
+	    }
+	    /** rewrind the "file" with the csv lines **/
+	    fseek($f, 0);
+	    /** modify header to be downloadable csv file **/
+	    header('Content-Type: application/csv');
+	    header('Content-Disposition: attachement; filename="report.csv";');
+	    /** Send file to browser for download */
+	    fpassthru($f);
 	}
 	
 	function lab_testing_trends($year=NULL)

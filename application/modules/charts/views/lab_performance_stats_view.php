@@ -1,6 +1,6 @@
-<!-- <div id="download_link">
+ <div id="download_link">
   
-</div> -->
+</div>
 
 <table id="example" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered">
 	<thead>
@@ -40,6 +40,8 @@
       sortable: true,
       condensed: true
     });
+
+    $("#download_link").html("<?php  echo $link; ?>");
 
 
   });

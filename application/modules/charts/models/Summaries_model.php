@@ -209,7 +209,7 @@ class Summaries_model extends MY_Model
 	    	</tr>
 
 	    	<tr>
-	    		<td colspan="2">Confirmatory:</td>
+	    		<td colspan="2">Confirmatory Repeat Tests:</td>
 	    		<td colspan="2">'.$value['confirmtx'].'</td>
 	    	</tr>
 
@@ -217,7 +217,7 @@ class Summaries_model extends MY_Model
 	    		<td>Rejected Samples:</td>
 	    		<td>'.$value['rejected'].'</td>
 	    		<td>%Rejection Rate</td>
-	    		<td>'.(int) (($value['rejected']/$value['received'])*100).'%</td>
+	    		<td>'. round(( ((int)$value['rejected']/(int)$value['received'])*100), 4).'%</td>
 	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
