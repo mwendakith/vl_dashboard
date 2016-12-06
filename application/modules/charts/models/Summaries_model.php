@@ -217,7 +217,7 @@ class Summaries_model extends MY_Model
 	    		<td>Rejected Samples:</td>
 	    		<td>'.$value['rejected'].'</td>
 	    		<td>%Rejection Rate</td>
-	    		<td>'. round(( ((int)$value['rejected']/(int)$value['received'])*100), 4).'%</td>
+	    		<td>'. round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
@@ -413,7 +413,12 @@ class Summaries_model extends MY_Model
 		$data['categories'][0]			= 'No Data';
 
 		foreach ($result as $key => $value) {
-			if ($value['name']=='Less 2') {
+			if ($value['name']=='No Data') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='Less 2') {
 				$loop = $key;
 				$name = $value['name'];
 				$nonsuppressed = $value['nonsuppressed'];
