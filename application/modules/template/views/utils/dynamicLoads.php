@@ -24,6 +24,8 @@
 		}
 	}
 	echo "<".$cssTag." rel='stylesheet' href='//cdn.datatables.net/1.10.12/css/jquery.dataTables.css'".$cssTagType."></".$cssTag.">\n";
+	echo "<".$cssTag." rel='stylesheet' href='//cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.css'".$cssTagType."></".$cssTag.">\n";
+	
 	
 	if(is_array($js_plugin_files)){
 		foreach($js_plugin_files as $file){
@@ -37,4 +39,6 @@
 
 	}
 	echo "<".$jsTag." src='//cdn.datatables.net/1.10.12/js/jquery.dataTables.js'".$jsTagType."></".$jsTag.">\n";
+	echo "<".$jsTag." src='//cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.js'".$jsTagType."></".$jsTag.">\n";
+
 	

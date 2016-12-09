@@ -83,7 +83,7 @@
 					</form> -->
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="<?php echo base_url();?>">Summary</a></li>
-						<!-- <li><a href="<?php //echo base_url();?>suppression/nosuppression">Non-Suppression</a></li> -->
+						<li><a href="<?php echo base_url();?>trends">Trends</a></li>
 						<li><a href="<?php echo base_url();?>regimen">Regimen</a></li>
 						<li><a href="<?php echo base_url();?>age">Age</a></li>
 						<li class="dropdown">
@@ -91,14 +91,14 @@
 							<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url();?>partner">Summary</a></li>
-								<li><a href="<?php echo base_url();?>partner/nosuppression">Non-Suppression</a></li>
+								<li><a href="<?php echo base_url();?>partner/trends">Trends</a></li>
 								<li><a href="<?php echo base_url();?>partner/sites">Partner Sites</a></li>
 							</ul>
 						</li>
-						<li><a href="<?php echo base_url();?>labs">Labs</a></li>
+						<<li><a href="<?php echo base_url();?>labs">Labs</a></li>
 						<li><a href="<?php echo base_url();?>sites">Sites</a></li>
 						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
-						<!-- <li><a href="<?php echo base_url();?>county">County View</a></li> -->
+						<li><a href="<?php echo base_url();?>county">County View</a></li>
 						<li><a href="http://eid.nascop.org/login.php">Login</a></li>
 						<li><a href="http://eid.nascop.org">EID View</a></li>
 						<!-- <li><a href="javascript:void(0)">Link</a></li> -->
