@@ -2,7 +2,7 @@
   
 </div>
 
-<table id="example" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered">
+<table id="example" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="max-width: 100%;">
 	<thead>
 		<tr class="colhead">
 			<th rowspan="2">No</th>
@@ -20,10 +20,10 @@
 		</tr>
 		<tr>
 			<th>Excludes QA and Repeats</th>
-			<th>&gt; 1000 copies/ml</th>
-			<th>% &gt; 1000 copies</th>
-			<th>&lt; 1000 copies/ml</th>
-			<th>%&lt;1000 copies/ml</th>
+			<th>&gt; 1000 cp/ml</th>
+			<th>% &gt; 1000 cp</th>
+			<th>&lt; 1000 cp/ml</th>
+			<th>%&lt;1000 cp/ml</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -32,7 +32,9 @@
 </table>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
-  	$('#example').DataTable();
+  	$('#example').DataTable({
+  		responsive: true
+  	});
 
     $("table").tablecloth({
       theme: "paper",

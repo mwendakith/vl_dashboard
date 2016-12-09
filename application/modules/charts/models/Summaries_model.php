@@ -180,23 +180,23 @@ class Summaries_model extends MY_Model
 
 			$data['ul'] .= '<tr>
 	    		<td colspan="2">Cumulative Tests (All Samples Run):</td>
-	    		<td colspan="2">'.$value['alltests'].'</td>
+	    		<td colspan="2">'.number_format($value['alltests']).'</td>
 	    	</tr>
 	    	<tr>
 	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Tests With Valid Outcomes:</td>
-	    		<td colspan="2">'.($total).'</td>
+	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
-	    		<td>'.($greater).'</td>
+	    		<td>'.number_format($greater).'</td>
 	    		<td>%Non Suppression</td>
 	    		<td>'.(int) (($greater/$total)*100).'%</td>
 	    	</tr>
 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
-	    		<td>'.($less).'</td>
+	    		<td>'.number_format($less).'</td>
 	    		<td>%Suppression</td>
 	    		<td>'.(int) (($less/$total)*100).'%</td>
 	    	</tr>
@@ -210,12 +210,12 @@ class Summaries_model extends MY_Model
 
 	    	<tr>
 	    		<td colspan="2">Confirmatory Repeat Tests:</td>
-	    		<td colspan="2">'.$value['confirmtx'].'</td>
+	    		<td colspan="2">'.number_format($value['confirmtx']).'</td>
 	    	</tr>
 
 	    	<tr>
 	    		<td>Rejected Samples:</td>
-	    		<td>'.$value['rejected'].'</td>
+	    		<td>'.number_format($value['rejected']).'</td>
 	    		<td>%Rejection Rate</td>
 	    		<td>'. round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';

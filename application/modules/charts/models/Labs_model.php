@@ -79,6 +79,7 @@ class Labs_model extends MY_Model
         $newline = "\r\n";
         $filename = "labs.csv";
         $result = $this->db->query($sql)->result_array();
+        
         $sheet;
 
         foreach ($result as $key => $value) {
