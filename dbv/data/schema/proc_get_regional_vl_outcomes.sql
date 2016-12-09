@@ -15,6 +15,7 @@ BEGIN
         SUM(`rejected`) AS `rejected`, 
         SUM(`repeattests`) AS `repeats`, 
         SUM(`invalids`) AS `invalids`,
+        SUM(`received`) AS `received`,
         AVG(`sitessending`) AS `sitessending`
     FROM `vl_county_summary`
     WHERE 1";
