@@ -83,7 +83,6 @@ class Labs_model extends MY_Model
         $sheet;
 
         foreach ($result as $key => $value) {
-			$key;
 			$sheet[$key]['name'] = $value['name'];
 			$sheet[$key]['sites_sending'] = (int) $value['sitesending'];
 			$sheet[$key]['received'] = (int) $value['received'];
@@ -123,7 +122,7 @@ class Labs_model extends MY_Model
 	    fseek($f, 0);
 	    /** modify header to be downloadable csv file **/
 	    header('Content-Type: application/csv');
-	    header('Content-Disposition: attachement; filename="report.csv";');
+	    header('Content-Disposition: attachement; filename="labs.csv";');
 	    /** Send file to browser for download */
 	    fpassthru($f);
 	}
@@ -177,7 +176,7 @@ class Labs_model extends MY_Model
 		$count = 0;
 		foreach ($result2 as $key => $value) {
 				
-			$data['test_trends'][$i]['name'] = 'National';
+			$data['test_trends'][$i]['name'] = 'Average Lab Testing Volumes';
 			$data['test_trends'][$i]['data'][$count] = (int) $value['alltests'];
 			$count++;
 		}
@@ -235,7 +234,7 @@ class Labs_model extends MY_Model
 		$count = 0;
 		foreach ($result2 as $key => $value) {
 				
-			$data['reject_trend'][$i]['name'] = 'National';
+			$data['reject_trend'][$i]['name'] = 'National Rejection Rate';
 			$data['reject_trend'][$i]['data'][$count] = (int) $value['rejected'];
 			$count++;
 		}
