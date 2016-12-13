@@ -1,19 +1,18 @@
-<?php ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!-- about this site -->
-		<meta name="description" content="A web platform that for Viral Load">
-		<meta name="keywords" content="EID, VL, Early infant diagnosis, Viral Load, HIV, AIDS, HIV/AIDS, adults, pedeatrics, infants">
-		<meta name="author" content="Star Sarifi Tours">
+		<meta name="description" content="A web platform that for Viral Load" />
+		<meta name="keywords" content="EID, VL, Early infant diagnosis, Viral Load, HIV, AIDS, HIV/AIDS, adults, pedeatrics, infants, VL Dashboard" />
+		<meta name="author" content="Viralload">
 		<meta name="Resource-type" content="Document">
 		<?php      	
 			$this->load->view('utils/dynamicLoads');
 		?>
-		<link rel=icon href="<?php echo base_url('assets/img/kenya-coat-of-arms.png');?>" type="image/png">
+		<link rel=icon href="<?php echo base_url('assets/img/kenya-coat-of-arms.png');?>" type="image/png" />
 		<title>
 			Dashboard
 		</title>
@@ -98,7 +97,7 @@
 						<<li><a href="<?php echo base_url();?>labs">Labs</a></li>
 						<li><a href="<?php echo base_url();?>sites">Sites</a></li>
 						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
-						<li><a href="<?php echo base_url();?>county">County View</a></li>
+						<!-- <li><a href="<?php echo base_url();?>county">County View</a></li> -->
 						<li><a href="http://eid.nascop.org/login.php">Login</a></li>
 						<li><a href="http://eid.nascop.org">EID View</a></li>
 						<!-- <li><a href="javascript:void(0)">Link</a></li> -->

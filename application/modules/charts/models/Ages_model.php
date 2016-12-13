@@ -84,31 +84,31 @@ class Ages_model extends MY_Model
 		foreach ($result as $key => $value) {
 			$data['ul'] .= '<tr>
 	    		<td colspan="2">Total Tests:</td>
-	    		<td colspan="2">'.$value['alltests'].'</td>
+	    		<td colspan="2">'.number_format($value['alltests']).'</td>
 	    	</tr>
 	    	<tr>
 	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Outcomes:</td>
-	    		<td colspan="2">'.($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']).'</td>
+	    		<td colspan="2">'.number_format($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']).'</td>
 	    	</tr>
 	    	<tr>
 	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suspected Tx Failure:</td>
-	    		<td colspan="2">'.$value['sustxfail'].' <strong>('.(int) (($value['sustxfail']/($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']))*100).'%)</strong></td>
+	    		<td colspan="2">'.number_format($value['sustxfail']).' <strong>('.(int) (($value['sustxfail']/($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']))*100).'%)</strong></td>
 	    	</tr>
 	    	<tr>
 	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invalid Outcomes:</td>
-	    		<td colspan="2">'.$value['invalids'].'</td>
+	    		<td colspan="2">'.number_format($value['invalids']).'</td>
 	    	</tr>
 	    	<tr>
 	    		<td colspan="2">Total Repeat VL:</td>
-	    		<td colspan="2">'.$value['confirm2vl'].'</td>
+	    		<td colspan="2">'.number_format($value['confirm2vl']).'</td>
 	    	</tr>
 	    	<tr>
 	    		<td colspan="2">Confirmed Tx Failure:</td>
-	    		<td colspan="2">'.$value['confirmtx'].'</td>
+	    		<td colspan="2">'.number_format($value['confirmtx']).'</td>
 	    	</tr>
 	    	<tr>
 	    		<td>Rejected:</td>
-	    		<td>'.$value['rejected'].'</td>';
+	    		<td>'.number_format($value['rejected']).'</td>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less5000']+(int) $value['above5000'];

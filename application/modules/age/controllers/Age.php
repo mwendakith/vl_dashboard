@@ -22,5 +22,15 @@ class Age extends MY_Controller
 		// echo "<pre>";print_r($t`his->data);die();
 		$this -> template($this->data);
 	}
+
+	function check_age_select()
+	{
+		if ($this->session->userdata('age_category_filter')) {
+			$age_select = $this->session->userdata('age_category_filter');
+		} else {
+			$age_select = 0;
+		}
+		echo json_encode($age_select);
+	}
 }
 ?>

@@ -1,4 +1,4 @@
-<div id="gender_pie" style="height:480px;">
+<div id="gender_pie" style="height:540px;">
 
 </div>
 

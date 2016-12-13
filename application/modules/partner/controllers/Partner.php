@@ -24,6 +24,14 @@ class Partner extends MY_Controller
 		$this -> template($this->data);
 	}
 
+	public function trends()
+	{
+		$this->load->module('charts/partner_trends');
+		$this->clear_all_session_data();
+		$this->data['content_view'] = 'partner/partner_trends_view';
+		$this->template($this->data);
+	}
+
 	public function nosuppression()
 	{
 		// echo "<pre>";print_r($this->session->all_userdata());die();
