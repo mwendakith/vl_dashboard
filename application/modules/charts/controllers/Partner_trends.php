@@ -25,7 +25,7 @@ class Partner_trends extends MY_Controller
 		$this->load->view('yearly_trends_view', $data);
 
 		$data['trends'] = $obj['test_trends'];
-		$data['title'] = "Test Trends";
+		$data['title'] = "Testing Trends";
 		$data['div_name'] = "tests";
 		$data['suffix'] = "";
 		$data['yAxis'] = "Number of  Valid Tests";
@@ -34,18 +34,18 @@ class Partner_trends extends MY_Controller
 		
 
 		$data['trends'] = $obj['rejected_trends'];
-		$data['title'] = "Rejected Trends";
+		$data['title'] = "Rejection Rate Trends";
 		$data['div_name'] = "rejects";
 		$data['suffix'] = "%";
-		$data['yAxis'] = "Rejects (%)";
+		$data['yAxis'] = "Rejection (%)";
 		$this->load->view('yearly_trends_view', $data);
 
 
 		$data['trends'] = $obj['tat_trends'];
-		$data['title'] = "Turnaround Time";
+		$data['title'] = "Collection - Dispatch";
 		$data['div_name'] = "tat";
 		$data['suffix'] = "";
-		$data['yAxis'] = "Tat4 Time";
+		$data['yAxis'] = "TAT(Days)";
 		$this->load->view('yearly_trends_view', $data);
 
 		
