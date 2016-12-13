@@ -214,7 +214,7 @@ class Labs_model extends MY_Model
 					foreach ($result as $key2 => $value2) {
 						if ((int) $value1 == (int) $value2['month'] && $value == $value2['labname']) {
 							$data['reject_trend'][$key]['name'] = $value;
-							$data['reject_trend'][$key]['data'][$count] = (int) $value2['rejected'];
+							$data['reject_trend'][$key]['data'][$count] = round(@((int) $value2['rejected'] * 100 / (int) $value2['received']), 2);
 						}
 					}
 					$count++;
@@ -235,7 +235,7 @@ class Labs_model extends MY_Model
 		foreach ($result2 as $key => $value) {
 				
 			$data['reject_trend'][$i]['name'] = 'National Rejection Rate';
-			$data['reject_trend'][$i]['data'][$count] = (int) $value['rejected'];
+			$data['reject_trend'][$i]['data'][$count] = round(@((int) $value['rejected'] * 100 / (int) $value['received']), 2);
 			$count++;
 		}
 

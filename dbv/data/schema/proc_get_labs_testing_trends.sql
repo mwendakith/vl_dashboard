@@ -7,6 +7,7 @@ BEGIN
                     `lb`.`labname`, 
                     `vls`.`alltests`, 
                     `vls`.`rejected`, 
+                    `vls`.`received`, 
                     `vls`.`month`, 
                     `vls`.`year` 
                 FROM `vl_lab_summary` `vls` 

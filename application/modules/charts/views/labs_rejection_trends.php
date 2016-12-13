@@ -19,7 +19,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Rejects'
+                    text: 'Rejection (%)'
                 },
                 plotLines: [{
                     value: 0,
@@ -28,7 +28,7 @@
                 }]
             },
             tooltip: {
-                valueSuffix: null
+                valueSuffix: "%"
             },
             legend: {
                 layout: 'vertical',

@@ -1,6 +1,3 @@
- <div id="download_link">
-  
-</div>
 
 <table id="example" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="max-width: 100%;">
 	<thead>
@@ -30,6 +27,11 @@
 		<?php echo $stats;?>
 	</tbody>
 </table>
+<div class="row">
+	<div class="col-md-12">
+		<center><button id="download_link" class="btn btn-primary" style="background-color: #009688;color: white;"></button></center>
+	</div>
+</div>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
   	$('#example').DataTable({
@@ -44,6 +46,7 @@
     });
 
     $("#download_link").html("<?php  echo $link; ?>");
+  	$('#download_link > a').css("color","white");
 
 
   });
