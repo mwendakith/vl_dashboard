@@ -31,10 +31,8 @@
                     },
                     legend: {
                         align: 'right',
-                        x: -30,
                         verticalAlign: 'bottom',
-                        y: 25,
-                        floating: true,
+                        floating: false,
                         backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
                         borderColor: '#CCC',
                         borderWidth: 1,
