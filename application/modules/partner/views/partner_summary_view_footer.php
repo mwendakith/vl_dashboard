@@ -1,6 +1,14 @@
 <script type="text/javascript">
 	$().ready(function () {
-		
+		$.get("<?php echo base_url();?>template/dates", function(data){
+    		obj = $.parseJSON(data);
+	
+			if(obj['month'] == "null" || obj['month'] == null){
+				obj['month'] = "";
+			}
+			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
+			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
+    	});
 		$("#second").hide();
 		$("#third").hide();
 		// fetching the partner outcomes
@@ -17,7 +25,15 @@
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+1, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
-
+	        	$.get("<?php echo base_url();?>template/dates", function(data){
+		    		obj = $.parseJSON(data);
+			
+					if(obj['month'] == "null" || obj['month'] == null){
+						obj['month'] = "";
+					}
+					$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
+					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
+		    	});
 	        	// Condition to dispay the proper divs based on whether a partner is selected or not
 	        	if (data=='null') {
 	        		$("#second").hide();

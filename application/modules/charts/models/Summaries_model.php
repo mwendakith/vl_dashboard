@@ -190,14 +190,14 @@ class Summaries_model extends MY_Model
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
-	    		<td>%Non Suppression</td>
+	    		<td>Percentage Non Suppression</td>
 	    		<td>'.(int) (($greater/$total)*100).'%</td>
 	    	</tr>
 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
 	    		<td>'.number_format($less).'</td>
-	    		<td>%Suppression</td>
+	    		<td>Percentage Suppression</td>
 	    		<td>'.(int) (($less/$total)*100).'%</td>
 	    	</tr>
 
@@ -216,7 +216,7 @@ class Summaries_model extends MY_Model
 	    	<tr>
 	    		<td>Rejected Samples:</td>
 	    		<td>'.number_format($value['rejected']).'</td>
-	    		<td>%Rejection Rate</td>
+	    		<td>Percentage Rejection Rate</td>
 	    		<td>'. round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
@@ -236,7 +236,7 @@ class Summaries_model extends MY_Model
 			}
 		}
 		// echo "<pre>";print_r($sites);echo "<pre>";print_r($count);echo "<pre>";print_r(round(@$sites / $count));die();
-		$data['ul'] .= "<tr> <td colspan=2>Average Sites Sending:</td><td colspan=2>".round(@$sites / $count)."</td></tr>";
+		$data['ul'] .= "<tr> <td colspan=2>Average Sites Sending:</td><td colspan=2>".number_format(round(@$sites / $count))."</td></tr>";
 		$count = 1;
 		$sites = 0;
 

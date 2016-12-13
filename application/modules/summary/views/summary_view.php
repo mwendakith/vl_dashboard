@@ -79,7 +79,7 @@
 </div>
 <div class="row">
 	<!-- Map of the country -->
-	<div class="col-md-4 col-sm-3 col-xs-12">
+	<div class="col-md-7 col-sm-3 col-xs-12">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
 		  	VL Outcomes <div class="display_date" ></div>
@@ -90,48 +90,42 @@
 		  
 		</div>
 	</div>
-
 	<div class="col-md-5">
-		<div class="row">
-			<div class="col-md-7" style="padding-right:0px;">
-				<div class="panel panel-default">
-				  <div class="panel-heading">
-				    Age <div class="display_date"></div>
-				  </div>
-				  <div class="panel-body" id="ageGroups">
-				    <center><div class="loader"></div></center>
-				  </div>
-				  <div>
-				  	<button class="btn btn-default" onclick="ageModal();">Click here for breakdown</button>
-				  </div>
-				</div>
-			</div>
-			<div class="col-md-5">
-				<div class="panel panel-default">
-				  <div class="panel-heading">
-				    Gender <div class="display_date"></div>
-				  </div>
-				  <div class="panel-body" id="gender" style="height:500px;padding-bottom:0px;">
-				    <center><div class="loader"></div></center>
-				  </div>
-				</div>
-			</div>
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    Gender <div class="display_date"></div>
+		  </div>
+		  <div class="panel-body" id="gender" style="height:650px;padding-bottom:0px;">
+		    <center><div class="loader"></div></center>
+		  </div>
+		</div>
+	</div>
+	
+	<div class="col-md-6">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		    Age <div class="display_date"></div>
+		  </div>
+		  <div class="panel-body" id="ageGroups">
+		    <center><div class="loader"></div></center>
+		  </div>
+		  <div>
+		  	<center><button class="btn btn-default" onclick="ageModal();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">Click here for breakdown</button></center>
+		  </div>
 		</div>
 	</div>
 	<!-- Map of the country -->
-	<div class="col-md-3 col-sm-4 col-xs-12">
-		<div class="row">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-				  Justification for tests <div class="display_date"></div>
-			  </div>
-			  <div class="panel-body" id="justification" style="height:500px;">
-			    <center><div class="loader"></div></center>
-			  </div>
-			  <div>
-			  	<button class="btn btn-default" onclick="justificationModal();">Click here for breakdown</button>
-			  </div>
-			</div>
+	<div class="col-md-6 col-sm-4 col-xs-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+			  Justification for tests <div class="display_date"></div>
+		  </div>
+		  <div class="panel-body" id="justification" style="height:500px;">
+		    <center><div class="loader"></div></center>
+		  </div>
+		  <div>
+		  	<center><button class="btn btn-default" onclick="justificationModal();" style="background-color: #1BA39C;color: white;margin-bottom: 1em;">Click here for breakdown</button></center>
+		  </div>
 		</div>
 	</div>
 	

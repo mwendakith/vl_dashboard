@@ -1,19 +1,18 @@
-<?php ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!-- about this site -->
-		<meta name="description" content="A web platform that for Viral Load">
-		<meta name="keywords" content="EID, VL, Early infant diagnosis, Viral Load, HIV, AIDS, HIV/AIDS, adults, pedeatrics, infants">
-		<meta name="author" content="Star Sarifi Tours">
+		<meta name="description" content="A web platform that for Viral Load" />
+		<meta name="keywords" content="EID, VL, Early infant diagnosis, Viral Load, HIV, AIDS, HIV/AIDS, adults, pedeatrics, infants, VL Dashboard" />
+		<meta name="author" content="Viralload">
 		<meta name="Resource-type" content="Document">
 		<?php      	
 			$this->load->view('utils/dynamicLoads');
 		?>
-		<link rel=icon href="<?php echo base_url('assets/img/kenya-coat-of-arms.png');?>" type="image/png">
+		<link rel=icon href="<?php echo base_url('assets/img/kenya-coat-of-arms.png');?>" type="image/png" />
 		<title>
 			Dashboard
 		</title>
@@ -82,7 +81,7 @@
 						</div>
 					</form> -->
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="<?php echo base_url();?>">Summary</a></li>
+						<li class="active"><a href="<?php echo base_url();?>">Summary</a></li>
 						<li><a href="<?php echo base_url();?>trends">Trends</a></li>
 						<li><a href="<?php echo base_url();?>regimen">Regimen</a></li>
 						<li><a href="<?php echo base_url();?>age">Age</a></li>

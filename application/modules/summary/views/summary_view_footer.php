@@ -1,5 +1,14 @@
 <script type="text/javascript">
 	$().ready(function(){
+		$.get("<?php echo base_url();?>template/dates", function(data){
+    		obj = $.parseJSON(data);
+	
+			if(obj['month'] == "null" || obj['month'] == null){
+				obj['month'] = "";
+			}
+			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
+			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
+    	});
 		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
 		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>");
 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>");
@@ -62,7 +71,7 @@
  			month = null;
  		}
 
- 		var posting = $.post( '<?php echo base_url();?>summary/set_filter_date', { 'year': year, 'month': month } );
+ 		var posting = $.post( '<?php echo base_url();?>template/filter_date_data', { 'year': year, 'month': month } );
 
  		// Put the results in a div
 		posting.done(function( data ) {
