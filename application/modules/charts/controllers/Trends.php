@@ -41,7 +41,7 @@ class Trends extends MY_Controller
 		$this->load->view('yearly_trends_view', $data);
 
 
-		$data['trends'] = $obj['tat4_trends'];
+		$data['trends'] = $obj['tat_trends'];
 		$data['title'] = "Turnaround Time";
 		$data['div_name'] = "tat";
 		$data['suffix'] = "";
