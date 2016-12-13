@@ -1,5 +1,14 @@
 <script type="text/javascript">
 	$().ready(function () {
+		$.get("<?php echo base_url();?>template/dates", function(data){
+    		obj = $.parseJSON(data);
+	
+			if(obj['month'] == "null" || obj['month'] == null){
+				obj['month'] = "";
+			}
+			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
+			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
+    	});
 		$("#second").hide();
 
 		$("#regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>");
@@ -87,7 +96,7 @@
 					$("#age").html("<center><div class='loader'></div></center>");
 					$("#samples").html("<center><div class='loader'></div></center>");
 					
-					$("#vlOutcomes").load("<?php echo base_url('charts/regimen/regimen_vl_outcome'); ?>");
+					$("#vlOutcomes").load("<?php echo base_url('charts/regimen/regimen_vl_outcome'); ?>/"+year+"/"+month+"/"+data);
 					$("#gender").load("<?php echo base_url('charts/regimen/regimen_gender'); ?>/"+year+"/"+month+"/"+data);
 					$("#age").load("<?php echo base_url('charts/regimen/regimen_age'); ?>/"+year+"/"+month+"/"+data); 
 					$("#samples").load("<?php echo base_url('charts/regimen/sample_types'); ?>/"+year+"/"+data);

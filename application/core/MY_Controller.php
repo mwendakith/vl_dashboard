@@ -81,6 +81,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 								'partner_filter',
 								'site_filter',
 								'regimen_filter',
+								'age_category_filter',
 								'filter_year',
 								'filter_month'
 								);
