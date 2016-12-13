@@ -95,7 +95,7 @@
 							</ul>
 						</li>
 						<<li><a href="<?php echo base_url();?>labs">Labs</a></li>
-						<li><a href="<?php echo base_url();?>sites">Sites</a></li>
+						<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
 						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
 						<!-- <li><a href="<?php echo base_url();?>county">County View</a></li> -->
 						<li><a href="http://eid.nascop.org/login.php">Login</a></li>
