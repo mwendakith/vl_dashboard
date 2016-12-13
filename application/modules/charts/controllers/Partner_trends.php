@@ -41,12 +41,12 @@ class Partner_trends extends MY_Controller
 		$this->load->view('yearly_trends_view', $data);
 
 
-		// $data['trends'] = $obj['tat4_trends'];
-		// $data['title'] = "Turnaround Time";
-		// $data['div_name'] = "tat";
-		// $data['suffix'] = "";
-		// $data['yAxis'] = "Tat4 Time";
-		// $this->load->view('yearly_trends_view', $data);
+		$data['trends'] = $obj['tat4_trends'];
+		$data['title'] = "Turnaround Time";
+		$data['div_name'] = "tat";
+		$data['suffix'] = "";
+		$data['yAxis'] = "Tat4 Time";
+		$this->load->view('yearly_trends_view', $data);
 
 		
 

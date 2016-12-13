@@ -8,7 +8,8 @@ BEGIN
                     SUM(`cs`.`Undetected` + `cs`.`less1000`) AS `suppressed`, 
                     SUM(`cs`.`above5000` + `cs`.`less5000`) AS `nonsuppressed`, 
                     SUM(`cs`.`received`) AS `received`, 
-                    SUM(`cs`.`rejected`) AS `rejected`
+                    SUM(`cs`.`rejected`) AS `rejected`,
+                    SUM(`cs`.`tat4`) AS `tat4`
                 FROM `vl_county_summary` `cs`
                 WHERE 1  ";
 
@@ -38,7 +39,8 @@ BEGIN
                     SUM(`cs`.`Undetected` + `cs`.`less1000`) AS `suppressed`, 
                     SUM(`cs`.`above5000` + `cs`.`less5000`) AS `nonsuppressed`, 
                     SUM(`cs`.`received`) AS `received`, 
-                    SUM(`cs`.`rejected`) AS `rejected`
+                    SUM(`cs`.`rejected`) AS `rejected`,
+                    SUM(`cs`.`tat4`) AS `tat4`
                 FROM `vl_national_summary` `cs`
                 WHERE 1  ";
     
