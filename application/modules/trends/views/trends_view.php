@@ -1,13 +1,15 @@
 <div class="row">
   <div style="color:red;"><center>Click on Year(s) on legend to view only for the year(s) selected</center></div>
+  <div id="stacked_graph" class="col-md-12">
+
+  </div>
+  
   <div id="graphs">
   
   </div>
 
 
-  <div id="stacked_graph" class="col-md-6">
-
-  </div>
+  
 </div>
 
   

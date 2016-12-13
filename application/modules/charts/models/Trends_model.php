@@ -19,9 +19,9 @@ class Trends_model extends MY_Model
 		}
 
 		if ($county == 0) {
-			$sql = "CALL `proc_get_eid_national_yearly_tests`();";
+			$sql = "CALL `proc_get_vl_national_yearly_trends`();";
 		} else {
-			$sql = "CALL `proc_get_eid_yearly_tests`(" . $county . ");";
+			$sql = "CALL `proc_get_vl_yearly_trends`(" . $county . ");";
 		}
 		
 		$result = $this->db->query($sql)->result_array();
@@ -48,33 +48,20 @@ class Trends_model extends MY_Model
 			$month = (int) $value['month'];
 			$month--;
 
+			$tests = (int) $value['suppressed'] + (int) $value['nonsuppressed'];
+
+			$data['suppression_trends'][$i]['name'] = $value['year'];
+			$data['suppression_trends'][$i]['data'][$month] = round(@(($value['suppressed']*100)/$tests), 4, PHP_ROUND_HALF_UP);
+
 
 			$data['test_trends'][$i]['name'] = $value['year'];
-			$data['test_trends'][$i]['data'][$month] = (int) $value['tests'];
+			$data['test_trends'][$i]['data'][$month] = $tests;
 
 			$data['rejected_trends'][$i]['name'] = $value['year'];
+			$data['rejected_trends'][$i]['data'][$month] = round(@(($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP);
 
-			if($value['tests'] == 0){
-				$data['rejected_trends'][$i]['data'][$month] = 0;
-			}else{
-				$data['rejected_trends'][$i]['data'][$month] = (int)
-				($value['rejected'] / $value['tests'] * 100);
-			}
-
-			$data['positivity_trends'][$i]['name'] = $value['year'];
-
-			if ($value['positive'] == 0){
-				$data['positivity_trends'][$i]['data'][$month] = 0;
-			}else{
-				$data['positivity_trends'][$i]['data'][$month] = (int) 
-				($value['positive'] / ($value['positive'] + $value['negative']) * 100 );
-			}
-
-			$data['infant_trends'][$i]['name'] = $value['year'];
-			$data['infant_trends'][$i]['data'][$month] = (int) $value['infants'];
-
-			$data['tat4_trends'][$i]['name'] = $value['year'];
-			$data['tat4_trends'][$i]['data'][$month] = (int) $value['tat4'];
+			// $data['tat_trends'][$i]['name'] = $value['year'];
+			// $data['tat_trends'][$i]['data'][$month] = (int) $value['tat4'];
 
 		}
 		
@@ -89,9 +76,9 @@ class Trends_model extends MY_Model
 		}
 		
 		if($county==0){
-			$sql = "CALL `proc_get_eid_national_yearly_summary`();";
+			$sql = "CALL `proc_get_vl_national_yearly_summary`();";
 		} else {
-			$sql = "CALL `proc_get_eid_yearly_summary`(" . $county . ");";
+			$sql = "CALL `proc_get_vl_yearly_summary`(" . $county . ");";
 		}
 		// echo "<pre>";print_r($sql);die();
 		
@@ -100,38 +87,32 @@ class Trends_model extends MY_Model
 		$year = date("Y");
 		$i = 0;
 
-		$data['outcomes'][0]['name'] = "Redraws";
-		$data['outcomes'][1]['name'] = "Positive";
-		$data['outcomes'][2]['name'] = "Negative";
-		$data['outcomes'][3]['name'] = "Positivity";
+		$data['outcomes'][0]['name'] = "Nonsuppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
 
 		$data['outcomes'][0]['color'] = '#52B3D9';
 		$data['outcomes'][1]['color'] = '#E26A6A';
 		$data['outcomes'][2]['color'] = '#257766';
-		$data['outcomes'][3]['color'] = '#913D88';
 
 		$data['outcomes'][0]['type'] = "column";
 		$data['outcomes'][1]['type'] = "column";
-		$data['outcomes'][2]['type'] = "column";
-		$data['outcomes'][3]['type'] = "spline";
+		$data['outcomes'][2]['type'] = "spline";
 
 		$data['outcomes'][0]['yAxis'] = 1;
 		$data['outcomes'][1]['yAxis'] = 1;
-		$data['outcomes'][2]['yAxis'] = 1;
 
 		foreach ($result as $key => $value) {
 			$data['categories'][$i] = $value['year'];
 			
-			$data['outcomes'][0]['data'][$i] = (int) $value['redraws'];
-			$data['outcomes'][1]['data'][$i] = (int) $value['positive'];
-			$data['outcomes'][2]['data'][$i] = (int) $value['negative'];
-			$data['outcomes'][3]['data'][$i] = round(((int) $value['positive']*100)/((int) $value['negative']+(int) $value['positive']+(int) $value['redraws']),1);
+			$data['outcomes'][0]['data'][$i] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$i] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$i] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 			$i++;
 		}
 		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
-		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' ');
-		$data['outcomes'][3]['tooltip'] = array("valueSuffix" => ' %');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
 
 		$data['title'] = "Outcomes";
 

@@ -16,45 +16,37 @@ class Trends extends MY_Controller
 	function positive_trends($county=NULL){
 		$obj = $this->trends_model->yearly_trends($county);
 		// echo "<pre>";print_r($obj);echo "</pre>";die();
+
+		$data['trends'] = $obj['suppression_trends'];
+		$data['title'] = "Suppression Trends";
+		$data['div_name'] = "suppression";
+		$data['suffix'] = "%";
+		$data['yAxis'] = "Suppression Rate (%)";
+		$this->load->view('yearly_trends_view', $data);
+
 		$data['trends'] = $obj['test_trends'];
 		$data['title'] = "Test Trends";
-		$data['div'] = "#tests";
 		$data['div_name'] = "tests";
 		$data['suffix'] = "";
-		$data['yAxis'] = "Number of Tests";
-		$this->load->view('lab_performance_view', $data);
+		$data['yAxis'] = "Number of  Valid Tests";
+		$this->load->view('yearly_trends_view', $data);
 
-		$data['trends'] = $obj['positivity_trends'];
-		$data['title'] = "Positivity Trends";
-		$data['div'] = "#positivity";
-		$data['div_name'] = "positivity";
-		$data['suffix'] = "%";
-		$data['yAxis'] = "Number of Positives (%)";
-		$this->load->view('lab_performance_view', $data);
+		
 
 		$data['trends'] = $obj['rejected_trends'];
 		$data['title'] = "Rejected Trends";
-		$data['div'] = "#rejects";
 		$data['div_name'] = "rejects";
 		$data['suffix'] = "%";
-		$data['yAxis'] = "Number of Rejects (%)";
-		$this->load->view('lab_performance_view', $data);
+		$data['yAxis'] = "Rejects (%)";
+		$this->load->view('yearly_trends_view', $data);
 
-		$data['trends'] = $obj['infant_trends'];
-		$data['title'] = "Infant tests (less than 2m)";
-		$data['div'] = "#infants";
-		$data['div_name'] = "infants";
-		$data['suffix'] = "";
-		$data['yAxis'] = "Number of Infant Tests";
-		$this->load->view('lab_performance_view', $data);
 
-		$data['trends'] = $obj['tat4_trends'];
-		$data['title'] = "Turnaround Time";
-		$data['div'] = "#tat";
-		$data['div_name'] = "tat";
-		$data['suffix'] = "";
-		$data['yAxis'] = "Tat4 Time";
-		$this->load->view('lab_performance_view', $data);
+		// $data['trends'] = $obj['tat4_trends'];
+		// $data['title'] = "Turnaround Time";
+		// $data['div_name'] = "tat";
+		// $data['suffix'] = "";
+		// $data['yAxis'] = "Tat4 Time";
+		// $this->load->view('yearly_trends_view', $data);
 
 		
 
