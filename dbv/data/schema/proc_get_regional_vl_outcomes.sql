@@ -12,7 +12,10 @@ BEGIN
         SUM(`above5000`) AS `above5000`,
         SUM(`alltests`) AS `alltests`,
         SUM(`sustxfail`) AS `sustxfail`,
-        SUM(`rejected`) AS `rejected`,
+        SUM(`rejected`) AS `rejected`, 
+        SUM(`repeattests`) AS `repeats`, 
+        SUM(`invalids`) AS `invalids`,
+        SUM(`received`) AS `received`,
         AVG(`sitessending`) AS `sitessending`
     FROM `vl_county_summary`
     WHERE 1";

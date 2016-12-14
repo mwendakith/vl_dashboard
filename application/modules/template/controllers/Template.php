@@ -19,6 +19,8 @@ class Template extends MY_Controller
 		$data['filter'] = $this->template_model->get_counties_dropdown();
 		$data['partner'] = $this->template_model->get_partners_dropdown();
 		$data['sites'] = $this->template_model->get_site_dropdown();
+		$data['regimen'] = $this->template_model->get_regimen_dropdown();
+		$data['age_filter'] = $this->template_model->get_age_dropdown();
 		// $data['breadcrum'] = $this->breadcrum();
 		// echo "<pre>";print_r($data);die();
 		$this->load->view('template_view',$data);
@@ -60,6 +62,28 @@ class Template extends MY_Controller
 		echo $this->session->userdata('site_filter');
 	}
 
+	function filter_regimen_data()
+	{
+		$data = array(
+				'regimen' => $this->input->post('regimen')
+			);
+
+		$this->filter_regimens($data);
+
+		echo $this->session->userdata('regimen_filter');
+	}
+
+	function filter_age_category_data()
+	{
+		$data = array(
+				'age_category' => $this->input->post('age_cat')
+			);
+
+		$this->filter_ages($data);
+
+		echo $this->session->userdata('age_category_filter');
+	}
+
 	function filter_date_data()
 	{
 		$data = array(
@@ -73,12 +97,20 @@ class Template extends MY_Controller
 	function breadcrum($data=null,$partner=NULL)
 	{
 		$this->load->model('template_model');
-		
+		$data = trim($data,"%22");
+		// echo $data;
 		if ($partner) {
-			if (!$this->session->userdata('partner_filter')) {
-			echo "<a href='javascript:void(0)' class='alert-link'><strong>All Partners</strong></a>";
+			if ($data==null || $data=='null') {
+				// echo "No partner is set";
+				if (!$this->session->userdata('partner_filter')) {
+					echo "<a href='javascript:void(0)' class='alert-link'><strong>All Partners</strong></a>";
+				} else {
+					$partner = $this->template_model->get_partner_name($this->session->userdata('partner_filter'));
+					echo "<a href='javascript:void(0)' class='alert-link'><strong>".$partner."</strong></a>";
+				}
 			} else {
-				$partner = $this->template_model->get_partner_name($this->session->userdata('partner_filter'));
+				// echo "A partner is set";
+				$partner = $this->template_model->get_partner_name($data);
 				echo "<a href='javascript:void(0)' class='alert-link'><strong>".$partner."</strong></a>";
 			}
 		} else {

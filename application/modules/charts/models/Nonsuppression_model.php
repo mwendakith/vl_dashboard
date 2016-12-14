@@ -358,6 +358,7 @@ class Nonsuppression_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_counties_sustxfail`('".$year."','".$month."')";
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
 		// echo "<pre>";print_r($result);die();

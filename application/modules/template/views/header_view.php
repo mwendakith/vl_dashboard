@@ -1,19 +1,18 @@
-<?php ?>
 <!DOCTYPE html>
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!-- about this site -->
-		<meta name="description" content="A web platform that for Viral Load">
-		<meta name="keywords" content="EID, VL, Early infant diagnosis, Viral Load, HIV, AIDS, HIV/AIDS, adults, pedeatrics, infants">
-		<meta name="author" content="Star Sarifi Tours">
+		<meta name="description" content="A web platform that for Viral Load" />
+		<meta name="keywords" content="EID, VL, Early infant diagnosis, Viral Load, HIV, AIDS, HIV/AIDS, adults, pedeatrics, infants, VL Dashboard" />
+		<meta name="author" content="Viralload">
 		<meta name="Resource-type" content="Document">
 		<?php      	
 			$this->load->view('utils/dynamicLoads');
 		?>
-		<link rel=icon href="<?php echo base_url('assets/img/kenya-coat-of-arms.png');?>" type="image/png">
+		<link rel=icon href="<?php echo base_url('assets/img/kenya-coat-of-arms.png');?>" type="image/png" />
 		<title>
 			Dashboard
 		</title>
@@ -70,7 +69,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="javascript:void(0)" style="padding:0px;padding-top:4px;padding-left:4px;"><img src="<?php echo base_url();?>assets/img/nascoplogo.png" style="width:300px;height:auto;"/></a>
+					<a class="navbar-brand" href="javascript:void(0)" style="padding:0px;padding-top:4px;padding-left:4px;"><img src="<?php echo base_url();?>assets/img/nascop_pepfar_logo.jpg" style="width:320px;height:54px;"/></a>
 				</div>
 				<div class="navbar-collapse collapse navbar-responsive-collapse">
 					<ul class="nav navbar-nav">
@@ -83,20 +82,22 @@
 					</form> -->
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="<?php echo base_url();?>">Summary</a></li>
-						<li><a href="<?php echo base_url();?>suppression/nosuppression">Non-Suppression</a></li>
+						<li><a href="<?php echo base_url();?>trends">Trends</a></li>
+						<li><a href="<?php echo base_url();?>regimen">Regimen</a></li>
+						<li><a href="<?php echo base_url();?>age">Age</a></li>
 						<li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Partners
 							<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url();?>partner">Summary</a></li>
-								<li><a href="<?php echo base_url();?>partner/nosuppression">Non-Suppression</a></li>
+								<li><a href="<?php echo base_url();?>partner/trends">Trends</a></li>
 								<li><a href="<?php echo base_url();?>partner/sites">Partner Sites</a></li>
 							</ul>
 						</li>
-						<li><a href="<?php echo base_url();?>labs">Labs</a></li>
-						<li><a href="<?php echo base_url();?>sites">Sites</a></li>
-						<li><a href="<?php echo base_url();?>county">County View</a></li>
-						<li><a href="http://eid.nascop.org/vreports.php">Reports</a></li>
+						<<li><a href="<?php echo base_url();?>labs">Labs</a></li>
+						<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
+						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
+						<!-- <li><a href="<?php echo base_url();?>county">County View</a></li> -->
 						<li><a href="http://eid.nascop.org/login.php">Login</a></li>
 						<li><a href="http://eid.nascop.org">EID View</a></li>
 						<!-- <li><a href="javascript:void(0)">Link</a></li> -->

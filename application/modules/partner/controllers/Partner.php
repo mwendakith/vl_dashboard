@@ -12,24 +12,31 @@ class Partner extends MY_Controller
 	{
 		parent:: __construct();
 		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom','tablecloth','select2')));
-		$this->session->set_userdata('county_filter', NULL);
+		$this->session->unset_userdata('county_filter');
 		$this->data['part'] = TRUE;
-		$this->data['partner_select'] = $this->session->userdata('partner_filter');
 	}
 
 	public function index()
 	{
 		$this->load->module('charts/summaries');
-		
+		$this->clear_all_session_data();
 		$this->data['content_view'] = 'partner/partner_summary_view';
 		$this -> template($this->data);
 	}
 
+	public function trends()
+	{
+		$this->load->module('charts/partner_trends');
+		$this->clear_all_session_data();
+		$this->data['content_view'] = 'partner/partner_trends_view';
+		$this->template($this->data);
+	}
+
 	public function nosuppression()
 	{
-		echo "<pre>";print_r($this->session->all_userdata());die();
+		// echo "<pre>";print_r($this->session->all_userdata());die();
 		$this->load->module('charts/nonsuppression');
-
+		$this->clear_all_session_data();
 		$this->data['content_view'] = 'partner/partner_no_suppression_view';
 		$this -> template($this->data);
 	}
@@ -37,7 +44,7 @@ class Partner extends MY_Controller
 	public function sites()
 	{
 		$this->load->module('charts/sites');
-
+		$this->clear_all_session_data();
 		$this->data['content_view'] = 'partner/partner_sites_view';
 		// echo "<pre>";print_r($this->data);die();
 		$this -> template($this->data);

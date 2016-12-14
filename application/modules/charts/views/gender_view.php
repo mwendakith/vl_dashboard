@@ -1,4 +1,4 @@
-<div id="gender_pie" style="height:480px;">
+<div id="gender_pie" style="height:540px;">
 
 </div>
 
@@ -29,12 +29,13 @@
                             y:-20
                         }
                     },
+
                     legend: {
                         align: 'right',
                         x: -30,
                         verticalAlign: 'bottom',
-                        y: 20,
-                        floating: true,
+                        y: 0,
+                        floating: false,
                         backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
                         borderColor: '#CCC',
                         borderWidth: 1,

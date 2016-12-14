@@ -19,7 +19,7 @@
             },
             yAxis: {
                 title: {
-                    text: 'Rejects'
+                    text: 'Rejection (%)'
                 },
                 plotLines: [{
                     value: 0,
@@ -28,12 +28,12 @@
                 }]
             },
             tooltip: {
-                valueSuffix: null
+                valueSuffix: "%"
             },
             legend: {
                 layout: 'vertical',
                 align: 'right',
-                verticalAlign: 'top',
+                verticalAlign: 'center',
                 borderWidth: 0
             },
             series: <?php echo json_encode($trends['reject_trend']);?>

@@ -4,10 +4,10 @@
 		$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>");
 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>");
 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>");
+		$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>");
 		$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>");
 		$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>");
 		$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>");
-		$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>");
 		$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>");
 
 		$(".display_date").load("<?php echo base_url('charts/nonsuppression/display_date'); ?>");
@@ -45,11 +45,12 @@
 				$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+null+"/"+null+"/"+data);
 		 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+data);
 		 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+null+"/"+null+"/"+data);
+				$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>/"+null+"/"+null+"/"+data);
 				$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+null+"/"+null+"/"+data);
 				$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+null+"/"+null+"/"+data);
 				$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+null+"/"+null+"/"+data);
-				$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>/"+null+"/"+null+"/"+data);
-				$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+null+"/"+null+"/"+data); 
+				$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+null+"/"+null+"/"+data);
+				
 	        });
 		});
 	});
@@ -89,10 +90,10 @@
 		$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+year+"/"+month);
  		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+year+"/"+month);
  		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+year+"/"+month);
+ 		$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>/"+year+"/"+month);
 		$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+year+"/"+month);
 		$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+year+"/"+month);
 		$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+year+"/"+month);
-		$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>/"+year+"/"+month);
 		$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+year+"/"+month);
 	}
 
@@ -114,10 +115,10 @@
 		$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+null+"/"+null+"/"+data);
  		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+data);
  		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+null+"/"+null+"/"+data);
+		$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>/"+null+"/"+null+"/"+data);
 		$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+null+"/"+null+"/"+data);
 		$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+null+"/"+null+"/"+data);
 		$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+null+"/"+null+"/"+data);
-		$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>/"+null+"/"+null+"/"+data);
 		$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+null+"/"+null+"/"+data);
 	}
 </script>
