@@ -53,8 +53,8 @@
 			                }
 			            }
 			        },colors: [
-				        '#D91E18',
-				        '#1BBC9B'
+				        '#F2784B',
+                        '#1BA39C'
 				    ],
 			        series: <?php echo json_encode($trends['lab_outcomes']);?>
 			    });

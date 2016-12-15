@@ -91,9 +91,10 @@ class Trends_model extends MY_Model
 		$data['outcomes'][1]['name'] = "Suppressed";
 		$data['outcomes'][2]['name'] = "Suppression";
 
-		$data['outcomes'][0]['color'] = '#52B3D9';
-		$data['outcomes'][1]['color'] = '#E26A6A';
-		$data['outcomes'][2]['color'] = '#257766';
+
+		//$data['outcomes'][0]['drilldown']['color'] = '#913D88';
+		//$data['outcomes'][1]['drilldown']['color'] = '#96281B';
+		//$data['outcomes'][2]['color'] = '#257766';
 
 		$data['outcomes'][0]['type'] = "column";
 		$data['outcomes'][1]['type'] = "column";

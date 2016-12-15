@@ -6,9 +6,8 @@
 			<th>Name</th>
 			<th>County</th>
 			<th>Tests</th>
-			<th>Suspected Failures</th>
-			<th>Repeat VL</th>
-			<th>Confirmed Tx</th>
+			<th>&gt; 1000 cp/ml</th>
+			<th>Confirm Repeat Tests</th>
 			<th>Rejected</th>
 			<th>Adult Tests</th>
 			<th>Paeds Tests</th>
@@ -25,13 +24,11 @@
 		<!-- <center><button class="btn btn-primary" style="background-color: #009688;color: white;">List of all supported sites</button></center> -->
 	</div>
 	<div class="col-md-6">
-		<center><button id="download_link" class="btn btn-primary" style="background-color: #009688;color: white;"></button></center>
+		<center><a href="<?php  echo $link; ?>"><button id="download_link" class="btn btn-primary" style="background-color: #009688;color: white;">Export To Excel</button></a></center>
 	</div>
 </div>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
-  	$('#download_link').html("<?php echo $link;?>");
-  	$('#download_link > a').css("color","white");
   	$('#example').DataTable();
 
     $("table").tablecloth({

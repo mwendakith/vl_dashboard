@@ -209,15 +209,17 @@ class Summaries_model extends MY_Model
 	    	</tr>
 
 	    	<tr>
-	    		<td colspan="2">Confirmatory Repeat Tests:</td>
-	    		<td colspan="2">'.number_format($value['confirmtx']).'</td>
+	    		<td>Confirmatory Repeat Tests:</td>
+	    		<td>'.number_format($value['confirmtx']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['confirm2vl']).'</td>
 	    	</tr>
 
 	    	<tr>
 	    		<td>Rejected Samples:</td>
 	    		<td>'.number_format($value['rejected']).'</td>
 	    		<td>Percentage Rejection Rate</td>
-	    		<td>'. round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP).'%</td>
+	    		<td>'. round((($value['rejected']*100)/$value['received']), 2, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];

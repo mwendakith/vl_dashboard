@@ -19,7 +19,7 @@ class Labs extends MY_Controller
 
 		$link = $year . '/' . $month;
 
-		$data['link'] = "<a href='" . base_url('charts/Labs/download_lab_performance_stats/' . $link) . "'>Download List</a>";
+		$data['link'] = base_url('charts/Labs/download_lab_performance_stats/' . $link);
 
 		$this->load->view('lab_performance_stats_view', $data);
 	}

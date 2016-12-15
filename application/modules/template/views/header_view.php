@@ -91,10 +91,10 @@
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url();?>partner">Summary</a></li>
 								<li><a href="<?php echo base_url();?>partner/trends">Trends</a></li>
-								<li><a href="<?php echo base_url();?>partner/sites">Partner Sites</a></li>
+								<li><a href="<?php echo base_url();?>partner/sites">Partner Facilities</a></li>
 							</ul>
 						</li>
-						<<li><a href="<?php echo base_url();?>labs">Labs</a></li>
+						<<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
 						<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
 						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
 						<!-- <li><a href="<?php echo base_url();?>county">County View</a></li> -->
