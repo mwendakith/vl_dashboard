@@ -42,7 +42,7 @@ class Trends extends MY_Controller
 
 
 		$data['trends'] = $obj['tat_trends'];
-		$data['title'] = "Collection - Dispatch";
+		$data['title'] = "Turn Around Time (Collection - Dispatch)";
 		$data['div_name'] = "tat";
 		$data['suffix'] = "";
 		$data['yAxis'] = "TAT(Days)";
