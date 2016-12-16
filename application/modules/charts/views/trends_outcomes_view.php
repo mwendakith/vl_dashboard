@@ -67,7 +67,11 @@
                 y: 80,
                 floating: true,
                 backgroundColor: '#FFFFFF'
-            },
+            },colors: [
+                        '#F2784B',
+                        '#1BA39C',
+                        '#257766'
+                    ],
             series: <?php echo json_encode($trends['outcomes']);?>
         });
     });

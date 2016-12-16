@@ -84,7 +84,6 @@ class Sites_model extends MY_Model
 			$table .= '<td>'.$value['county'].'</td>';
 			$table .= '<td>'.$value['tests'].'</td>';
 			$table .= '<td>'.$value['sustxfail'].'</td>';
-			$table .= '<td>'.$value['repeatvl'].'</td>';
 			$table .= '<td>'.$value['confirmtx'].'</td>';
 			$table .= '<td>'.$value['rejected'].'</td>';
 			$table .= '<td>'.$value['adults'].'</td>';
@@ -448,7 +447,7 @@ class Sites_model extends MY_Model
 	    $f = fopen('php://memory', 'w');
 	    /** loop through array  */
 
-	    $b = array('MFL Code', 'Name', 'County', 'Tests', 'Suspected Failures', 'Repeat VL', 'Confirmed Tx', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female');
+	    $b = array('MFL Code', 'Name', 'County', 'Tests', '>1000cp/ml', 'Confirm Repeat Tests', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female');
 
 	    fputcsv($f, $b, $delimiter);
 

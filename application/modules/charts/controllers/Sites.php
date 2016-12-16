@@ -26,9 +26,9 @@ class Sites extends MY_Controller
 
 		$link = $year . '/' . $month . '/' . $partner;
 
-		//$data['link'] = anchor('charts/sites/download_partner_sites/' . $link, 'Download List');
+		
 
-		$data['link'] = "<a href='" . base_url('charts/sites/download_partner_sites/' . $link) . "'>Export to Excel</a>";
+		$data['link'] =  base_url('charts/sites/download_partner_sites/' . $link);
 
     	$this->load->view('partner_site__view',$data);
 	}
