@@ -4,8 +4,8 @@
       <div class="row">
         <div class="col-md-12">
           <select class="btn js-example-basic-single" style="width:220px;background-color: #C5EFF7;" name="site">
-            <option value="0" disabled="true" selected="true">Select a Site:</option>
-            <option value="NA">All Sites</option>
+            <option value="0" disabled="true" selected="true">Select a Facility:</option>
+            <option value="NA">All Facilities</option>
             <!-- <optgroup value="Counties"> -->
             <?php echo $sites; ?>
             <!-- </optgroup> -->

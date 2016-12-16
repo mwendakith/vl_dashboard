@@ -11,13 +11,14 @@ class Sites extends MY_Controller
 	function __construct()
 	{
 		parent:: __construct();
-		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom','select2')));
+		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom','select2','tablecloth')));
 		$this->data['sit'] = TRUE;
 		$this->load->module('charts/sites');
 	}
 
 	function index()
 	{
+		$this->clear_all_session_data();
 		$this->data['content_view'] = 'sites/sites_view';
 		$this -> template($this->data);
 	}
