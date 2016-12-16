@@ -82,33 +82,51 @@ class Ages_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['y'] = $count;
 
 		foreach ($result as $key => $value) {
+			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
+			$less = (int) ($value['undetected']+$value['less1000']);
+			$greater = (int) ($value['less5000']+$value['above5000']);
+
 			$data['ul'] .= '<tr>
-	    		<td colspan="2">Total Tests:</td>
+	    		<td colspan="2">Cumulative Tests (All Samples Run):</td>
 	    		<td colspan="2">'.number_format($value['alltests']).'</td>
 	    	</tr>
 	    	<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Outcomes:</td>
-	    		<td colspan="2">'.number_format($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']).'</td>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Tests With Valid Outcomes:</td>
+	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
+
 	    	<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Suspected Tx Failure:</td>
-	    		<td colspan="2">'.number_format($value['sustxfail']).' <strong>('.(int) (($value['sustxfail']/($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']))*100).'%)</strong></td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
+	    		<td>'.number_format($greater).'</td>
+	    		<td>Percentage Non Suppression</td>
+	    		<td>'.(int) (($greater/$total)*100).'%</td>
 	    	</tr>
+
 	    	<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invalid Outcomes:</td>
-	    		<td colspan="2">'.number_format($value['invalids']).'</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
+	    		<td>'.number_format($less).'</td>
+	    		<td>Percentage Suppression</td>
+	    		<td>'.(int) (($less/$total)*100).'%</td>
 	    	</tr>
+
 	    	<tr>
-	    		<td colspan="2">Total Repeat VL:</td>
-	    		<td colspan="2">'.number_format($value['confirm2vl']).'</td>
+	    		<td></td>
+	    		<td></td>
+	    		<td></td>
+	    		<td></td>
 	    	</tr>
+
 	    	<tr>
-	    		<td colspan="2">Confirmed Tx Failure:</td>
+	    		<td colspan="2">Confirmatory Repeat Tests:</td>
 	    		<td colspan="2">'.number_format($value['confirmtx']).'</td>
 	    	</tr>
+
 	    	<tr>
-	    		<td>Rejected:</td>
-	    		<td>'.number_format($value['rejected']).'</td>';
+	    		<td>Rejected Samples:</td>
+	    		<td>'.number_format($value['rejected']).'</td>
+	    		<td>Percentage Rejection Rate</td>
+	    		<td>'. round((($value['rejected']*100)/$value['alltests']), 4, PHP_ROUND_HALF_UP).'%</td>
+	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less5000']+(int) $value['above5000'];

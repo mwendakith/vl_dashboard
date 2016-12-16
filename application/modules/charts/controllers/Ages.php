@@ -30,7 +30,7 @@ class Ages extends MY_Controller
 	{
 		$data['outcomes'] = $this->ages_model->ages_gender($year,$month,$regimen);
 		
-    	$this->load->view('gender_view',$data);
+    	$this->load->view('age_regimen_gender_view',$data);
 	}
 
 	function sample_types($year=NULL,$regimen=NULL)

@@ -4,7 +4,7 @@ CREATE PROCEDURE `proc_get_vl_regimen_vl_outcomes`
 (IN R_id INT(11), IN filter_year INT(11), IN filter_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-        SUM(`confirmtx`) AS `confirmtx`,
+       SUM(`confirmtx`) AS `confirmtx`,
         SUM(`confirm2vl`) AS `confirm2vl`,
         SUM(`Undetected`) AS `undetected`,
         SUM(`less1000`) AS `less1000`,

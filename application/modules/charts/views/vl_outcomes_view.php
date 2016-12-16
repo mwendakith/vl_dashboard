@@ -1,5 +1,5 @@
 <div class="panel-body">
-	<div id="vlOutcomes_pie" style="height: 350px;"></div>
+	<div id="vlOutcomes_pie" style="height: 300px;"></div>
 </div>
 <div>
 	<!-- <ul>
@@ -60,6 +60,8 @@
 		        });
 		    });
 </script>
-
-
-
+<style type="text/css">
+	td {
+		padding: 0px;
+	}
+</style>

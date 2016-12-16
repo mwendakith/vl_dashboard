@@ -26,7 +26,9 @@ class Template_model extends MY_Model
 	function get_partners_dropdown()
 	{
 		$dropdown = '';
-		$partner_data = $this->db->query('SELECT `ID`, `name` FROM `partners` ORDER BY `name` ASC')->result_array();
+		$this->db->order_by("name","asc");
+		$partner_data = $this->db->get('partners')->result_array();
+		// $partner_data = $this->db->query('SELECT `ID`, `name` FROM `partners` ORDER BY `name` ASC')->result_array();
 
 		foreach ($partner_data as $key => $value) {
 			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
@@ -50,6 +52,7 @@ class Template_model extends MY_Model
 	function get_regimen_dropdown()
 	{
 		$dropdown = '';
+		$this->db->order_by("name","asc");
 		$county_data = $this->db->get('viralprophylaxis')->result_array();
 
 		foreach ($county_data as $key => $value) {
@@ -62,7 +65,7 @@ class Template_model extends MY_Model
 	function get_age_dropdown()
 	{
 		$dropdown = '';
-		$regimen_data = $this->db->query("SELECT * FROM `agecategory` WHERE `ID` > '5'")->result_array();
+		$regimen_data = $this->db->query("SELECT * FROM `agecategory` WHERE `ID` > '5' ")->result_array();
 
 		foreach ($regimen_data as $key => $value) {
 			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
