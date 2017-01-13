@@ -2,7 +2,7 @@
 	$().ready(function(){
 		$.get("<?php echo base_url();?>template/dates", function(data){
     		obj = $.parseJSON(data);
-	
+			console.log(obj);
 			if(obj['month'] == "null" || obj['month'] == null){
 				obj['month'] = "";
 			}

@@ -24,6 +24,7 @@ class Regimen extends MY_Controller
 	{
 		$data['outcomes']= $this->regimen_model->regimen_vl_outcomes($year,$month,$regimen);
 
+		// $this->load->view('vl_outcomes_view',$data);
 		$this->load->view('vl_outcomes_view',$data);
 	}
 
@@ -31,14 +32,16 @@ class Regimen extends MY_Controller
 	{
 		$data['outcomes'] = $this->regimen_model->regimen_gender($year,$month,$regimen);
 		
-    	$this->load->view('gender_view',$data);
+    	// $this->load->view('gender_view',$data);
+    	$this->load->view('age_regimen_gender_view',$data);
 	}
 
 	function regimen_age($year=NULL,$month=NULL,$regimen=NULL)
 	{
 		$data['outcomes'] = $this->regimen_model->regimen_age($year,$month,$regimen);
 		
-    	$this->load->view('agegroup_view',$data);
+    	// $this->load->view('agegroup_view',$data);
+    	$this->load->view('regimen_agegroup_view',$data);
 	}
 
 	function sample_types($year=NULL,$regimen=NULL)

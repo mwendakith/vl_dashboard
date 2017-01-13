@@ -134,10 +134,11 @@ class Template extends MY_Controller
 
 	function dates()
 	{
+		$this->load->model('template_model');
 		$data = array(
 					'prev_year' => ($this->session->userdata('filter_year')-1),
 					'year' => $this->session->userdata('filter_year'),
-					'month' => $this->session->userdata('filter_month'));
+					'month' => $this->template_model->resolve_month($this->session->userdata('filter_month')));
 		echo json_encode($data);
 	}
 }

@@ -177,9 +177,11 @@ class Summaries_model extends MY_Model
 			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
 			$less = (int) ($value['undetected']+$value['less1000']);
 			$greater = (int) ($value['less5000']+$value['above5000']);
-
-			$data['ul'] .= '
-	    	<tr>
+			// 	<td colspan="2">Cumulative Tests (All Samples Run):</td>
+	    	// 	<td colspan="2">'.number_format($value['alltests']).'</td>
+	    	// </tr>
+	    	// <tr>
+			$data['ul'] .= '<tr>
 	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Tests With Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>

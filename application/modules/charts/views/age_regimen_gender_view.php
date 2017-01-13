@@ -1,9 +1,10 @@
-<div id="ageGroups_pie" style="height:450px;">
-	
+<div id="gender_pie" style="height:540px;">
+
 </div>
+
 <script type="text/javascript">
-	$(function () {
-                $('#ageGroups_pie').highcharts({
+	 $(function () {
+                $('#gender_pie').highcharts({
                     chart: {
                         type: 'column'
                     },
@@ -11,8 +12,7 @@
                         text: ''
                     },
                     xAxis: {
-                        categories: <?php echo json_encode($outcomes['categories']);?>,
-                        crosshair: true
+                        categories: <?php echo json_encode($outcomes['categories']);?>
                     },
                     yAxis: {
                         min: 0,
@@ -26,12 +26,15 @@
                                 fontWeight: 'bold',
                                 color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
                             },
-                            y:-10
+                            y:-20
                         }
                     },
+
                     legend: {
                         align: 'right',
+                        x: -30,
                         verticalAlign: 'bottom',
+                        y: 0,
                         floating: false,
                         backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
                         borderColor: '#CCC',
@@ -54,10 +57,9 @@
                             }
                         }
                     },colors: [
-                        '#F2784B',
                         '#1BA39C'
                     ],
-                    series: <?php echo json_encode($outcomes['ageGnd']);?>
+                    series: <?php echo json_encode($outcomes['gender']);?>
                 });
             });
 </script>

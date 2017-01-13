@@ -20,13 +20,13 @@
                             text: 'Tests'
                         },
                         stackLabels: {
-                            rotation: 0,
+                            rotation: -75,
                             enabled: true,
                             style: {
                                 fontWeight: 'bold',
                                 color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
                             },
-                            y:-10
+                            y:-20
                         }
                     },
                     legend: {
@@ -54,7 +54,6 @@
                             }
                         }
                     },colors: [
-                        '#F2784B',
                         '#1BA39C'
                     ],
                     series: <?php echo json_encode($outcomes['ageGnd']);?>
