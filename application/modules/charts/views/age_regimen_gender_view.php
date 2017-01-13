@@ -20,7 +20,7 @@
                             text: 'Tests'
                         },
                         stackLabels: {
-                            rotation: -75,
+                            rotation: 0,
                             enabled: true,
                             style: {
                                 fontWeight: 'bold',

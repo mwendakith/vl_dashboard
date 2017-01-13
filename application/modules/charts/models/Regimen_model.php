@@ -172,6 +172,7 @@ class Regimen_model extends MY_Model
 			$data['categories'][1] 			= 'Female';
 			$data["gender"][0]["data"][0]	=  (int) $value['maletest'];
 			$data["gender"][0]["data"][1]	=  (int) $value['femaletest'];
+			$data["gender"][0]["data"][2]	= (int) $value['nodata'];
 		}
 
 		// $data['gender'][0]['drilldown']['color'] = '#913D88';
