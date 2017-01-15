@@ -20,6 +20,13 @@ class Regimen extends MY_Controller
 		$this->load->view('county_outcomes_view', $data);
 	}
 
+	function regimen_county_outcomes($year=NULL,$month=NULL,$regimen=NULL)
+	{
+		$data['outcomes'] = $this->regimen_model->county_outcomes($year,$month,$regimen);
+
+    	$this->load->view('county_outcomes_view',$data);
+	}
+
 	function regimen_vl_outcome($year=NULL,$month=NULL,$regimen=NULL)
 	{
 		$data['outcomes']= $this->regimen_model->regimen_vl_outcomes($year,$month,$regimen);

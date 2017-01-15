@@ -233,4 +233,47 @@ class Ages_model extends MY_Model
 		
 		return $data;
 	}
+
+	function county_outcomes($year=null,$month=null,$age_cat=null)
+	{
+		
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		//Assigning the value of the month or setting it to the selected value
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		if ($age_cat==null || $age_cat=='null') {
+			$age_cat = $this->session->userdata('age_category_filter');
+		}
+
+		$sql = "CALL `proc_get_vl_county_age_outcomes`('".$age_cat."','".$year."','".$month."')";
+				
+		
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
+		$data['county_outcomes'][1]['name'] = 'Suppresed';
+
+		$count = 0;
+		
+		$data["county_outcomes"][0]["data"][0]	= $count;
+		$data["county_outcomes"][1]["data"][0]	= $count;
+		$data['categories'][0]					= 'No Data';
+
+		foreach ($result as $key => $value) {
+			$data['categories'][$key] 					= $value['name'];
+			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
+			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+		}
+		// echo "<pre>";print_r($data);die();
+		return $data;
+	}
+
 }

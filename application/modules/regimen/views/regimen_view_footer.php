@@ -48,11 +48,14 @@
 					$("#gender").html("<center><div class='loader'></div></center>");
 					$("#age").html("<center><div class='loader'></div></center>");
 					$("#samples").html("<center><div class='loader'></div></center>");
+					$("#county").html("<center><div class='loader'></div></center>");
 					
 					$("#vlOutcomes").load("<?php echo base_url('charts/regimen/regimen_vl_outcome'); ?>");
 					$("#gender").load("<?php echo base_url('charts/regimen/regimen_gender'); ?>/"+null+"/"+null+"/"+data);
 					$("#age").load("<?php echo base_url('charts/regimen/regimen_age'); ?>/"+null+"/"+null+"/"+data); 
 					$("#samples").load("<?php echo base_url('charts/regimen/sample_types'); ?>/"+null+"/"+data);
+
+					$("#county").load("<?php echo base_url('charts/regimen/regimen_county_outcomes'); ?>/"+null+"/"+null+"/"+data);
 	        	}      	
 	        });
 	    });
@@ -95,11 +98,13 @@
 					$("#gender").html("<center><div class='loader'></div></center>");
 					$("#age").html("<center><div class='loader'></div></center>");
 					$("#samples").html("<center><div class='loader'></div></center>");
+					$("#county").html("<center><div class='loader'></div></center>");
 					
 					$("#vlOutcomes").load("<?php echo base_url('charts/regimen/regimen_vl_outcome'); ?>/"+year+"/"+month+"/"+data);
 					$("#gender").load("<?php echo base_url('charts/regimen/regimen_gender'); ?>/"+year+"/"+month+"/"+data);
 					$("#age").load("<?php echo base_url('charts/regimen/regimen_age'); ?>/"+year+"/"+month+"/"+data); 
 					$("#samples").load("<?php echo base_url('charts/regimen/sample_types'); ?>/"+year+"/"+data);
+					$("#county").load("<?php echo base_url('charts/regimen/regimen_county_outcomes'); ?>/"+year+"/"+month+"/"+data);
 				}
 			});
 			
