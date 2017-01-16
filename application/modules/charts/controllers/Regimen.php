@@ -24,7 +24,7 @@ class Regimen extends MY_Controller
 	{
 		$data['outcomes'] = $this->regimen_model->county_outcomes($year,$month,$regimen);
 
-    	$this->load->view('county_outcomes_view',$data);
+    	$this->load->view('county_outcomes_view_two',$data);
 	}
 
 	function regimen_vl_outcome($year=NULL,$month=NULL,$regimen=NULL)

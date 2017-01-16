@@ -23,7 +23,7 @@ class Ages extends MY_Controller
 	{
 		$data['outcomes'] = $this->ages_model->county_outcomes($year,$month,$age);
 
-    	$this->load->view('county_outcomes_view',$data);
+    	$this->load->view('county_outcomes_view_two',$data);
 	}
 
 	function age_vl_outcome($year=NULL,$month=NULL,$regimen=NULL)
