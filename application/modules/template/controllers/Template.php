@@ -21,6 +21,7 @@ class Template extends MY_Controller
 		$data['sites'] = $this->template_model->get_site_dropdown();
 		$data['regimen'] = $this->template_model->get_regimen_dropdown();
 		$data['age_filter'] = $this->template_model->get_age_dropdown();
+		$data['subCounty'] = $this->template_model->get_sub_county_dropdown();
 		// $data['breadcrum'] = $this->breadcrum();
 		// echo "<pre>";print_r($data);die();
 		$this->load->view('template_view',$data);
@@ -36,6 +37,19 @@ class Template extends MY_Controller
 		$this->filter_regions($data);
 
 		echo $this->session->userdata('county_filter');
+		
+	}
+
+	function filter_sub_county_data()
+	{
+		
+		$data = array(
+				'sub_county' => $this->input->post('subCounty')
+			);
+		// echo "<pre>";print_r($data);die();
+		$this->filter_sub_county($data);
+
+		echo $this->session->userdata('sub_county_filter');
 		
 	}
 

@@ -5,7 +5,8 @@ CREATE PROCEDURE `proc_get_vl_age_gender`
 BEGIN
   SET @QUERY =    "SELECT
         SUM(`maletest`) AS `maletest`,
-        SUM(`femaletest`) AS `femaletest`
+        SUM(`femaletest`) AS `femaletest`,
+        SUM('nogendertest') AS `nodata`
     FROM `vl_national_age`
     WHERE 1";
 

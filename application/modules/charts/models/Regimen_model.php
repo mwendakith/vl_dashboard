@@ -86,11 +86,7 @@ class Regimen_model extends MY_Model
 			$greater = (int) ($value['less5000']+$value['above5000']);
 
 			$data['ul'] .= '<tr>
-	    		<td colspan="2">Cumulative Tests (All Samples Run):</td>
-	    		<td colspan="2">'.number_format($value['alltests']).'</td>
-	    	</tr>
-	    	<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Tests With Valid Outcomes:</td>
+	    		<td colspan="2">Tests With Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
 
@@ -170,6 +166,7 @@ class Regimen_model extends MY_Model
 		foreach ($result as $key => $value) {
 			$data['categories'][0] 			= 'Male';
 			$data['categories'][1] 			= 'Female';
+			$data['categories'][2] 			= 'No Data';
 			$data["gender"][0]["data"][0]	=  (int) $value['maletest'];
 			$data["gender"][0]["data"][1]	=  (int) $value['femaletest'];
 			$data["gender"][0]["data"][2]	= (int) $value['nodata'];

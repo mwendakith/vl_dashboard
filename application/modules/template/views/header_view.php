@@ -69,7 +69,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</button>
-					<a class="navbar-brand" href="javascript:void(0)" style="padding:0px;padding-top:4px;padding-left:4px;"><img src="<?php echo base_url();?>assets/img/nascop_pepfar_logo.jpg" style="width:320px;height:54px;"/></a>
+					<a class="navbar-brand" href="javascript:void(0)" style="padding:0px;padding-top:4px;padding-left:4px;"><img src="<?php echo base_url();?>assets/img/nascop_pepfar_logo.jpg" style="width:250px;height:50px;"/></a>
 				</div>
 				<div class="navbar-collapse collapse navbar-responsive-collapse">
 					<ul class="nav navbar-nav">
@@ -85,6 +85,14 @@
 						<li><a href="<?php echo base_url();?>trends">Trends</a></li>
 						<li><a href="<?php echo base_url();?>regimen">Regimen</a></li>
 						<li><a href="<?php echo base_url();?>age">Age</a></li>
+						<li class="dropdown">
+							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">County/Sub-County
+							<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url();?>county">County</a></li>
+								<li><a href="<?php echo base_url();?>county/subCounty">Sub-County</a></li>
+							</ul>
+						</li>
 						<li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Partners
 							<b class="caret"></b></a>
