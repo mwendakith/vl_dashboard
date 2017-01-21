@@ -86,6 +86,14 @@
 						<li><a href="<?php echo base_url();?>regimen">Regimen</a></li>
 						<li><a href="<?php echo base_url();?>age">Age</a></li>
 						<li class="dropdown">
+							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">County/Sub-County
+							<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url();?>counties">County</a></li>
+								<li><a href="<?php echo base_url();?>subcounties">Sub-County</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Partners
 							<b class="caret"></b></a>
 							<ul class="dropdown-menu">
@@ -97,7 +105,7 @@
 						<<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
 						<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
 						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
-						<!-- <li><a href="<?php echo base_url();?>county">County View</a></li> -->
+						
 						<li><a href="http://eid.nascop.org/login.php">Login</a></li>
 						<li><a href="http://eid.nascop.org">EID View</a></li>
 						<!-- <li><a href="javascript:void(0)">Link</a></li> -->
