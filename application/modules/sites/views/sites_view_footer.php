@@ -109,7 +109,7 @@
 	        	});
 			
 		});
-		// var site = <?php echo json_encode($this->session->userdata("site_filter")); ?>;
+		// var site = <?php //echo json_encode($this->session->userdata("site_filter")); ?>;
 		// console.log(site);
 
 		$.get("<?php echo base_url('sites/check_site_select');?>", function(site) {

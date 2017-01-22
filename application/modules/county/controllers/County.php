@@ -9,7 +9,7 @@ class County extends MY_Controller {
 		parent:: __construct();
 		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom', 'Kenya', 'tablecloth', 'select2')));
 		$this->session->set_userdata('partner_filter', NULL);
-		$this->load->module('charts/counties');
+		$this->load->module('charts/county');
 	}
 
 	public function index()
@@ -34,6 +34,16 @@ class County extends MY_Controller {
 		$this->data['county'] = TRUE;
 		$this->data['content_view'] = 'county/county_map';
 		$this -> template($this->data);
+	}
+
+	public function check_county_select()
+	{
+		if ($this->session->userdata('county_filter')) {
+			$county = $this->session->userdata('county_filter');
+		} else {
+			$county = 0;
+		}
+		echo json_encode($county);
 	}
 }
 
