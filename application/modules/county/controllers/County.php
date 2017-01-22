@@ -22,9 +22,9 @@ class County extends MY_Controller {
 
 	public function subCounty()
 	{
+		$this->clear_all_session_data();
 		$this->load->module('charts/subcounties');
 		$this->data['sub_county'] = TRUE;
-		$this->clear_all_session_data();
 		$this->data['content_view'] = 'county/subCounty_view';
 		$this->template($this->data);
 	}
@@ -44,6 +44,16 @@ class County extends MY_Controller {
 			$county = 0;
 		}
 		echo json_encode($county);
+	}
+
+	public function check_subcounty_select()
+	{
+		if ($this->session->userdata('sub_county_filter')) {
+			$subcounty = $this->session->userdata('sub_county_filter');
+		} else {
+			$subcounty = 0;
+		}
+		echo json_encode($subcounty);
 	}
 }
 

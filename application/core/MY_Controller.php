@@ -249,6 +249,30 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			return TRUE;
 		}
 
+		function filter_sub_county($data=NULL){
+			if (!$data) {
+				
+			} else {
+				if ($data['subCounty']=='NA') {
+					$this->session->unset_userdata('age_category_filter');
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('partner_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+				}else{
+					$this->session->set_userdata('sub_county_filter', $data['subCounty']);
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('partner_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+				}
+			}
+			
+			return TRUE;
+		}
+
 		function display_time_period()
 		{
 			$display = array('year' => $this->session->userdata('filter_year'), 'month' => $this->session->userdata('filter_month') );

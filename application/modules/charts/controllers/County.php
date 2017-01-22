@@ -35,7 +35,17 @@ class County extends MY_Controller
 	{
 		$data['outcomes'] = $this->county_model->county_subcounties($year,$month,$county);
 
-    	$this->load->view('county_outcomes_view',$data);
+		$link = $year . '/' . $month . '/' . $county;
+
+		$data['link'] =  base_url('charts/county/download_subcounty_table/' . $link);
+
+    	$this->load->view('counties_table_view',$data);
+	}
+
+	function download_subcounty_table($year=NULL,$month=NULL,$county=NULL)
+	{
+		$this->county_model->download_subcounty_table($year,$month,$county);
+		
 	}
 
 	

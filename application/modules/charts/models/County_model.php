@@ -99,7 +99,7 @@ class County_model extends MY_Model
 	    fpassthru($f);
 	}
 
-	function subcounty_table($year=NULL,$month=NULL)
+	function county_subcounties($year=NULL,$month=NULL,$county=NULL)
 	{
 		$table = '';
 		$count = 1;
@@ -119,7 +119,7 @@ class County_model extends MY_Model
 		}
 
 
-		$sql = "CALL `proc_get_vl_county_details`('".$county."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_subcounty_details`('".$county."','".$year."','".$month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($sql);die();
@@ -128,7 +128,7 @@ class County_model extends MY_Model
 			$table .= '<td>'.$count.'</td>';
 			// $table .= '<td>'.$value['MFLCode'].'</td>';
 			// $table .= '<td>'.$value['name'].'</td>';
-			$table .= '<td>'.$value['county'].'</td>';
+			$table .= '<td>'.$value['subcounty'].'</td>';
 			$table .= '<td>'.$value['tests'].'</td>';
 			$table .= '<td>'.$value['sustxfail'].'</td>';
 			$table .= '<td>'.$value['confirmtx'].'</td>';
@@ -143,6 +143,57 @@ class County_model extends MY_Model
 		
 
 		return $table;
+	}
+
+	function download_subcounty_table($year=NULL,$month=NULL,$county=NULL)
+	{
+		$table = '';
+		$count = 1;
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
+		}
+
+
+		$sql = "CALL `proc_get_vl_subcounty_details`('".$county."','".$year."','".$month."')";
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+
+		$this->load->helper('file');
+        $this->load->helper('download');
+        $delimiter = ",";
+        $newline = "\r\n";
+
+	    /** open raw memory as file, no need for temp files, be careful not to run out of memory thought */
+	    $f = fopen('php://memory', 'w');
+	    /** loop through array  */
+
+	    $b = array('County', 'Subcounty', 'Tests', '>1000cp/ml', 'Confirm Repeat Tests', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female');
+
+	    fputcsv($f, $b, $delimiter);
+
+	    foreach ($result as $line) {
+	        /** default php csv handler **/
+	        fputcsv($f, $line, $delimiter);
+	    }
+	    /** rewrind the "file" with the csv lines **/
+	    fseek($f, 0);
+	    /** modify header to be downloadable csv file **/
+	    header('Content-Type: application/csv');
+	    header('Content-Disposition: attachement; filename="vl_counties_subcounties.csv";');
+	    /** Send file to browser for download */
+	    fpassthru($f);
+		
 	}
 
 }

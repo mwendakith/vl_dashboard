@@ -44,7 +44,7 @@ class Template extends MY_Controller
 	{
 		
 		$data = array(
-				'sub_county' => $this->input->post('subCounty')
+				'subCounty' => $this->input->post('subCounty')
 			);
 		// echo "<pre>";print_r($data);die();
 		$this->filter_sub_county($data);
