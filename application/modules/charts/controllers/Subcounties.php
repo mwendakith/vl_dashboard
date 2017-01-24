@@ -48,5 +48,21 @@ class Subcounties extends MY_Controller
 
     	$this->load->view('sample_types_view',$data);
 	}
+
+	function subcounty_sites($year=NULL,$month=NULL,$subcounty=NULL)
+	{
+		$data['outcomes'] = $this->subcounty_model->subcounty_sites($year,$month,$subcounty);
+		
+    	$link = $year . '/' . $month . '/' . $partner;
+		$data['link'] =  base_url('charts/subcounties/download_subcounty_sites/' . $link);
+
+    	$this->load->view('partner_site__view',$data);
+	}
+
+	function download_subcounty_sites($year=NULL,$month=NULL,$subcounty=NULL)
+	{
+		$this->subcounty_model->download_subcounty_sites($year,$month,$subcounty);
+	}
+
 }
 ?>

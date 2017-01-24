@@ -25,9 +25,6 @@ class Sites extends MY_Controller
 		$data['outcomes'] = $this->sites_model->partner_sites_outcomes($year,$month,$site,$partner);
 
 		$link = $year . '/' . $month . '/' . $partner;
-
-		
-
 		$data['link'] =  base_url('charts/sites/download_partner_sites/' . $link);
 
     	$this->load->view('partner_site__view',$data);

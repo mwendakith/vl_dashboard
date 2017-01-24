@@ -48,6 +48,13 @@ class County extends MY_Controller
 		
 	}
 
+	function subcounty_outcomes($year=NULL,$month=NULL,$county=NULL)
+	{
+		$data['outcomes'] = $this->county_model->subcounty_outcomes($year,$month,$county);
+
+		$this->load->view('county_outcomes_view',$data);
+	}
+
 	
 }
 ?>

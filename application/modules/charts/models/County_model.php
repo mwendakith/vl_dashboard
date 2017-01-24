@@ -12,6 +12,47 @@ class County_model extends MY_Model
 		parent::__construct();
 	}
 
+	function subcounty_outcomes($year=NULL,$month=NULL,$county=NULL)
+	{
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
+		}
+
+
+		$sql = "CALL `proc_get_vl_county_subcounty_outcomes`('".$county."','".$year."','".$month."')";
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+
+		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
+		$data['county_outcomes'][1]['name'] = 'Suppresed';
+
+		$count = 0;
+		
+		$data["county_outcomes"][0]["data"][0]	= $count;
+		$data["county_outcomes"][1]["data"][0]	= $count;
+		$data['categories'][0]					= 'No Data';
+
+		foreach ($result as $key => $value) {
+			$data['categories'][$key] 					= $value['name'];
+			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
+			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+		}
+		// echo "<pre>";print_r($data);die();
+		return $data;
+
+	}
+
 	function county_table($year=NULL,$month=NULL)
 	{
 		$table = '';
@@ -141,7 +182,6 @@ class County_model extends MY_Model
 			$count++;
 		}
 		
-
 		return $table;
 	}
 
