@@ -1,8 +1,8 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed!');
 require_once('phpmailer/class.phpmailer.php');
-define('GUSER', 'ampathlabmail@gmail.com'); // Gmail username
-define('GPWD', 's1mplepl@n'); // Gmail password
+define('GUSER', 'nascop.eid.eic@gmail.com'); // Gmail username
+define('GPWD', 'masaiboy'); // Gmail password
 /**
 * 
 */
@@ -44,7 +44,7 @@ class Contacts extends MY_Controller
 		echo $sent;
 	}
 
-	function smtpmailer($from, $from_name, $subject, $body) { 
+	function smtpmailer($from='joshua.bakasa@strathmore.edu', $from_name='Joshua', $subject='TEST', $body='This is just a test') { 
 		global $error;
 		$mail = new PHPMailer();  // create a new object
 		$mail->IsSMTP(); // enable SMTP
@@ -58,10 +58,10 @@ class Contacts extends MY_Controller
 		$mail->SetFrom($from, $from_name);
 		$mail->Subject = 'VL DASHBOARD: '.$subject;
 		$mail->Body = $body;
-		$mail->AddAddress('jbatuka@usaid.gov');
-		$mail->AddAddress('jhungu@clintonhealthaccess.org');
-		$mail->AddAddress('jlusike@clintonhealthaccess.org');
-		$mail->AddAddress('tngugi@clintonhealthaccess.org');
+		// $mail->AddAddress('jbatuka@usaid.gov');
+		// $mail->AddAddress('jhungu@clintonhealthaccess.org');
+		// $mail->AddAddress('jlusike@clintonhealthaccess.org');
+		// $mail->AddAddress('tngugi@clintonhealthaccess.org');
 		$mail->AddAddress('baksajoshua09@gmail.com');
 		if(!$mail->Send()) {
 			$error = 'Mail error: '.$mail->ErrorInfo; 
