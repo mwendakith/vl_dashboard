@@ -40,7 +40,7 @@
 		border-top: 8px solid black;
 	}
 </style>
-<!-- <div class="row">
+<div class="row">
 	<div class="col-md-12" id="nattatdiv">
 		<div class="col-md-6 col-md-offset-3">
 			<div class="col-md-4 title-name" id="title">
@@ -64,7 +64,7 @@
 			</div>
 		</div>
 	</div>
-</div> -->
+</div>
 <div class="row">
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-default">
