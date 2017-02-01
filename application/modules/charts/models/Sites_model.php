@@ -249,14 +249,14 @@ class Sites_model extends MY_Model
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
-	    		<td>'.(int) (($greater/$total)*100).'%</td>
+	    		<td>'.round((($greater/$total)*100),2).'%</td>
 	    	</tr>
 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
 	    		<td>'.number_format($less).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.(int) (($less/$total)*100).'%</td>
+	    		<td>'.round((($less/$total)*100),2).'%</td>
 	    	</tr>
 
 	    	<tr>
