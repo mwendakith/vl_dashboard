@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_county_subcounty_outcomes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_county_subcounty_outcomes`
-(IN filter_county INT(11), IN filter_year INT(11), IN filter_month INT(11))
+(IN filter_county INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
 						`d`.`name`, 
@@ -10,15 +10,20 @@ BEGIN
 						FROM `vl_subcounty_summary` `vss`
 						JOIN `districts` `d` 
 						ON `vss`.`subcounty` = `d`.`ID`
-					WHERE 1";
+					WHERE 1 ";
 
-    IF (filter_month != 0 && filter_month != '') THEN
-       SET @QUERY = CONCAT(@QUERY, " AND `d`.`county` = '",filter_county,"' AND `year` = '",filter_year,"' AND `month`='",filter_month,"' ");
+  
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '') THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
     ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `d`.`county` = '",filter_county,"' AND `year` = '",filter_year,"' ");
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY `suppressed` DESC, `nonsuppressed` ");
+    SET @QUERY = CONCAT(@QUERY, " AND `d`.`county` = '",filter_county,"' GROUP BY `name` ORDER BY `suppressed` DESC, `nonsuppressed` ");
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

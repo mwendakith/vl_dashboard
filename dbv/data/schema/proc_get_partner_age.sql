@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_partner_age`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_partner_age`
-(IN P_id INT(11), IN filter_year INT(11), IN filter_month INT(11))
+(IN P_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
                     `ac`.`name`, 
@@ -13,8 +13,12 @@ BEGIN
                     ON `vca`.`age` = `ac`.`ID`
                 WHERE 1";
 
-    IF (filter_month != 0 && filter_month != '') THEN
-       SET @QUERY = CONCAT(@QUERY, " AND `vca`.`partner` = '",P_id,"' AND `vca`.`year` = '",filter_year,"' AND `vca`.`month`='",filter_month,"' ");
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '') THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `vca`.`partner` = '",P_id,"' AND `vca`.`year` = '",filter_year,"' AND `vca`.`month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `vca`.`partner` = '",P_id,"' AND `vca`.`year` = '",filter_year,"' AND `vca`.`month`='",from_month,"' ");
+        END IF;
     ELSE
         SET @QUERY = CONCAT(@QUERY, " AND `vca`.`partner` = '",P_id,"' AND `vca`.`year` = '",filter_year,"' ");
     END IF;

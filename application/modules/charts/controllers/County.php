@@ -12,7 +12,7 @@ class County extends MY_Controller
 		$this->load->model('county_model');
 	}
 
-	function county_table($year=NULL,$month=NULL)
+	function county_table($year=NULL,$month=NULL,$to_month=NULL)
 	{
 		$data['outcomes']= $this->county_model->county_table($year,$month);
 
@@ -23,7 +23,7 @@ class County extends MY_Controller
     	$this->load->view('counties_table_view',$data);
 	}
 
-	function download_county_table($year=NULL,$month=NULL)
+	function download_county_table($year=NULL,$month=NULL,$to_month=NULL)
 	{
 		$this->county_model->download_county_table($year,$month);
 		
@@ -31,7 +31,7 @@ class County extends MY_Controller
 
 
 
-	function county_subcounties($year=NULL,$month=NULL,$county=NULL)
+	function county_subcounties($year=NULL,$month=NULL,$county=NULL,$to_month=NULL)
 	{
 		$data['outcomes'] = $this->county_model->county_subcounties($year,$month,$county);
 
@@ -42,13 +42,13 @@ class County extends MY_Controller
     	$this->load->view('counties_table_view',$data);
 	}
 
-	function download_subcounty_table($year=NULL,$month=NULL,$county=NULL)
+	function download_subcounty_table($year=NULL,$month=NULL,$county=NULL,$to_month=NULL)
 	{
 		$this->county_model->download_subcounty_table($year,$month,$county);
 		
 	}
 
-	function subcounty_outcomes($year=NULL,$month=NULL,$county=NULL)
+	function subcounty_outcomes($year=NULL,$month=NULL,$county=NULL,$to_month=NULL)
 	{
 		$data['outcomes'] = $this->county_model->subcounty_outcomes($year,$month,$county);
 
