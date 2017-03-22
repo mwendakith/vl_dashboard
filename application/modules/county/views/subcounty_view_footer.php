@@ -85,7 +85,7 @@
 
 			$.get("<?php echo base_url('county/check_subcounty_select');?>", function( data ){
 				data = $.parseJSON(data);
-				if (em=="NA") {
+				if (data==0) {
 					$("#second").hide();
 	        		$("#first").show();
 
@@ -100,9 +100,9 @@
 					$("#samples").html("<center><div class='loader'></div></center>");
 					$("#subcounties").html("<center><div class='loader'></div></center>");
 					
-					$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/regimen_vl_outcome'); ?>/"+year+"/"+month+"/"+data);
-					$("#gender").load("<?php echo base_url('charts/subcounties/regimen_gender'); ?>/"+year+"/"+month+"/"+data);
-					$("#age").load("<?php echo base_url('charts/subcounties/regimen_age'); ?>/"+year+"/"+month+"/"+data); 
+					$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/subcounty_vl_outcomes'); ?>/"+year+"/"+month+"/"+data);
+					$("#gender").load("<?php echo base_url('charts/subcounties/subcounty_gender'); ?>/"+year+"/"+month+"/"+data);
+					$("#age").load("<?php echo base_url('charts/subcounties/subcounty_age'); ?>/"+year+"/"+month+"/"+data); 
 					$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+year+"/"+data);
 					$("#subcounties").load("<?php echo base_url('charts/subcounties/subcounty_sites'); ?>/"+year+"/"+month+"/"+data); 
 				}
