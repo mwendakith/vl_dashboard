@@ -13,8 +13,12 @@ class Sites_model extends MY_Model
 	}
 
 
-	function sites_outcomes($year=null,$month=null,$partner=null)
+	function sites_outcomes($year=null,$month=null,$partner=null,$to_month=null)
 	{
+		
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
 		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_year');
 		}
@@ -30,9 +34,9 @@ class Sites_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_month."')";
 		}  else {
-			$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."')";
+			$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_month."')";
 		}
 		// $sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."')";
 		
@@ -57,10 +61,13 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function partner_sites_outcomes($year=NULL,$month=NULL,$site=NULL,$partner=NULL)
+	function partner_sites_outcomes($year=NULL,$month=NULL,$partner=NULL,$to_month=null)
 	{
 		$table = '';
 		$count = 1;
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -72,7 +79,7 @@ class Sites_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($sql);die();
@@ -98,17 +105,20 @@ class Sites_model extends MY_Model
 		return $table;
 	}
 
-	function sites_trends($year=null,$month=null,$site=null)
+	function sites_trends($year=null,$month=null,$site=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
 		}
 		$data['year'] = $year;
 
-		$sql = "CALL `proc_get_sites_trends`('".$site."','".$year."')";
+		$sql = "CALL `proc_get_sites_trends`('".$site."','".$year."','".$to_month."')";
 
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
@@ -146,10 +156,13 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function site_outcomes_chart($year=null,$month=null,$site=null)
+	function site_outcomes_chart($year=null,$month=null,$site=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -196,10 +209,13 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function sites_vloutcomes($year=null,$month=null,$site=null)
+	function sites_vloutcomes($year=null,$month=null,$site=null,$to_month=null)
 	{
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		
 		if ($year==null || $year=='null') {
@@ -213,7 +229,7 @@ class Sites_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_sites_vl_outcomes`('".$site."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_sites_vl_outcomes`('".$site."','".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -291,7 +307,7 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function sites_age($year=null,$month=null,$site=null)
+	function sites_age($year=null,$month=null,$site=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -303,11 +319,15 @@ class Sites_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
 		}
 
-		$sql = "CALL `proc_get_sites_age`('".$site."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_sites_age`('".$site."','".$year."','".$month."','".$to
+		."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -340,7 +360,7 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function sites_gender($year=null,$month=null,$site=null)
+	function sites_gender($year=null,$month=null,$site=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -352,11 +372,14 @@ class Sites_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
 		}
 
-		$sql = "CALL `proc_get_sites_gender`('".$site."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_sites_gender`('".$site."','".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -381,9 +404,10 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function partner_sites_outcomes_download($year=NULL,$month=NULL,$partner=NULL)
+	function partner_sites_outcomes_download($year=NULL,$month=NULL,$partner=NULL,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
+
 			$year = $this->session->userdata('filter_year');
 		}
 		if ($month==null || $month=='null') {
@@ -393,8 +417,11 @@ class Sites_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
 
-		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$data = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($data);die();

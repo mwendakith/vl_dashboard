@@ -15,21 +15,21 @@ class Regimen extends MY_Controller
 
 	function regimen_outcomes($year=NULL,$month=NULL,$to_month=NULL)
 	{
-		$data['outcomes']= $this->regimen_model->regimens_outcomes($year,$month);
+		$data['outcomes']= $this->regimen_model->regimens_outcomes($year,$month,$to_month);
 
 		$this->load->view('county_outcomes_view', $data);
 	}
 
 	function regimen_county_outcomes($year=NULL,$month=NULL,$regimen=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->regimen_model->county_outcomes($year,$month,$regimen);
+		$data['outcomes'] = $this->regimen_model->county_outcomes($year,$month,$regimen,$to_month);
 
     	$this->load->view('county_outcomes_view_two',$data);
 	}
 
 	function regimen_vl_outcome($year=NULL,$month=NULL,$regimen=NULL,$to_month=NULL)
 	{
-		$data['outcomes']= $this->regimen_model->regimen_vl_outcomes($year,$month,$regimen);
+		$data['outcomes']= $this->regimen_model->regimen_vl_outcomes($year,$month,$regimen,$to_month);
 
 		// $this->load->view('vl_outcomes_view',$data);
 		$this->load->view('vl_outcomes_view',$data);
@@ -37,7 +37,7 @@ class Regimen extends MY_Controller
 
 	function regimen_gender($year=NULL,$month=NULL,$regimen=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->regimen_model->regimen_gender($year,$month,$regimen);
+		$data['outcomes'] = $this->regimen_model->regimen_gender($year,$month,$regimen,$to_month);
 		
     	// $this->load->view('gender_view',$data);
     	$this->load->view('age_regimen_gender_view',$data);
@@ -45,7 +45,7 @@ class Regimen extends MY_Controller
 
 	function regimen_age($year=NULL,$month=NULL,$regimen=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->regimen_model->regimen_age($year,$month,$regimen);
+		$data['outcomes'] = $this->regimen_model->regimen_age($year,$month,$regimen,$to_month);
 		
     	// $this->load->view('agegroup_view',$data);
     	$this->load->view('regimen_agegroup_view',$data);

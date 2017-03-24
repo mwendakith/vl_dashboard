@@ -8,10 +8,13 @@ class Summaries_model extends MY_Model
 		parent:: __construct();
 	}
 
-	function turnaroundtime($year=null,$month=null,$county=null)
+	function turnaroundtime($year=null,$month=null,$county=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -21,7 +24,7 @@ class Summaries_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_national_tat`('".$year."','".$month."')";
+		$sql = "CALL `proc_get_national_tat`('".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -60,12 +63,15 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function county_outcomes($year=null,$month=null,$pfil=null,$partner=null,$county=null)
+	function county_outcomes($year=null,$month=null,$pfil=null,$partner=null,$county=null,$to_month=null)
 	{
 		// echo "Year:".$year.":--: Month:".$month.":--: County:".$county.":--: Partner:".$partner.":--: pfil:".$pfil;die();
 		//Initializing the value of the Year to the selected year or the default year which is current year
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		//Assigning the value of the month or setting it to the selected value
 		if ($month==null || $month=='null') {
@@ -87,17 +93,17 @@ class Summaries_model extends MY_Model
 				
 		// echo "PFil: ".$pfil." --Partner: ".$partner." -- County: ".$county;
 		if ($county) {
-			$sql = "CALL `proc_get_county_sites_outcomes`('".$county."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_county_sites_outcomes`('".$county."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($pfil==1) {
 				if ($partner) {
-					$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."')";
+					$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_month."')";
 				} else {
-					$sql = "CALL `proc_get_partner_outcomes`('".$year."','".$month."')";
+					$sql = "CALL `proc_get_partner_outcomes`('".$year."','".$month."','".$to_month."')";
 				}
 				
 			} else {
-				$sql = "CALL `proc_get_county_outcomes`('".$year."','".$month."')";
+				$sql = "CALL `proc_get_county_outcomes`('".$year."','".$month."','".$to_month."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);echo "</pre>";die();
@@ -121,13 +127,16 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function vl_outcomes($year=null,$month=null,$county=null,$partner=null)
+	function vl_outcomes($year=null,$month=null,$county=null,$partner=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
 		if (!$partner) {
 			$partner = $this->session->userdata('partner_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -142,15 +151,15 @@ class Summaries_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."')";
-			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."','".$to_month."')";
+			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_vl_outcomes`('".$year."','".$month."')";
-				$sql2 = "CALL `proc_get_national_sitessending`('".$year."','".$month."')";
+				$sql = "CALL `proc_get_national_vl_outcomes`('".$year."','".$month."','".$to_month."')";
+				$sql2 = "CALL `proc_get_national_sitessending`('".$year."','".$month."','".$to_month."')";
 			} else {
-				$sql = "CALL `proc_get_regional_vl_outcomes`('".$county."','".$year."','".$month."')";
-				$sql2 = "CALL `proc_get_regional_sitessending`('".$county."','".$year."','".$month."')";
+				$sql = "CALL `proc_get_regional_vl_outcomes`('".$county."','".$year."','".$month."','".$to_month."')";
+				$sql2 = "CALL `proc_get_regional_sitessending`('".$county."','".$year."','".$month."','".$to_month."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);echo "</pre>";
@@ -247,13 +256,16 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function justification($year=null,$month=null,$county=null,$partner=null)
+	function justification($year=null,$month=null,$county=null,$partner=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
 		if (!$partner) {
 			$partner = $this->session->userdata('partner_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -268,12 +280,12 @@ class Summaries_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_justification`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_justification`('".$partner."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_justification`('".$year."','".$month."')";
+				$sql = "CALL `proc_get_national_justification`('".$year."','".$month."','".$to_month."')";
 			} else {
-				$sql = "CALL `proc_get_regional_justification`('".$county."','".$year."','".$month."')";
+				$sql = "CALL `proc_get_regional_justification`('".$county."','".$year."','".$month."','".$to_month."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);die();
@@ -302,13 +314,16 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function justification_breakdown($year=null,$month=null,$county=null,$partner=null)
+	function justification_breakdown($year=null,$month=null,$county=null,$partner=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
 		if (!$partner) {
 			$partner = $this->session->userdata('partner_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -319,15 +334,15 @@ class Summaries_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_justification_breakdown`('6','".$partner."','".$year."','".$month."')";
-			$sql2 = "CALL `proc_get_partner_justification_breakdown`('9','".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_justification_breakdown`('6','".$partner."','".$year."','".$month."','".$to_month."')";
+			$sql2 = "CALL `proc_get_partner_justification_breakdown`('9','".$partner."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_justification_breakdown`('6','".$year."','".$month."')";
-				$sql2 = "CALL `proc_get_national_justification_breakdown`('9','".$year."','".$month."')";
+				$sql = "CALL `proc_get_national_justification_breakdown`('6','".$year."','".$month."','".$to_month."')";
+				$sql2 = "CALL `proc_get_national_justification_breakdown`('9','".$year."','".$month."','".$to_month."')";
 			} else {
-				$sql = "CALL `proc_get_regional_justification_breakdown`('6','".$county."','".$year."','".$month."')";
-				$sql2 = "CALL `proc_get_regional_justification_breakdown`('9','".$county."','".$year."','".$month."')";
+				$sql = "CALL `proc_get_regional_justification_breakdown`('6','".$county."','".$year."','".$month."','".$to_month."')";
+				$sql2 = "CALL `proc_get_regional_justification_breakdown`('9','".$county."','".$year."','".$month."','".$to_month."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);
@@ -365,13 +380,16 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function age($year=null,$month=null,$county=null,$partner=null)
+	function age($year=null,$month=null,$county=null,$partner=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
 		if (!$partner) {
 			$partner = $this->session->userdata('partner_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -386,12 +404,12 @@ class Summaries_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_age`('".$year."','".$month."')";
+				$sql = "CALL `proc_get_national_age`('".$year."','".$month."','".$to_month."')";
 			} else {
-				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."')";
+				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."','".$to_month."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);die();
@@ -467,13 +485,16 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function age_breakdown($year=null,$month=null,$county=null,$partner=null)
+	function age_breakdown($year=null,$month=null,$county=null,$partner=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
 		if (!$partner) {
 			$partner = $this->session->userdata('partner_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -488,12 +509,12 @@ class Summaries_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_age`('".$year."','".$month."')";
+				$sql = "CALL `proc_get_national_age`('".$year."','".$month."','".$to_month."')";
 			} else {
-				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."')";
+				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."','".$to_month."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);die();
@@ -551,13 +572,16 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function gender($year=null,$month=null,$county=null,$partner=null)
+	function gender($year=null,$month=null,$county=null,$partner=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
 		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -572,12 +596,12 @@ class Summaries_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_gender`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_gender`('".$partner."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_gender`('".$year."','".$month."')";
+				$sql = "CALL `proc_get_national_gender`('".$year."','".$month."','".$to_month."')";
 			} else {
-				$sql = "CALL `proc_get_regional_gender`('".$county."','".$year."','".$month."')";
+				$sql = "CALL `proc_get_regional_gender`('".$county."','".$year."','".$month."','".$to_month."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);die();
@@ -616,6 +640,7 @@ class Summaries_model extends MY_Model
 		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_filter');
 		}
+
 
 		if ($year==null || $year=='null') {
 			$to = $this->session->userdata('filter_year');

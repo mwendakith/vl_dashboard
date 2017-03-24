@@ -9,58 +9,58 @@ class Summaries extends MY_Controller {
 		$this->load->model('summaries_model');
 	}
 
-	function turnaroundtime($year=NULL,$month=NULL,$county=NULL)
+	function turnaroundtime($year=NULL,$month=NULL,$county=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->turnaroundtime($year,$month,$county);
+		$data['outcomes'] = $this->summaries_model->turnaroundtime($year,$month,$county,$to_month);
 
 		$this->load->view('turnaroundtime_view',$data);
 	}
 	
-	function county_outcomes($year=NULL,$month=NULL,$pfil=NULL,$partner=NULL,$county=NULL)
+	function county_outcomes($year=NULL,$month=NULL,$pfil=NULL,$partner=NULL,$county=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->county_outcomes($year,$month,$pfil,$partner,$county);
+		$data['outcomes'] = $this->summaries_model->county_outcomes($year,$month,$pfil,$partner,$county,$to_month);
 
     	$this->load->view('county_outcomes_view',$data);
 	}
 
-	function vl_outcomes($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
+	function vl_outcomes($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->vl_outcomes($year,$month,$county,$partner);
+		$data['outcomes'] = $this->summaries_model->vl_outcomes($year,$month,$county,$partner,$to_month);
 
     	$this->load->view('vl_outcomes_view',$data);
 	}
 
-	function justification($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
+	function justification($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->justification($year,$month,$county,$partner);
+		$data['outcomes'] = $this->summaries_model->justification($year,$month,$county,$partner,$to_month);
 
     	$this->load->view('justification_view',$data);
 	}
 
-	function justificationbreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
+	function justificationbreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->justification_breakdown($year,$month,$county,$partner);
+		$data['outcomes'] = $this->summaries_model->justification_breakdown($year,$month,$county,$partner,$to_month);
 		
 		$this->load->view('justification_breakdown_view',$data);
 	}
 
-	function age($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
+	function age($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->age($year,$month,$county,$partner);
+		$data['outcomes'] = $this->summaries_model->age($year,$month,$county,$partner,$to_month);
 		
     	$this->load->view('agegroup_view',$data);
 	}
 
-	function agebreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
+	function agebreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->age_breakdown($year,$month,$county,$partner);
+		$data['outcomes'] = $this->summaries_model->age_breakdown($year,$month,$county,$partner,$to_month);
 		
 		$this->load->view('agegroupBreakdown',$data);
 	}
 
-	function gender($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
+	function gender($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->gender($year,$month,$county,$partner);
+		$data['outcomes'] = $this->summaries_model->gender($year,$month,$county,$partner,$to_month);
 
     	$this->load->view('gender_view',$data);
 	}

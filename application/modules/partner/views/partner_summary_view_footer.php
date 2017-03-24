@@ -63,6 +63,56 @@
 	        	}
 	        });
 		});
+
+		$("button").click(function () {
+		    var first, second;
+		    first = $(".date-picker[name=startDate]").val();
+		    second = $(".date-picker[name=endDate]").val();
+		    
+		    var new_title = set_multiple_date(first, second);
+
+		    $(".display_date").html(new_title);
+		    
+		    from = format_date(first);
+		    /* from is an array
+		     	[0] => month
+		     	[1] => year*/
+		    to 	= format_date(second);
+		    var error_check = check_error_date_range(from, to);
+		    
+		    if (!error_check) {
+			    $.get("<?php echo base_url();?>partner/check_partner_select", function (data) {
+					partner = data;
+					
+					if (partner==0) {
+						$("#second").hide();
+						$("#third").hide();
+						// fetching the partner outcomes
+						$("#partner").html("<center><div class='loader'></div></center>");
+						$("#partner").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+1+"/"+to[0]);
+					} else {
+						partner = "<?php echo json_decode("+partner+")?>";
+						$("#second").show();
+						$("#third").show();
+						
+		        		$("#samples").html("<center><div class='loader'></div></center>");
+						$("#vlOutcomes").html("<center><div class='loader'></div></center>");
+						$("#justification").html("<center><div class='loader'></div></center>");
+						$("#ageGroups").html("<center><div class='loader'></div></center>");
+						$("#gender").html("<center><div class='loader'></div></center>");
+						$("#partner").html("<center><div class='loader'></div></center>");
+
+						$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+from[1]+"/"+from[0]+"/"+partner+"/"+to[0]);
+						$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
+						$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
+						$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
+						$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
+						$("#partner").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+1+"/"+partner+"/"+to[0]);
+					}
+				});
+			}
+		    
+		});
 	});
 
 	function date_filter(criteria, id)

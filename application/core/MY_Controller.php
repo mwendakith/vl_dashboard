@@ -22,7 +22,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 
 		public function load_libraries($arr){
 
-			array_unshift($arr, "jquery","bootstrap");
+			array_unshift($arr, "jquery", "jquery-ui", "bootstrap");
 					
 			$libs['js_files']				=	array();		
 			$libs['css_files']				=	array();			

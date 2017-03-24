@@ -55,6 +55,46 @@
 				$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+null+"/"+null+"/"+data);
 	        	});
 	        });
+
+			$("button").click(function () {
+			    var first, second;
+			    first = $(".date-picker[name=startDate]").val();
+			    second = $(".date-picker[name=endDate]").val();
+			    
+			    var new_title = set_multiple_date(first, second);
+
+			    $(".display_date").html(new_title);
+			    
+			    from = format_date(first);
+			    /* from is an array
+			     	[0] => month
+			     	[1] => year*/
+			    to 	= format_date(second);
+			    var error_check = check_error_date_range(from, to);
+			    
+			    if (!error_check) {
+				    $("#genderGrp").html("<div>Loading...</div>"); 
+			        $("#ageGrp").html("<div>Loading...</div>"); 
+					$("#justification").html("<div>Loading...</div>");
+					$("#regimen").html("<div>Loading...</div>");
+					$("#sampleType").html("<div>Loading...</div>");
+					$("#sites_listing").html("<center><div class='loader'>Loading...</div></center>");
+
+					$.get("<?php echo base_url('partner/check_partner_select')?>", function(data) {
+			 			data = "<?php echo json_decode("+data+")?>";
+			 			partner = data;
+			 			// console.log(partner);
+				 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
+				 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
+						$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
+						$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
+						$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
+						$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[0]);
+					});
+
+				}
+			    
+			});
 		});
 	
 	function date_filter(criteria, id)
