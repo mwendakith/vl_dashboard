@@ -6,7 +6,8 @@ BEGIN
   SET @QUERY =    "SELECT 
                     `vf`.`name`,
                     SUM(`vss`.`undetected`+`vss`.`less1000`) AS `suppressed`,
-                    SUM(`vss`.`less5000`+`vss`.`above5000`) AS `nonsuppressed`  
+                    SUM(`vss`.`less5000`+`vss`.`above5000`) AS `nonsuppressed`,
+                    SUM(`vss`.`undetected`+`vss`.`less1000`+`vss`.`less5000`+`vss`.`above5000`) AS `total`  
                   FROM `vl_site_summary` `vss` 
                   LEFT JOIN `view_facilitys` `vf` 
                     ON `vss`.`facility` = `vf`.`ID` 
@@ -23,7 +24,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",C_id,"' AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vss`.`facility` ORDER BY SUM(`suppressed` + `nonsuppressed`) DESC LIMIT 0, 50 ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vss`.`facility` ORDER BY `total` DESC LIMIT 0, 50 ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

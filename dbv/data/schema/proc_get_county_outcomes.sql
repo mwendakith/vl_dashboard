@@ -6,7 +6,8 @@ BEGIN
   SET @QUERY =    "SELECT
                     `c`.`name`,
                     SUM(`vcs`.`undetected`+`vcs`.`less1000`) AS `suppressed`,
-                    SUM(`vcs`.`less5000`+`vcs`.`above5000`) AS `nonsuppressed` 
+                    SUM(`vcs`.`less5000`+`vcs`.`above5000`) AS `nonsuppressed`,
+                    SUM(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`) AS `total`
                 FROM `vl_county_summary` `vcs`
                     JOIN `countys` `c` ON `vcs`.`county` = `c`.`ID`
     WHERE 1";
@@ -22,7 +23,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vcs`.`county` ORDER BY SUM(`suppressed` + `nonsuppressed`) DESC ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vcs`.`county` ORDER BY `total` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

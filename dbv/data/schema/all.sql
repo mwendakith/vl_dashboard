@@ -285,7 +285,8 @@ BEGIN
   SET @QUERY =    "SELECT
                     `c`.`name`,
                     SUM(`vcs`.`undetected`+`vcs`.`less1000`) AS `suppressed`,
-                    SUM(`vcs`.`less5000`+`vcs`.`above5000`) AS `nonsuppressed` 
+                    SUM(`vcs`.`less5000`+`vcs`.`above5000`) AS `nonsuppressed`,
+                    SUM(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`) AS `total`
                 FROM `vl_county_summary` `vcs`
                     JOIN `countys` `c` ON `vcs`.`county` = `c`.`ID`
     WHERE 1";
@@ -301,7 +302,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vcs`.`county` ORDER BY SUM(`suppressed` + `nonsuppressed`) DESC ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vcs`.`county` ORDER BY `total` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
@@ -315,7 +316,8 @@ BEGIN
   SET @QUERY =    "SELECT 
                     `vf`.`name`,
                     SUM(`vss`.`undetected`+`vss`.`less1000`) AS `suppressed`,
-                    SUM(`vss`.`less5000`+`vss`.`above5000`) AS `nonsuppressed`  
+                    SUM(`vss`.`less5000`+`vss`.`above5000`) AS `nonsuppressed`,
+                    SUM(`vss`.`undetected`+`vss`.`less1000`+`vss`.`less5000`+`vss`.`above5000`) AS `total`  
                   FROM `vl_site_summary` `vss` 
                   LEFT JOIN `view_facilitys` `vf` 
                     ON `vss`.`facility` = `vf`.`ID` 
@@ -332,7 +334,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",C_id,"' AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vss`.`facility` ORDER BY SUM(`suppressed` + `nonsuppressed`) DESC LIMIT 0, 50 ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vss`.`facility` ORDER BY `total` DESC LIMIT 0, 50 ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
@@ -873,10 +875,10 @@ CREATE PROCEDURE `proc_get_national_tat`
 (IN filter_year INT(11), IN from_month INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
-                        `vls`.`tat1`, 
-                        `vls`.`tat2`, 
-                        `vls`.`tat3`, 
-                        `vls`.`tat4` 
+                        `vns`.`tat1`, 
+                        `vns`.`tat2`, 
+                        `vns`.`tat3`, 
+                        `vns`.`tat4` 
                     FROM `vl_national_summary` `vns` 
                     WHERE 1";
 
