@@ -63,6 +63,7 @@ class Contacts extends MY_Controller
 		$mail->AddAddress('jlusike@clintonhealthaccess.org');
 		$mail->AddAddress('tngugi@clintonhealthaccess.org');
 		$mail->AddAddress('baksajoshua09@gmail.com');
+		$mail->AddAddress('joelkith@gmail.com');
 		if(!$mail->Send()) {
 			$error = 'Mail error: '.$mail->ErrorInfo; 
 			return false;
