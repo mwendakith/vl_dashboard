@@ -8,6 +8,40 @@
 		$("#results").load("<?php echo base_url();?>charts/labs/results_outcome");
 
 		$(".display_date").load("<?php echo base_url('charts/labs/display_date'); ?>");
+
+		$("button").click(function () {
+		    var first, second;
+		    first = $(".date-picker[name=startDate]").val();
+		    second = $(".date-picker[name=endDate]").val();
+		    
+		    var new_title = set_multiple_date(first, second);
+
+		    $(".display_date").html(new_title);
+		    
+		    from = format_date(first);
+		    /* from is an array
+		     	[0] => month
+		     	[1] => year*/
+		    to 	= format_date(second);
+		    var error_check = check_error_date_range(from, to);
+		    
+		    if (!error_check) {
+			    $("#lab_perfomance_stats").html("<div>Loading...</div>"); 
+		 		$("#rejected").html("<div>Loading...</div>"); 
+				$("#test_trends").html("<div>Loading...</div>");
+				$("#samples").html("<div>Loading...</div>");
+				$("#ttime").html("<div>Loading...</div>");
+				$("#results").html("<div>Loading...</div>");
+
+				$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends/"+from[1]);
+				$("#test_trends").load("<?php echo base_url('charts/labs/testing_trends');?>/"+from[1]);
+				$("#ttime").load("<?php echo base_url();?>charts/labs/turn_around_time/"+from[1]+"/"+from[0]+"/"+to[0]);
+				$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats/"+from[1]+"/"+from[0]+"/"+to[0]);
+				$("#samples").load("<?php echo base_url();?>charts/labs/sample_types/"+from[1]+"/"+from[0]+"/"+to[0]);
+				$("#results").load("<?php echo base_url();?>charts/labs/results_outcome/"+from[1]+"/"+from[0]+"/"+to[0]);
+			}
+		    
+		});
 	});
 
 	function date_filter(criteria, id)

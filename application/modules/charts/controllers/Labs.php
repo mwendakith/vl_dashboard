@@ -13,20 +13,20 @@ class Labs extends MY_Controller
 		$this->load->model('labs_model');
 	}
 
-	function lab_performance_stats($year=NULL,$month=NULL)
+	function lab_performance_stats($year=NULL,$month=NULL,$to_month=NULL)
 	{
-		$data['stats'] = $this->labs_model->lab_performance_stat($year,$month);
+		$data['stats'] = $this->labs_model->lab_performance_stat($year,$month,$to_month);
 
-		$link = $year . '/' . $month;
+		$link = $year . '/' . $month . '/' . $to_month;
 
 		$data['link'] = base_url('charts/Labs/download_lab_performance_stats/' . $link);
 
 		$this->load->view('lab_performance_stats_view', $data);
 	}
 
-	function download_lab_performance_stats($year=NULL,$month=NULL)
+	function download_lab_performance_stats($year=NULL,$month=NULL,$to_month=NULL)
 	{
-		$this->labs_model->download_lab_performance_stats($year,$month);
+		$this->labs_model->download_lab_performance_stats($year,$month,$to_month);
 	}
 
 	function testing_trends($year=NULL)
@@ -44,23 +44,23 @@ class Labs extends MY_Controller
 		$this->load->view('labs_rejection_trends',$data);
 	}
 
-	function sample_types($year=NULL,$month=NULL)
+	function sample_types($year=NULL,$month=NULL,$to_month=NULL)
 	{
-		$data['trends'] = $this->labs_model->sample_types($year,$month);
+		$data['trends'] = $this->labs_model->sample_types($year,$month,$to_month);
 
 		$this->load->view('labs_sample_types',$data);
 	}
 
-	function turn_around_time($year=NULL,$month=NULL)
+	function turn_around_time($year=NULL,$month=NULL,$to_month=NULL)
 	{
-		$data['trends'] = $this->labs_model->labs_turnaround($year,$month);
+		$data['trends'] = $this->labs_model->labs_turnaround($year,$month,$to_month);
 
 		$this->load->view('labs_turnaround_time',$data);
 	}
 
-	function results_outcome($year=NULL,$month=NULL)
+	function results_outcome($year=NULL,$month=NULL,$to_month=NULL)
 	{
-		$data['trends'] = $this->labs_model->labs_outcomes($year,$month);
+		$data['trends'] = $this->labs_model->labs_outcomes($year,$month,$to_month);
 		
 		$this->load->view('lab_results_outcome', $data);
 	}

@@ -11,10 +11,13 @@ class Subcounty_model extends MY_Model
 		parent::__construct();
 	}
 
-	function subcounty_outcomes($year=NULL,$month=NULL)
+	function subcounty_outcomes($year=NULL,$month=NULL,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -24,7 +27,7 @@ class Subcounty_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_subcounty_outcomes`('".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_subcounty_outcomes`('".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$res = $this->db->query($sql)->result_array();
 
@@ -49,10 +52,13 @@ class Subcounty_model extends MY_Model
 		return $data;
 	}
 
-	function subcounty_vl_outcomes($year=NULL,$month=NULL,$subcounty=NULL)
+	function subcounty_vl_outcomes($year=NULL,$month=NULL,$subcounty=NULL,$to_month=null)
 	{
 		if ($subcounty==null || $subcounty=='null') {
 			$subcounty = $this->session->userdata('sub_county_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -65,7 +71,7 @@ class Subcounty_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_subcounty_vl_outcomes`('".$subcounty."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_subcounty_vl_outcomes`('".$subcounty."','".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
@@ -138,10 +144,13 @@ class Subcounty_model extends MY_Model
 		return $data;
 	}
 
-	function subcounty_gender($year=NULL,$month=NULL,$subcounty=NULL)
+	function subcounty_gender($year=NULL,$month=NULL,$subcounty=NULL,$to_month=null)
 	{
 		if ($subcounty==null || $subcounty=='null') {
 			$subcounty = $this->session->userdata('sub_county_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -154,7 +163,7 @@ class Subcounty_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_subcounty_gender`('".$subcounty."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_subcounty_gender`('".$subcounty."','".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -181,13 +190,16 @@ class Subcounty_model extends MY_Model
 		return $data;
 	}
 
-	function subcounty_age($year=NULL,$month=NULL,$subcounty=NULL)
+	function subcounty_age($year=NULL,$month=NULL,$subcounty=NULL,$to_month=null)
 	{
 		if ($subcounty==null || $subcounty=='null') {
 			$subcounty = $this->session->userdata('sub_county_filter');
 		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -197,7 +209,7 @@ class Subcounty_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_subcounty_age`('".$subcounty."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_subcounty_age`('".$subcounty."','".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -282,6 +294,106 @@ class Subcounty_model extends MY_Model
 		}
 		
 		return $data;
+	}
+
+	function subcounty_sites($year=NULL,$month=NULL,$subcounty=NULL,$to_month=null)
+	{
+		if ($subcounty==null || $subcounty=='null') {
+			$subcounty = $this->session->userdata('sub_county_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		$table = '';
+		$count = 1;
+
+		$sql = "CALL `proc_get_vl_subcounty_sites_details`('".$subcounty."','".$year."','".$month."','".$to_month."')";
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+
+		foreach ($result as $key => $value) {
+			$table .= '<tr>';
+			$table .= '<td>'.$count.'</td>';
+			$table .= '<td>'.$value['MFLCode'].'</td>';
+			$table .= '<td>'.$value['name'].'</td>';
+			$table .= '<td>'.$value['county'].'</td>';
+			$table .= '<td>'.$value['tests'].'</td>';
+			$table .= '<td>'.$value['sustxfail'].'</td>';
+			$table .= '<td>'.$value['confirmtx'].'</td>';
+			$table .= '<td>'.$value['rejected'].'</td>';
+			$table .= '<td>'.$value['adults'].'</td>';
+			$table .= '<td>'.$value['paeds'].'</td>';
+			$table .= '<td>'.$value['maletest'].'</td>';
+			$table .= '<td>'.$value['femaletest'].'</td>';
+			$table .= '</tr>';
+			$count++;
+		}
+		
+		return $table;
+	}
+
+
+	function download_subcounty_sites($year=NULL,$month=NULL,$subcounty=NULL,$to_month=null)
+	{
+		if ($subcounty==null || $subcounty=='null') {
+			$subcounty = $this->session->userdata('sub_county_filter');
+		}
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		$table = '';
+		$count = 1;
+
+		$sql = "CALL `proc_get_vl_subcounty_sites_details`('".$subcounty."','".$year."','".$month."','".$to_month."')";
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+
+		$this->load->helper('file');
+        $this->load->helper('download');
+        $delimiter = ",";
+        $newline = "\r\n";
+
+	    /** open raw memory as file, no need for temp files, be careful not to run out of memory thought */
+	    $f = fopen('php://memory', 'w');
+	    /** loop through array  */
+
+	    $b = array('MFLCode', 'Facility',  'County', 'Sub-County', 'Tests', '>1000cp/ml', 'Confirm Repeat Tests', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female');
+
+	    fputcsv($f, $b, $delimiter);
+
+	    foreach ($result as $line) {
+	        /** default php csv handler **/
+	        fputcsv($f, $line, $delimiter);
+	    }
+	    /** rewrind the "file" with the csv lines **/
+	    fseek($f, 0);
+	    /** modify header to be downloadable csv file **/
+	    header('Content-Type: application/csv');
+	    header('Content-Disposition: attachement; filename="vl_subcounty_sites.csv";');
+	    /** Send file to browser for download */
+	    fpassthru($f);
 	}
 
 	

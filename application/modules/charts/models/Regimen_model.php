@@ -11,10 +11,13 @@ class Regimen_model extends MY_Model
 		parent::__construct();
 	}
 
-	function regimens_outcomes($year=NULL,$month=NULL)
+	function regimens_outcomes($year=NULL,$month=NULL,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -24,7 +27,7 @@ class Regimen_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_regimen_outcomes`('".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_regimen_outcomes`('".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -46,10 +49,13 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
-	function regimen_vl_outcomes($year=NULL,$month=NULL,$regimen=NULL)
+	function regimen_vl_outcomes($year=NULL,$month=NULL,$regimen=NULL,$to_month=null)
 	{
 		if ($regimen==null || $regimen=='null') {
 			$regimen = $this->session->userdata('regimen_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -62,7 +68,7 @@ class Regimen_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_regimen_vl_outcomes`('".$regimen."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_regimen_vl_outcomes`('".$regimen."','".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
@@ -135,13 +141,16 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
-	function regimen_gender($year=NULL,$month=NULL,$regimen=NULL)
+	function regimen_gender($year=NULL,$month=NULL,$regimen=NULL,$to_month=null)
 	{
 		if ($regimen==null || $regimen=='null') {
 			$regimen = $this->session->userdata('regimen_filter');
 		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -151,7 +160,7 @@ class Regimen_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_regimen_gender`('".$regimen."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_regimen_gender`('".$regimen."','".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -178,13 +187,16 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
-	function regimen_age($year=NULL,$month=NULL,$regimen=NULL)
+	function regimen_age($year=NULL,$month=NULL,$regimen=NULL,$to_month=null)
 	{
 		if ($regimen==null || $regimen=='null') {
 			$regimen = $this->session->userdata('regimen_filter');
 		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -194,7 +206,7 @@ class Regimen_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_regimen_age`('".$regimen."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_regimen_age`('".$regimen."','".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -281,11 +293,14 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
-	function county_outcomes($year=null,$month=null,$regimen=null)
+	function county_outcomes($year=null,$month=null,$regimen=null,$to_month=null)
 	{
 		
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 		//Assigning the value of the month or setting it to the selected value
 		if ($month==null || $month=='null') {
@@ -300,7 +315,7 @@ class Regimen_model extends MY_Model
 			$regimen = $this->session->userdata('regimen_filter');
 		}
 
-		$sql = "CALL `proc_get_vl_county_regimen_outcomes`('".$regimen."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_county_regimen_outcomes`('".$regimen."','".$year."','".$month."','".$to_month."')";
 				
 		
 		$result = $this->db->query($sql)->result_array();

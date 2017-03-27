@@ -13,71 +13,71 @@ class Sites extends MY_Controller
 		$this->load->model('sites_model');
 	}
 
-	function site_outcomes($year=NULL,$month=NULL,$partner=NULL)
+	function site_outcomes($year=NULL,$month=NULL,$partner=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->sites_model->sites_outcomes($year,$month,$partner);
+		$data['outcomes'] = $this->sites_model->sites_outcomes($year,$month,$partner,$to_month);
 
     	$this->load->view('site_outcomes_view',$data);
 	}
 
-	function partner_sites($year=NULL,$month=NULL,$site=NULL,$partner=NULL)
+	function partner_sites($year=NULL,$month=NULL,$partner=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->sites_model->partner_sites_outcomes($year,$month,$site,$partner);
+		$data['outcomes'] = $this->sites_model->partner_sites_outcomes($year,$month,$partner,$to_month);
 
-		$link = $year . '/' . $month . '/' . $partner;
-
-		
-
+		$link = $year . '/' . $month . '/' . $partner . '/' . $to_month;
 		$data['link'] =  base_url('charts/sites/download_partner_sites/' . $link);
 
     	$this->load->view('partner_site__view',$data);
 	}
 
-	function site_trends($year=null,$month=null,$site=null)
+	function download_partner_sites($year=NULL,$month=NULL,$partner=NULL,$to_month=NULL)
 	{
-		$data['trends'] = $this->sites_model->sites_trends($year,$month,$site);
+		$this->sites_model->partner_sites_outcomes_download($year,$month,$partner,$to_month);
+	}
+
+
+	function site_trends($year=null,$month=null,$site=null,$to_month=NULL)
+	{
+		$data['trends'] = $this->sites_model->sites_trends($year,$month,$site,$to_month);
 
 		$this->load->view('labs_testing_trends',$data);
 	}
 
-	function site_outcomes_chart($year=null,$month=null,$site=null)
+	function site_outcomes_chart($year=null,$month=null,$site=null,$to_month=NULL)
 	{
-		$data['trends'] = $this->sites_model->site_outcomes_chart($year,$month,$site);
+		$data['trends'] = $this->sites_model->site_outcomes_chart($year,$month,$site,$to_month);
 
 		$this->load->view('labs_sample_types',$data);
 	}
 
-	function site_Vlotcomes($year=null,$month=null,$site=null)
+	function site_Vlotcomes($year=null,$month=null,$site=null,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->sites_model->sites_vloutcomes($year,$month,$site);
+		$data['outcomes'] = $this->sites_model->sites_vloutcomes($year,$month,$site,$to_month);
 
 		$this->load->view('vl_outcomes_view',$data);
 	}
 
-	function site_agegroups($year=null,$month=null,$site=null)
+	function site_agegroups($year=null,$month=null,$site=null,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->sites_model->sites_age($year,$month,$site);
+		$data['outcomes'] = $this->sites_model->sites_age($year,$month,$site,$to_month);
 
 		$this->load->view('sites_agegroup_view',$data);
 	}
 
-	function site_gender($year=null,$month=null,$site=null)
+	function site_gender($year=null,$month=null,$site=null,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->sites_model->sites_gender($year,$month,$site);
+		$data['outcomes'] = $this->sites_model->sites_gender($year,$month,$site,$to_month);
 
 		$this->load->view('sites_gender_view',$data);
 	}
 
-	function site_justification($year=null,$month=null,$site=null)
+	function site_justification($year=null,$month=null,$site=null,$to_month=NULL)
 	{
 		$data['outcomes'] = null;
 
 		$this->load->view('',$data);
 	}
 
-	function download_partner_sites($year=NULL,$month=NULL,$partner=NULL)
-	{
-		$this->sites_model->partner_sites_outcomes_download($year,$month,$partner);
-	}
+	
 }
 ?>

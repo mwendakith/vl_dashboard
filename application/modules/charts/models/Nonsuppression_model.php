@@ -11,10 +11,13 @@ class Nonsuppression_model extends MY_Model
 		parent:: __construct();
 	}
 
-	function notification_bar($year=NULL,$month=NULL,$county=NULL)
+	function notification_bar($year=NULL,$month=NULL,$county=NULL,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -35,10 +38,10 @@ class Nonsuppression_model extends MY_Model
 		}
 
 		if ($county==null || $county=='null') {
-			$sql = "CALL `proc_get_national_sustxfail_notification`('".$year."','".$month."')";
+			$sql = "CALL `proc_get_national_sustxfail_notification`('".$year."','".$month."','".$to_month."')";
 			// $data['county'] = 'National';
 		} else {
-			$sql = "CALL `proc_get_regional_sustxfail_notification`('".$county."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_regional_sustxfail_notification`('".$county."','".$year."','".$month."','".$to_month."')";
 			// $data['county'] = $county;
 		}
 		// echo "<pre>";print_r($sql);die();
@@ -64,10 +67,13 @@ class Nonsuppression_model extends MY_Model
 		return $data;
 	}
 
-	function gender_group_chart($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
+	function gender_group_chart($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if (!$partner) {
@@ -86,12 +92,12 @@ class Nonsuppression_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_sustxfail_gender`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_sustxfail_gender`('".$partner."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_sustxfail_gender`('".$year."','".$month."')";
+				$sql = "CALL `proc_get_national_sustxfail_gender`('".$year."','".$month."','".$to_month."')";
 			} else {
-				$sql = "CALL `proc_get_regional_sustxfail_gender`('".$county."','".$year."','".$month."')";
+				$sql = "CALL `proc_get_regional_sustxfail_gender`('".$county."','".$year."','".$month."','".$to_month."')";
 			}
 		}
 		
@@ -118,7 +124,7 @@ class Nonsuppression_model extends MY_Model
 		return $data;
 	}
 
-	function age_group_chart($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
+	function age_group_chart($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
@@ -126,6 +132,9 @@ class Nonsuppression_model extends MY_Model
 
 		if (!$partner) {
 			$partner = $this->session->userdata('partner_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -140,12 +149,12 @@ class Nonsuppression_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_sustxfail_age`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_sustxfail_age`('".$partner."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_sustxfail_age`('".$year."','".$month."')";
+				$sql = "CALL `proc_get_national_sustxfail_age`('".$year."','".$month."','".$to_month."')";
 			} else {
-				$sql = "CALL `proc_get_regional_sustxfail_age`('".$county."','".$year."','".$month."')";
+				$sql = "CALL `proc_get_regional_sustxfail_age`('".$county."','".$year."','".$month."','".$to_month."')";
 			}
 		}
 
@@ -166,10 +175,13 @@ class Nonsuppression_model extends MY_Model
 		return $data;
 	}
 
-	function justifications($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
+	function justifications($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if (!$partner) {
@@ -188,12 +200,12 @@ class Nonsuppression_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_sustxfail_justification`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_sustxfail_justification`('".$partner."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_sustxfail_justification`('".$year."','".$month."')";
+				$sql = "CALL `proc_get_national_sustxfail_justification`('".$year."','".$month."','".$to_month."')";
 			} else {
-				$sql = "CALL `proc_get_regional_sustxfail_justification`('".$county."','".$year."','".$month."')";
+				$sql = "CALL `proc_get_regional_sustxfail_justification`('".$county."','".$year."','".$month."','".$to_month."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);die();
@@ -226,10 +238,13 @@ class Nonsuppression_model extends MY_Model
 		return $data;
 	}
 
-	function sampletypes($year=NULL,$month=NULL,$county=NULL,$partner=NULL)
+	function sampletypes($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if (!$partner) {
@@ -248,12 +263,12 @@ class Nonsuppression_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_sustxfail_sampletypes`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_sustxfail_sampletypes`('".$partner."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_sustxfail_sampletypes`('".$year."','".$month."')";
+				$sql = "CALL `proc_get_national_sustxfail_sampletypes`('".$year."','".$month."','".$to_month."')";
 			} else {
-				$sql = "CALL `proc_get_regional_sustxfail_sampletypes`('".$county."','".$year."','".$month."')";
+				$sql = "CALL `proc_get_regional_sustxfail_sampletypes`('".$county."','".$year."','".$month."','".$to_month."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);die();
@@ -282,10 +297,13 @@ class Nonsuppression_model extends MY_Model
 		return $data;
 	}
 
-	function regimen($year=null,$month=null,$county=null,$partner=NULL)
+	function regimen($year=null,$month=null,$county=null,$partner=NULL,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if (!$partner) {
@@ -304,12 +322,12 @@ class Nonsuppression_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_sustxfail_regimen`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_sustxfail_regimen`('".$partner."','".$year."','".$month."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_sustxfail_regimen`('".$year."','".$month."')";
+				$sql = "CALL `proc_get_national_sustxfail_regimen`('".$year."','".$month."','".$to_month."')";
 			} else {
-				$sql = "CALL `proc_get_regional_sustxfail_regimen`('".$county."','".$year."','".$month."')";
+				$sql = "CALL `proc_get_regional_sustxfail_regimen`('".$county."','".$year."','".$month."','".$to_month."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);die();
@@ -339,11 +357,14 @@ class Nonsuppression_model extends MY_Model
 		return $data;
 	}
 
-	function county_listings($year=NULL,$month=NULL,$county=NULL)
+	function county_listings($year=NULL,$month=NULL,$county=NULL,$to_month=null)
 	{
 		$li = '';
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -357,7 +378,7 @@ class Nonsuppression_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_counties_sustxfail`('".$year."','".$month."')";
+		$sql = "CALL `proc_get_counties_sustxfail`('".$year."','".$month."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
@@ -416,10 +437,13 @@ class Nonsuppression_model extends MY_Model
 		return $li;
 	}
 
-	function partners($year=null,$month=null,$county=null)
+	function partners($year=null,$month=null,$county=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -433,9 +457,9 @@ class Nonsuppression_model extends MY_Model
 			}
 		}
 		if ($county==null || $county=='null') {
-			$sql = "CALL `proc_get_national_sustxfail_partner`('".$year."','".$month."')";
+			$sql = "CALL `proc_get_national_sustxfail_partner`('".$year."','".$month."','".$to_month."')";
 		} else {
-			$sql = "CALL `proc_get_regional_sustxfail_partner`('".$county."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_regional_sustxfail_partner`('".$county."','".$year."','".$month."','".$to_month."')";
 		}
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
@@ -455,10 +479,13 @@ class Nonsuppression_model extends MY_Model
 		return $li;
 	}
 
-	function facility_listing($year=null,$month=null,$partner=NULL)
+	function facility_listing($year=null,$month=null,$partner=NULL,$to_month=null)
 	{
 		if (!$partner) {
 			$partner = $this->session->userdata('partner_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -474,9 +501,9 @@ class Nonsuppression_model extends MY_Model
 
 		
 		if ($partner==null || $partner=='null') {
-			$sql = "CALL `proc_get_sites_listing`('".$year."','".$month."')";
+			$sql = "CALL `proc_get_sites_listing`('".$year."','".$month."','".$to_month."')";
 		} else {
-			$sql = "CALL `proc_get_partner_sites_listing`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_sites_listing`('".$partner."','".$year."','".$month."','".$to_month."')";
 		}
 		
 		// echo "<pre>";print_r($sql);die();
@@ -500,10 +527,13 @@ class Nonsuppression_model extends MY_Model
 	}
 
 
-	function regimen_listing($year=null,$month=null,$county=null)
+	function regimen_listing($year=null,$month=null,$county=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
 		}
 
 		if ($year==null || $year=='null') {
@@ -517,9 +547,9 @@ class Nonsuppression_model extends MY_Model
 			}
 		}
 		if ($county==null || $county=='null') {
-			$sql = "CALL `proc_get_national_sustxfail_rank_regimen`('".$year."','".$month."')";
+			$sql = "CALL `proc_get_national_sustxfail_rank_regimen`('".$year."','".$month."','".$to_month."')";
 		} else {
-			$sql = "CALL `proc_get_regional_sustxfail_rank_regimen`('".$county."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_regional_sustxfail_rank_regimen`('".$county."','".$year."','".$month."','".$to_month."')";
 		}
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();

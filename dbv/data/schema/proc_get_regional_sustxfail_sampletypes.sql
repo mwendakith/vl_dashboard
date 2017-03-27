@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_regional_sustxfail_sampletypes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_regional_sustxfail_sampletypes`
-(IN C_id INT(11), IN filter_year INT(11), IN filter_month INT(11))
+(IN C_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
                         `vsd`.`name`, 
@@ -9,15 +9,20 @@ BEGIN
                     FROM `vl_county_sampletype` `vcs` 
                     JOIN `viralsampletypedetails` `vsd` 
                         ON `vcs`.`sampletype` = `vsd`.`ID`
-                WHERE 1";
+                WHERE 1 ";
 
-    IF (filter_month != 0 && filter_month != '') THEN
-       SET @QUERY = CONCAT(@QUERY, " AND `vcs`.`county` = '",C_id,"' AND `vcs`.`year` = '",filter_year,"' AND `vcs`.`month`='",filter_month,"' ");
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '') THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `vcs`.`year` = '",filter_year,"' AND `vcs`.`month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `vcs`.`year` = '",filter_year,"' AND `vcs`.`month`='",from_month,"' ");
+        END IF;
     ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `vcs`.`county` = '",C_id,"' AND `vcs`.`year` = '",filter_year,"' ");
+        SET @QUERY = CONCAT(@QUERY, " AND `vcs`.`year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vsd`.`name` ");
+    SET @QUERY = CONCAT(@QUERY, " AND `vcs`.`county` = '",C_id,"' GROUP BY `vsd`.`name` ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
