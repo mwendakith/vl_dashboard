@@ -100,10 +100,10 @@
 		    if (!error_check) {
 			    $.get("<?php echo base_url('sites/check_site_select');?>", function(site) {
 					//Checking if site was previously selected and calling the relevant views
-					console.log(site);
+					site = JSON.parse(site);
 					if (site==0) {
 						$("#siteOutcomes").html("<center><div class='loader'></div></center>");
-						$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>/"+from[1]+"/"+from[0]+"/"+to[0]);
+						$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[0]);
 					} else {
 						$("#tsttrends").html("<center><div class='loader'></div></center>");
 						$("#stoutcomes").html("<center><div class='loader'></div></center>");
@@ -111,7 +111,7 @@
 						$("#ageGroups").html("<center><div class='loader'></div></center>");
 						$("#gender").html("<center><div class='loader'></div></center>");
 
-						$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+from[1]+"/"+from[0]]+"/"+site+"/"+to[0]);
+						$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[0]);
 						$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[0]);
 						$("#vlOutcomes").load("<?php echo base_url('charts/sites/site_Vlotcomes');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[0]);
 						$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[0]);
@@ -156,7 +156,7 @@
 
 		$.get("<?php echo base_url('sites/check_site_select');?>", function(site) {
 			//Checking if site was previously selected and calling the relevant views
-			console.log(site);
+			site = JSON.parse(site);
 			if (site==0) {
 				$("#siteOutcomes").html("<center><div class='loader'></div></center>");
 				$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>/"+year+"/"+month);
@@ -167,12 +167,12 @@
 				$("#ageGroups").html("<center><div class='loader'></div></center>");
 				$("#gender").html("<center><div class='loader'></div></center>");
 
-				$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+year+"/"+month);
-				$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+year+"/"+month);
-				$("#vlOutcomes").load("<?php echo base_url('charts/sites/site_Vlotcomes');?>/"+year+"/"+month);
-				$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+year+"/"+month);
-				$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+year+"/"+month);
-				$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+year+"/"+month);
+				$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+year+"/"+month+"/"+site);
+				$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+year+"/"+month+"/"+site);
+				$("#vlOutcomes").load("<?php echo base_url('charts/sites/site_Vlotcomes');?>/"+year+"/"+month+"/"+site);
+				$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+year+"/"+month+"/"+site);
+				$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+year+"/"+month+"/"+site);
+				$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+year+"/"+month+"/"+site);
 			}
 		});
 		
@@ -181,9 +181,9 @@
 	 	
  	}
 
-	function ageModal()
-	{
-		$('#agemodal').modal('show');
-		// $('#CatAge').load('<?php echo base_url();?>charts/summaries/agebreakdown');
-	}
+	// function ageModal()
+	// {
+	// 	$('#agemodal').modal('show');
+	// 	// $('#CatAge').load('<?php echo base_url();?>charts/summaries/agebreakdown');
+	// }
 </script>
