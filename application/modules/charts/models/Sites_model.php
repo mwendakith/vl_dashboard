@@ -118,7 +118,7 @@ class Sites_model extends MY_Model
 		}
 		$data['year'] = $year;
 
-		$sql = "CALL `proc_get_sites_trends`('".$site."','".$year."','".$to_month."')";
+		$sql = "CALL `proc_get_sites_trends`('".$site."','".$year."')";
 
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
