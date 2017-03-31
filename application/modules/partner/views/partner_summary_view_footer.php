@@ -89,9 +89,9 @@
 						$("#third").hide();
 						// fetching the partner outcomes
 						$("#partner").html("<center><div class='loader'></div></center>");
-						$("#partner").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+1+"/"+to[0]);
+						$("#partner").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+1+"/"+null+"/"+null+"/"+to[0]);
 					} else {
-						partner = "<?php echo json_decode("+partner+")?>";
+						partner = $.parseJSON(partner);
 						$("#second").show();
 						$("#third").show();
 						

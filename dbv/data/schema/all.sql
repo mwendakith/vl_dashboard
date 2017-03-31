@@ -1185,7 +1185,7 @@ BEGIN
   SET @QUERY =    "SELECT 
                     `view_facilitys`.`name`, 
                     SUM(`vl_site_summary`.`undetected`+`vl_site_summary`.`less1000`) AS `suppressed`,
-                    SUM(`vl_site_summary`.`less5000`+`vl_site_summary`.`above5000`) AS `nonsuppressed` LEFT JOIN `view_facilitys` ON `vl_site_summary`.`facility` = `view_facilitys`.`ID` WHERE 1";
+                    SUM(`vl_site_summary`.`less5000`+`vl_site_summary`.`above5000`) AS `nonsuppressed` FROM `vl_site_summary` LEFT JOIN `view_facilitys` ON `vl_site_summary`.`facility` = `view_facilitys`.`ID` WHERE 1";
 
   
     IF (from_month != 0 && from_month != '') THEN
@@ -1198,7 +1198,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `view_facilitys`.`partner` = '",P_id,"' GROUP BY `view_facilitys`.`ID` ORDER BY `tests` DESC LIMIT 0, 50 ");
+    SET @QUERY = CONCAT(@QUERY, " AND `view_facilitys`.`partner` = '",P_id,"' GROUP BY `view_facilitys`.`ID` ORDER BY `suppressed` DESC LIMIT 0, 50 ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
