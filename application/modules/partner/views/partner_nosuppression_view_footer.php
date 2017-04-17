@@ -84,12 +84,12 @@
 			 			data = "<?php echo json_decode("+data+")?>";
 			 			partner = data;
 			 			// console.log(partner);
-				 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
-				 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
-						$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
-						$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
-						$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[0]);
-						$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[0]);
+				 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[1]+"/"+to[0]);
+				 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[1]+"/"+to[0]);
+						$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[1]+"/"+to[0]);
+						$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[1]+"/"+to[0]);
+						$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[1]+"/"+to[0]);
+						$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
 					});
 
 				}

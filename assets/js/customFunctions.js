@@ -12,7 +12,8 @@ function format_date(data)
 function set_multiple_date(first, second){
 	var f = first.split(" ");
 	var s = second.split(" ");
-	return f[0] + "-" + s[0] + " " + f[1];
+	// return f[0] + "-" + s[0] + " " + f[1];
+	return f[0] + ", " + f[1] + " - " + s[0] + ", " + s[1];
 }
 
 function check_error_date_range (first, second) {
@@ -34,8 +35,10 @@ function check_error_date_range (first, second) {
 			doAlert('errorAlert', content);
 		}
 	} else {
-		content = "<strong>Warning!</strong>Please select months within the same year";
-		doAlert('errorAlert', content);
+		if(firstYear > secondYear){
+			content = "<strong>Warning!</strong>The from year is greater than the to year!";
+			doAlert('errorAlert', content);
+		}
 	}
 
 	return returnVal;

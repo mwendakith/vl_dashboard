@@ -103,7 +103,7 @@
 					site = JSON.parse(site);
 					if (site==0) {
 						$("#siteOutcomes").html("<center><div class='loader'></div></center>");
-						$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[0]);
+						$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
 					} else {
 						$("#tsttrends").html("<center><div class='loader'></div></center>");
 						$("#stoutcomes").html("<center><div class='loader'></div></center>");
@@ -111,12 +111,12 @@
 						$("#ageGroups").html("<center><div class='loader'></div></center>");
 						$("#gender").html("<center><div class='loader'></div></center>");
 
-						$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[0]);
-						$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[0]);
-						$("#vlOutcomes").load("<?php echo base_url('charts/sites/site_Vlotcomes');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[0]);
-						$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[0]);
-						$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[0]);
-						$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[0]);
+						$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
+						$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
+						$("#vlOutcomes").load("<?php echo base_url('charts/sites/site_Vlotcomes');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
+						$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
+						$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
+						$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
 					}
 				});
 			}

@@ -79,7 +79,7 @@
 						$("#sites_all").hide();
 						$("#partner_sites").show();
 						$("#partnerSites").html("<center><div class='loader'></div></center>");
-						$("#partnerSites").load("<?php echo base_url('charts/sites/partner_sites');?>/"+from[1]+"/"+from[0]+"/"+partner+"/"+to[0]);
+						$("#partnerSites").load("<?php echo base_url('charts/sites/partner_sites');?>/"+from[1]+"/"+from[0]+"/"+partner+"/"+to[1]+"/"+to[0]);
 					}
 				});
 			}

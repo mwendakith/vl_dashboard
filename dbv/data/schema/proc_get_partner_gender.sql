@@ -15,16 +15,18 @@ BEGIN
 
     IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `vng`.`partner` = '",P_id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
         ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND `vng`.`partner` = '",P_id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"')) ");
+          SET @QUERY = CONCAT(@QUERY, "  AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"')) ");
         ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `vng`.`partner` = '",P_id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+            SET @QUERY = CONCAT(@QUERY, "  AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
         END IF;
     END IF;
     ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `vng`.`partner` = '",P_id,"' AND `year` = '",filter_year,"' ");
+        SET @QUERY = CONCAT(@QUERY, "  AND `year` = '",filter_year,"' ");
     END IF;
+
+     SET @QUERY = CONCAT(@QUERY, " AND `vng`.`partner` = '",P_id,"' ");
 
     SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name` ");
 

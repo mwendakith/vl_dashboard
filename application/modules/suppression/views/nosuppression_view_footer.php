@@ -79,14 +79,14 @@
 				$("#countys").html("<div>Loading...</div>");
 				$("#partners").html("<div>Loading...</div>");
 				
-				$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+from[1]+"/"+from[0]+null+"/"+to[0]);
-		 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+from[1]+"/"+from[0]+null+"/"+to[0]);
-		 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+from[1]+"/"+from[0]+null+"/"+to[0]);
-		 		$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>/"+from[1]+"/"+from[0]+null+"/"+to[0]);
-				$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+from[1]+"/"+from[0]+null+"/"+to[0]);
-				$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+from[1]+"/"+from[0]+null+"/"+to[0]);
-				$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+from[1]+"/"+from[0]+null+null+"/"+to[0]);
-				$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+from[1]+"/"+from[0]+null+"/"+to[0]);
+				$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+from[1]+"/"+from[0]+null+"/"+to[1]+"/"+to[0]);
+		 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+from[1]+"/"+from[0]+null+"/"+to[1]+"/"+to[0]);
+		 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+from[1]+"/"+from[0]+null+"/"+to[1]+"/"+to[0]);
+		 		$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>/"+from[1]+"/"+from[0]+null+"/"+to[1]+"/"+to[0]);
+				$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+from[1]+"/"+from[0]+null+"/"+to[1]+"/"+to[0]);
+				$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+from[1]+"/"+from[0]+null+"/"+to[1]+"/"+to[0]);
+				$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+from[1]+"/"+from[0]+null+null+"/"+to[1]+"/"+to[0]);
+				$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+from[1]+"/"+from[0]+null+"/"+to[1]+"/"+to[0]);
 			}
 		    
 		});
