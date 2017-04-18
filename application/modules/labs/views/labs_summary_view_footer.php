@@ -35,10 +35,10 @@
 
 				$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends/"+from[1]);
 				$("#test_trends").load("<?php echo base_url('charts/labs/testing_trends');?>/"+from[1]);
-				$("#ttime").load("<?php echo base_url();?>charts/labs/turn_around_time/"+from[1]+"/"+from[0]+"/"+to[0]);
-				$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats/"+from[1]+"/"+from[0]+"/"+to[0]);
-				$("#samples").load("<?php echo base_url();?>charts/labs/sample_types/"+from[1]+"/"+from[0]+"/"+to[0]);
-				$("#results").load("<?php echo base_url();?>charts/labs/results_outcome/"+from[1]+"/"+from[0]+"/"+to[0]);
+				$("#ttime").load("<?php echo base_url();?>charts/labs/turn_around_time/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+				$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+				$("#samples").load("<?php echo base_url();?>charts/labs/sample_types/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+				$("#results").load("<?php echo base_url();?>charts/labs/results_outcome/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 			}
 		    
 		});

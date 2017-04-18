@@ -12,30 +12,30 @@ class Ages extends MY_Controller
 		$this->load->model('ages_model');
 	}
 
-	function age_outcomes($year=NULL,$month=NULL,$to_month=NULL)
+	function age_outcomes($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['outcomes']= $this->ages_model->ages_outcomes($year,$month,$to_month);
+		$data['outcomes']= $this->ages_model->ages_outcomes($year,$month,$to_year,$to_month);
 
 		$this->load->view('county_outcomes_view', $data);
 	}
 
-	function age_county_outcomes($year=NULL,$month=NULL,$age=NULL,$to_month=NULL)
+	function age_county_outcomes($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->ages_model->county_outcomes($year,$month,$age,$to_month);
+		$data['outcomes'] = $this->ages_model->county_outcomes($year,$month,$age,$to_year,$to_month);
 
     	$this->load->view('county_outcomes_view_two',$data);
 	}
 
-	function age_vl_outcome($year=NULL,$month=NULL,$age=NULL,$to_month=NULL)
+	function age_vl_outcome($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['outcomes']= $this->ages_model->ages_vl_outcomes($year,$month,$age,$to_month);
+		$data['outcomes']= $this->ages_model->ages_vl_outcomes($year,$month,$age,$to_year,$to_month);
 
 		$this->load->view('vl_outcomes_view',$data);
 	}
 
-	function age_gender($year=NULL,$month=NULL,$age=NULL,$to_month=NULL)
+	function age_gender($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->ages_model->ages_gender($year,$month,$age,$to_month);
+		$data['outcomes'] = $this->ages_model->ages_gender($year,$month,$age,$to_year,$to_month);
 		
     	$this->load->view('age_regimen_gender_view',$data);
 	}
