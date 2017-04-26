@@ -1,6 +1,6 @@
 <div class="row" id="filter">
   
-  <div class="col-md-6 col-md-offset-3" id="year-month-filter">
+  <div class="col-md-6 col-md-offset-2" id="year-month-filter">
     <div class="filter">
       Year: 
       <a href="javascript:void(0)" onclick="date_filter('yearly', 2010 )" class="alert-link"> 2010 </a>|
@@ -30,24 +30,51 @@
       <a href='javascript:void(0)' onclick='date_filter("monthly", 12)' class='alert-link'> Dec</a>
     </div>
   </div>
+
+  <div class="col-md-3">
+      <div class="row" id="range">
+          <div class="col-md-4">
+              <input name="startDate" id="startDate" class="date-picker" placeholder="From:" />
+          </div>
+          <div class="col-md-4 endDate">
+              <input name="endDate" id="endDate" class="date-picker" placeholder="To:" />
+          </div>
+          <div class="col-md-4">
+              <button id="filter" class="btn btn-primary date-pickerBtn" style="color: white;background-color: #1BA39C; margin-top: 0.2em; margin-bottom: 0em; margin-left: 4em;"><center>Filter</center></button>
+          </div>
+      </div>
+          <center><div id="errorAlertDateRange"><div id="errorAlert" class="alert alert-danger" role="alert">...</div></div></center>
+  </div>
 </div>
+
 <script type="text/javascript">
-  // $().ready(function(){
-  //   //Getting the URL dynamically
-  //   var url = $(location).attr('href');
-  //   // Getting the file name i.e last segment of URL (i.e. example.html)
-  //   var fn = url.split('/').indexOf("partner");
-  //   console.log(fn);
+  $(function() {
+    $('.date-picker').datepicker( {
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'MM yy',
+        onClose: function(dateText, inst) { 
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, month, 1));
+        }
+    });
+    $('#endDate').datepicker( {
+        changeMonth: true,
+        changeYear: false,
+        showButtonPanel: true,
+        dateFormat: 'MM',
+        onClose: function(dateText, inst) { 
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            // var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(month, 1));
+        }
+    });
+  });
+  
+  $().ready(function(){
+    $('#errorAlertDateRange').hide();
     
-  //   if (fn==-1) {
-  //     $.get("<?php echo base_url();?>template/breadcrum", function(data){
-  //       $("#breadcrum").html(data);
-  //     });
-  //   } else {
-  //     $.get("<?php echo base_url();?>template/breadcrum", function(data){
-  //       $("#breadcrum").html(data);
-  //     });
-  //   }
-    
-  // });
+  });
 </script>

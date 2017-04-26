@@ -79,19 +79,19 @@
   </div>
 
   <div class="col-md-2">
-        <div class="row" id="range">
-            <div class="col-md-4">
-                <input name="startDate" id="startDate" class="date-picker" placeholder="From:" />
-            </div>
-            <div class="col-md-4 endDate">
-                <input name="endDate" id="endDate" class="date-picker" placeholder="To:" />
-            </div>
-            <div class="col-md-4">
-                <button id="filter" class="btn btn-primary date-pickerBtn" style="color: white;background-color: #1BA39C; margin-top: 0.2em; margin-bottom: 0em; margin-left: 4em;"><center>Filter</center></button>
-            </div>
-        </div>
-            <center><div id="errorAlertDateRange"><div id="errorAlert" class="alert alert-danger" role="alert">...</div></div></center>
-    </div>
+      <div class="row" id="range">
+          <div class="col-md-4">
+              <input name="startDate" id="startDate" class="date-picker" placeholder="From:" />
+          </div>
+          <div class="col-md-4 endDate">
+              <input name="endDate" id="endDate" class="date-picker" placeholder="To:" />
+          </div>
+          <div class="col-md-4">
+              <button id="filter" class="btn btn-primary date-pickerBtn" style="color: white;background-color: #1BA39C; margin-top: 0.2em; margin-bottom: 0em; margin-left: 4em;"><center>Filter</center></button>
+          </div>
+      </div>
+          <center><div id="errorAlertDateRange"><div id="errorAlert" class="alert alert-danger" role="alert">...</div></div></center>
+  </div>
 
 </div>
 <script type="text/javascript">
