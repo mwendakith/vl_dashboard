@@ -49,11 +49,153 @@
   	Not Suppressed: XXXX
 </div>
 <div class="row">
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Gender <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body">
+		  	<div id="genderGrp">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Age Category <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body">
+		  	<div id="ageGrp">
+		  		<div>Loading...</div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Justification <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body">
+		  	<div id="justification">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Gender <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body">
+		  	<div id="gender">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Age <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body">
+		  	<div id="age">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<center><h3>Non suppression rates</h3></center>
+</div>
+<div class="row">
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Counties <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body">
+		  	<div id="countys">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+	<!-- <div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Sub counties <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body">
+		  	<div class="row" id="genderGrp">
+		  		<div>Loading...</div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Facilities <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body">
+		  	<div class="row" id="genderGrp">
+		  		<div>Loading...</div>
+		  	</div>
+		  </div>
+		</div>
+	</div> -->
+	<div class="col-md-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Partners <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body">
+		  	<div id="partners">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  VL County Suppression <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body">
+		  	<div id="countiesGraph">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+</div>
+
+
+
+
+<?php /*'<div class="row">
 	<div class="col-md-7">
 		<!-- Begining of the age gender suppresion failures -->
 		<div class="row">
 			<div class="col-md-7">
-				<div class="panel panel-default">
+				<!-- <div class="panel panel-default">
 					<div class="panel-heading">
 					  By Gender <div class="display_date"></div>
 					</div>
@@ -61,9 +203,8 @@
 				  	<div class="row" id="genderGrp">
 				  		<div>Loading...</div>
 				  	</div>
-				  	<!-- -->
 				  </div>
-				</div>
+				</div> -->
 			</div>
 			<div class="col-md-5">
 				<div class="panel panel-default">
@@ -98,7 +239,7 @@
 				<!-- End of Justification -->
 			</div>
 			<div class="col-md-5">
-				<!-- Begining of Sample Types -->
+				Begining of Sample Types
 				<div class="panel panel-default">
 						<div class="panel-heading">
 							By Sample Types <div class="display_date"></div>
@@ -156,5 +297,5 @@
 		<!-- End of Regimen -->
 		
 	</div>
-</div>
+</div>';*/?>
 <?php $this->load->view('nosuppression_view_footer')?>
