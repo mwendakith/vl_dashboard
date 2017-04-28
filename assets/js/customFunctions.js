@@ -17,6 +17,7 @@ function set_multiple_date(first, second){
 }
 
 function check_error_date_range (first, second) {
+	// console.log(first);
 	firstMonth = first[0];
 	firstYear = first[1];
 
@@ -27,7 +28,7 @@ function check_error_date_range (first, second) {
 
 	var content = "";
 
-	if (firstYear === secondYear) {
+	if (firstYear == secondYear) {
 		if (firstMonth <= secondMonth) {
 			returnVal = false;
 		} else {
