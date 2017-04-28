@@ -1,3 +1,29 @@
+<style type="text/css">
+.ui-datepicker-calendar {
+    display: none;
+}
+.date-picker {
+    width: 100px;
+    margin-right: 0.5em;
+    font-size: 11px;
+}
+.date-pickerBtn {
+    /*width: 80px;*/
+    font-size: 11px;
+    height: 22px;
+}
+.filter {
+    font-size: 11px;
+}
+#breadcrum {
+    font-size: 11px;
+}
+#errorAlert {
+    font-size: 11px;
+    background-color: #E08283;
+    color: #96281B;
+}
+</style>
 <div class="row" id="filter">
   
   <div class="col-md-6 col-md-offset-2" id="year-month-filter">
