@@ -27,7 +27,7 @@ function check_error_date_range (first, second) {
 
 	var content = "";
 
-	if (firstYear === secondYear) {
+	if (firstYear == secondYear) {
 		if (firstMonth <= secondMonth) {
 			returnVal = false;
 		} else {
