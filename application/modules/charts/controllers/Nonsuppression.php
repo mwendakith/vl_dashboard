@@ -83,9 +83,16 @@ class Nonsuppression extends MY_Controller
 		$this->load->view('county_listings',$data);
 	}
 
-	function site_listings($year=NULL,$month=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
+	function subcounty_listings($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['facilities'] = $this->nonsuppression_model->facility_listing($year,$month,$to_year,$to_month);
+		$data['partners'] = $this->nonsuppression_model->subcounty_listings($year,$month,$county,$to_year,$to_month);
+
+		$this->load->view('sup_partner_listing',$data);
+	}
+
+	function site_listings($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['facilities'] = $this->nonsuppression_model->facility_listing($year,$month,$county,$to_year,$to_month);
 
 		$this->load->view('site_listings',$data);
 	}
