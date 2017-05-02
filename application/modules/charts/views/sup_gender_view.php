@@ -46,7 +46,7 @@
 			        },
 			        plotOptions: {
 			            column: {
-			                stacking: 'normal',
+			                stacking: 'percent',
 			                dataLabels: {
 			                    enabled: false,
 			                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
