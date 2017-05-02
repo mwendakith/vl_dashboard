@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS `proc_get_partner_sites_listing`;
+DROP PROCEDURE IF EXISTS `proc_get_county_sites_listing`;
 DELIMITER //
-CREATE PROCEDURE `proc_get_partner_sites_listing`
-(IN P_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+CREATE PROCEDURE `proc_get_county_sites_listing`
+(IN C_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
 						SUM(`vss`.`sustxfail`) AS `sustxfail`, 
@@ -27,7 +27,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`partner` = '",P_id,"' GROUP BY `vf`.`ID` ORDER BY `non supp` DESC LIMIT 0, 17 ");
+    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",C_id,"' GROUP BY `vf`.`ID` ORDER BY `non supp` DESC LIMIT 0, 15 ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

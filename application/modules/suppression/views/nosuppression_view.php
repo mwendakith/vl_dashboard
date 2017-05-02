@@ -120,7 +120,7 @@
 	<center><h3>Non suppression rates</h3></center>
 </div>
 <div class="row">
-	<div class="col-md-6">
+	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 			  Counties <div class="display_date"></div>
@@ -133,13 +133,13 @@
 		  </div>
 		</div>
 	</div>
-	<!-- <div class="col-md-3">
+	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 			  Sub counties <div class="display_date"></div>
 			</div>
 		  	<div class="panel-body">
-		  	<div class="row" id="genderGrp">
+		  	<div id="subcounty">
 		  		<div>Loading...</div>
 		  	</div>
 		  </div>
@@ -151,13 +151,13 @@
 			  Facilities <div class="display_date"></div>
 			</div>
 		  	<div class="panel-body">
-		  	<div class="row" id="genderGrp">
+		  	<div id="facilities">
 		  		<div>Loading...</div>
 		  	</div>
 		  </div>
 		</div>
-	</div> -->
-	<div class="col-md-6">
+	</div>
+	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 			  Partners <div class="display_date"></div>

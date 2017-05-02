@@ -10,6 +10,8 @@
 		$("#age").load("<?php echo base_url('charts/nonsuppression/age');?>");
 		$("#countiesGraph").load("<?php echo base_url('charts/nonsuppression/county');?>");
 		$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>");
+		$("#subcounty").load("<?php echo base_url('charts/nonsuppression/subcounty_listings');?>");
+		$("#facilities").load("<?php echo base_url('charts/nonsuppression/site_listings');?>");
 
 		$(".display_date").load("<?php echo base_url('charts/nonsuppression/display_date'); ?>");
 
@@ -43,6 +45,8 @@
 				$("#age").html("<div>Loading...</div>");
 				$("#countiesGraph").html("<div>Loading...</div>");
 				$("#partners").html("<div>Loading...</div>");
+				$("#subcounty").html("<div>Loading...</div>");
+				$("#facilities").html("<div>Loading...</div>");
 
 				$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+null+"/"+null+"/"+data);
 				$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+data);
@@ -53,6 +57,8 @@
 				$("#age").load("<?php echo base_url('charts/nonsuppression/age');?>/"+null+"/"+null+"/"+data);
 				$("#countiesGraph").load("<?php echo base_url('charts/nonsuppression/county');?>/"+null+"/"+null+"/"+data);
 				$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+null+"/"+null+"/"+data);
+				$("#subcounty").load("<?php echo base_url('charts/nonsuppression/subcounty_listings');?>/"+null+"/"+null+"/"+data);
+				$("#facilities").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+null+"/"+null+"/"+data);
 				
 	        });
 		});
@@ -72,7 +78,7 @@
 		     	[1] => year*/
 		    to 	= format_date(second);
 		    var error_check = check_error_date_range(from, to);
-		    
+		    // alert(error_check);
 		    if (!error_check) {
 			    $("#notification").html("<div>Loading...</div>");
 				$("#genderGrp").html("<div>Loading...</div>");
@@ -83,7 +89,9 @@
 				$("#age").html("<div>Loading...</div>");
 				$("#countiesGraph").html("<div>Loading...</div>");
 				$("#partners").html("<div>Loading...</div>");
-				
+				$("#subcounty").html("<div>Loading...</div>");
+				$("#facilities").html("<div>Loading...</div>");
+
 				$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
 				$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
 				$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
@@ -93,7 +101,8 @@
 				$("#age").load("<?php echo base_url('charts/nonsuppression/age');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
 				$("#countiesGraph").load("<?php echo base_url('charts/nonsuppression/county');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
 				$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
-
+				$("#subcounty").load("<?php echo base_url('charts/nonsuppression/subcounty_listings');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
+				$("#facilities").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
 			}
 		    
 		});
@@ -131,6 +140,8 @@
 		$("#age").html("<div>Loading...</div>");
 		$("#countiesGraph").html("<div>Loading...</div>");
 		$("#partners").html("<div>Loading...</div>");
+		$("#subcounty").html("<div>Loading...</div>");
+		$("#facilities").html("<div>Loading...</div>");
 
 		$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+year+"/"+month);
 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+year+"/"+month);
@@ -141,6 +152,9 @@
 		$("#age").load("<?php echo base_url('charts/nonsuppression/age');?>/"+year+"/"+month);
 		$("#countiesGraph").load("<?php echo base_url('charts/nonsuppression/county');?>/"+year+"/"+month);
 		$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+year+"/"+month);
+		$("#subcounty").load("<?php echo base_url('charts/nonsuppression/subcounty_listings');?>/"+year+"/"+month);
+		$("#facilities").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+year+"/"+month);
+
 	}
 
 	function county_filter(data)
@@ -157,6 +171,8 @@
 		$("#sampleType").html("<div>Loading...</div>");
 		$("#countys").html("<div>Loading...</div>");
 		$("#partners").html("<div>Loading...</div>");
+		$("#subcounty").html("<div>Loading...</div>");
+		$("#facilities").html("<div>Loading...</div>");
 		
 		$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+null+"/"+null+"/"+data);
  		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+data);
@@ -166,5 +182,7 @@
 		$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+null+"/"+null+"/"+data);
 		$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+null+"/"+null+"/"+data);
 		$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+null+"/"+null+"/"+data);
+		$("#subcounty").load("<?php echo base_url('charts/nonsuppression/subcounty_listings');?>/"+null+"/"+null+"/"+data);
+		$("#facilities").load("<?php echo base_url('charts/nonsuppression/subcounty_listings');?>/"+null+"/"+null+"/"+data);
 	}
 </script>

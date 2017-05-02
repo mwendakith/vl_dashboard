@@ -1,15 +1,15 @@
-DROP PROCEDURE IF EXISTS `proc_get_national_sustxfail_partner`;
+DROP PROCEDURE IF EXISTS `proc_get_national_sustxfail_subcounty`;
 DELIMITER //
-CREATE PROCEDURE `proc_get_national_sustxfail_partner`
+CREATE PROCEDURE `proc_get_national_sustxfail_subcounty`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
-                      `p`.`name`, 
-                      ((SUM(`vps`.`sustxfail`)/SUM(`vps`.`alltests`))*100) AS `percentages`, 
-                      SUM(`vps`.`sustxfail`) AS `sustxfail` 
-                  FROM `vl_partner_summary` `vps` 
-                  JOIN `partners` `p` 
-                  ON `vps`.`partner` = `p`.`ID`
+                      `d`.`name`, 
+                      ((SUM(`vss`.`sustxfail`)/SUM(`vss`.`alltests`))*100) AS `percentages`, 
+                      SUM(`vss`.`sustxfail`) AS `sustxfail` 
+                  FROM `vl_subcounty_summary` `vss` 
+                  JOIN `districts` `d` 
+                  ON `vss`.`subcounty` = `d`.`ID`
                 WHERE 1";
 
    
@@ -26,7 +26,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `p`.`name` ORDER BY `percentages` DESC  LIMIT 0, 15 ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `d`.`name` ORDER BY `percentages` DESC  LIMIT 0, 15 ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

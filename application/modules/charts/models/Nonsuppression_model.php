@@ -541,130 +541,130 @@ class Nonsuppression_model extends MY_Model
 		return $data;
 	}
 
-	function sampletypes($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
-	{
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
+	// function sampletypes($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
+	// {
+	// 	if ($county==null || $county=='null') {
+	// 		$county = $this->session->userdata('county_filter');
+	// 	}
+	// 	if ($to_year==null || $to_year=='null') {
+	// 		$to_year = 0;
+	// 	}
+	// 	if ($to_month==null || $to_month=='null') {
+	// 		$to_month = 0;
+	// 	}
 
-		if (!$partner) {
-			$partner = $this->session->userdata('partner_filter');
-		}
+	// 	if (!$partner) {
+	// 		$partner = $this->session->userdata('partner_filter');
+	// 	}
 
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+	// 	if ($year==null || $year=='null') {
+	// 		$year = $this->session->userdata('filter_year');
+	// 	}
+	// 	if ($month==null || $month=='null') {
+	// 		if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+	// 			$month = 0;
+	// 		}else {
+	// 			$month = $this->session->userdata('filter_month');
+	// 		}
+	// 	}
 
-		if ($partner) {
-			$sql = "CALL `proc_get_partner_sustxfail_sampletypes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		} else {
-			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_sustxfail_sampletypes`('".$year."','".$month."','".$to_year."','".$to_month."')";
-			} else {
-				$sql = "CALL `proc_get_regional_sustxfail_sampletypes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
-			}
-		}
-		// echo "<pre>";print_r($sql);die();
-		$result = $this->db->query($sql)->result_array();
-		// echo "<pre>";print_r($result);die();
+	// 	if ($partner) {
+	// 		$sql = "CALL `proc_get_partner_sustxfail_sampletypes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+	// 	} else {
+	// 		if ($county==null || $county=='null') {
+	// 			$sql = "CALL `proc_get_national_sustxfail_sampletypes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+	// 		} else {
+	// 			$sql = "CALL `proc_get_regional_sustxfail_sampletypes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+	// 		}
+	// 	}
+	// 	echo "<pre>";print_r($sql);die();
+	// 	$result = $this->db->query($sql)->result_array();
+	// 	// echo "<pre>";print_r($result);die();
 
-		$color = array('#6BB9F0', '#F2784B', '#1BA39C');
-		$data['sampletype']['name'] = 'Non Suppression';
-		$data['sampletype']['colorByPoint'] = true;
+	// 	$color = array('#6BB9F0', '#F2784B', '#1BA39C');
+	// 	$data['sampletype']['name'] = 'Non Suppression';
+	// 	$data['sampletype']['colorByPoint'] = true;
 
-		$count = 0;
+	// 	$count = 0;
 
-		$data['sampletype']['data'][0]['name'] = 'No Data';
+	// 	$data['sampletype']['data'][0]['name'] = 'No Data';
 
-		foreach ($result as $key => $value) {
-			$data['sampletype']['data'][$key]['y'] = $count;
+	// 	foreach ($result as $key => $value) {
+	// 		$data['sampletype']['data'][$key]['y'] = $count;
 			
-			$data['sampletype']['data'][$key]['name'] = $value['name'];
-			$data['sampletype']['data'][$key]['y'] = (int) $value['sustxfail'];
-			$data['sampletype']['data'][$key]['color'] = $color[$key];
-		}
+	// 		$data['sampletype']['data'][$key]['name'] = $value['name'];
+	// 		$data['sampletype']['data'][$key]['y'] = (int) $value['sustxfail'];
+	// 		$data['sampletype']['data'][$key]['color'] = $color[$key];
+	// 	}
 		
-		$data['sampletype']['data'][0]['sliced'] = true;
-		$data['sampletype']['data'][0]['selected'] = true;
-		// echo "<pre>";print_r($data);die();
-		return $data;
-	}
+	// 	$data['sampletype']['data'][0]['sliced'] = true;
+	// 	$data['sampletype']['data'][0]['selected'] = true;
+	// 	// echo "<pre>";print_r($data);die();
+	// 	return $data;
+	// }
 
-	function regimen($year=null,$month=null,$county=null,$partner=NULL,$to_year=NULL,$to_month=null)
-	{
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
+	// function regimen($year=null,$month=null,$county=null,$partner=NULL,$to_year=NULL,$to_month=null)
+	// {
+	// 	if ($county==null || $county=='null') {
+	// 		$county = $this->session->userdata('county_filter');
+	// 	}
+	// 	if ($to_year==null || $to_year=='null') {
+	// 		$to_year = 0;
+	// 	}
+	// 	if ($to_month==null || $to_month=='null') {
+	// 		$to_month = 0;
+	// 	}
 
-		if (!$partner) {
-			$partner = $this->session->userdata('partner_filter');
-		}
+	// 	if (!$partner) {
+	// 		$partner = $this->session->userdata('partner_filter');
+	// 	}
 
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+	// 	if ($year==null || $year=='null') {
+	// 		$year = $this->session->userdata('filter_year');
+	// 	}
+	// 	if ($month==null || $month=='null') {
+	// 		if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+	// 			$month = 0;
+	// 		}else {
+	// 			$month = $this->session->userdata('filter_month');
+	// 		}
+	// 	}
 
-		if ($partner) {
-			$sql = "CALL `proc_get_partner_sustxfail_regimen`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		} else {
-			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_sustxfail_regimen`('".$year."','".$month."','".$to_year."','".$to_month."')";
-			} else {
-				$sql = "CALL `proc_get_regional_sustxfail_regimen`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
-			}
-		}
-		// echo "<pre>";print_r($sql);die();
-		$result = $this->db->query($sql)->result_array();
-		$data['regimen']['name'] = 'Non Suppression';
-		$data['regimen']['colorByPoint'] = true;
+	// 	if ($partner) {
+	// 		$sql = "CALL `proc_get_partner_sustxfail_regimen`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+	// 	} else {
+	// 		if ($county==null || $county=='null') {
+	// 			$sql = "CALL `proc_get_national_sustxfail_regimen`('".$year."','".$month."','".$to_year."','".$to_month."')";
+	// 		} else {
+	// 			$sql = "CALL `proc_get_regional_sustxfail_regimen`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+	// 		}
+	// 	}
+	// 	// echo "<pre>";print_r($sql);die();
+	// 	$result = $this->db->query($sql)->result_array();
+	// 	$data['regimen']['name'] = 'Non Suppression';
+	// 	$data['regimen']['colorByPoint'] = true;
 
-		$count = 0;
-		$color = array('#19B5FE', '#E26A6A', '#96281B', '#BE90D4', '#16A085', '#F2784B', '#26C281', '#C8F7C5', '#E9D460', '', '', '', '', '', '', '', '');
+	// 	$count = 0;
+	// 	$color = array('#19B5FE', '#E26A6A', '#96281B', '#BE90D4', '#16A085', '#F2784B', '#26C281', '#C8F7C5', '#E9D460', '', '', '', '', '', '', '', '');
 
-		$data['li'] = '';
-		$data['regimen']['data'][0]['name'] = 'No Data';
-		$data['regimen']['data'][0]['y'] = 0;
+	// 	$data['li'] = '';
+	// 	$data['regimen']['data'][0]['name'] = 'No Data';
+	// 	$data['regimen']['data'][0]['y'] = 0;
 
-		foreach ($result as $key => $value) {
-			$data['li'] .= '<a href="#" class="list-group-item"><strong>'.$value['name'].':-></strong>&nbsp;'.$value['sustxfail'].'</a>';
-			$data['regimen']['data'][$key]['y'] = $count;
+	// 	foreach ($result as $key => $value) {
+	// 		$data['li'] .= '<a href="#" class="list-group-item"><strong>'.$value['name'].':-></strong>&nbsp;'.$value['sustxfail'].'</a>';
+	// 		$data['regimen']['data'][$key]['y'] = $count;
 			
-			$data['regimen']['data'][$key]['name'] = $value['name'];
-			$data['regimen']['data'][$key]['y'] = (int) $value['sustxfail'];
-			$data['regimen']['data'][$key]['color'] = $color[$key];
-		}
+	// 		$data['regimen']['data'][$key]['name'] = $value['name'];
+	// 		$data['regimen']['data'][$key]['y'] = (int) $value['sustxfail'];
+	// 		$data['regimen']['data'][$key]['color'] = $color[$key];
+	// 	}
 
-		$data['regimen']['data'][0]['sliced'] = true;
-		$data['regimen']['data'][0]['selected'] = true;
-		// echo "<pre>";print_r($data);die();
-		return $data;
-	}
+	// 	$data['regimen']['data'][0]['sliced'] = true;
+	// 	$data['regimen']['data'][0]['selected'] = true;
+	// 	// echo "<pre>";print_r($data);die();
+	// 	return $data;
+	// }
 
 	function county_listings($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=null)
 	{
@@ -749,6 +749,51 @@ class Nonsuppression_model extends MY_Model
 		return $li;
 	}
 
+	function subcounty_listings($year=null,$month=null,$county=null,$to_year=NULL,$to_month=null)
+	{
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+		if ($county==null || $county=='null') {
+			$sql = "CALL `proc_get_national_sustxfail_subcounty`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		} else {
+			$sql = "CALL `proc_get_county_sustxfail_subcounty`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$li = '';
+		$count = 1;
+		if($result)
+			{
+				foreach ($result as $key => $value) {
+					$li .= '<a href="#" class="list-group-item"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].'.&nbsp;'.(int) $value['percentages'].'%</a>';
+					$count++;
+				}
+			}else{
+				$li = 'No Data';
+			}
+
+		return $li;
+	}
+
 	function partners($year=null,$month=null,$county=null,$to_year=NULL,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
@@ -794,10 +839,10 @@ class Nonsuppression_model extends MY_Model
 		return $li;
 	}
 
-	function facility_listing($year=null,$month=null,$partner=NULL,$to_year=NULL,$to_month=null)
+	function facility_listing($year=null,$month=null,$county=NULL,$to_year=NULL,$to_month=null)
 	{
-		if (!$partner) {
-			$partner = $this->session->userdata('partner_filter');
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
 		}
 		if ($to_year==null || $to_year=='null') {
 			$to_year = 0;
@@ -818,10 +863,10 @@ class Nonsuppression_model extends MY_Model
 		}
 
 		
-		if ($partner==null || $partner=='null') {
-			$sql = "CALL `proc_get_sites_listing`('".$year."','".$month."','".$to_month."')";
+		if ($county==null || $county=='null') {
+			$sql = "CALL `proc_get_sites_listing`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			$sql = "CALL `proc_get_partner_sites_listing`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+			$sql = "CALL `proc_get_county_sites_listing`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		}
 		
 		// echo "<pre>";print_r($sql);die();
@@ -845,49 +890,49 @@ class Nonsuppression_model extends MY_Model
 	}
 
 
-	function regimen_listing($year=null,$month=null,$county=null,$to_year=NULL,$to_month=null)
-	{
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
+	// function regimen_listing($year=null,$month=null,$county=null,$to_year=NULL,$to_month=null)
+	// {
+	// 	if ($county==null || $county=='null') {
+	// 		$county = $this->session->userdata('county_filter');
+	// 	}
+	// 	if ($to_year==null || $to_year=='null') {
+	// 		$to_year = 0;
+	// 	}
+	// 	if ($to_month==null || $to_month=='null') {
+	// 		$to_month = 0;
+	// 	}
 
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($county==null || $county=='null') {
-			$sql = "CALL `proc_get_national_sustxfail_rank_regimen`('".$year."','".$month."','".$to_month."')";
-		} else {
-			$sql = "CALL `proc_get_regional_sustxfail_rank_regimen`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		}
-		// echo "<pre>";print_r($sql);die();
-		$result = $this->db->query($sql)->result_array();
+	// 	if ($year==null || $year=='null') {
+	// 		$year = $this->session->userdata('filter_year');
+	// 	}
+	// 	if ($month==null || $month=='null') {
+	// 		if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+	// 			$month = 0;
+	// 		}else {
+	// 			$month = $this->session->userdata('filter_month');
+	// 		}
+	// 	}
+	// 	if ($county==null || $county=='null') {
+	// 		$sql = "CALL `proc_get_national_sustxfail_rank_regimen`('".$year."','".$month."','".$to_month."')";
+	// 	} else {
+	// 		$sql = "CALL `proc_get_regional_sustxfail_rank_regimen`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+	// 	}
+	// 	// echo "<pre>";print_r($sql);die();
+	// 	$result = $this->db->query($sql)->result_array();
 
-		$li = '';
-		$count = 1;
-		if($result)
-			{
-				foreach ($result as $key => $value) {
-					$li .= '<a href="#" class="list-group-item"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.$value['sustxfail'].'</a>';
-					$count++;
-				}
-			}else{
-				$li = 'No Data';
-			}
+	// 	$li = '';
+	// 	$count = 1;
+	// 	if($result)
+	// 		{
+	// 			foreach ($result as $key => $value) {
+	// 				$li .= '<a href="#" class="list-group-item"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.$value['sustxfail'].'</a>';
+	// 				$count++;
+	// 			}
+	// 		}else{
+	// 			$li = 'No Data';
+	// 		}
 
-		return $li;
-	}
+	// 	return $li;
+	// }
 }
 ?>
