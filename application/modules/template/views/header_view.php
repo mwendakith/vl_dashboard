@@ -17,6 +17,46 @@
 			Dashboard
 		</title>
 		<style type="text/css">
+			@import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+			@import url("https://fonts.googleapis.com/css?family=Roboto:400,300,500,700");
+			/*
+			 *
+			 *   INSPINIA - Responsive Admin Theme
+			 *   version 2.6.2
+			 *
+			*/
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6 {
+			  font-weight: 100;
+			}
+			h1 {
+			  font-size: 30px;
+			}
+			h2 {
+			  font-size: 24px;
+			}
+			h3 {
+			  font-size: 16px;
+			}
+			h4 {
+			  font-size: 14px;
+			}
+			h5 {
+			  font-size: 12px;
+			}
+			h6 {
+			  font-size: 10px;
+			}
+			h3,
+			h4,
+			h5 {
+			  margin-top: 5px;
+			  font-weight: 600;
+			}
 			.navbar-inverse {
 				border-radius: 0px;
 			}
