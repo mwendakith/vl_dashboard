@@ -20,13 +20,13 @@
                             text: 'Tests'
                         },
                         stackLabels: {
-                            rotation: -75,
+                            rotation: 0,
                             enabled: true,
                             style: {
                                 fontWeight: 'bold',
                                 color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
                             },
-                            y:-20
+                            y:-10
                         }
                     },
                     legend: {

@@ -12,10 +12,16 @@ class Ages_model extends MY_Model
 		parent::__construct();
 	}
 
-	function ages_outcomes($year=NULL,$month=NULL)
+	function ages_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -25,7 +31,7 @@ class Ages_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_age_outcomes`('".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_age_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -47,10 +53,16 @@ class Ages_model extends MY_Model
 		return $data;
 	}
 
-	function ages_vl_outcomes($year=NULL,$month=NULL,$age_cat=NULL)
+	function ages_vl_outcomes($year=NULL,$month=NULL,$age_cat=NULL,$to_year=null,$to_month=null)
 	{
 		if ($age_cat==null || $age_cat=='null') {
 			$age_cat = $this->session->userdata('age_category_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
 		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -63,7 +75,7 @@ class Ages_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_age_vl_outcomes`('".$age_cat."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_age_vl_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
@@ -87,11 +99,7 @@ class Ages_model extends MY_Model
 			$greater = (int) ($value['less5000']+$value['above5000']);
 
 			$data['ul'] .= '<tr>
-	    		<td colspan="2">Cumulative Tests (All Samples Run):</td>
-	    		<td colspan="2">'.number_format($value['alltests']).'</td>
-	    	</tr>
-	    	<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Tests With Valid Outcomes:</td>
+	    		<td colspan="2">Tests With Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
 
@@ -99,14 +107,14 @@ class Ages_model extends MY_Model
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
-	    		<td>'.(int) (($greater/$total)*100).'%</td>
+	    		<td>'.round((($greater/$total)*100),2).'%</td>
 	    	</tr>
 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
 	    		<td>'.number_format($less).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.(int) (($less/$total)*100).'%</td>
+	    		<td>'.round((($less/$total)*100),2).'%</td>
 	    	</tr>
 
 	    	<tr>
@@ -140,10 +148,16 @@ class Ages_model extends MY_Model
 		return $data;
 	}
 
-	function ages_gender($year=NULL,$month=NULL,$age_cat=NULL)
+	function ages_gender($year=NULL,$month=NULL,$age_cat=NULL,$to_year=null,$to_month=null)
 	{
 		if ($age_cat==null || $age_cat=='null') {
 			$age_cat = $this->session->userdata('age_category_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
 		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -156,7 +170,7 @@ class Ages_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_age_gender`('".$age_cat."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_vl_age_gender`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -171,8 +185,10 @@ class Ages_model extends MY_Model
 		foreach ($result as $key => $value) {
 			$data['categories'][0] 			= 'Male';
 			$data['categories'][1] 			= 'Female';
+			$data['categories'][2] 			= 'No Data';
 			$data["gender"][0]["data"][0]	=  (int) $value['maletest'];
 			$data["gender"][0]["data"][1]	=  (int) $value['femaletest'];
+			$data["gender"][0]["data"][2]	= (int) $value['nodata'];
 		}
 
 		// $data['gender'][0]['drilldown']['color'] = '#913D88';
@@ -190,6 +206,7 @@ class Ages_model extends MY_Model
 		if ($age_cat==null || $age_cat=='null') {
 			$age_cat = $this->session->userdata('age_category_filter');
 		}
+
 		
 		if ($year==null || $year=='null') {
 			$to = $this->session->userdata('filter_year');
@@ -233,4 +250,53 @@ class Ages_model extends MY_Model
 		
 		return $data;
 	}
+
+	function county_outcomes($year=null,$month=null,$age_cat=null,$to_year=null,$to_month=null)
+	{
+		
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		//Assigning the value of the month or setting it to the selected value
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		if ($age_cat==null || $age_cat=='null') {
+			$age_cat = $this->session->userdata('age_category_filter');
+		}
+
+		$sql = "CALL `proc_get_vl_county_age_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
+				
+		
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
+		$data['county_outcomes'][1]['name'] = 'Suppresed';
+
+		$count = 0;
+		
+		$data["county_outcomes"][0]["data"][0]	= $count;
+		$data["county_outcomes"][1]["data"][0]	= $count;
+		$data['categories'][0]					= 'No Data';
+
+		foreach ($result as $key => $value) {
+			$data['categories'][$key] 					= $value['name'];
+			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
+			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+		}
+		// echo "<pre>";print_r($data);die();
+		return $data;
+	}
+
 }

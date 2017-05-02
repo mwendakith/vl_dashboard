@@ -13,8 +13,15 @@ class Sites_model extends MY_Model
 	}
 
 
-	function sites_outcomes($year=null,$month=null,$partner=null)
+	function sites_outcomes($year=null,$month=null,$partner=null,$to_year=null,$to_month=null)
 	{
+		
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
 		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_year');
 		}
@@ -30,9 +37,9 @@ class Sites_model extends MY_Model
 		}
 
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."')";
+			$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		}  else {
-			$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."')";
+			$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		}
 		// $sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."')";
 		
@@ -57,10 +64,16 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function partner_sites_outcomes($year=NULL,$month=NULL,$site=NULL,$partner=NULL)
+	function partner_sites_outcomes($year=NULL,$month=NULL,$partner=NULL,$to_year=null,$to_month=null)
 	{
 		$table = '';
 		$count = 1;
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -72,7 +85,7 @@ class Sites_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($sql);die();
@@ -84,7 +97,6 @@ class Sites_model extends MY_Model
 			$table .= '<td>'.$value['county'].'</td>';
 			$table .= '<td>'.$value['tests'].'</td>';
 			$table .= '<td>'.$value['sustxfail'].'</td>';
-			$table .= '<td>'.$value['repeatvl'].'</td>';
 			$table .= '<td>'.$value['confirmtx'].'</td>';
 			$table .= '<td>'.$value['rejected'].'</td>';
 			$table .= '<td>'.$value['adults'].'</td>';
@@ -99,10 +111,16 @@ class Sites_model extends MY_Model
 		return $table;
 	}
 
-	function sites_trends($year=null,$month=null,$site=null)
+	function sites_trends($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
 		}
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
@@ -147,10 +165,16 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function site_outcomes_chart($year=null,$month=null,$site=null)
+	function site_outcomes_chart($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -197,10 +221,16 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function sites_vloutcomes($year=null,$month=null,$site=null)
+	function sites_vloutcomes($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
 		}
 		
 		if ($year==null || $year=='null') {
@@ -214,7 +244,7 @@ class Sites_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_sites_vl_outcomes`('".$site."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_sites_vl_outcomes`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -233,11 +263,51 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['y'] = $count;
 
 		foreach ($result as $key => $value) {
-			$data['ul'] .= '<li>Total Tests: '.$value['alltests'].'</li>';
-			$data['ul'] .= '<li>Suspected Tx Failures: '.$value['sustxfail'].' <strong>('.(int) (($value['sustxfail']/$value['alltests'])*100).'%)</strong></li>';
-			$data['ul'] .= '<li>Total Repeat VL: '.$value['confirm2vl'].'</li>';
-			$data['ul'] .= '<li>Confirmed Tx Failure: '.$value['confirmtx'].'</li>';
-			$data['ul'] .= '<li>Rejected: '.$value['rejected'].'</li>';
+			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
+			$less = (int) ($value['undetected']+$value['less1000']);
+			$greater = (int) ($value['less5000']+$value['above5000']);
+
+			$data['ul'] .= '<tr>
+	    		<td colspan="2">Cumulative Tests (All Samples Run):</td>
+	    		<td colspan="2">'.number_format($value['alltests']).'</td>
+	    	</tr>
+	    	<tr>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Tests With Valid Outcomes:</td>
+	    		<td colspan="2">'.number_format($total).'</td>
+	    	</tr>
+
+	    	<tr>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
+	    		<td>'.number_format($greater).'</td>
+	    		<td>Percentage Non Suppression</td>
+	    		<td>'.round((($greater/$total)*100),2).'%</td>
+	    	</tr>
+
+	    	<tr>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
+	    		<td>'.number_format($less).'</td>
+	    		<td>Percentage Suppression</td>
+	    		<td>'.round((($less/$total)*100),2).'%</td>
+	    	</tr>
+
+	    	<tr>
+	    		<td></td>
+	    		<td></td>
+	    		<td></td>
+	    		<td></td>
+	    	</tr>
+
+	    	<tr>
+	    		<td colspan="2">Confirmatory Repeat Tests:</td>
+	    		<td colspan="2">'.number_format($value['confirmtx']).'</td>
+	    	</tr>
+
+	    	<tr>
+	    		<td>Rejected Samples:</td>
+	    		<td>'.number_format($value['rejected']).'</td>
+	    		<td>Percentage Rejection Rate</td>
+	    		<td>'. round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP).'%</td>
+	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less5000']+(int) $value['above5000'];
@@ -252,7 +322,7 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function sites_age($year=null,$month=null,$site=null)
+	function sites_age($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -264,11 +334,17 @@ class Sites_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
 		}
 
-		$sql = "CALL `proc_get_sites_age`('".$site."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_sites_age`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -301,7 +377,7 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function sites_gender($year=null,$month=null,$site=null)
+	function sites_gender($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -313,11 +389,17 @@ class Sites_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
 		}
 
-		$sql = "CALL `proc_get_sites_gender`('".$site."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_sites_gender`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -342,9 +424,10 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function partner_sites_outcomes_download($year=NULL,$month=NULL,$partner=NULL)
+	function partner_sites_outcomes_download($year=NULL,$month=NULL,$partner=NULL,$to_year=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
+
 			$year = $this->session->userdata('filter_year');
 		}
 		if ($month==null || $month=='null') {
@@ -354,8 +437,14 @@ class Sites_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
 
-		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."')";
+		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$data = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($data);die();
@@ -408,7 +497,7 @@ class Sites_model extends MY_Model
 	    $f = fopen('php://memory', 'w');
 	    /** loop through array  */
 
-	    $b = array('MFL Code', 'Name', 'County', 'Tests', 'Suspected Failures', 'Repeat VL', 'Confirmed Tx', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female');
+	    $b = array('MFL Code', 'Name', 'County', 'Tests', '>1000cp/ml', 'Confirm Repeat Tests', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female');
 
 	    fputcsv($f, $b, $delimiter);
 

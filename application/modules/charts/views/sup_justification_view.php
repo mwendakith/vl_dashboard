@@ -1,37 +1,65 @@
-<div class="col-md-12">
-	<div class="panel panel-primary">
-		<div class="panel-body">
-			<div id="justification_pie"></div>
-		</div>
-	</div>
+<?php //echo"<pre>";print_r($outcomes); ?>
+<div class="panel-body" id="sup_justification">
+	
 </div>
-
 <script type="text/javascript">
-	$(function(){
-				$('#justification_pie').highcharts({
-				        chart: {
-	                plotBackgroundColor: null,
-	                plotBorderWidth: null,
-	                plotShadow: false,
-	                type: 'pie'
-			            },
+	$(function () {
+			    $('#sup_justification').highcharts({
+			        chart: {
+			            type: 'column'
+			        },
+			        title: {
+			            text: ''
+			        },
+			        xAxis: {
+			            categories: <?php echo json_encode($suppressions['categories']);?>
+			        },
+			        yAxis: {
+			            min: 0,
 			            title: {
-			                text: ''
+			                text: 'Tests'
 			            },
-			            tooltip: {
-			                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-			            },
-			            plotOptions: {
-			                pie: {
-			                    allowPointSelect: true,
-			                    cursor: 'pointer',
-			                    dataLabels: {
-			                        enabled: false
-			                    },
-			                    showInLegend: true
+			            stackLabels: {
+			            	rotation: -75,
+			                enabled: true,
+			                style: {
+			                    fontWeight: 'bold',
+			                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+			                },
+			                y:-20
+			            }
+			        },
+			        legend: {
+			            align: 'right',
+			            x: -30,
+			            verticalAlign: 'top',
+			            y: 25,
+			            floating: true,
+			            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+			            borderColor: '#CCC',
+			            borderWidth: 1,
+			            shadow: true
+			        },
+			        tooltip: {
+			            headerFormat: '<b>{point.x}</b><br/>',
+			            pointFormat: '{series.name}: {point.y}<br/>% contribution: {point.percentage:.1f}%'
+			        },
+			        plotOptions: {
+			            column: {
+			                stacking: 'percent',
+			                dataLabels: {
+			                    enabled: false,
+			                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+			                    style: {
+			                        textShadow: '0 0 3px black'
+			                    }
 			                }
-			            },
-			            series: [<?php echo json_encode($suppressions['justification']); ?>]
-			        });
-		    });
+			            }
+			        },colors: [
+				        '#F2784B',
+				        '#1BA39C'
+				    ],
+			        series: <?php echo json_encode($suppressions['sup_justification']);?>
+			    });
+			});
 </script>

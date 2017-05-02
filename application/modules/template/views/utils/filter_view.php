@@ -1,5 +1,31 @@
+<style type="text/css">
+.ui-datepicker-calendar {
+    display: none;
+}
+.date-picker {
+    width: 100px;
+    margin-right: 0.5em;
+    font-size: 11px;
+}
+.date-pickerBtn {
+    /*width: 80px;*/
+    font-size: 11px;
+    height: 22px;
+}
+.filter {
+    font-size: 11px;
+}
+#breadcrum {
+    font-size: 11px;
+}
+#errorAlert {
+    font-size: 11px;
+    background-color: #E08283;
+    color: #96281B;
+}
+</style>
 <div class="row" id="filter">
-  <div class="col-md-4">
+  <div class="col-md-2">
     <form action="<?php echo base_url();?>template/filter_county_data" method="post" id="filter_form">
       <div class="row">
         <div class="col-md-6">
@@ -11,45 +37,13 @@
             <!-- </optgroup> -->
           </select>
         </div>
-        <!-- <div class="col-md-6">
-          <button class="btn" type="submit" style="background-color: #81CFE0; margin-left: 0.5em;">Filter</button> -->
-          <!-- <select class="btn" style="background-color: #C5EFF7;">
-            <option value="0" disabled="true" selected="true">Sub County:</option>
-            <option>Nairobi</option>
-            <option>Nakuru</option>
-            <option>Mombasa</option>
-            <option>Kisumu</option>
-            <option>Marsabit</option>
-            <option>Embu</option>
-          </select> -->
-        <!-- </div> -->
+        
       </div>
       
-      <!-- <div class="row">
-        <div class="col-md-6">
-          <select class="btn btn-primary">
-          <option>Nairobi</option>
-          <option>Nakuru</option>
-          <option>Mombasa</option>
-          <option>Kisumu</option>
-          <option>Marsabit</option>
-          <option>Embu</option>
-        </select>
-        </div>
-        <div class="col-md-6">
-          <select class="btn btn-primary">
-          <option>Nairobi</option>
-          <option>Nakuru</option>
-          <option>Mombasa</option>
-          <option>Kisumu</option>
-          <option>Marsabit</option>
-          <option>Embu</option>
-        </select>
-        </div>
-      </div> -->
+      
     </form>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-2">
     <div id="breadcrum" class="alert" style="background-color: #1BA39C;/*display:none;">
       
     </div>
@@ -83,9 +77,50 @@
       <a href='javascript:void(0)' onclick='date_filter("monthly", 12)' class='alert-link'> Dec</a>
     </div>
   </div>
+
+  <div class="col-md-2">
+        <div class="row" id="range">
+            <div class="col-md-4">
+                <input name="startDate" id="startDate" class="date-picker" placeholder="From:" />
+            </div>
+            <div class="col-md-4 endDate">
+                <input name="endDate" id="endDate" class="date-picker" placeholder="To:" />
+            </div>
+            <div class="col-md-4">
+                <button id="filter" class="btn btn-primary date-pickerBtn" style="color: white;background-color: #1BA39C; margin-top: 0.2em; margin-bottom: 0em; margin-left: 4em;"><center>Filter</center></button>
+            </div>
+        </div>
+            <center><div id="errorAlertDateRange"><div id="errorAlert" class="alert alert-danger" role="alert">...</div></div></center>
+    </div>
 </div>
 <script type="text/javascript">
+  $(function() {
+    $('.date-picker').datepicker( {
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: 'MM yy',
+        onClose: function(dateText, inst) { 
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(year, month, 1));
+        }
+    });
+    $('#endDate').datepicker( {
+        changeMonth: true,
+        changeYear: false,
+        showButtonPanel: true,
+        dateFormat: 'MM',
+        onClose: function(dateText, inst) { 
+            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
+            // var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
+            $(this).datepicker('setDate', new Date(month, 1));
+        }
+    });
+  });
+  
   $().ready(function(){
+    $('#errorAlertDateRange').hide();
     $(".js-example-basic-single").select2();
     //Getting the URL dynamically
     var url = $(location).attr('href');

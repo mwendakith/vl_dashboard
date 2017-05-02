@@ -91,10 +91,6 @@ class Partner_trends_model extends MY_Model
 		$data['outcomes'][1]['name'] = "Suppressed";
 		$data['outcomes'][2]['name'] = "Suppression";
 
-		$data['outcomes'][0]['color'] = '#52B3D9';
-		$data['outcomes'][1]['color'] = '#E26A6A';
-		$data['outcomes'][2]['color'] = '#257766';
-
 		$data['outcomes'][0]['type'] = "column";
 		$data['outcomes'][1]['type'] = "column";
 		$data['outcomes'][2]['type'] = "spline";

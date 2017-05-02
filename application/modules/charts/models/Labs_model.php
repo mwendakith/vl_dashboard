@@ -7,11 +7,17 @@ defined("BASEPATH") or exit("No direct script access allowed!");
 class Labs_model extends MY_Model
 {
 
-	function lab_performance_stat($year=NULL,$month=NULL)
+	function lab_performance_stat($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
 		// echo round(3.6451895227869, 2, PHP_ROUND_HALF_UP);die();
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -21,7 +27,7 @@ class Labs_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_lab_performance_stats`('".$year."','".$month."');";
+		$sql = "CALL `proc_get_vl_lab_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."');";
 
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);echo "</pre>";die();
@@ -57,10 +63,16 @@ class Labs_model extends MY_Model
 		return $ul;
 	}
 
-	function download_lab_performance_stats($year, $month){
+	function download_lab_performance_stats($year=null, $month=null,$to_year=null,$to_month=null){
 
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -70,7 +82,7 @@ class Labs_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_lab_performance_stats`('".$year."','".$month."');";
+		$sql = "CALL `proc_get_vl_lab_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."');";
 
 		$this->load->dbutil();
         $this->load->helper('file');
@@ -132,6 +144,7 @@ class Labs_model extends MY_Model
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
+
 
 		$data['year'] = $year;
 
@@ -242,10 +255,16 @@ class Labs_model extends MY_Model
 		return $data;
 	}
 
-	function sample_types($year=NULL,$month=NULL)
+	function sample_types($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -255,7 +274,7 @@ class Labs_model extends MY_Model
 			}
 		}
 		
-		$sql = "CALL `proc_get_labs_sampletypes`('".$year."','".$month."')";
+		$sql = "CALL `proc_get_labs_sampletypes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
@@ -286,10 +305,16 @@ class Labs_model extends MY_Model
 		return $data;
 	}
 
-	function labs_turnaround($year=NULL,$month=NULL)
+	function labs_turnaround($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -299,7 +324,7 @@ class Labs_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_labs_tat`('".$year."','".$month."')";
+		$sql = "CALL `proc_get_labs_tat`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -381,10 +406,16 @@ class Labs_model extends MY_Model
 		return $data;
 	}
 
-	function labs_outcomes($year=NULL,$month=NULL)
+	function labs_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
@@ -394,7 +425,7 @@ class Labs_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_lab_outcomes`('".$year."','".$month."')";
+		$sql = "CALL `proc_get_lab_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();

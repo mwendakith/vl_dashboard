@@ -48,14 +48,62 @@
 					$("#gender").html("<center><div class='loader'></div></center>");
 					$("#age").html("<center><div class='loader'></div></center>");
 					$("#samples").html("<center><div class='loader'></div></center>");
+					$("#county").html("<center><div class='loader'></div></center>");
 					
 					$("#vlOutcomes").load("<?php echo base_url('charts/regimen/regimen_vl_outcome'); ?>");
 					$("#gender").load("<?php echo base_url('charts/regimen/regimen_gender'); ?>/"+null+"/"+null+"/"+data);
 					$("#age").load("<?php echo base_url('charts/regimen/regimen_age'); ?>/"+null+"/"+null+"/"+data); 
 					$("#samples").load("<?php echo base_url('charts/regimen/sample_types'); ?>/"+null+"/"+data);
+
+					$("#county").load("<?php echo base_url('charts/regimen/regimen_county_outcomes'); ?>/"+null+"/"+null+"/"+data);
 	        	}      	
 	        });
 	    });
+
+	    $("button").click(function () {
+		    var first, second;
+		    first = $(".date-picker[name=startDate]").val();
+		    second = $(".date-picker[name=endDate]").val();
+		    
+		    var new_title = set_multiple_date(first, second);
+
+		    $(".display_date").html(new_title);
+		    
+		    from = format_date(first);
+		    /* from is an array
+		     	[0] => month
+		     	[1] => year*/
+		    to 	= format_date(second);
+		    var error_check = check_error_date_range(from, to);
+		    
+		    if (!error_check) {
+			    $.get("<?php echo base_url('regimen/check_regimen_select');?>", function( data ){
+					data = $.parseJSON(data);
+					if (data==0) {
+						$("#second").hide();
+		        		$("#first").show();
+
+		        		$("#regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+					} else {
+						$("#first").hide();
+		        		$("#second").show();
+
+		        		$("#vlOutcomes").html("<center><div class='loader'></div></center>");
+						$("#gender").html("<center><div class='loader'></div></center>");
+						$("#age").html("<center><div class='loader'></div></center>");
+						$("#samples").html("<center><div class='loader'></div></center>");
+						$("#county").html("<center><div class='loader'></div></center>");
+						
+						$("#vlOutcomes").load("<?php echo base_url('charts/regimen/regimen_vl_outcome'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
+						$("#gender").load("<?php echo base_url('charts/regimen/regimen_gender'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
+						$("#age").load("<?php echo base_url('charts/regimen/regimen_age'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
+						$("#samples").load("<?php echo base_url('charts/regimen/sample_types'); ?>/"+from[1]+"/"+data+"/"+to[1]+"/"+to[0]);
+						$("#county").load("<?php echo base_url('charts/regimen/regimen_county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
+					}
+				});
+			}
+		    
+		});
 	});
 
 	function date_filter(criteria, id)
@@ -95,11 +143,13 @@
 					$("#gender").html("<center><div class='loader'></div></center>");
 					$("#age").html("<center><div class='loader'></div></center>");
 					$("#samples").html("<center><div class='loader'></div></center>");
+					$("#county").html("<center><div class='loader'></div></center>");
 					
 					$("#vlOutcomes").load("<?php echo base_url('charts/regimen/regimen_vl_outcome'); ?>/"+year+"/"+month+"/"+data);
 					$("#gender").load("<?php echo base_url('charts/regimen/regimen_gender'); ?>/"+year+"/"+month+"/"+data);
 					$("#age").load("<?php echo base_url('charts/regimen/regimen_age'); ?>/"+year+"/"+month+"/"+data); 
 					$("#samples").load("<?php echo base_url('charts/regimen/sample_types'); ?>/"+year+"/"+data);
+					$("#county").load("<?php echo base_url('charts/regimen/regimen_county_outcomes'); ?>/"+year+"/"+month+"/"+data);
 				}
 			});
 			
