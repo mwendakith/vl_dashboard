@@ -17,7 +17,7 @@
 			        yAxis: {
 			            min: 0,
 			            title: {
-			                text: 'Tests'
+			                text: '%'
 			            },
 			            stackLabels: {
 			            	rotation: -75,
@@ -46,7 +46,7 @@
 			        },
 			        plotOptions: {
 			            column: {
-			                stacking: 'normal',
+			                stacking: 'percent',
 			                dataLabels: {
 			                    enabled: false,
 			                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',

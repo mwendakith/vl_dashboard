@@ -18,6 +18,8 @@
 		$this->load->view('utils/sub_county_filter_view');
 	} else if ($contacts) {
 
+	}else if ($live){
+
 	}else {
 		$this->load->view('utils/filter_view');
 	}

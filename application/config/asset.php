@@ -67,7 +67,8 @@ $config['css_files']		=	array(
 									array('title' => 'custom'	,	'file'	=>	'custom.css')
 								);
 $config['js_files']			=	array(
-									array('title' => 'custom' ,	'file'	=>	'customFunctions.js')
+									array('title' => 'custom' ,	'file'	=>	'customFunctions.js'),
+									array('title' => 'live' ,	'file'	=>	'live.js')
 								);
 $config['plugin_js_files']	=	array(
 									array('title'=> 'jquery',		'file'	=>	'jquery/jquery-2.2.3.min.js'),
