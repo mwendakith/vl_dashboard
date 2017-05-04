@@ -29,7 +29,7 @@
     <form action="<?php echo base_url();?>template/filter_partner_data" method="post" id="filter_form">
       <div class="row">
         <div class="col-md-12">
-          <select class="btn js-example-basic-single" style="width:220px;background-color: #C5EFF7;" name="partner">
+          <select class="btn js-example-basic-single" style="width:220px;background-color: #C5EFF7;" id="partner" name="partner">
             <option value="0" disabled="true" selected="true">Select Partner:</option>
             <option value="NA">All Partners</option>
             <!-- <optgroup value="Counties"> -->
