@@ -17,7 +17,7 @@
 			        yAxis: {
 			            min: 0,
 			            title: {
-			                text: 'Tests'
+			                text: '%'
 			            },
 			            stackLabels: {
 			            	rotation: -75,
