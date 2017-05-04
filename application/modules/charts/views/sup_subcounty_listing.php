@@ -1,17 +1,17 @@
 <div class="list-group" style="height: 362px;">
-	<?php echo $facilities['ul'];?>
+	<?php echo $subCounty['ul'];?>
 </div>
-<button class="btn btn-primary"  onclick="expandSiteListing();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">View Full Listing</button>
+<button class="btn btn-primary"  onclick="expandSubListing();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">View Full Listing</button>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="expSiteList">
-  <div class="modal-dialog modal-lg">
+<div class="modal fade" tabindex="-1" role="dialog" id="expSubList">
+  <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Faciilities Listing</h4>
+        <h4 class="modal-title">Sub-County Listing</h4>
       </div>
       <div class="modal-body">
-        <table id="SiteList" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="max-width: 100%;">
+        <table id="subList" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="max-width: 100%;">
         	<thead>
         		<tr>
         			<th>#</th>
@@ -20,7 +20,7 @@
         		</tr>
         	</thead>
         	<tbody>
-        		<?= @$facilities['table']; ?>
+        		<?= @$subCounty['table']; ?>
         	</tbody>
         </table>
       </div>
@@ -30,7 +30,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#SiteList').DataTable({
+		$('#subList').DataTable({
 			responsive: true
 		});
 
@@ -41,8 +41,8 @@
 			condensed: true
 		});
 	});
-	function expandSiteListing()
+	function expandSubListing()
 	{
-		$('#expSiteList').modal('show');
+		$('#expSubList').modal('show');
 	}
 </script>
