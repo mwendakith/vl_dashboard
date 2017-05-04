@@ -1,0 +1,1 @@
+partner_regimen_view

@@ -694,56 +694,69 @@ class Nonsuppression_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
-		// echo "<pre>";print_r($result);die();
+		echo "<pre>";print_r($result);die();
 		$count = 1;
 		$listed = FALSE;
 
 		if($result)
+		{
+			foreach ($result as $key => $value)
 			{
-				if ($county==null || $county=='null') {
-					foreach ($result as $key => $value)
-						{
-							if ($count<16) {
-								$li .= '<a href="javascript:void(0);" class="list-group-item" onclick="county_filter('.$value['ID'].')"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a>';
-							}
-							// else {
-							// 	exit();
-							// }
-							$count++;
-						}
-				} else {
-					foreach ($result as $key => $value)
-						{
-							if ($count<16) {
-								if ($county == $value['ID']) {
-									$li .= '<pre><strong><a href="javascript:void(0);" class="list-group-item" onclick="county_filter('.$value['ID'].')">'.$count.'.&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a></strong></pre>';
-									$listed = TRUE;
-								} else {
-									$li .= '<a href="javascript:void(0);" class="list-group-item" onclick="county_filter('.$value['ID'].')"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a>';
-								}
-							}
-							// else {
-							// 	exit();
-							// }
-							$count++;
-						}
-					if(!$listed)
-						{
-							$count = 1;
-							foreach ($result as $key => $value)
-								{
-									if ($county == $value['ID'])
-										{
-											$li .= '<pre><strong><a href="javascript:void(0);" class="list-group-item" onclick="county_filter('.$value['ID'].')">'.$count.'.&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a></strong></pre>';
-										}
-									$count++;
-								}
-						}
-					
+				if ($count<16) {
+					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a>';
 				}
-			}else{
-				$li = 'No Data';
+					$count++;
 			}
+		}else{
+			$li = 'No Data';
+		}
+		
+		// if($result)
+		// 	{
+		// 		if ($county==null || $county=='null') {
+		// 			foreach ($result as $key => $value)
+		// 				{
+		// 					if ($count<16) {
+		// 						$li .= '<a href="javascript:void(0);" class="list-group-item" onclick="county_filter('.$value['ID'].')"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a>';
+		// 					}
+		// 					// else {
+		// 					// 	exit();
+		// 					// }
+		// 					$count++;
+		// 				}
+		// 		} else {
+		// 			foreach ($result as $key => $value)
+		// 				{
+		// 					if ($count<16) {
+		// 						if ($county == $value['ID']) {
+		// 							$li .= '<pre><strong><a href="javascript:void(0);" class="list-group-item" onclick="county_filter('.$value['ID'].')">'.$count.'.&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a></strong></pre>';
+		// 							$listed = TRUE;
+		// 						} else {
+		// 							$li .= '<a href="javascript:void(0);" class="list-group-item" onclick="county_filter('.$value['ID'].')"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a>';
+		// 						}
+		// 					}
+		// 					// else {
+		// 					// 	exit();
+		// 					// }
+		// 					$count++;
+		// 				}
+		// 			if(!$listed)
+		// 				{
+		// 					$count = 1;
+		// 					foreach ($result as $key => $value)
+		// 						{
+		// 							if ($county == $value['ID'])
+		// 								{
+		// 									$li .= '<pre><strong><a href="javascript:void(0);" class="list-group-item" onclick="county_filter('.$value['ID'].')">'.$count.'.&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a></strong></pre>';
+		// 								}
+		// 							$count++;
+		// 						}
+		// 				}
+					
+		// 		}
+		// 	}else{
+		// 		$li = 'No Data';
+		// 	}
 		
 		// echo "<pre>";print_r($li);die();
 		return $li;

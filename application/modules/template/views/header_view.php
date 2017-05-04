@@ -140,6 +140,8 @@
 								<li><a href="<?php echo base_url();?>partner">Summary</a></li>
 								<li><a href="<?php echo base_url();?>partner/trends">Trends</a></li>
 								<li><a href="<?php echo base_url();?>partner/sites">Partner Facilities</a></li>
+								<li><a href="<?php echo base_url();?>partner/age">Partner Age</a></li>
+								<li><a href="<?php echo base_url();?>partner/regimen">Partner Regimen</a></li>
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>

@@ -32,6 +32,21 @@ class Partner extends MY_Controller
 		$this->template($this->data);
 	}
 
+	public function age()
+	{
+		$this->load->module('charts/ages');
+		$this->clear_all_session_data();
+		$this->data['content_view'] = 'partner/partner_age_view';
+		$this->template($this->data);
+	}
+
+	public function regimen()
+	{
+		$this->clear_all_session_data();
+		$this->data['content_view'] = 'partner/partner_regimen_view';
+		$this->template($this->data);
+	}
+
 	public function nosuppression()
 	{
 		// echo "<pre>";print_r($this->session->all_userdata());die();
