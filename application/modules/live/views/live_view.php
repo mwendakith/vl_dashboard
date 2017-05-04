@@ -50,10 +50,10 @@
 				<div class="ibox float-e-margins">
 		            <div class="ibox-title">
 		                <!-- <span class="label label-success pull-right">Monthly</span> -->
-		                <h5>Reeceived Samples</h5>
+		                <h5>Received Samples</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success">40 886,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="received_samples">40 886,200</h1>
 		                <!-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
 		                <small>Total income</small> -->
 		            </div>
@@ -69,7 +69,7 @@
 		                <h5>Inqueue Samples</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success">406,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="inqueue_samples">406,200</h1>
 		            </div>
 		        </div>
 			</div>
@@ -83,7 +83,7 @@
 		                <h5>In Process Samples</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success">342,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="inprocess_samples">342,200</h1>
 		            </div>
 		        </div>
 			</div>
@@ -97,7 +97,7 @@
 		                <h5>Processed Samples</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success">34,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="processed_samples">34,200</h1>
 		            </div>
 		        </div>
 			</div>
@@ -111,7 +111,7 @@
 		                <h5>Pending Approval</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success">646,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="pending_approval">646,200</h1>
 		            </div>
 		        </div>
 			</div>
@@ -125,7 +125,7 @@
 		                <h5>Dispatched Results</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success">98,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="dispatched_results">98,200</h1>
 		            </div>
 		        </div>
 			</div>
@@ -258,3 +258,108 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+	ajaxd();
+    setInterval("ajaxd()", 180000);
+});
+
+function ajaxd(){
+	//alert("this");
+	$.ajax({
+	   type: "GET",
+	   url: "<?php echo base_url();?>charts/live/get_data/",
+	   success: function(msg){
+	     var ob = JSON.parse(msg);
+
+	     $("#received_samples").html(ob.receivedsamples);
+	     $("#inqueue_samples").html(ob.inqueuesamples);
+	     $("#inprocess_samples").html(ob.inprocesssamples);
+	     $("#processed_samples").html(ob.processedsamples);
+	     $("#pending_approval").html(ob.pendingapproval);
+	     $("#dispatched_results").html(ob.dispatchedresults);
+
+	     set_graph("#sampleEntry", "column", ["Entered at site","Entered at Lab"], [ob.enteredsamplesatsite, ob.enteredsamplesatlab], 'samples');
+	     set_graph("#sampleEntryVsReceived", "column", ["Entered received same day","Entered not received same day"], [ob.enteredreceivedsameday, ob.enterednotreceivedsameday], 'samples');
+	     set_graph("#siteEntryLab", "bar", ob.labs, ob.enteredsamplesatsitea, 'samples');
+	     set_graph("#receivedSampleLab", "bar", ob.labs, ob.receivedsamplesa, 'samples');
+	     set_graph("#inqueueLabs", "bar", ob.labs, ob.inqueuesamplesa, 'samples');
+	     set_graph("#inprocessLabs", "bar", ob.labs, ob.inprocesssamplesa, 'samples');
+	     set_graph("#processedSamples", "bar", ob.labs, ob.processedsamplesa, 'samples');
+	     set_graph("#pendsApproval", "bar", ob.labs, ob.pendingapprovala, 'samples');
+	     set_graph("#dispatchedResults", "bar", ob.labs, ob.dispatchedresultsa, 'samples');
+	     set_graph("#oldestSamples", "bar", ob.labs, ob.oldestinqueuesamplea, 'days');
+	     set_graph("#inprocessPlatform", "column", ob.machines, ob.minprocess, 'samples');
+	     set_graph("#processedPlatform", "column", ob.machines, ob.mprocessed, 'samples');
+
+
+	   }
+	 });
+}
+
+
+function set_graph(div_name, chart_type, xcategories, ydata, ytitle){
+	//alert(s);
+
+	$(function () {
+    $(div_name).highcharts({
+        chart: {
+            type: chart_type
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            categories: xcategories
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ytitle
+            },
+            stackLabels: {
+            	rotation: -75,
+                enabled: true,
+                style: {
+                    fontWeight: 'bold',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                },
+                y:-20
+            }
+        },
+        legend: {
+        	enabled: false
+        },
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name}: {point.y}<br/>% contribution: {point.percentage:.1f}%'
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: false,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {
+                        textShadow: '0 0 3px black'
+                    }
+                }
+            }
+        },colors: [
+	        '#1BA39C'
+	    ],
+        series: [
+        			{
+        				"data": ydata,
+        				"name": "Total"
+        			}
+        		]
+        });
+});
+
+
+}
+
+</script>

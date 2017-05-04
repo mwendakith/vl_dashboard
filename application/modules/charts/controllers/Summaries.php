@@ -29,6 +29,7 @@ class Summaries extends MY_Controller {
 
     	$this->load->view('vl_outcomes_view',$data);
 	}
+	
 
 	function justification($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
 	{

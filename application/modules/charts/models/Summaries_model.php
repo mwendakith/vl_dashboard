@@ -138,7 +138,7 @@ class Summaries_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
-		if (!$partner) {
+		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_filter');
 		}
 		if ($to_month==null || $to_month=='null') {
@@ -270,7 +270,7 @@ class Summaries_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
-		if (!$partner) {
+		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_filter');
 		}
 		if ($to_month==null || $to_month=='null') {
@@ -331,7 +331,7 @@ class Summaries_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
-		if (!$partner) {
+		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_filter');
 		}
 		if ($to_month==null || $to_month=='null') {
@@ -400,7 +400,7 @@ class Summaries_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
-		if (!$partner) {
+		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_filter');
 		}
 		if ($to_month==null || $to_month=='null') {
@@ -508,7 +508,7 @@ class Summaries_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
-		if (!$partner) {
+		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_filter');
 		}
 		if ($to_month==null || $to_month=='null') {
