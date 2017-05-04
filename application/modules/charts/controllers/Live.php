@@ -12,8 +12,12 @@ class Live extends MY_Controller
 		$this->load->model('live_model');
 	}
 
-	function get_data(){
-		echo $this->live_model->get_data();
+	function get_vl_data(){
+		echo $this->live_model->get_vl_data();
+	}
+
+	function get_eid_data(){
+		echo $this->live_model->get_eid_data();
 	}
 
 	

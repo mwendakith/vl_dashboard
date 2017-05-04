@@ -41,6 +41,33 @@
 	}
 </style>
 <div class="row">
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="ibox-title">
+		            <h5>Date: <span id="time_now"></span></h5>
+		        </div>
+		    </div>
+		</div>
+	</div>
+	<div class="col-md-4">
+		<div id="breadcrum" class="alert" style="background-color: #1BA39C;text-align: center;vertical-align: middle;" onclick="switch_source()">
+      		<span id="current_source">Viralload</span> (Click to switch)	
+    	</div>
+		     
+	</div>
+	<div class="col-md-4">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="ibox-title">
+		            <h5>Last Update: <span id="last_updated"></span></h5>
+		        </div>
+		    </div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
 	
 </div>
 <div class="row">
@@ -262,17 +289,39 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+	localStorage.setItem("my_url", "charts/live/get_vl_data/");
+	localStorage.setItem("my_var", 0);
 	ajaxd();
-    setInterval("ajaxd()", 180000);
+    setInterval("ajaxd()", 60000);
 });
+
+function switch_source(){
+	var a = localStorage.getItem("my_var");
+
+	if(a == 0){
+		localStorage.setItem("my_var", 1);
+		localStorage.setItem("my_url", "charts/live/get_eid_data/");
+		$("#current_source").html('EID');
+	}
+	else{
+		localStorage.setItem("my_var", 0);
+		localStorage.setItem("my_url", "charts/live/get_vl_data/");
+		$("#current_source").html('Viralload');
+	}
+	ajaxd();
+}
 
 function ajaxd(){
 	//alert("this");
+	var this_url = "<?php echo base_url();?>" + localStorage.getItem("my_url");
 	$.ajax({
 	   type: "GET",
-	   url: "<?php echo base_url();?>charts/live/get_data/",
+	   url: this_url,
 	   success: function(msg){
 	     var ob = JSON.parse(msg);
+
+	     $("#time_now").html(ob.updated);
+	     $("#last_updated").html(ob.updated_time);
 
 	     $("#received_samples").html(ob.receivedsamples);
 	     $("#inqueue_samples").html(ob.inqueuesamples);
