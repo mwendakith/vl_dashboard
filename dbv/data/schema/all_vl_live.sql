@@ -19,7 +19,7 @@ BEGIN
 
                 JOIN `labs` 
                     ON `lablogs`.`lab` = `labs`.`ID`
-                WHERE 1 AND DATE(logdate) = CURDATE()
+                WHERE 1 AND DATE(logdate) = CURDATE() AND testtype=2
                 GROUP BY `labs`.`ID`";
   
     PREPARE stmt FROM @QUERY;
@@ -51,7 +51,7 @@ BEGIN
                     SUM((`lablogs`.`rocheprocessed`)) AS `rocheprocessed`
                 FROM `lablogs`
 
-                WHERE 1 AND DATE(logdate) = CURDATE()";
+                WHERE 1 AND DATE(logdate) = CURDATE() AND testtype=2";
   
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
