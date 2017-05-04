@@ -17,7 +17,7 @@
 			        yAxis: {
 			            min: 0,
 			            title: {
-			                text: 'Tests'
+			                text: '%'
 			            },
 			            stackLabels: {
 			            	rotation: -75,
@@ -32,9 +32,9 @@
 			        legend: {
 			            align: 'right',
 			            x: -30,
-			            verticalAlign: 'top',
+			            verticalAlign: 'bottom',
 			            y: 25,
-			            floating: true,
+			            floating: false,
 			            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
 			            borderColor: '#CCC',
 			            borderWidth: 1,

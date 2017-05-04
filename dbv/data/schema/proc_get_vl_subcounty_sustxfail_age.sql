@@ -6,7 +6,8 @@ BEGIN
   SET @QUERY =  "SELECT 
                     `ag`.`name`,
                     SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
                 FROM vl_subcounty_age `vsa`
                 LEFT JOIN agecategory `ag`
                     ON ag.ID = vsa.age
@@ -27,7 +28,7 @@ BEGIN
     END IF;
 
 
-    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY ag.ID ");
+    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY `pecentage` DESC ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

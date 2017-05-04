@@ -11,8 +11,11 @@ class Regimen_model extends MY_Model
 		parent::__construct();
 	}
 
-	function regimens_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null)
+	function regimens_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null,$partner=NULL)
 	{
+		if ($partner==null || $partner=='null') {
+			$partner = null;
+		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -30,7 +33,11 @@ class Regimen_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_regimen_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		if ($partner==null) {
+			$sql = "CALL `proc_get_vl_regimen_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		} else {
+			$sql = "CALL `proc_get_vl_partner_regimen_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -52,8 +59,11 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
-	function regimen_vl_outcomes($year=NULL,$month=NULL,$regimen=NULL,$to_year=null,$to_month=null)
+	function regimen_vl_outcomes($year=NULL,$month=NULL,$regimen=NULL,$to_year=null,$to_month=null,$partner=NULL)
 	{
+		if ($partner==null || $partner=='null') {
+			$partner = null;
+		}
 		if ($regimen==null || $regimen=='null') {
 			$regimen = $this->session->userdata('regimen_filter');
 		}
@@ -74,7 +84,12 @@ class Regimen_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_regimen_vl_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		if ($partner==null) {
+			$sql = "CALL `proc_get_vl_regimen_vl_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		} else {
+			$sql = "CALL `proc_get_vl_partner_regimen_vl_outcomes`('".$partner."','".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
+				
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
@@ -147,8 +162,11 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
-	function regimen_gender($year=NULL,$month=NULL,$regimen=NULL,$to_year=null,$to_month=null)
+	function regimen_gender($year=NULL,$month=NULL,$regimen=NULL,$to_year=null,$to_month=null,$partner=NULL)
 	{
+		if ($partner==null || $partner=='null') {
+			$partner = null;
+		}
 		if ($regimen==null || $regimen=='null') {
 			$regimen = $this->session->userdata('regimen_filter');
 		}
@@ -169,7 +187,11 @@ class Regimen_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_regimen_gender`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		if ($partner==null) {
+			$sql = "CALL `proc_get_vl_regimen_gender`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		} else {
+			$sql = "CALL `proc_get_vl_partner_regimen_gender`('".$partner."','".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -196,8 +218,11 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
-	function regimen_age($year=NULL,$month=NULL,$regimen=NULL,$to_year=null,$to_month=null)
+	function regimen_age($year=NULL,$month=NULL,$regimen=NULL,$to_year=null,$to_month=null,$partner=NULL)
 	{
+		if ($partner==null || $partner=='null') {
+			$partner = null;
+		}
 		if ($regimen==null || $regimen=='null') {
 			$regimen = $this->session->userdata('regimen_filter');
 		}
@@ -218,7 +243,11 @@ class Regimen_model extends MY_Model
 			}
 		}
 
-		$sql = "CALL `proc_get_vl_regimen_age`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		if ($partner==null) {
+			$sql = "CALL `proc_get_vl_regimen_age`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		} else {
+			$sql = "CALL `proc_get_vl_partner_regimen_age`('".$partner."','".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -252,12 +281,15 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
-	function regimen_samples($year=NULL,$regimen=NULL)
+	function regimen_samples($year=NULL,$regimen=NULL,$partner=NULL)
 	{
 		$array1 = array();
 		$array2 = array();
 		$sql2 = NULL;
 
+		if ($partner==null || $partner=='null') {
+			$partner = null;
+		}
 		if ($regimen==null || $regimen=='null') {
 			$regimen = $this->session->userdata('regimen_filter');
 		}
@@ -269,8 +301,14 @@ class Regimen_model extends MY_Model
 		}
 		$from = $to-1;
 
-		$sql = "CALL `proc_get_vl_sample_types`('".$regimen."','".$from."')";
-		$sql2 = "CALL `proc_get_vl_sample_types`('".$regimen."','".$to."')";
+		if ($partner==null) {
+			$sql = "CALL `proc_get_vl_sample_types`('".$regimen."','".$from."')";
+			$sql2 = "CALL `proc_get_vl_sample_types`('".$regimen."','".$to."')";
+		} else {
+			$sql = "CALL `proc_get_vl_partner_regimen_sample_types`('".$partner."','".$regimen."','".$from."')";
+			$sql2 = "CALL `proc_get_vl_partner_regimen_sample_types`('".$partner."','".$regimen."','".$to."')";
+		}
+		
 		// echo "<pre>";print_r($sql);die();
 		$array1 = $this->db->query($sql)->result_array();
 		
@@ -305,9 +343,12 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
-	function county_outcomes($year=null,$month=null,$regimen=null,$to_year=null,$to_month=null)
+	function county_outcomes($year=null,$month=null,$regimen=null,$to_year=null,$to_month=null,$partner=NULL)
 	{
 		
+		if ($partner==null || $partner=='null') {
+			$partner = null;
+		}
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -330,8 +371,11 @@ class Regimen_model extends MY_Model
 			$regimen = $this->session->userdata('regimen_filter');
 		}
 
-		$sql = "CALL `proc_get_vl_county_regimen_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
-				
+		if ($partner==null) {
+			$sql = "CALL `proc_get_vl_county_regimen_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		} else {
+			$sql = "CALL `proc_get_vl_partner_county_regimen_outcomes`('".$partner."','".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
 		
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();

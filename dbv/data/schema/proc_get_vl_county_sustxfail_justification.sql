@@ -6,7 +6,8 @@ BEGIN
   SET @QUERY =    "SELECT 
                     `vj`.`name`,
                     SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
                 FROM vl_county_justification `vcj`
                 LEFT JOIN viraljustifications `vj`
                     ON vj.ID = vcj.justification
@@ -26,7 +27,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY vj.ID ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY `pecentage` DESC ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

@@ -669,6 +669,7 @@ class Nonsuppression_model extends MY_Model
 	function county_listings($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=null)
 	{
 		$li = '';
+		$table = '';
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
@@ -694,7 +695,7 @@ class Nonsuppression_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
-		echo "<pre>";print_r($result);die();
+		// echo "<pre>";print_r($result);die();
 		$count = 1;
 		$listed = FALSE;
 
@@ -705,6 +706,11 @@ class Nonsuppression_model extends MY_Model
 				if ($count<16) {
 					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a>';
 				}
+					$table .= '<tr>';
+					$table .= '<td>'.$count.'</td>';
+					$table .= '<td>'.$value['name'].'</td>';
+					$table .= '<td>'.(int) $value['sustxfail'].'%</td>';
+					$table .= '</tr>';
 					$count++;
 			}
 		}else{
@@ -759,7 +765,10 @@ class Nonsuppression_model extends MY_Model
 		// 	}
 		
 		// echo "<pre>";print_r($li);die();
-		return $li;
+		$data = array(
+						'ul' => $li,
+						'table' => $table);
+		return $data;
 	}
 
 	function subcounty_listings($year=null,$month=null,$county=null,$to_year=NULL,$to_month=null)
@@ -793,18 +802,29 @@ class Nonsuppression_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$li = '';
+		$table = '';
 		$count = 1;
 		if($result)
 			{
 				foreach ($result as $key => $value) {
-					$li .= '<a href="#" class="list-group-item"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].'.&nbsp;'.(int) $value['percentages'].'%</a>';
+					if ($count<16) {
+						$li .= '<a href="#" class="list-group-item"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].'.&nbsp;'.(int) $value['percentages'].'%</a>';
+					}
+					$table .= '<tr>';
+					$table .= '<td>'.$count.'</td>';
+					$table .= '<td>'.$value['name'].'</td>';
+					$table .= '<td>'.(int) $value['percentages'].'%</td>';
+					$table .= '</tr>';
 					$count++;
 				}
 			}else{
 				$li = 'No Data';
 			}
 
-		return $li;
+		$data = array(
+					'ul' => $li,
+					'table' => $table);
+		return $data;
 	}
 
 	function partners($year=null,$month=null,$county=null,$to_year=NULL,$to_month=null)
@@ -838,18 +858,29 @@ class Nonsuppression_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$li = '';
+		$table = '';
 		$count = 1;
 		if($result)
 			{
 				foreach ($result as $key => $value) {
-					$li .= '<a href="#" class="list-group-item"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].'.&nbsp;'.(int) $value['percentages'].'%</a>';
-					$count++;
+					if ($count<16) {
+						$li .= '<a href="#" class="list-group-item"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].'.&nbsp;'.(int) $value['percentages'].'%</a>';
+					}
+					$table .= '<tr>';
+					$table .= '<td>'.$count.'</td>';
+					$table .= '<td>'.$value['name'].'</td>';
+					$table .= '<td>'.(int) $value['percentages'].'%</td>';
+					$table .= '</tr>';
+				$count++;
 				}
 			}else{
 				$li = 'No Data';
 			}
 
-		return $li;
+		$data = array(
+					'ul' => $li,
+					'table' => $table);
+		return $data;
 	}
 
 	function facility_listing($year=null,$month=null,$county=NULL,$to_year=NULL,$to_month=null)
@@ -886,20 +917,29 @@ class Nonsuppression_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$li = '';
+		$table = '';
 		$count = 1;
 		if($result)
 			{
-				if ($count<16) {
-					foreach ($result as $key => $value) {
+				
+				foreach ($result as $key => $value) {
+					if ($count<16) {
 						$li .= '<a href="#" class="list-group-item"><strong>'.$count.'.</strong>&nbsp;'.$value['name'].'.&nbsp;'.(int) $value['non supp'].'%</a>';
-						$count++;
 					}
+					$table .= '<tr>';
+					$table .= '<td>'.$count.'</td>';
+					$table .= '<td>'.$value['name'].'</td>';
+					$table .= '<td>'.(int) $value['non supp'].'%</td>';
+					$table .= '</tr>';
+					$count++;
 				}
 			}else{
 				$li = 'No Data';
 			}
-
-		return $li;
+			$data = array(
+						'ul' => $li,
+						'table' => $table);
+		return $data;
 	}
 
 

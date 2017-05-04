@@ -42,6 +42,7 @@ class Partner extends MY_Controller
 
 	public function regimen()
 	{
+		$this->load->module('charts/regimen');
 		$this->clear_all_session_data();
 		$this->data['content_view'] = 'partner/partner_regimen_view';
 		$this->template($this->data);
@@ -83,6 +84,26 @@ class Partner extends MY_Controller
 			$partner = 0;
 		}
 		echo json_encode($partner);
+	}
+
+	public function check_partner_age_select()
+	{
+		if ($this->session->userdata('patner_age_category_filter')) {
+			$partner_age = $this->session->userdata('patner_age_category_filter');
+		} else {
+			$partner_age = 0;
+		}
+		echo json_encode($partner_age);
+	}
+
+	public function check_partner_regimen_select()
+	{
+		if ($this->session->userdata('patner_regimen_filter')) {
+			$partner_regimen = $this->session->userdata('patner_regimen_filter');
+		} else {
+			$partner_regimen = 0;
+		}
+		echo json_encode($partner_regimen);
 	}
 }
 ?>
