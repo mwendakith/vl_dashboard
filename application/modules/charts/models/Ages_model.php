@@ -12,7 +12,7 @@ class Ages_model extends MY_Model
 		parent::__construct();
 	}
 
-	function ages_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null)
+	function ages_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -30,8 +30,17 @@ class Ages_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($partner==null || $partner=='null') {
+			$partner = null;
+		}
 
-		$sql = "CALL `proc_get_vl_age_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		if ($partner==null) {
+			$sql = "CALL `proc_get_vl_age_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		} else {
+			$sql = "CALL `proc_get_vl_partner_age_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
+		
+		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -53,7 +62,7 @@ class Ages_model extends MY_Model
 		return $data;
 	}
 
-	function ages_vl_outcomes($year=NULL,$month=NULL,$age_cat=NULL,$to_year=null,$to_month=null)
+	function ages_vl_outcomes($year=NULL,$month=NULL,$age_cat=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
 		if ($age_cat==null || $age_cat=='null') {
 			$age_cat = $this->session->userdata('age_category_filter');
@@ -74,8 +83,16 @@ class Ages_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($partner==null || $partner=='null') {
+			$partner = null;
+		}
 
-		$sql = "CALL `proc_get_vl_age_vl_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		if ($partner==null) {
+			$sql = "CALL `proc_get_vl_age_vl_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		} else {
+			$sql = "CALL `proc_get_vl_partner_age_vl_outcomes`('".$partner."','".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
+		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
@@ -148,7 +165,7 @@ class Ages_model extends MY_Model
 		return $data;
 	}
 
-	function ages_gender($year=NULL,$month=NULL,$age_cat=NULL,$to_year=null,$to_month=null)
+	function ages_gender($year=NULL,$month=NULL,$age_cat=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
 		if ($age_cat==null || $age_cat=='null') {
 			$age_cat = $this->session->userdata('age_category_filter');
@@ -169,8 +186,16 @@ class Ages_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($partner==null || $partner=='null') {
+			$partner = null;
+		}
 
-		$sql = "CALL `proc_get_vl_age_gender`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		if ($partner==null) {
+			$sql = "CALL `proc_get_vl_age_gender`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		} else {
+			$sql = "CALL `proc_get_vl_partner_age_gender`('".$partner."','".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
+		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
@@ -197,7 +222,7 @@ class Ages_model extends MY_Model
 		return $data;
 	}
 
-	function ages_samples($year=NULL,$age_cat=NULL)
+	function ages_samples($year=NULL,$age_cat=NULL,$partner=null)
 	{
 		$array1 = array();
 		$array2 = array();
@@ -213,10 +238,19 @@ class Ages_model extends MY_Model
 		}else {
 			$to = $year;
 		}
+		if ($partner==null || $partner=='null') {
+			$partner = null;
+		}
 		$from = $to-1;
 
-		$sql = "CALL `proc_get_vl_age_sample_types`('".$age_cat."','".$from."')";
-		$sql2 = "CALL `proc_get_vl_age_sample_types`('".$age_cat."','".$to."')";
+		if ($partner==null) {
+			$sql = "CALL `proc_get_vl_age_sample_types`('".$age_cat."','".$from."')";
+			$sql2 = "CALL `proc_get_vl_age_sample_types`('".$age_cat."','".$to."')";
+		} else {
+			$sql = "CALL `proc_get_vl_partner_age_sample_types`('".$partner."','".$age_cat."','".$from."')";
+			$sql2 = "CALL `proc_get_vl_partner_age_sample_types`('".$partner."','".$age_cat."','".$to."')";
+		}
+		
 		// echo "<pre>";print_r($sql);die();
 		$array1 = $this->db->query($sql)->result_array();
 		
@@ -251,7 +285,7 @@ class Ages_model extends MY_Model
 		return $data;
 	}
 
-	function county_outcomes($year=null,$month=null,$age_cat=null,$to_year=null,$to_month=null)
+	function county_outcomes($year=null,$month=null,$age_cat=null,$to_year=null,$to_month=null,$partner=null)
 	{
 		
 		if ($year==null || $year=='null') {
@@ -271,13 +305,19 @@ class Ages_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($partner==null || $partner=='null') {
+			$partner = null;
+		}
 
 		if ($age_cat==null || $age_cat=='null') {
 			$age_cat = $this->session->userdata('age_category_filter');
 		}
 
-		$sql = "CALL `proc_get_vl_county_age_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
-				
+		if ($partner==null) {
+			$sql = "CALL `proc_get_vl_county_age_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		} else {
+			$sql = "CALL `proc_get_vl_partner_county_age_outcomes`('".$partner."','".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
 		
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();

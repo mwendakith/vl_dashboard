@@ -275,6 +275,60 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			return TRUE;
 		}
 
+		function filter_partner_ages($data=NULL)
+		{
+			if (!$data) {
+				
+			} else {
+				if ($data['ageCat']=='NA') {
+					$this->session->unset_userdata('age_category_filter');
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('sub_county_filter');
+					$this->session->unset_userdata('patner_age_category_filter');
+				}else{
+					$this->session->set_userdata('patner_age_category_filter', $data['ageCat']);
+					$this->session->unset_userdata('sub_county_filter');
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+				}
+			}
+			
+			return TRUE;
+		}
+
+		function filter_partner_regimen($data=NULL)
+		{
+			if (!$data) {
+				
+			} else {
+				if ($data['patReg']=='NA') {
+					$this->session->unset_userdata('age_category_filter');
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('sub_county_filter');
+					$this->session->unset_userdata('patner_age_category_filter');
+					$this->session->unset_userdata('patner_regimen_filter');
+				}else{
+					$this->session->set_userdata('patner_regimen_filter', $data['patReg']);
+					$this->session->unset_userdata('patner_age_category_filter');
+					$this->session->unset_userdata('sub_county_filter');
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+				}
+			}
+			
+			return TRUE;
+		}
+
 		function display_time_period()
 		{
 			$display = array('year' => $this->session->userdata('filter_year'), 'month' => $this->session->userdata('filter_month') );
