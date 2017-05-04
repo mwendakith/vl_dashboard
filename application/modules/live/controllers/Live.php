@@ -11,6 +11,7 @@ class Live extends MY_Controller
 		parent:: __construct();
 		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom','tablecloth','select2','live')));
 		$this->data['live'] = TRUE;
+		$this->load->module('charts/live');
 	}
 
 	function index()
