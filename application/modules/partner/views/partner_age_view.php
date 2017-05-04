@@ -7,13 +7,13 @@
 	<div id="age_dropdown">
 		<select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;" id="age_category" name="age_category">
 	        <option value="0" disabled="true" selected="true">Select Age Category:</option>
-	        <option value="">All Age Categories</option>
+	        <option value="NA">All Age Categories</option>
 	        <!-- <optgroup value="Counties"> -->
 	        <?php echo $age_filter; ?>
 	        <!-- </optgroup> -->
 	      </select>
 	</div>
-	<div> All Age Categories </div>
+	<!-- <div> All Age Categories </div> -->
 </center>
 <div id="first">
 	<div class="row">

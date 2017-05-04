@@ -84,5 +84,15 @@ class Partner extends MY_Controller
 		}
 		echo json_encode($partner);
 	}
+
+	public function check_partner_age_select()
+	{
+		if ($this->session->userdata('patner_age_category_filter')) {
+			$partner_age = $this->session->userdata('patner_age_category_filter');
+		} else {
+			$partner_age = 0;
+		}
+		echo json_encode($partner_age);
+	}
 }
 ?>

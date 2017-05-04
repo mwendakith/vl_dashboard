@@ -98,6 +98,17 @@ class Template extends MY_Controller
 		echo $this->session->userdata('age_category_filter');
 	}
 
+	function filter_partner_age_data()
+	{
+		$data = array(
+				'ageCat' => $this->input->post('ageCat')
+			);
+
+		$this->filter_partner_ages($data);
+
+		echo $this->session->userdata('patner_age_category_filter');
+	}
+
 	function filter_date_data()
 	{
 		$data = array(
