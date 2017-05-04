@@ -109,6 +109,17 @@ class Template extends MY_Controller
 		echo $this->session->userdata('patner_age_category_filter');
 	}
 
+	function filter_partner_regimen_data()
+	{
+		$data = array(
+				'patReg' => $this->input->post('regimen')
+			);
+
+		$this->filter_partner_regimen($data);
+
+		echo $this->session->userdata('patner_regimen_filter');
+	}
+
 	function filter_date_data()
 	{
 		$data = array(

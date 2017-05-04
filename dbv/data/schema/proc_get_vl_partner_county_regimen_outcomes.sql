@@ -1,24 +1,19 @@
-DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_vl_outcomes`;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_county_regimen_outcomes`;
 DELIMITER //
-CREATE PROCEDURE `proc_get_vl_partner_age_vl_outcomes`
-(IN P_id INT(11),IN A_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+CREATE PROCEDURE `proc_get_vl_partner_county_regimen_outcomes`
+(IN P_Id INT(11), IN filter_regimen INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-        SUM(`confirmtx`) AS `confirmtx`,
-        SUM(`confirm2vl`) AS `confirm2vl`,
-        SUM(`Undetected`) AS `undetected`,
-        SUM(`less1000`) AS `less1000`,
-        SUM(`less5000`) AS `less5000`,
-        SUM(`above5000`) AS `above5000`,
-        SUM(`tests`) AS `alltests`,
-        SUM(`sustxfail`) AS `sustxfail`,
-        SUM(`rejected`) AS `rejected`, 
-        SUM(`repeattests`) AS `repeats`, 
-        SUM(`invalids`) AS `invalids`
-    FROM `vl_partner_age`
+                    `c`.`name`,
+                    SUM(`vcr`.`undetected`+`vcr`.`less1000`) AS `suppressed`,
+                    SUM(`vcr`.`less5000`+`vcr`.`above5000`) AS `nonsuppressed` 
+                FROM `vl_partner_regimen` `vcr`
+                    LEFT JOIN view_facilitys vf
+                    ON vf.partner = vcr.partner
+                  LEFT JOIN countys c
+                    ON c.ID = vf.county
     WHERE 1 ";
 
-  
 
     IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
@@ -33,7 +28,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `age` = '",A_id,"' ");
+    SET @QUERY = CONCAT(@QUERY, " AND `regimen` = '",filter_regimen,"' AND `vcr`.`partner` = '",P_Id,"' GROUP BY `c`.`name` ORDER BY `suppressed` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
