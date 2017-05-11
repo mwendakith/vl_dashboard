@@ -6,7 +6,7 @@ BEGIN
   SET @QUERY =    "SELECT 
                     `c`.`ID`, 
                     `c`.`name`, 
-                    ((SUM(`vcs`.`sustxfail`)/SUM(`vcs`.`alltests`))*100) AS `sustxfail` 
+                    ((SUM(`less5000`+`above5000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`)))*100) AS `sustxfail` 
                     FROM `vl_county_summary` `vcs` 
                     JOIN `countys` `c` 
                     ON `vcs`.`county` = `c`.`ID`

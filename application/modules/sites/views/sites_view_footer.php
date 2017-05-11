@@ -7,7 +7,7 @@
 				obj['month'] = "";
 			}
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
-			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
+			$(".display_range").html("( "+obj['year']+" )");
     	});
 		var site = <?php echo json_encode($this->session->userdata("site_filter")); ?>;
 		console.log(site);
@@ -49,7 +49,7 @@
 						obj['month'] = "";
 					}
 					$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
-					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
+					$(".display_range").html("( "+obj['year']+" )");
 	        	});
 
 	        	$.get("<?php echo base_url();?>template/breadcrum", function(data){
@@ -147,7 +147,7 @@
 						obj['month'] = "";
 					}
 					$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
-					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
+					$(".display_range").html("( "+obj['year']+" )");
 	        	});
 			
 		});

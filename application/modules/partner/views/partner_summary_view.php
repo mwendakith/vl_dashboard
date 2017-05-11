@@ -80,7 +80,7 @@
 		  <div class="panel-heading">
 		  	Partner Outcomes <div class="display_date"></div>
 		  </div>
-		  <div class="panel-body" id="partner">
+		  <div class="panel-body" id="partner_div">
 		    <center><div class="loader"></div></center>
 		  </div>
 		</div>

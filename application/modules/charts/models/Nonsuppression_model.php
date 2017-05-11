@@ -704,12 +704,12 @@ class Nonsuppression_model extends MY_Model
 			foreach ($result as $key => $value)
 			{
 				if ($count<16) {
-					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.(int)$value['sustxfail'].'%</a>';
+					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;'.round($value['sustxfail'],1).'%</a>';
 				}
 					$table .= '<tr>';
 					$table .= '<td>'.$count.'</td>';
 					$table .= '<td>'.$value['name'].'</td>';
-					$table .= '<td>'.(int) $value['sustxfail'].'%</td>';
+					$table .= '<td>'.round($value['sustxfail'],1).'%</td>';
 					$table .= '</tr>';
 					$count++;
 			}
