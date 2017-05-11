@@ -79,6 +79,20 @@ class Live_model extends MY_Model
 
 			$phpdate = strtotime( $value['dateupdated'] );
 			$data['updated_time'] = date('D d-m-Y g:i a', $phpdate);
+			//$data['updated_time'] = $value['dateupdated'];
+			$phpdate = strtotime( $value['dateupdated'] );
+			$data['updated_time'] = date('D d-m-Y g:i a', $phpdate);
+
+
+			// foreach ($value as $key2 => $value2) {
+			// 	$n = $value2 . 'a';
+			// 	if($value2 == "name"){
+			// 		$data['labs'][$i] = $value2;
+			// 	}
+			// 	else{
+			// 		$data[$n][$i] = (int) $value2;
+			// 	}
+			// }
 
 			$i++;
 
@@ -145,6 +159,32 @@ class Live_model extends MY_Model
 	// 		//$data['updated_time'] = $value['dateupdated'];
 	// 		$phpdate = strtotime( $value['dateupdated'] );
 	// 		$data['updated_time'] = date('D d-m-Y g:i a', $phpdate);
+
+		// foreach ($result as $key => $value) {
+		// 	$data['labs'][$i] = $value['name'];
+		// 	$data['enteredsamplesatsitea'][$i] = (int) $value['enteredsamplesatsite'];
+		// 	$data['enteredsamplesatlaba'][$i] = (int) $value['enteredsamplesatlab'];
+		// 	$data['receivedsamplesa'][$i] = (int) $value['receivedsamples'];
+		// 	$data['inqueuesamplesa'][$i] = (int) $value['inqueuesamples'];
+		// 	$data['inprocesssamplesa'][$i] = (int) $value['inprocesssamples'];
+		// 	$data['processedsamplesa'][$i] = (int) $value['processedsamples'];
+		// 	$data['pendingapprovala'][$i] = (int) $value['pendingapproval'];
+		// 	$data['dispatchedresultsa'][$i] = (int) $value['dispatchedresults'];
+		// 	$data['oldestinqueuesamplea'][$i] = (int) $value['oldestinqueuesample'];
+		// 	// $data['updated_time'] = $value['dateupdated'];
+		// 	$phpdate = strtotime( $value['dateupdated'] );
+		// 	$data['updated_time'] = date('D d-m-Y g:i a', $phpdate);
+
+
+			// foreach ($value as $key2 => $value2) {
+			// 	$n = $value2 . 'a';
+			// 	if($value2 == "name"){
+			// 		$data['labs'][$i] = $value2;
+			// 	}
+			// 	else{
+			// 		$data[$n][$i] = (int) $value2;
+			// 	}
+			// }
 
 
 	// 		// foreach ($value as $key2 => $value2) {
