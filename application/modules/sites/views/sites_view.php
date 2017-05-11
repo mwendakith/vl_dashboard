@@ -106,6 +106,29 @@
 			</div>
 		</div> -->
 	</div>
+	<div class="row">
+		<div class="col-md-6 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    Patients Stats <div class="display_range"></div>
+			  </div>
+			  <div class="panel-body" id="pat_stats">
+			    <center><div class="loader"></div></center>
+			  </div>
+			</div>
+		</div>
+		<div class="col-md-6 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    Patients Graphs <div class="display_range"></div>
+			  </div>
+			  <div class="panel-body" id="pat_graph">
+			    <center><div class="loader"></div></center>
+			  </div>
+			</div>
+		</div>
+	</div>
+
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="agemodal">
