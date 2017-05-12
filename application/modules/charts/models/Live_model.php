@@ -25,7 +25,7 @@ class Live_model extends MY_Model
 		return $data;
 	}
 
-	function get_data($type, $lab){
+	function get_data($type=2, $lab=1){
 		$sql = "CALL `proc_get_vl_lab_live_data`('".$type."')";
 		$sql2 = "CALL `proc_get_vl_live_data_totals`('".$type."')";
 
