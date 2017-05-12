@@ -552,10 +552,10 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->row();
 		// echo "<pre>";print_r($result);die();
-		$data['categories'] = array('Total Patients', 'VL/\'\/s Done');
+		$data['categories'] = array('Total Patients', "VL's Done");
 		$data['outcomes']['name'] = 'Tests';
-		$data['outcomes']['data'][0] = (int) $result->alltests;
-		$data['outcomes']['data'][1] = (int) $result->totalartmar;
+		$data['outcomes']['data'][0] = (int) $result->totalartmar;
+		$data['outcomes']['data'][1] = (int) $result->alltests;
 		$data["outcomes"]["color"] =  '#1BA39C';
 
 		return $data;
