@@ -80,7 +80,7 @@
 		                <h5>Received Samples</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="received_samples">40 886,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="received_samples"></h1>
 		                <!-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
 		                <small>Total income</small> -->
 		            </div>
@@ -96,7 +96,7 @@
 		                <h5>Inqueue Samples</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="inqueue_samples">406,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="inqueue_samples"></h1>
 		            </div>
 		        </div>
 			</div>
@@ -110,7 +110,7 @@
 		                <h5>In Process Samples</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="inprocess_samples">342,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="inprocess_samples"></h1>
 		            </div>
 		        </div>
 			</div>
@@ -124,7 +124,7 @@
 		                <h5>Processed Samples</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="processed_samples">34,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="processed_samples"></h1>
 		            </div>
 		        </div>
 			</div>
@@ -138,7 +138,7 @@
 		                <h5>Pending Approval</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="pending_approval">646,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="pending_approval"></h1>
 		            </div>
 		        </div>
 			</div>
@@ -152,7 +152,7 @@
 		                <h5>Dispatched Results</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="dispatched_results">98,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="dispatched_results"></h1>
 		            </div>
 		        </div>
 			</div>
