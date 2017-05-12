@@ -26,6 +26,7 @@
 			$("#gender").html("<center><div class='loader'></div></center>");
 			$("#justification").html("<center><div class='loader'></div></center>");
 			$("#pat_stats").html("<center><div class='loader'></div></center>");
+			$("#pat_out").html("<center><div class='loader'></div></center>");
 			$("#pat_graph").html("<center><div class='loader'></div></center>");
 
 			$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+null+"/"+null+"/"+site);
@@ -35,6 +36,7 @@
 			$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+null+"/"+null+"/"+site);
 			$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+null+"/"+null+"/"+site);
 			$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+site);
+			$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+site);
 			$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+site);
 
 		}
@@ -76,6 +78,7 @@
 					$("#gender").html("<center><div class='loader'></div></center>");
 					$("#justification").html("<center><div class='loader'></div></center>");
 					$("#pat_stats").html("<center><div class='loader'></div></center>");
+					$("#pat_out").html("<center><div class='loader'></div></center>");
 					$("#pat_graph").html("<center><div class='loader'></div></center>");
 
 					$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+null+"/"+null+"/"+data);
@@ -85,6 +88,7 @@
 					$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+null+"/"+null+"/"+data);
 					$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+null+"/"+null+"/"+data);
 					$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+data);
+					$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+data+"/"+null);
 					$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+data);
 				}
 	        });
@@ -174,6 +178,7 @@
 				$("#stoutcomes").html("<center><div class='loader'></div></center>");
 				$("#vlOutcomes").html("<center><div class='loader'></div></center>");
 				$("#ageGroups").html("<center><div class='loader'></div></center>");
+				$("#pat_out").html("<center><div class='loader'></div></center>");
 				$("#gender").html("<center><div class='loader'></div></center>");
 
 				$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+year+"/"+month+"/"+site);
@@ -183,6 +188,7 @@
 				$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+year+"/"+month+"/"+site);
 				$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+year+"/"+month+"/"+site);
 				$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+site+"/"+year);
+				$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+site+"/"+year);
 				$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+site+"/"+year);
 
 			}
