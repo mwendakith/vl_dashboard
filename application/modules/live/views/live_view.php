@@ -76,11 +76,25 @@
 			<div class="panel-body">
 				<div class="ibox float-e-margins">
 		            <div class="ibox-title">
+		                <h5>Year to Date/Month to date</h5>
+		            </div>
+		            <div class="ibox-content">
+		                <h1 class="no-margins stat-percent font-bold text-success" id="year_to_date">34,200</h1>
+		            </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="ibox float-e-margins">
+		            <div class="ibox-title">
 		                <!-- <span class="label label-success pull-right">Monthly</span> -->
 		                <h5>Received Samples</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="received_samples"></h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="received_samples">40 886,200</h1>
 		                <!-- <div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>
 		                <small>Total income</small> -->
 		            </div>
@@ -93,10 +107,10 @@
 			<div class="panel-body">
 				<div class="ibox float-e-margins">
 		            <div class="ibox-title">
-		                <h5>Inqueue Samples</h5>
+		                <h5>Waiting (Testing) Samples</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="inqueue_samples"></h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="inqueue_samples">406,200</h1>
 		            </div>
 		        </div>
 			</div>
@@ -107,10 +121,25 @@
 			<div class="panel-body">
 				<div class="ibox float-e-margins">
 		            <div class="ibox-title">
-		                <h5>In Process Samples</h5>
+		                <h5>In-Process Samples</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="inprocess_samples"></h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="inprocess_samples">342,200</h1>
+		            </div>
+		        </div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-md-2">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<div class="ibox float-e-margins">
+		            <div class="ibox-title">
+		                <h5>Results Pending Approval</h5>
+		            </div>
+		            <div class="ibox-content">
+		                <h1 class="no-margins stat-percent font-bold text-success" id="pending_approval">646,200</h1>
 		            </div>
 		        </div>
 			</div>
@@ -121,38 +150,10 @@
 			<div class="panel-body">
 				<div class="ibox float-e-margins">
 		            <div class="ibox-title">
-		                <h5>Processed Samples</h5>
+		                <h5>Results Dispatched Today</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="processed_samples"></h1>
-		            </div>
-		        </div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-2">
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<div class="ibox float-e-margins">
-		            <div class="ibox-title">
-		                <h5>Pending Approval</h5>
-		            </div>
-		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="pending_approval"></h1>
-		            </div>
-		        </div>
-			</div>
-		</div>
-	</div>
-	<div class="col-md-2">
-		<div class="panel panel-default">
-			<div class="panel-body">
-				<div class="ibox float-e-margins">
-		            <div class="ibox-title">
-		                <h5>Dispatched Results</h5>
-		            </div>
-		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="dispatched_results"></h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="dispatched_results">98,200</h1>
 		            </div>
 		        </div>
 			</div>
@@ -277,10 +278,14 @@
 	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">Processed by Platform</h3>
+				<h3 class="panel-title">Ageing of Samples (Based on Date Drawn)</h3>
 			</div>
 			<div class="panel-body">
-				<div id="processedPlatform"></div>
+				<select id="lab_dropdown" name="ny" class="form-control">
+					<option>Select something</option>
+				</select>
+				
+				<div id="aging_samples"></div>
 			</div>
 		</div>
 	</div>
@@ -289,10 +294,22 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-	localStorage.setItem("my_url", "charts/live/get_vl_data/");
+	
+
+	localStorage.setItem("my_url", "charts/live/get_data/2/");
 	localStorage.setItem("my_var", 0);
+	localStorage.setItem("my_lab", 1);
 	ajaxd();
     setInterval("ajaxd()", 60000);
+
+    $("#lab_dropdown").load("<?php echo base_url('charts/live/get_dropdown');?>");
+    
+
+    $("select").change(function(){
+		em = $(this).val();
+		localStorage.setItem("lab", em);
+		ajaxd();
+	});
 });
 
 function switch_source(){
@@ -300,12 +317,12 @@ function switch_source(){
 
 	if(a == 0){
 		localStorage.setItem("my_var", 1);
-		localStorage.setItem("my_url", "charts/live/get_eid_data/");
+		localStorage.setItem("my_url", "charts/live/get_data/1/");
 		$("#current_source").html('EID');
 	}
 	else{
 		localStorage.setItem("my_var", 0);
-		localStorage.setItem("my_url", "charts/live/get_vl_data/");
+		localStorage.setItem("my_url", "charts/live/get_data/2/");
 		$("#current_source").html('Viralload');
 	}
 	ajaxd();
@@ -313,7 +330,7 @@ function switch_source(){
 
 function ajaxd(){
 	//alert("this");
-	var this_url = "<?php echo base_url();?>" + localStorage.getItem("my_url");
+	var this_url = "<?php echo base_url();?>" + localStorage.getItem("my_url") + localStorage.getItem("my_lab");
 	$.ajax({
 	   type: "GET",
 	   url: this_url,
@@ -323,12 +340,13 @@ function ajaxd(){
 	     $("#time_now").html(ob.updated);
 	     $("#last_updated").html(ob.updated_time);
 
+	     $("#year_to_date").html(ob.year_to_date);
 	     $("#received_samples").html(ob.receivedsamples);
 	     $("#inqueue_samples").html(ob.inqueuesamples);
 	     $("#inprocess_samples").html(ob.inprocesssamples);
-	     $("#processed_samples").html(ob.processedsamples);
 	     $("#pending_approval").html(ob.pendingapproval);
 	     $("#dispatched_results").html(ob.dispatchedresults);
+
 
 	     set_graph("#sampleEntry", "column", ["Entered at site","Entered at Lab"], [ob.enteredsamplesatsite, ob.enteredsamplesatlab], 'samples');
 	     set_graph("#sampleEntryVsReceived", "column", ["Entered received same day","Entered not received same day"], [ob.enteredreceivedsameday, ob.enterednotreceivedsameday], 'samples');
@@ -341,7 +359,7 @@ function ajaxd(){
 	     set_graph("#dispatchedResults", "bar", ob.labs, ob.dispatchedresultsa, 'samples');
 	     set_graph("#oldestSamples", "bar", ob.labs, ob.oldestinqueuesamplea, 'days');
 	     set_graph("#inprocessPlatform", "column", ob.machines, ob.minprocess, 'samples');
-	     set_graph("#processedPlatform", "column", ob.machines, ob.mprocessed, 'samples');
+	     set_graph("#aging_samples", "bar", ob.age_cat, ob.age, 'samples');
 
 
 	   }
@@ -353,62 +371,63 @@ function set_graph(div_name, chart_type, xcategories, ydata, ytitle){
 	//alert(s);
 
 	$(function () {
-    $(div_name).highcharts({
-        chart: {
-            type: chart_type
-        },
-        title: {
-            text: ''
-        },
-        xAxis: {
-            categories: xcategories
-        },
-        yAxis: {
-            min: 0,
-            title: {
-                text: ytitle
-            },
-            stackLabels: {
-            	rotation: -75,
-                enabled: true,
-                style: {
-                    fontWeight: 'bold',
-                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-                },
-                y:-20
-            }
-        },
-        legend: {
-        	enabled: false
-        },
-        tooltip: {
-            headerFormat: '<b>{point.x}</b><br/>',
-            pointFormat: '{series.name}: {point.y}<br/>% contribution: {point.percentage:.1f}%'
-        },
-        plotOptions: {
-            column: {
-                stacking: 'normal',
-                dataLabels: {
-                    enabled: false,
-                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
-                    style: {
-                        textShadow: '0 0 3px black'
-                    }
-                }
-            }
-        },colors: [
-	        '#1BA39C'
-	    ],
-        series: [
-        			{
-        				"data": ydata,
-        				"name": "Total"
-        			}
-        		]
-        });
-});
-
+	    $(div_name).highcharts({
+	        chart: {
+	            type: chart_type
+	        },
+	        title: {
+	            text: ''
+	        },
+	        xAxis: {
+	            categories: xcategories
+	        },
+	        yAxis: {
+	            min: 0,
+	            title: {
+	                text: ytitle
+	            },
+	            stackLabels: {
+	            	rotation: -75,
+	                enabled: true,
+	                style: {
+	                    fontWeight: 'bold',
+	                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+	                },
+	                y:-20
+	            }
+	        },
+	        legend: {
+	        	enabled: false
+	        },
+	        tooltip: {
+	            headerFormat: '<b>{point.x}</b><br/>',
+	            pointFormat: '{series.name}: {point.y}<br/>% contribution: {point.percentage:.1f}%'
+	        },
+	        plotOptions: {
+	            column: {
+	                stacking: 'normal',
+	                dataLabels: {
+	                    enabled: false,
+	                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+	                    style: {
+	                        textShadow: '0 0 3px black'
+	                    }
+	                }
+	            }
+	        },colors: [
+		        '#1BA39C'
+		    ],
+	        series: [
+	        			{
+	        				"data": ydata,
+	        				"name": "Total"
+	        			}
+	        		]
+	        });
+	});
 
 }
+
+
 
 </script>

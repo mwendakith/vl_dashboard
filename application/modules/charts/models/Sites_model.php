@@ -514,5 +514,55 @@ class Sites_model extends MY_Model
 	    fpassthru($f);
 		
 	}
+
+	function get_patients($site=null,$year=null){
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
+
+		$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->row();
+
+		$data['stats'] = "<tr><td>" . $result->alltests . "</td><td>" . $result->onevl . "</td><td>" . $result->twovl . "</td><td>" . $result->threevl . "</td><td>" . $result->above3vl . "</td></tr>";
+
+		$data['tests'] = $result->alltests;
+		$data['patients'] = $result->totalartmar;
+		$unmet = (int) $result->totalartmar - (int) $result->alltests;
+		$unmet_p = round((($unmet / (int) $result->totalartmar) * 100),2);
+		$data['unmet'] = $unmet_p;
+
+		return $data;
+
+
+	}
+
+	function get_patients_graph($site=null,$year=null){
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
+
+		$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->row();
+
+		$data['categories'] = array('1 VL', '2 VL', '3 VL', '3 VL');
+		$data['outcomes']['name'] = 'Tests';
+		$data['outcomes']['data'][0] = (int) $result->onevl;
+		$data['outcomes']['data'][1] = (int) $result->twovl;
+		$data['outcomes']['data'][2] = (int) $result->threevl;
+		$data['outcomes']['data'][3] = (int) $result->above3vl;
+		$data["outcomes"]["color"] =  '#1BA39C';
+
+		return $data;
+
+
+	}
 }
 ?>
