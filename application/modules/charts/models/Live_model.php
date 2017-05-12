@@ -48,7 +48,7 @@ class Live_model extends MY_Model
 
 		$data['updated'] = date('D d-m-Y g:i a');
 
-		$data['year_to_date'] = $totals->yeartodate . '/' . $totals->monthtodate;
+		$data['year_to_date'] = number_format($totals->yeartodate) . '/' . number_format($totals->monthtodate);
 
 		foreach ($totals as $key => $value) {
 			$data[$key] = (int) $value;

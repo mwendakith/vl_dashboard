@@ -79,7 +79,7 @@
 		                <h5>Year to Date/Month to date</h5>
 		            </div>
 		            <div class="ibox-content">
-		                <h1 class="no-margins stat-percent font-bold text-success" id="year_to_date">34,200</h1>
+		                <h1 class="no-margins stat-percent font-bold text-success" id="year_to_date" style="font-size:24px;">34,200</h1>
 		            </div>
 		        </div>
 			</div>
