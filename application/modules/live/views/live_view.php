@@ -226,13 +226,23 @@
 	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
+				<h3 class="panel-title">In process platform</h3>
+			</div>
+			<div class="panel-body">
+				<div id="inprocessPlatform"></div>
+			</div>
+		</div>
+	</div>
+	<!-- <div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
 				<h3 class="panel-title">Processed Samples</h3>
 			</div>
 			<div class="panel-body">
 				<div id="processedSamples"></div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -268,10 +278,10 @@
 	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">In process platform</h3>
+				<h3 class="panel-title">Ageing of Samples (National)</h3>
 			</div>
 			<div class="panel-body">
-				<div id="inprocessPlatform"></div>
+				<div id="aging_samples_national"></div>
 			</div>
 		</div>
 	</div>
@@ -354,11 +364,12 @@ function ajaxd(){
 	     set_graph("#receivedSampleLab", "bar", ob.labs, ob.receivedsamplesa, 'samples');
 	     set_graph("#inqueueLabs", "bar", ob.labs, ob.inqueuesamplesa, 'samples');
 	     set_graph("#inprocessLabs", "bar", ob.labs, ob.inprocesssamplesa, 'samples');
-	     set_graph("#processedSamples", "bar", ob.labs, ob.processedsamplesa, 'samples');
+	     // set_graph("#processedSamples", "bar", ob.labs, ob.processedsamplesa, 'samples');
 	     set_graph("#pendsApproval", "bar", ob.labs, ob.pendingapprovala, 'samples');
 	     set_graph("#dispatchedResults", "bar", ob.labs, ob.dispatchedresultsa, 'samples');
 	     set_graph("#oldestSamples", "bar", ob.labs, ob.oldestinqueuesamplea, 'days');
 	     set_graph("#inprocessPlatform", "column", ob.machines, ob.minprocess, 'samples');
+	     set_graph("#aging_samples_national", "bar", ob.age_cat, ob.age_nat, 'samples');
 	     set_graph("#aging_samples", "bar", ob.age_cat, ob.age, 'samples');
 
 
