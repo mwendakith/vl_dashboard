@@ -540,6 +540,27 @@ class Sites_model extends MY_Model
 
 	}
 
+	function get_patients_outcomes($site=null,$year=null){
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
+
+		$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->row();
+		// echo "<pre>";print_r($result);die();
+		$data['categories'] = array('Total Patients', 'VL/\'\/s Done');
+		$data['outcomes']['name'] = 'Tests';
+		$data['outcomes']['data'][0] = (int) $result->alltests;
+		$data['outcomes']['data'][1] = (int) $result->totalartmar;
+		$data["outcomes"]["color"] =  '#1BA39C';
+
+		return $data;
+	}
+
 	function get_patients_graph($site=null,$year=null){
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -552,7 +573,7 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->row();
 
-		$data['categories'] = array('1 VL', '2 VL', '3 VL', '3 VL');
+		$data['categories'] = array('1 VL', '2 VL', '3 VL', '> 3 VL');
 		$data['outcomes']['name'] = 'Tests';
 		$data['outcomes']['data'][0] = (int) $result->onevl;
 		$data['outcomes']['data'][1] = (int) $result->twovl;

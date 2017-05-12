@@ -1,12 +1,12 @@
-<div id="patients_chart" style="height:340px;">
+<div id="patients_chart_outcomes" style="height:240px;">
 
 </div>
 
 <script type="text/javascript">
 	 $(function () {
-                $('#patients_chart').highcharts({
+                $('#patients_chart_outcomes').highcharts({
                     chart: {
-                        type: 'column'
+                        type: 'bar'
                     },
                     title: {
                         text: ''
@@ -17,7 +17,7 @@
                     yAxis: {
                         min: 0,
                         title: {
-                            text: 'Tests'
+                            text: 'Outcomes'
                         },
                         stackLabels: {
                             rotation: 0,
