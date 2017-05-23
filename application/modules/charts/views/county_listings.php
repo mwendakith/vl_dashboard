@@ -17,7 +17,13 @@
         		<tr>
         			<th>#</th>
         			<th>Name</th>
-        			<th>% Non-suppression</th>
+              <?php
+                if(isset($countys['requests'])){
+                  echo "<th># of Requests</th>";
+                }else{
+                  echo "<th>% Non-suppression</th>";
+                }
+              ?>
         		</tr>
         	</thead>
         	<tbody>
