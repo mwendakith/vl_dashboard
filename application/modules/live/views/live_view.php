@@ -317,7 +317,7 @@ $(document).ready(function() {
 
     $("select").change(function(){
 		em = $(this).val();
-		localStorage.setItem("lab", em);
+		localStorage.setItem("my_lab", em);
 		ajaxd();
 	});
 });
