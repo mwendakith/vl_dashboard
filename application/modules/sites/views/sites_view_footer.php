@@ -178,6 +178,7 @@
 				$("#stoutcomes").html("<center><div class='loader'></div></center>");
 				$("#vlOutcomes").html("<center><div class='loader'></div></center>");
 				$("#ageGroups").html("<center><div class='loader'></div></center>");
+				$("#pat_stats").html("<center><div class='loader'></div></center>");
 				$("#pat_out").html("<center><div class='loader'></div></center>");
 				$("#gender").html("<center><div class='loader'></div></center>");
 

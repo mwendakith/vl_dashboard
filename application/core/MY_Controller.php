@@ -19,6 +19,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			$this->data['age'] = FALSE;
 			$this->data['sub_county'] = FALSE;
 			$this->data['live'] = FALSE;
+			$this->data['codes'] = FALSE;
 		}
 
 		public function load_libraries($arr){

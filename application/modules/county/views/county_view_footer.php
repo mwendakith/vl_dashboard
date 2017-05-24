@@ -88,7 +88,6 @@
 		    if (!error_check) {
 			    $.get("<?php echo base_url('county/check_county_select');?>", function(county) {
 					//Checking if county was previously selected and calling the relevant views
-					console.log(county);
 					if (county==0) {
 						$("#first").show();
 						$("#second").hide();
@@ -149,7 +148,6 @@
 
 		$.get("<?php echo base_url('county/check_county_select');?>", function(county) {
 			//Checking if county was previously selected and calling the relevant views
-			console.log(county);
 			if (county==0) {
 				$("#first").show();
 				$("#second").hide();
@@ -163,6 +161,7 @@
 				$("#county_sites").load("<?php echo base_url('charts/county/county_table'); ?>/"+year+"/"+month);
 
 			} else {
+				county = JSON.parse(county);
 				$("#second").show();
 				$("#first").hide();
 
