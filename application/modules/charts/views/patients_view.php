@@ -1,6 +1,6 @@
 <p style="height: 200px;">
-	Total Patients : <?php echo $patients; ?>  <br />
-	Total VL done : <?php echo $tests; ?>  <br />
+	Total Patients as of <?= @Date('M').", ".Date('Y'); ?> : <?php echo number_format($patients); ?>  <br />
+	Total Viral Loads Done : <?php echo number_format($tests); ?>  <br />
 	Unmet Need : <?php echo $unmet; ?>%  <br />
 
 </p>
@@ -9,7 +9,7 @@
 <table id="example" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="max-width: 100%;">
 	<thead>
 		<tr class="colhead">
-			<th>Total Tests</th>
+			<th>Total Viral Load Tests</th>
 			<th>1 VL</th>
 			<th>2 VL</th>
 			<th>3 VL</th>

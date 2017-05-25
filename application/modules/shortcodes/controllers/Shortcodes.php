@@ -1,22 +1,22 @@
 <?php
-defined('BASEPATH') or die('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed!');
+
 /**
 * 
 */
-class Live extends MY_Controller
+class Shortcodes extends MY_Controller
 {
 	
 	function __construct()
 	{
 		parent:: __construct();
 		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom','tablecloth','select2')));
-		$this->data['live'] = TRUE;
-		$this->load->module('charts/live');
+		$this->data['codes'] = TRUE;
+		$this->load->module('charts/shortcodes');
 	}
 
-	function index()
-	{
-		$this->data['content_view'] = 'live/live_view';
+	function index(){
+		$this->data['content_view'] = 'shortcodes/shortcodes_view';
 		// echo "<pre>";print_r($this->data);die();
 		$this -> template($this->data);
 	}
