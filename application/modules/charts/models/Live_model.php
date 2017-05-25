@@ -25,7 +25,7 @@ class Live_model extends MY_Model
 		return $data;
 	}
 
-	function get_data($type, $lab){
+	function get_data($type=2, $lab=1){
 		$sql = "CALL `proc_get_vl_lab_live_data`('".$type."')";
 		$sql2 = "CALL `proc_get_vl_live_data_totals`('".$type."')";
 
@@ -38,13 +38,17 @@ class Live_model extends MY_Model
 
 		$sql3 = "CALL `proc_get_vl_live_lab_samples`('".$type."', '".$lab."')";
 		$row = $this->db->query($sql3)->row();
+		$this->db->close();
+
+		$sql4 = "CALL `proc_get_vl_live_lab_samples`('".$type."', '')";
+		$row2 = $this->db->query($sql4)->row();
 
 		$data = null;
 
 
 		$data['updated'] = date('D d-m-Y g:i a');
 
-		$data['year_to_date'] = $totals->yeartodate . '/' . $totals->monthtodate;
+		$data['year_to_date'] = number_format($totals->yeartodate) . '/' . number_format($totals->monthtodate);
 
 		foreach ($totals as $key => $value) {
 			$data[$key] = (int) $value;
@@ -83,27 +87,21 @@ class Live_model extends MY_Model
 			$phpdate = strtotime( $value['dateupdated'] );
 			$data['updated_time'] = date('D d-m-Y g:i a', $phpdate);
 
-
-			// foreach ($value as $key2 => $value2) {
-			// 	$n = $value2 . 'a';
-			// 	if($value2 == "name"){
-			// 		$data['labs'][$i] = $value2;
-			// 	}
-			// 	else{
-			// 		$data[$n][$i] = (int) $value2;
-			// 	}
-			// }
-
 			$i++;
 
 		}
 
 		$data['age_cat'] = array('1 week', '2 weeks', '3 weeks', '&gt; 4 weeks');
 
-		$data['age'][0] = $row->oneweek;
-		$data['age'][1] = $row->twoweeks;
-		$data['age'][2] = $row->threeweeks;
-		$data['age'][3] = $row->aboveamonth;
+		$data['age'][0] = (int) $row->oneweek;
+		$data['age'][1] = (int) $row->twoweeks;
+		$data['age'][2] = (int) $row->threeweeks;
+		$data['age'][3] = (int) $row->aboveamonth;
+
+		$data['age_nat'][0] = (int) $row2->oneweek;
+		$data['age_nat'][1] = (int) $row2->twoweeks;
+		$data['age_nat'][2] = (int) $row2->threeweeks;
+		$data['age_nat'][3] = (int) $row2->aboveamonth;
 
 		return json_encode($data);
 

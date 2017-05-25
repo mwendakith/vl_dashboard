@@ -112,6 +112,7 @@
 				
 						$("#sub_counties").html("<center><div class='loader'></div></center>");
 						$("#sub_counties").load("<?php echo base_url('charts/county/county_subcounties'); ?>/"+from[1]+"/"+from[0]+"/"+county+"/"+to[1]+"/"+to[0]);
+						$(".display_date").html(new_title);
 					}
 				});
 			}

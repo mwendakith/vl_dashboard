@@ -79,10 +79,13 @@ BEGIN
                 FROM `lablogs`
 
                 WHERE 1 ";
+
+                IF (filter_lab != 0 && filter_lab != '') THEN
+                  SET @QUERY = CONCAT(@QUERY, " AND `lab` = '",filter_lab,"' ");
+                END IF;
   
                 SET @QUERY = CONCAT(@QUERY, " AND DATE(logdate) = (SELECT MAX(logdate) from lablogs WHERE testtype = '",filter_type,"') AND testtype = '",filter_type,"'");
-                SET @QUERY = CONCAT(@QUERY, " AND lab = '",filter_lab,"'");
-
+               
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
 END //
