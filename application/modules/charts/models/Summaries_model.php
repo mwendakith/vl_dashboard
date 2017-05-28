@@ -200,7 +200,7 @@ class Summaries_model extends MY_Model
 	    	// </tr>
 	    	// <tr>
 			$data['ul'] .= '<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Tests With Valid Outcomes:</td>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;First VL Tests with Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
 

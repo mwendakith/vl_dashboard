@@ -81,15 +81,15 @@
 					$("#pat_out").html("<center><div class='loader'></div></center>");
 					$("#pat_graph").html("<center><div class='loader'></div></center>");
 
-					$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+null+"/"+null+"/"+data);
-					$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+null+"/"+null+"/"+data);
-					$("#vlOutcomes").load("<?php echo base_url('charts/sites/site_Vlotcomes');?>/"+null+"/"+null+"/"+data);
-					$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+null+"/"+null+"/"+data);
-					$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+null+"/"+null+"/"+data);
-					$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+null+"/"+null+"/"+data);
-					$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+data);
-					$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+data+"/"+null);
-					$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+data);
+					$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+null+"/"+null+"/"+em);
+					$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+null+"/"+null+"/"+em);
+					$("#vlOutcomes").load("<?php echo base_url('charts/sites/site_Vlotcomes');?>/"+null+"/"+null+"/"+em);
+					$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+null+"/"+null+"/"+em);
+					$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+null+"/"+null+"/"+em);
+					$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+null+"/"+null+"/"+em);
+					$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+em);
+					$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+em+"/"+null);
+					$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+em);
 				}
 	        });
 		});
