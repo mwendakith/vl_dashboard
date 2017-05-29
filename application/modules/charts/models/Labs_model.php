@@ -36,23 +36,23 @@ class Labs_model extends MY_Model
 			$ul .= "<tr>
 						<td>".($key+1)."</td>
 						<td>".$value['name']."</td>
-						<td>".(int) $value['sitesending']."</td>
-						<td>".(int) $value['received']."</td>
-						<td>".(int) $value['rejected'] . " (" . 
+						<td>".number_format((int) $value['sitesending'])."</td>
+						<td>".number_format((int) $value['received'])."</td>
+						<td>".number_format((int) $value['rejected']) . " (" . 
 							round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP)."%)</td>
-						<td>".(int) $value['invalids']."</td>
+						<td>".number_format((int) $value['invalids'])."</td>
 
-						<td>".(int) $value['alltests']."</td>
-						<td>".((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000'])."</td>
-						<td>".(int) $value['eqa']."</td>
-						<td>".(int) $value['confirmtx']."</td>
-						<td>".((int) $value['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx'])."</td>
+						<td>".number_format((int) $value['alltests'])."</td>
+						<td>".number_format(((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']))."</td>
+						<td>".number_format((int) $value['eqa'])."</td>
+						<td>".number_format((int) $value['confirmtx'])."</td>
+						<td>".number_format(((int) $value['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx']))."</td>
 
-						<td>".( (int) $value['less5000'] + (int) $value['above5000'])."</td>
+						<td>".number_format( (int) $value['less5000'] + (int) $value['above5000'])."</td>
 						
 						<td>".round(((($value['less5000'] + $value['above5000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP)."%</td>
 
-						<td>".((int) $value['undetected'] + (int) $value['less1000'])."</td>
+						<td>".number_format((int) $value['undetected'] + (int) $value['less1000'])."</td>
 
 						<td>".round(((($value['undetected'] + $value['less1000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP)."%</td>
 

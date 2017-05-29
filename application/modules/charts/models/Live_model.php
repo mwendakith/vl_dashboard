@@ -51,8 +51,13 @@ class Live_model extends MY_Model
 		$data['year_to_date'] = number_format($totals->yeartodate) . '/' . number_format($totals->monthtodate);
 
 		foreach ($totals as $key => $value) {
-			$data[$key] = (int) $value;
+			$data[$key] = number_format((int) $value);
 		}
+
+		$data['enteredsamplesatsite'] = $totals->enteredsamplesatsite;
+		$data['enteredsamplesatlab'] = $totals->enteredsamplesatlab;
+		$data['enteredreceivedsameday'] = $totals->enteredreceivedsameday;
+		$data['enterednotreceivedsameday'] = $totals->enterednotreceivedsameday;
 
 		$data['machines'][0] = "Abbot";
 		$data['machines'][1] = "Panther";

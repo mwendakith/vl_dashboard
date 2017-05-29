@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_details`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_subcounty_details`
-(IN filter_county INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11) IN to_month INT(11))
+(IN filter_county INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT  
                     `countys`.`name` AS `county`,
