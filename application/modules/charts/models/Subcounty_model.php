@@ -101,7 +101,7 @@ class Subcounty_model extends MY_Model
 			$greater = (int) ($value['less5000']+$value['above5000']);
 
 			$data['ul'] .= '<tr>
-	    		<td colspan="2">Tests With Valid Outcomes:</td>
+	    		<td colspan="2">First VL Tests with Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
 
