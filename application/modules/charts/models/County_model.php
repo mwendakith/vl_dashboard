@@ -90,14 +90,14 @@ class County_model extends MY_Model
 			// $table .= '<td>'.$value['MFLCode'].'</td>';
 			// $table .= '<td>'.$value['name'].'</td>';
 			$table .= '<td>'.$value['county'].'</td>';
-			$table .= '<td>'.$value['tests'].'</td>';
-			$table .= '<td>'.$value['sustxfail'].'</td>';
-			$table .= '<td>'.$value['confirmtx'].'</td>';
-			$table .= '<td>'.$value['rejected'].'</td>';
-			$table .= '<td>'.$value['adults'].'</td>';
-			$table .= '<td>'.$value['paeds'].'</td>';
-			$table .= '<td>'.$value['maletest'].'</td>';
-			$table .= '<td>'.$value['femaletest'].'</td>';
+			$table .= '<td>'.number_format($value['tests']).'</td>';
+			$table .= '<td>'.number_format($value['sustxfail']).'</td>';
+			$table .= '<td>'.number_format($value['confirmtx']).'</td>';
+			$table .= '<td>'.number_format($value['rejected']).'</td>';
+			$table .= '<td>'.number_format($value['adults']).'</td>';
+			$table .= '<td>'.number_format($value['paeds']).'</td>';
+			$table .= '<td>'.number_format($value['maletest']).'</td>';
+			$table .= '<td>'.number_format($value['femaletest']).'</td>';
 			$table .= '</tr>';
 			$count++;
 		}
@@ -194,14 +194,14 @@ class County_model extends MY_Model
 			// $table .= '<td>'.$value['MFLCode'].'</td>';
 			// $table .= '<td>'.$value['name'].'</td>';
 			$table .= '<td>'.$value['subcounty'].'</td>';
-			$table .= '<td>'.$value['tests'].'</td>';
-			$table .= '<td>'.$value['sustxfail'].'</td>';
-			$table .= '<td>'.$value['confirmtx'].'</td>';
-			$table .= '<td>'.$value['rejected'].'</td>';
-			$table .= '<td>'.$value['adults'].'</td>';
-			$table .= '<td>'.$value['paeds'].'</td>';
-			$table .= '<td>'.$value['maletest'].'</td>';
-			$table .= '<td>'.$value['femaletest'].'</td>';
+			$table .= '<td>'.number_format($value['tests']).'</td>';
+			$table .= '<td>'.number_format($value['sustxfail']).'</td>';
+			$table .= '<td>'.number_format($value['confirmtx']).'</td>';
+			$table .= '<td>'.number_format($value['rejected']).'</td>';
+			$table .= '<td>'.number_format($value['adults']).'</td>';
+			$table .= '<td>'.number_format($value['paeds']).'</td>';
+			$table .= '<td>'.number_format($value['maletest']).'</td>';
+			$table .= '<td>'.number_format($value['femaletest']).'</td>';
 			$table .= '</tr>';
 			$count++;
 		}
