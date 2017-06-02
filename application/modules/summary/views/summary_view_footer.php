@@ -28,6 +28,7 @@
 	     
 	        // Put the results in a div
 	        posting.done(function( data ) {
+	        	data = JSON.parse(data);
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
