@@ -234,7 +234,7 @@ class Summaries_model extends MY_Model
 	    	</tr>
 
 	    	<tr>
-	    		<td>Confirmatory Repeat Tests:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
 	    		<td>'.number_format($value['confirmtx']).'</td>
 	    		<td>Non Suppression ( &gt; 1000cpml)</td>
 	    		<td>'.number_format($value['confirm2vl']). ' (' .round(($value['confirm2vl'] * 100 / $value['confirmtx']), 2). '%)' .'</td>

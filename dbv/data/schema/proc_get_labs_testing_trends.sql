@@ -5,7 +5,9 @@ CREATE PROCEDURE `proc_get_labs_testing_trends`
 BEGIN
   SET @QUERY =    "SELECT 
                     `lb`.`labname`, 
-                    `vls`.`alltests`, 
+                    `vls`.`alltests`,
+                    `vls`.`eqa`,
+                    `vls`.`confirmtx`, 
                     `vls`.`rejected`, 
                     `vls`.`received`, 
                     `vls`.`month`, 
