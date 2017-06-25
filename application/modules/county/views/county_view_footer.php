@@ -23,8 +23,8 @@
 	        var posting = $.post( "<?php echo base_url();?>template/filter_county_data", { county: em } );
 	     
 	        // Put the results in a div
-	        posting.done(function( data ) {
-	        	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
+	        posting.done(function( county ) {
+	        	$.get("<?php echo base_url();?>template/breadcrum/"+county, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
 	        	$.get("<?php echo base_url();?>template/dates", function(data){
@@ -53,16 +53,17 @@
 					$("#county_sites").load("<?php echo base_url('charts/county/county_table'); ?>"); 
 	        	}
 	        	else{
+	        		county = JSON.parse(county);
 	        		$("#second").show();
 					$("#first").hide();
 
 					$('#heading').html('Sub-Counties Outcomes <div class="display_date"></div>');
 
 					$("#county").html("<center><div class='loader'></div></center>");
-					$("#county").load("<?php echo base_url('charts/county/subcounty_outcomes');?>/"+null+"/"+null+"/"+data);
+					$("#county").load("<?php echo base_url('charts/county/subcounty_outcomes');?>/"+null+"/"+null+"/"+county);
 
 					$("#sub_counties").html("<center><div class='loader'></div></center>");
-					$("#sub_counties").load("<?php echo base_url('charts/county/county_subcounties'); ?>/"+null+"/"+null+"/"+data);
+					$("#sub_counties").load("<?php echo base_url('charts/county/county_subcounties'); ?>/"+null+"/"+null+"/"+county);
 	        	}
 
 		         

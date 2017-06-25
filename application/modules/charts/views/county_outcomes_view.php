@@ -32,9 +32,9 @@
 			        legend: {
 			            align: 'right',
 			            x: -30,
-			            verticalAlign: 'top',
-			            y: 25,
-			            floating: true,
+			            verticalAlign: 'bottom',
+			            y: 5,
+			            floating: false,
 			            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
 			            borderColor: '#CCC',
 			            borderWidth: 1,

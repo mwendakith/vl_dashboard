@@ -199,7 +199,15 @@ class Summaries_model extends MY_Model
 	    	// 	<td colspan="2">'.number_format($value['alltests']).'</td>
 	    	// </tr>
 	    	// <tr>
-			$data['ul'] .= '<tr>
+			$data['ul'] .= '
+			<tr>
+	    		<td>Total VL tests done:</td>
+	    		<td>'.number_format( (int) $value['alltests']).'</td>
+	    		<td>Non Suppression</td>
+	    		<td>'.round((($greater/ ( (int) $value['alltests'])  )*100),2).'%</td>
+	    	</tr>
+
+			<tr>
 	    		<td colspan="2">&nbsp;&nbsp;&nbsp;First VL Tests with Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
