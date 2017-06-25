@@ -24,6 +24,7 @@
 	     
 	        // Put the results in a div
 	        posting.done(function( county ) {
+	        	county = JSON.parse(county);
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+county, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
@@ -53,7 +54,7 @@
 					$("#county_sites").load("<?php echo base_url('charts/county/county_table'); ?>"); 
 	        	}
 	        	else{
-	        		county = JSON.parse(county);
+	        		
 	        		$("#second").show();
 					$("#first").hide();
 
