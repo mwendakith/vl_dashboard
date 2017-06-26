@@ -1,3 +1,1529 @@
+DROP PROCEDURE IF EXISTS `proc_get_counties_sustxfail_stats`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_counties_sustxfail_stats`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `c`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_county_summary `vcs`
+                LEFT JOIN countys `c`
+                    ON c.ID = vcs.county 
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_justification`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_sustxfail_justification`
+(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `vj`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_county_justification `vcj`
+                LEFT JOIN viraljustifications `vj`
+                    ON vj.ID = vcj.justification
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_justification`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_justification`
+(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `vj`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_subcounty_justification `vsj`
+                LEFT JOIN viraljustifications `vj`
+                    ON vj.ID = vsj.justification
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_justification`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_national_sustxfail_justification`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `vj`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_national_justification `vnj`
+                LEFT JOIN viraljustifications `vj`
+                    ON vj.ID = vnj.justification
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_sustxfail_age`
+(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `ag`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_county_age `vca`
+                LEFT JOIN agecategory `ag`
+                    ON ag.ID = vca.age
+
+                WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_age`
+(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `ag`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_subcounty_age `vsa`
+                LEFT JOIN agecategory `ag`
+                    ON ag.ID = vsa.age
+
+                WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_national_sustxfail_age`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `ag`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_national_age `vna`
+                LEFT JOIN agecategory `ag`
+                    ON ag.ID = vna.age
+
+                WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_national_sustxfail_subcounty`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_national_sustxfail_subcounty`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                      `d`.`name`, 
+                      ((SUM(`vss`.`sustxfail`)/SUM(`vss`.`alltests`))*100) AS `percentages`, 
+                      SUM(`vss`.`sustxfail`) AS `sustxfail` 
+                  FROM `vl_subcounty_summary` `vss` 
+                  JOIN `districts` `d` 
+                  ON `vss`.`subcounty` = `d`.`ID`
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `d`.`name` ORDER BY `percentages` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_county_sustxfail_subcounty`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_county_sustxfail_subcounty`
+(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                      `d`.`name`, 
+                      ((SUM(`vss`.`sustxfail`)/SUM(`vss`.`alltests`))*100) AS `percentages`, 
+                      SUM(`vss`.`sustxfail`) AS `sustxfail` 
+                  FROM `vl_subcounty_summary` `vss` 
+                  JOIN `districts` `d` 
+                  ON `vss`.`subcounty` = `d`.`ID`
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `d`.`county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `d`.`county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `d`.`county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `d`.`county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `d`.`name` ORDER BY `percentages` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_national_sustxfail_partner`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_national_sustxfail_partner`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                      `p`.`name`, 
+                      ((SUM(`vps`.`sustxfail`)/SUM(`vps`.`alltests`))*100) AS `percentages`, 
+                      SUM(`vps`.`sustxfail`) AS `sustxfail` 
+                  FROM `vl_partner_summary` `vps` 
+                  JOIN `partners` `p` 
+                  ON `vps`.`partner` = `p`.`ID`
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `p`.`name` ORDER BY `percentages` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_regional_sustxfail_partner`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_regional_sustxfail_partner`
+(IN C_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                      DISTINCT(`p`.`name`) AS `name`,
+                      ((SUM(`vps`.`sustxfail`)/SUM(`vps`.`alltests`))*100) AS `percentages`, 
+                      SUM(`vps`.`sustxfail`) AS `sustxfail` 
+                  FROM `vl_partner_summary` `vps` 
+                  JOIN `partners` `p` 
+                    ON `vps`.`partner` = `p`.`ID`
+                  JOIN `view_facilitys` `vf`
+                    ON `p`.`ID` = `vf`.`partner`
+                WHERE 1 ";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",C_id,"' GROUP BY `p`.`name` ORDER BY `percentages` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_sites_listing`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_sites_listing`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                        SUM(`vss`.`sustxfail`) AS `sustxfail`, 
+                        SUM(`vss`.`alltests`) AS `alltests`,
+                        SUM(`vss`.`sustxfail`), 
+                        ((SUM(`vss`.`sustxfail`)/SUM(`vss`.`alltests`))*100) AS `non supp`, 
+                        `vf`.`ID`, 
+                        `vf`.`name` 
+                    FROM `vl_site_summary` `vss` LEFT JOIN `view_facilitys` `vf` 
+                    ON `vss`.`facility`=`vf`.`ID` 
+                    WHERE 1";
+
+  
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vf`.`ID` ORDER BY `non supp` DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_county_sites_listing`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_county_sites_listing`
+(IN C_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                        SUM(`vss`.`sustxfail`) AS `sustxfail`, 
+                        SUM(`vss`.`alltests`) AS `alltests`, 
+                        ((SUM(`vss`.`sustxfail`)/SUM(`vss`.`alltests`))*100) AS `non supp`, 
+                        `vf`.`ID`, 
+                        `vf`.`name` 
+                    FROM `vl_site_summary` `vss` LEFT JOIN `view_facilitys` `vf` 
+                    ON `vss`.`facility`=`vf`.`ID` 
+                    WHERE 1";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",C_id,"' GROUP BY `vf`.`ID` ORDER BY `non supp` DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_regimen_outcomes`
+(IN P_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+						`vp`.`name`, 
+						SUM(`vnr`.`less5000`+`vnr`.`above5000`) AS `nonsuppressed`, 
+						SUM(`vnr`.`Undetected`+`vnr`.`less1000`) AS `suppressed` 
+						FROM `vl_partner_regimen` `vnr`
+						LEFT JOIN `viralprophylaxis` `vp` 
+						ON `vnr`.`regimen` = `vp`.`ID`
+					WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_Id,"' GROUP BY `name` ORDER BY `suppressed` DESC, `nonsuppressed` ");
+    
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_vl_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_regimen_vl_outcomes`
+(IN P_id INT(11), IN R_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+       SUM(`confirmtx`) AS `confirmtx`,
+        SUM(`confirm2vl`) AS `confirm2vl`,
+        SUM(`Undetected`) AS `undetected`,
+        SUM(`less1000`) AS `less1000`,
+        SUM(`less5000`) AS `less5000`,
+        SUM(`above5000`) AS `above5000`,
+        SUM(`tests`) AS `alltests`,
+        SUM(`sustxfail`) AS `sustxfail`,
+        SUM(`rejected`) AS `rejected`, 
+        SUM(`repeattests`) AS `repeats`, 
+        SUM(`invalids`) AS `invalids`
+    FROM `vl_partner_regimen`
+    WHERE 1 ";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `regimen` = '",R_id,"' ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_gender`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_regimen_gender`
+(IN P_id INT(11), IN R_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+        SUM(`maletest`) AS `maletest`,
+        SUM(`femaletest`) AS `femaletest`,
+        SUM(`nogendertest`) AS `nodata`
+    FROM `vl_partner_regimen`
+    WHERE 1 ";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `regimen` = '",R_id,"' ");
+
+   
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_regimen_age`
+(IN P_id INT(11), IN R_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+        SUM(`noage`) AS `noage`,
+        SUM(`less2`) AS `less2`,
+        SUM(`less9`) AS `less9`,
+        SUM(`less14`) AS `less14`,
+        SUM(`less19`) AS `less19`,
+        SUM(`less24`) AS `less24`,
+        SUM(`over25`) AS `over25`
+    FROM `vl_partner_regimen`
+    WHERE 1 ";
+
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `regimen` = '",R_id,"' ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_sample_types`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_regimen_sample_types`
+(IN P_id INT(11), IN R_id INT(11), IN filter_year INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+          `month`,
+          `year`,
+          SUM(`edta`) AS `edta`,
+          SUM(`dbs`) AS `dbs`,
+          SUM(`plasma`) AS `plasma` 
+    FROM `vl_partner_regimen`
+    WHERE 1";
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `regimen` = '",R_id,"' AND `year` = '",filter_year,"' GROUP BY `month` ORDER BY `year` ASC, `month` ");
+    
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_county_regimen_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_county_regimen_outcomes`
+(IN P_Id INT(11), IN filter_regimen INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+                    `c`.`name`,
+                    SUM(`vcr`.`undetected`+`vcr`.`less1000`) AS `suppressed`,
+                    SUM(`vcr`.`less5000`+`vcr`.`above5000`) AS `nonsuppressed` 
+                FROM `vl_partner_regimen` `vcr`
+                    LEFT JOIN view_facilitys vf
+                    ON vf.partner = vcr.partner
+                  LEFT JOIN countys c
+                    ON c.ID = vf.county
+    WHERE 1 ";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `regimen` = '",filter_regimen,"' AND `vcr`.`partner` = '",P_Id,"' GROUP BY `c`.`name` ORDER BY `suppressed` DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_county_age_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_county_age_outcomes`
+(IN P_Id INT(11), IN filter_age INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `c`.`name`,
+                    SUM(`vpa`.`undetected`+`vpa`.`less1000`) AS `suppressed`,
+                    SUM(`vpa`.`less5000`+`vpa`.`above5000`) AS `nonsuppressed`
+                  FROM vl_partner_age vpa
+                  LEFT JOIN view_facilitys vf
+                    ON vf.partner = vpa.partner
+                  LEFT JOIN countys c
+                    ON c.ID = vf.county
+                  WHERE 1 ";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND `age` = '",filter_age,"' AND `vpa`.`partner` = '",P_Id,"' GROUP BY `c`.`name` ORDER BY `suppressed` DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_sample_types`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_age_sample_types`
+(IN P_Id INT(11), IN A_id INT(11), IN filter_year INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+          `month`,
+          `year`,
+          SUM(`edta`) AS `edta`,
+          SUM(`dbs`) AS `dbs`,
+          SUM(`plasma`) AS `plasma` 
+    FROM `vl_partner_age`
+    WHERE 1";
+
+    SET @QUERY = CONCAT(@QUERY, " AND `age` = '",A_id,"' AND `partner` = '",P_Id,"' AND `year` = '",filter_year,"' GROUP BY `month` ORDER BY `year` ASC, `month` ");
+    
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_gender`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_age_gender`
+(IN P_Id INT(11), IN A_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+        SUM(`maletest`) AS `maletest`,
+        SUM(`femaletest`) AS `femaletest`,
+        SUM(`nogendertest`) AS `nodata`
+    FROM `vl_partner_age`
+    WHERE 1 ";
+
+  
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `age` = '",A_id,"' AND `partner` = '",P_Id,"' ");
+
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_vl_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_age_vl_outcomes`
+(IN P_id INT(11),IN A_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+        SUM(`confirmtx`) AS `confirmtx`,
+        SUM(`confirm2vl`) AS `confirm2vl`,
+        SUM(`Undetected`) AS `undetected`,
+        SUM(`less1000`) AS `less1000`,
+        SUM(`less5000`) AS `less5000`,
+        SUM(`above5000`) AS `above5000`,
+        SUM(`tests`) AS `alltests`,
+        SUM(`sustxfail`) AS `sustxfail`,
+        SUM(`rejected`) AS `rejected`, 
+        SUM(`repeattests`) AS `repeats`, 
+        SUM(`invalids`) AS `invalids`
+    FROM `vl_partner_age`
+    WHERE 1 ";
+
+  
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `age` = '",A_id,"' ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_age_outcomes`
+(IN P_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                        `ac`.`name`, 
+                        SUM(`vna`.`less5000`+`vna`.`above5000`) AS `nonsuppressed`, 
+                        SUM(`vna`.`Undetected`+`vna`.`less1000`) AS `suppressed` 
+                        FROM `vl_partner_age` `vna`
+                        LEFT JOIN `agecategory` `ac` 
+                        ON `vna`.`age` = `ac`.`ID`
+                    WHERE `ac`.`ID` NOT BETWEEN '1' AND '5'";
+
+ 
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND `vna`.`partner` = '",P_Id,"' GROUP BY `name` ORDER BY `suppressed` DESC, `nonsuppressed` ");
+    
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_site_patients`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_site_patients`
+(IN filter_site INT(11), IN filter_year INT(11))
+BEGIN
+  SET @QUERY =    "SELECT  
+                    SUM((`alltests`)) AS `alltests`,
+                    SUM((`onevl`)) AS `onevl`,
+                    SUM((`twovl`)) AS `twovl`,
+                    SUM((`threevl`)) AS `threevl`,
+                    SUM((`above3vl`)) AS `above3vl`,
+                    SUM((`vf`.`totalartmar`)) AS `totalartmar`
+                    FROM `vl_site_patient_tracking` `vspt`
+                    JOIN `view_facilitys` `vf` 
+                    ON `vspt`.`facility` = `vf`.`ID`
+                WHERE 1";
+
+   
+    SET @QUERY = CONCAT(@QUERY, " AND `facility` = '",filter_site,"' ");
+
+    SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_lab_live_data`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_lab_live_data`
+(IN filter_type INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+                    `labs`.`ID` AS `ID`,
+                    `labs`.`name` AS `name`,
+                    SUM((`lablogs`.`enteredsamplesatsite`)) AS `enteredsamplesatsite`,
+                    SUM((`lablogs`.`enteredsamplesatlab`)) AS `enteredsamplesatlab`,
+                    SUM((`lablogs`.`receivedsamples`)) AS `receivedsamples`,
+                    SUM((`lablogs`.`inqueuesamples`)) AS `inqueuesamples`,
+                    SUM((`lablogs`.`inprocesssamples`)) AS `inprocesssamples`,
+                    SUM((`lablogs`.`processedsamples`)) AS `processedsamples`,
+                    SUM((`lablogs`.`pendingapproval`)) AS `pendingapproval`,
+                    SUM((`lablogs`.`dispatchedresults`)) AS `dispatchedresults`,
+                    SUM((`lablogs`.`oldestinqueuesample`)) AS `oldestinqueuesample`,
+                    `dateupdated`
+                FROM `lablogs`
+
+                JOIN `labs` 
+                    ON `lablogs`.`lab` = `labs`.`ID`
+                WHERE 1 ";
+
+                SET @QUERY = CONCAT(@QUERY, " AND DATE(logdate) = (SELECT MAX(logdate) from lablogs WHERE testtype = '",filter_type,"') AND testtype = '",filter_type,"'");
+
+                SET @QUERY = CONCAT(@QUERY, " GROUP BY `labs`.`ID` ");
+  
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_live_data_totals`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_live_data_totals`
+(IN filter_type INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+                    SUM((`lablogs`.`receivedsamples`)) AS `receivedsamples`,
+                    SUM((`lablogs`.`inqueuesamples`)) AS `inqueuesamples`,
+                    SUM((`lablogs`.`inprocesssamples`)) AS `inprocesssamples`,
+                    SUM((`lablogs`.`processedsamples`)) AS `processedsamples`,
+                    SUM((`lablogs`.`pendingapproval`)) AS `pendingapproval`,
+                    SUM((`lablogs`.`dispatchedresults`)) AS `dispatchedresults`,
+                    SUM((`lablogs`.`enteredsamplesatlab`)) AS `enteredsamplesatlab`,
+                    SUM((`lablogs`.`enteredsamplesatsite`)) AS `enteredsamplesatsite`,
+                    SUM((`lablogs`.`enteredreceivedsameday`)) AS `enteredreceivedsameday`,
+                    SUM((`lablogs`.`enterednotreceivedsameday`)) AS `enterednotreceivedsameday`,
+                    SUM((`lablogs`.`abbottinprocess`)) AS `abbottinprocess`,
+                    SUM((`lablogs`.`panthainprocess`)) AS `panthainprocess`,
+                    SUM((`lablogs`.`rocheinprocess`)) AS `rocheinprocess`,
+                    SUM((`lablogs`.`abbottprocessed`)) AS `abbottprocessed`,
+                    SUM((`lablogs`.`panthaprocessed`)) AS `panthaprocessed`,
+                    SUM((`lablogs`.`rocheprocessed`)) AS `rocheprocessed`,
+                    SUM((`lablogs`.`yeartodate`)) AS `yeartodate`,
+                    SUM((`lablogs`.`monthtodate`)) AS `monthtodate`
+                FROM `lablogs`
+
+                WHERE 1 ";
+  
+                SET @QUERY = CONCAT(@QUERY, " AND DATE(logdate) = (SELECT MAX(logdate) from lablogs WHERE testtype = '",filter_type,"') AND testtype = '",filter_type,"'");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_live_lab_samples`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_live_lab_samples`
+(IN filter_type INT(11), IN filter_lab INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+                    SUM((`lablogs`.`oneweek`)) AS `oneweek`,
+                    SUM((`lablogs`.`twoweeks`)) AS `twoweeks`,
+                    SUM((`lablogs`.`threeweeks`)) AS `threeweeks`,
+                    SUM((`lablogs`.`aboveamonth`)) AS `aboveamonth`
+                FROM `lablogs`
+
+                WHERE 1 ";
+
+                IF (filter_lab != 0 && filter_lab != '') THEN
+                  SET @QUERY = CONCAT(@QUERY, " AND `lab` = '",filter_lab,"' ");
+                END IF;
+  
+                SET @QUERY = CONCAT(@QUERY, " AND DATE(logdate) = (SELECT MAX(logdate) from lablogs WHERE testtype = '",filter_type,"') AND testtype = '",filter_type,"'");
+               
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_lab_live_data`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_lab_live_data`
+()
+BEGIN
+  SET @QUERY =    "SELECT
+                    `labs`.`ID` AS `ID`,
+                    `labs`.`name` AS `name`,
+                    SUM((`lablogs`.`enteredsamplesatsite`)) AS `enteredsamplesatsite`,
+                    SUM((`lablogs`.`enteredsamplesatlab`)) AS `enteredsamplesatlab`,
+                    SUM((`lablogs`.`receivedsamples`)) AS `receivedsamples`,
+                    SUM((`lablogs`.`inqueuesamples`)) AS `inqueuesamples`,
+                    SUM((`lablogs`.`inprocesssamples`)) AS `inprocesssamples`,
+                    SUM((`lablogs`.`processedsamples`)) AS `processedsamples`,
+                    SUM((`lablogs`.`pendingapproval`)) AS `pendingapproval`,
+                    SUM((`lablogs`.`dispatchedresults`)) AS `dispatchedresults`,
+                    SUM((`lablogs`.`oldestinqueuesample`)) AS `oldestinqueuesample`,
+                    `dateupdated`
+                FROM `lablogs`
+
+                JOIN `labs` 
+                    ON `lablogs`.`lab` = `labs`.`ID`
+                WHERE 1 AND DATE(logdate) = (SELECT MAX(logdate) from lablogs WHERE testtype=2) AND testtype=2
+                GROUP BY `labs`.`ID`";
+  
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_live_data_totals`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_live_data_totals`
+()
+BEGIN
+  SET @QUERY =    "SELECT
+                    SUM((`lablogs`.`receivedsamples`)) AS `receivedsamples`,
+                    SUM((`lablogs`.`inqueuesamples`)) AS `inqueuesamples`,
+                    SUM((`lablogs`.`inprocesssamples`)) AS `inprocesssamples`,
+                    SUM((`lablogs`.`processedsamples`)) AS `processedsamples`,
+                    SUM((`lablogs`.`pendingapproval`)) AS `pendingapproval`,
+                    SUM((`lablogs`.`dispatchedresults`)) AS `dispatchedresults`,
+                    SUM((`lablogs`.`enteredsamplesatlab`)) AS `enteredsamplesatlab`,
+                    SUM((`lablogs`.`enteredsamplesatsite`)) AS `enteredsamplesatsite`,
+                    SUM((`lablogs`.`enteredreceivedsameday`)) AS `enteredreceivedsameday`,
+                    SUM((`lablogs`.`enterednotreceivedsameday`)) AS `enterednotreceivedsameday`,
+                    SUM((`lablogs`.`abbottinprocess`)) AS `abbottinprocess`,
+                    SUM((`lablogs`.`panthainprocess`)) AS `panthainprocess`,
+                    SUM((`lablogs`.`rocheinprocess`)) AS `rocheinprocess`,
+                    SUM((`lablogs`.`abbottprocessed`)) AS `abbottprocessed`,
+                    SUM((`lablogs`.`panthaprocessed`)) AS `panthaprocessed`,
+                    SUM((`lablogs`.`rocheprocessed`)) AS `rocheprocessed`
+                FROM `lablogs`
+
+                WHERE 1 AND DATE(logdate) = (SELECT MAX(logdate) from lablogs WHERE testtype=2) AND testtype=2";
+  
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_eid_lab_live_data`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_eid_lab_live_data`
+()
+BEGIN
+  SET @QUERY =    "SELECT
+                    `labs`.`ID` AS `ID`,
+                    `labs`.`name` AS `name`,
+                    SUM((`lablogs`.`enteredsamplesatsite`)) AS `enteredsamplesatsite`,
+                    SUM((`lablogs`.`enteredsamplesatlab`)) AS `enteredsamplesatlab`,
+                    SUM((`lablogs`.`receivedsamples`)) AS `receivedsamples`,
+                    SUM((`lablogs`.`inqueuesamples`)) AS `inqueuesamples`,
+                    SUM((`lablogs`.`inprocesssamples`)) AS `inprocesssamples`,
+                    SUM((`lablogs`.`processedsamples`)) AS `processedsamples`,
+                    SUM((`lablogs`.`pendingapproval`)) AS `pendingapproval`,
+                    SUM((`lablogs`.`dispatchedresults`)) AS `dispatchedresults`,
+                    SUM((`lablogs`.`oldestinqueuesample`)) AS `oldestinqueuesample`,
+                    `dateupdated`
+                FROM `lablogs`
+
+                JOIN `labs` 
+                    ON `lablogs`.`lab` = `labs`.`ID`
+                WHERE 1 AND DATE(logdate) = (SELECT MAX(logdate) from lablogs WHERE testtype=1) AND testtype=1
+                GROUP BY `labs`.`ID`";
+  
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_eid_live_data_totals`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_eid_live_data_totals`
+()
+BEGIN
+  SET @QUERY =    "SELECT
+                    SUM((`lablogs`.`receivedsamples`)) AS `receivedsamples`,
+                    SUM((`lablogs`.`inqueuesamples`)) AS `inqueuesamples`,
+                    SUM((`lablogs`.`inprocesssamples`)) AS `inprocesssamples`,
+                    SUM((`lablogs`.`processedsamples`)) AS `processedsamples`,
+                    SUM((`lablogs`.`pendingapproval`)) AS `pendingapproval`,
+                    SUM((`lablogs`.`dispatchedresults`)) AS `dispatchedresults`,
+                    SUM((`lablogs`.`enteredsamplesatlab`)) AS `enteredsamplesatlab`,
+                    SUM((`lablogs`.`enteredsamplesatsite`)) AS `enteredsamplesatsite`,
+                    SUM((`lablogs`.`enteredreceivedsameday`)) AS `enteredreceivedsameday`,
+                    SUM((`lablogs`.`enterednotreceivedsameday`)) AS `enterednotreceivedsameday`,
+                    SUM((`lablogs`.`abbottinprocess`)) AS `abbottinprocess`,
+                    SUM((`lablogs`.`panthainprocess`)) AS `panthainprocess`,
+                    SUM((`lablogs`.`rocheinprocess`)) AS `rocheinprocess`,
+                    SUM((`lablogs`.`abbottprocessed`)) AS `abbottprocessed`,
+                    SUM((`lablogs`.`panthaprocessed`)) AS `panthaprocessed`,
+                    SUM((`lablogs`.`rocheprocessed`)) AS `rocheprocessed`
+                FROM `lablogs`
+
+                WHERE 1 AND DATE(logdate) = (SELECT MAX(logdate) from lablogs WHERE testtype=1) AND testtype=1";
+  
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_age`
+(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `ag`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_subcounty_age `vsa`
+                LEFT JOIN agecategory `ag`
+                    ON ag.ID = vsa.age
+
+                WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY ag.ID ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_sustxfail_age`
+(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `ag`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_county_age `vca`
+                LEFT JOIN agecategory `ag`
+                    ON ag.ID = vca.age
+
+                WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY ag.ID ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_national_sustxfail_age`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `ag`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_national_age `vna`
+                LEFT JOIN agecategory `ag`
+                    ON ag.ID = vna.age
+
+                WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY ag.ID ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_gender`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_gender`
+(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `g`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_subcounty_gender `vcg`
+                LEFT JOIN gender `g`
+                    ON g.ID = vcg.gender 
+                WHERE 1";
+
+  
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name` ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_gender`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_sustxfail_gender`
+(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `g`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_county_gender `vcg`
+                LEFT JOIN gender `g`
+                    ON g.ID = vcg.gender 
+                WHERE 1";
+
+  
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name` ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_gender`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_national_sustxfail_gender`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `g`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_national_gender `vng`
+                LEFT JOIN gender `g`
+                    ON g.ID = vng.gender 
+                WHERE 1";
+
+  
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name` ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_justification`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_justification`
+(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `vj`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_subcounty_justification `vsj`
+                LEFT JOIN viraljustifications `vj`
+                    ON vj.ID = vsj.justification
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY vj.ID ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_justification`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_sustxfail_justification`
+(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `vj`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_county_justification `vcj`
+                LEFT JOIN viraljustifications `vj`
+                    ON vj.ID = vcj.justification
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY vj.ID ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_justification`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_national_sustxfail_justification`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `vj`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_national_justification `vnj`
+                LEFT JOIN viraljustifications `vj`
+                    ON vj.ID = vnj.justification
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY vj.ID ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_sustxfail`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `c`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_county_summary `vcs`
+                LEFT JOIN countys `c`
+                    ON c.ID = vcs.county
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY suppressed DESC, nonsuppressed DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `proc_get_subcounty_sustxfail_notification`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_subcounty_sustxfail_notification`
+(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+                        SUM(`sustxfail`) AS `sustxfail`, 
+                        ((SUM(`sustxfail`)/SUM(`alltests`))*100) AS `sustxfail_rate` 
+                    FROM `vl_subcounty_summary`
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+
+
+DROP PROCEDURE IF EXISTS `proc_get_counties_sustxfail_stats`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_counties_sustxfail_stats`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `c`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_county_summary `vcs`
+                LEFT JOIN countys `c`
+                    ON c.ID = vcs.county 
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY suppressed DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_county_suppression`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_county_suppression`
@@ -256,7 +1782,7 @@ BEGIN
   SET @QUERY =    "SELECT 
                     `c`.`ID`, 
                     `c`.`name`, 
-                    ((SUM(`vcs`.`sustxfail`)/SUM(`vcs`.`alltests`))*100) AS `sustxfail` 
+                    ((SUM(`less5000`+`above5000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`)))*100) AS `sustxfail` 
                     FROM `vl_county_summary` `vcs` 
                     JOIN `countys` `c` 
                     ON `vcs`.`county` = `c`.`ID`
@@ -277,6 +1803,42 @@ BEGIN
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " GROUP BY `c`.`name` ORDER BY `sustxfail` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_counties_sustxfail_stats`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_counties_sustxfail_stats`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `c`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_county_summary `vcs`
+                LEFT JOIN countys `c`
+                    ON c.ID = vcs.county 
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY `pecentage` DESC ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
@@ -312,6 +1874,41 @@ BEGIN
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " GROUP BY `vcs`.`county` ORDER BY `total` DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_county_sites_listing`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_county_sites_listing`
+(IN C_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+						SUM(`vss`.`sustxfail`) AS `sustxfail`, 
+                        SUM(`vss`.`alltests`) AS `alltests`, 
+                        ((SUM(`vss`.`sustxfail`)/SUM(`vss`.`alltests`))*100) AS `non supp`, 
+                        `vf`.`ID`, 
+                        `vf`.`name` 
+					FROM `vl_site_summary` `vss` LEFT JOIN `view_facilitys` `vf` 
+                    ON `vss`.`facility`=`vf`.`ID` 
+                    WHERE 1";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",C_id,"' GROUP BY `vf`.`ID` ORDER BY `non supp` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
@@ -354,6 +1951,41 @@ BEGIN
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_county_sustxfail_subcounty`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_county_sustxfail_subcounty`
+(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                      `d`.`name`, 
+                      ((SUM(`vss`.`sustxfail`)/SUM(`vss`.`alltests`))*100) AS `percentages`, 
+                      SUM(`vss`.`sustxfail`) AS `sustxfail` 
+                  FROM `vl_subcounty_summary` `vss` 
+                  JOIN `districts` `d` 
+                  ON `vss`.`subcounty` = `d`.`ID`
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `d`.`county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `d`.`county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `d`.`county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `d`.`county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `d`.`name` ORDER BY `percentages` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
 END //
 DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_lab_outcomes`;
@@ -825,7 +2457,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `p`.`name` ORDER BY `percentages` DESC  LIMIT 0, 10 ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `p`.`name` ORDER BY `percentages` DESC ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
@@ -923,6 +2555,41 @@ BEGIN
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " GROUP BY `vsd`.`name` ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_national_sustxfail_subcounty`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_national_sustxfail_subcounty`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                      `d`.`name`, 
+                      ((SUM(`vss`.`sustxfail`)/SUM(`vss`.`alltests`))*100) AS `percentages`, 
+                      SUM(`vss`.`sustxfail`) AS `sustxfail` 
+                  FROM `vl_subcounty_summary` `vss` 
+                  JOIN `districts` `d` 
+                  ON `vss`.`subcounty` = `d`.`ID`
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `d`.`name` ORDER BY `percentages` DESC ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
@@ -1057,7 +2724,7 @@ BEGIN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
             SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
         ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, "  AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+          SET @QUERY = CONCAT(@QUERY, "  AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"')) ");
         ELSE
             SET @QUERY = CONCAT(@QUERY, "  AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
         END IF;
@@ -1232,41 +2899,6 @@ BEGIN
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " AND `view_facilitys`.`partner` = '",P_id,"' GROUP BY `view_facilitys`.`ID` ORDER BY `tests` DESC ");
-
-     PREPARE stmt FROM @QUERY;
-     EXECUTE stmt;
-END //
-DELIMITER ;
-DROP PROCEDURE IF EXISTS `proc_get_partner_sites_listing`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_partner_sites_listing`
-(IN P_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =    "SELECT 
-						SUM(`vss`.`sustxfail`) AS `sustxfail`, 
-                        SUM(`vss`.`alltests`) AS `alltests`, 
-                        ((SUM(`vss`.`sustxfail`)/SUM(`vss`.`alltests`))*100) AS `non supp`, 
-                        `vf`.`ID`, 
-                        `vf`.`name` 
-					FROM `vl_site_summary` `vss` LEFT JOIN `view_facilitys` `vf` 
-                    ON `vss`.`facility`=`vf`.`ID` 
-                    WHERE 1";
-
-
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
-    END IF;
-
-    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`partner` = '",P_id,"' GROUP BY `vf`.`ID` ORDER BY `non supp` DESC LIMIT 0, 17 ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
@@ -1903,7 +3535,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",C_id,"' GROUP BY `p`.`name` ORDER BY `percentages` DESC  LIMIT 0, 10 ");
+    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",C_id,"' GROUP BY `p`.`name` ORDER BY `percentages` DESC ");
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
@@ -2150,7 +3782,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vf`.`ID` ORDER BY `non supp` DESC LIMIT 0, 50 ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vf`.`ID` ORDER BY `non supp` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
@@ -2245,6 +3877,36 @@ BEGIN
      EXECUTE stmt;
 END //
 DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_subcounty_sustxfail_notification`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_subcounty_sustxfail_notification`
+(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+                        SUM(`sustxfail`) AS `sustxfail`, 
+                        ((SUM(`sustxfail`)/SUM(`alltests`))*100) AS `sustxfail_rate` 
+                    FROM `vl_subcounty_summary`
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_vl_age_gender`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_age_gender`
@@ -2292,7 +3954,7 @@ BEGIN
 						FROM `vl_national_age` `vna`
 						LEFT JOIN `agecategory` `ac` 
 						ON `vna`.`age` = `ac`.`ID`
-					WHERE `ac`.`ID` > '5'";
+					WHERE `ac`.`ID` NOT BETWEEN '1' AND '5'";
 
  
     IF (from_month != 0 && from_month != '') THEN
@@ -2309,7 +3971,7 @@ BEGIN
     END IF;
 
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY `ac`.`ID` DESC ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY `ac`.`ID` ");
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
@@ -2479,6 +4141,42 @@ BEGIN
      EXECUTE stmt;
 END //
 DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_shortcodes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_shortcodes`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    COUNT(shortcodequeries.ID) AS `counts`, 
+                    view_facilitys.county, 
+                    countys.name
+                  FROM shortcodequeries 
+                  LEFT JOIN view_facilitys 
+                    ON shortcodequeries.mflcode = view_facilitys.facilitycode 
+                  LEFT JOIN countys 
+                    ON countys.ID = view_facilitys.county 
+                  WHERE 1";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived) BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived) >= '",from_month,"')  OR (YEAR(shortcodequeries.datereceived) = '",to_year,"' AND MONTH(shortcodequeries.datereceived) <= '",to_month,"') OR (YEAR(shortcodequeries.datereceived) > '",filter_year,"' AND YEAR(shortcodequeries.datereceived) < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived)='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY view_facilitys.county ORDER BY COUNT(shortcodequeries.ID) DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_vl_county_subcounty_outcomes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_county_subcounty_outcomes`
@@ -2511,6 +4209,150 @@ BEGIN
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_sustxfail_age`
+(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `ag`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_county_age `vca`
+                LEFT JOIN agecategory `ag`
+                    ON ag.ID = vca.age
+
+                WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_gender`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_sustxfail_gender`
+(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `g`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_county_gender `vcg`
+                LEFT JOIN gender `g`
+                    ON g.ID = vcg.gender 
+                WHERE 1";
+
+  
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name` ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_justification`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_sustxfail_justification`
+(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `vj`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_county_justification `vcj`
+                LEFT JOIN viraljustifications `vj`
+                    ON vj.ID = vcj.justification
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_sustxfail`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `c`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_county_summary `vcs`
+                LEFT JOIN countys `c`
+                    ON c.ID = vcs.county
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY suppressed DESC, nonsuppressed DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
 END //
 DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_vl_lab_performance_stats`;
@@ -2552,6 +4394,115 @@ BEGIN
 
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_national_sustxfail_age`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `ag`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_national_age `vna`
+                LEFT JOIN agecategory `ag`
+                    ON ag.ID = vna.age
+
+                WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_gender`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_national_sustxfail_gender`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `g`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_national_gender `vng`
+                LEFT JOIN gender `g`
+                    ON g.ID = vng.gender 
+                WHERE 1";
+
+  
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name` ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_justification`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_national_sustxfail_justification`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `vj`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_national_justification `vnj`
+                LEFT JOIN viraljustifications `vj`
+                    ON vj.ID = vnj.justification
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
 END //
 DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_vl_national_yearly_summary`;
@@ -2602,6 +4553,409 @@ BEGIN
 END //
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_gender`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_age_gender`
+(IN P_Id INT(11), IN A_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+        SUM(`maletest`) AS `maletest`,
+        SUM(`femaletest`) AS `femaletest`,
+        SUM(`nogendertest`) AS `nodata`
+    FROM `vl_partner_age`
+    WHERE 1 ";
+
+  
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `age` = '",A_id,"' AND `partner` = '",P_Id,"' ");
+
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_age_outcomes`
+(IN P_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                        `ac`.`name`, 
+                        SUM(`vna`.`less5000`+`vna`.`above5000`) AS `nonsuppressed`, 
+                        SUM(`vna`.`Undetected`+`vna`.`less1000`) AS `suppressed` 
+                        FROM `vl_partner_age` `vna`
+                        LEFT JOIN `agecategory` `ac` 
+                        ON `vna`.`age` = `ac`.`ID`
+                    WHERE `ac`.`ID` NOT BETWEEN '1' AND '5'";
+
+ 
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND `vna`.`partner` = '",P_Id,"' GROUP BY `name` ORDER BY `ac`.`ID` ");
+    
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_sample_types`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_age_sample_types`
+(IN P_Id INT(11), IN A_id INT(11), IN filter_year INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+          `month`,
+          `year`,
+          SUM(`edta`) AS `edta`,
+          SUM(`dbs`) AS `dbs`,
+          SUM(`plasma`) AS `plasma` 
+    FROM `vl_partner_age`
+    WHERE 1";
+
+    SET @QUERY = CONCAT(@QUERY, " AND `age` = '",A_id,"' AND `partner` = '",P_Id,"' AND `year` = '",filter_year,"' GROUP BY `month` ORDER BY `year` ASC, `month` ");
+    
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_vl_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_age_vl_outcomes`
+(IN P_id INT(11),IN A_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+        SUM(`confirmtx`) AS `confirmtx`,
+        SUM(`confirm2vl`) AS `confirm2vl`,
+        SUM(`Undetected`) AS `undetected`,
+        SUM(`less1000`) AS `less1000`,
+        SUM(`less5000`) AS `less5000`,
+        SUM(`above5000`) AS `above5000`,
+        SUM(`tests`) AS `alltests`,
+        SUM(`sustxfail`) AS `sustxfail`,
+        SUM(`rejected`) AS `rejected`, 
+        SUM(`repeattests`) AS `repeats`, 
+        SUM(`invalids`) AS `invalids`
+    FROM `vl_partner_age`
+    WHERE 1 ";
+
+  
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `age` = '",A_id,"' ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_county_age_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_county_age_outcomes`
+(IN P_Id INT(11), IN filter_age INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `c`.`name`,
+                    SUM(`vpa`.`undetected`+`vpa`.`less1000`) AS `suppressed`,
+                    SUM(`vpa`.`less5000`+`vpa`.`above5000`) AS `nonsuppressed`
+                  FROM vl_partner_age vpa
+                  LEFT JOIN view_facilitys vf
+                    ON vf.partner = vpa.partner
+                  LEFT JOIN countys c
+                    ON c.ID = vf.county
+                  WHERE 1 ";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND `age` = '",filter_age,"' AND `vpa`.`partner` = '",P_Id,"' GROUP BY `c`.`name` ORDER BY `suppressed` DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_county_regimen_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_county_regimen_outcomes`
+(IN P_Id INT(11), IN filter_regimen INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+                    `c`.`name`,
+                    SUM(`vcr`.`undetected`+`vcr`.`less1000`) AS `suppressed`,
+                    SUM(`vcr`.`less5000`+`vcr`.`above5000`) AS `nonsuppressed` 
+                FROM `vl_partner_regimen` `vcr`
+                    LEFT JOIN view_facilitys vf
+                    ON vf.partner = vcr.partner
+                  LEFT JOIN countys c
+                    ON c.ID = vf.county
+    WHERE 1 ";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `regimen` = '",filter_regimen,"' AND `vcr`.`partner` = '",P_Id,"' GROUP BY `c`.`name` ORDER BY `suppressed` DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_regimen_age`
+(IN P_id INT(11), IN R_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+        SUM(`noage`) AS `noage`,
+        SUM(`less2`) AS `less2`,
+        SUM(`less9`) AS `less9`,
+        SUM(`less14`) AS `less14`,
+        SUM(`less19`) AS `less19`,
+        SUM(`less24`) AS `less24`,
+        SUM(`over25`) AS `over25`
+    FROM `vl_partner_regimen`
+    WHERE 1 ";
+
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `regimen` = '",R_id,"' ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_gender`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_regimen_gender`
+(IN P_id INT(11), IN R_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+        SUM(`maletest`) AS `maletest`,
+        SUM(`femaletest`) AS `femaletest`,
+        SUM(`nogendertest`) AS `nodata`
+    FROM `vl_partner_regimen`
+    WHERE 1 ";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `regimen` = '",R_id,"' ");
+
+   
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_regimen_outcomes`
+(IN P_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+						`vp`.`name`, 
+						SUM(`vnr`.`less5000`+`vnr`.`above5000`) AS `nonsuppressed`, 
+						SUM(`vnr`.`Undetected`+`vnr`.`less1000`) AS `suppressed` 
+						FROM `vl_partner_regimen` `vnr`
+						LEFT JOIN `viralprophylaxis` `vp` 
+						ON `vnr`.`regimen` = `vp`.`ID`
+					WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_Id,"' GROUP BY `name` ORDER BY `suppressed` DESC, `nonsuppressed` ");
+    
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_sample_types`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_regimen_sample_types`
+(IN P_id INT(11), IN R_id INT(11), IN filter_year INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+          `month`,
+          `year`,
+          SUM(`edta`) AS `edta`,
+          SUM(`dbs`) AS `dbs`,
+          SUM(`plasma`) AS `plasma` 
+    FROM `vl_partner_regimen`
+    WHERE 1";
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `regimen` = '",R_id,"' AND `year` = '",filter_year,"' GROUP BY `month` ORDER BY `year` ASC, `month` ");
+    
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_vl_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_regimen_vl_outcomes`
+(IN P_id INT(11), IN R_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+       SUM(`confirmtx`) AS `confirmtx`,
+        SUM(`confirm2vl`) AS `confirm2vl`,
+        SUM(`Undetected`) AS `undetected`,
+        SUM(`less1000`) AS `less1000`,
+        SUM(`less5000`) AS `less5000`,
+        SUM(`above5000`) AS `above5000`,
+        SUM(`tests`) AS `alltests`,
+        SUM(`sustxfail`) AS `sustxfail`,
+        SUM(`rejected`) AS `rejected`, 
+        SUM(`repeattests`) AS `repeats`, 
+        SUM(`invalids`) AS `invalids`
+    FROM `vl_partner_regimen`
+    WHERE 1 ";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `regimen` = '",R_id,"' ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_partner_shortcodes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_partner_shortcodes`
+(IN C_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    COUNT(shortcodequeries.ID) AS `counts`, 
+                    view_facilitys.partner, 
+                    partners.name
+                  FROM shortcodequeries 
+                  LEFT JOIN view_facilitys 
+                    ON shortcodequeries.mflcode = view_facilitys.facilitycode 
+                  LEFT JOIN partners 
+                    ON partners.ID = view_facilitys.partner
+                  WHERE 1";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived) BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived) >= '",from_month,"')  OR (YEAR(shortcodequeries.datereceived) = '",to_year,"' AND MONTH(shortcodequeries.datereceived) <= '",to_month,"') OR (YEAR(shortcodequeries.datereceived) > '",filter_year,"' AND YEAR(shortcodequeries.datereceived) < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived)='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' ");
+    END IF;
+
+    IF (C_id != 0 && C_id != '') THEN
+        SET @QUERY = CONCAT(@QUERY, "  AND view_facilitys.county = '",C_id,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY view_facilitys.partner ORDER BY COUNT(shortcodequeries.ID) DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_vl_partner_yearly_summary`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_partner_yearly_summary`
@@ -2821,6 +5175,87 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_shortcodes_requests`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_shortcodes_requests`
+(IN C_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+					COUNT(DISTINCT shortcodequeries.`ID`) AS `count`,
+					MONTH(shortcodequeries.`datereceived`) AS `month`,
+					YEAR(shortcodequeries.`datereceived`) AS `year`,
+					MONTHNAME(shortcodequeries.`datereceived`) AS `monthname`
+				FROM shortcodequeries
+					LEFT JOIN view_facilitys
+				ON view_facilitys.facilitycode = shortcodequeries.mflcode 
+                 WHERE 1";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived) BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived) >= '",from_month,"')  OR (YEAR(shortcodequeries.datereceived) = '",to_year,"' AND MONTH(shortcodequeries.datereceived) <= '",to_month,"') OR (YEAR(shortcodequeries.datereceived) > '",filter_year,"' AND YEAR(shortcodequeries.datereceived) < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived)='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' ");
+    END IF;
+
+    IF (C_id != 0 && C_id != '') THEN
+        SET @QUERY = CONCAT(@QUERY, "  AND view_facilitys.county = '",C_id,"' ");
+    END IF;
+
+
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `year` ASC,`month` ASC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_sites_shortcodes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_sites_shortcodes`
+(IN C_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    COUNT(DISTINCT shortcodequeries.ID) AS `count`, 
+                    view_facilitys.facilitycode, 
+                    view_facilitys.name 
+                  FROM shortcodequeries 
+                  LEFT JOIN view_facilitys 
+                    ON shortcodequeries.mflcode = view_facilitys.facilitycode 
+                  WHERE 1";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived) BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived) >= '",from_month,"')  OR (YEAR(shortcodequeries.datereceived) = '",to_year,"' AND MONTH(shortcodequeries.datereceived) <= '",to_month,"') OR (YEAR(shortcodequeries.datereceived) > '",filter_year,"' AND YEAR(shortcodequeries.datereceived) < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived)='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' ");
+    END IF;
+
+    IF (C_id != 0 && C_id != '') THEN
+        SET @QUERY = CONCAT(@QUERY, "  AND view_facilitys.county = '",C_id,"' ");
+    END IF;
+
+
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY view_facilitys.facilitycode ORDER BY COUNT(shortcodequeries.ID) DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_age`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_subcounty_age`
@@ -2985,6 +5420,46 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_shortcodes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_subcounty_shortcodes`
+(IN C_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    COUNT(shortcodequeries.ID) AS `counts`, 
+                    view_facilitys.district, 
+                    districts.name
+                  FROM shortcodequeries 
+                  LEFT JOIN view_facilitys 
+                    ON shortcodequeries.mflcode = view_facilitys.facilitycode 
+                  LEFT JOIN districts 
+                    ON districts.ID = view_facilitys.district
+                  WHERE 1";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived) BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived) >= '",from_month,"')  OR (YEAR(shortcodequeries.datereceived) = '",to_year,"' AND MONTH(shortcodequeries.datereceived) <= '",to_month,"') OR (YEAR(shortcodequeries.datereceived) > '",filter_year,"' AND YEAR(shortcodequeries.datereceived) < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' AND MONTH(shortcodequeries.datereceived)='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND YEAR(shortcodequeries.datereceived) = '",filter_year,"' ");
+    END IF;
+
+    IF (C_id != 0 && C_id != '') THEN
+        SET @QUERY = CONCAT(@QUERY, "  AND view_facilitys.county = '",C_id,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY view_facilitys.district ORDER BY COUNT(shortcodequeries.ID) DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sites_details`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_subcounty_sites_details`
@@ -3025,6 +5500,115 @@ BEGIN
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_age`
+(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `ag`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_subcounty_age `vsa`
+                LEFT JOIN agecategory `ag`
+                    ON ag.ID = vsa.age
+
+                WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_gender`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_gender`
+(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =  "SELECT 
+                    `g`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                FROM vl_subcounty_gender `vcg`
+                LEFT JOIN gender `g`
+                    ON g.ID = vcg.gender 
+                WHERE 1";
+
+  
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name` ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_justification`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_justification`
+(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+                    `vj`.`name`,
+                    SUM(`Undetected`+`less1000`) AS `suppressed`,
+                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
+                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                FROM vl_subcounty_justification `vsj`
+                LEFT JOIN viraljustifications `vj`
+                    ON vj.ID = vsj.justification
+                WHERE 1";
+
+   
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY `pecentage` DESC ");
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+    
 END //
 DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_vl_outcomes`;
@@ -3117,6 +5701,37 @@ BEGIN
 
      
       SET @QUERY = CONCAT(@QUERY, " ORDER BY `cs`.`year` DESC, `cs`.`month` ASC ");
+      
+
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_yearly_lab_trends`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_yearly_lab_trends`
+(IN lab INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+                    `vls`.`year`, `vls`.`month`,  
+                    SUM(`vls`.`Undetected` + `vls`.`less1000`) AS `suppressed`, 
+                    SUM(`vls`.`above5000` + `vls`.`less5000`) AS `nonsuppressed`,
+                    SUM(`vls`.`alltests`) AS `alltests`, 
+                    SUM(`vls`.`received`) AS `received`, 
+                    SUM(`vls`.`rejected`) AS `rejected`,
+                    SUM(`vls`.`tat4`) AS `tat4`
+                FROM `vl_lab_summary` `vls`
+                WHERE 1  ";
+
+      IF (lab != 0 && lab != '') THEN
+           SET @QUERY = CONCAT(@QUERY, " AND `vls`.`lab` = '",lab,"' ");
+      END IF;  
+
+    
+      SET @QUERY = CONCAT(@QUERY, " GROUP BY `vls`.`month`, `vls`.`year` ");
+
+     
+      SET @QUERY = CONCAT(@QUERY, " ORDER BY `vls`.`year` DESC, `vls`.`month` ASC ");
       
 
     PREPARE stmt FROM @QUERY;

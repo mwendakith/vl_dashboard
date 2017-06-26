@@ -14,6 +14,7 @@ class Template extends MY_Controller
 
 	public function load_template($data)
 	{
+
 		$this->load->model('template_model');
 
 		$data['filter'] = $this->template_model->get_counties_dropdown();
@@ -22,6 +23,7 @@ class Template extends MY_Controller
 		$data['regimen'] = $this->template_model->get_regimen_dropdown();
 		$data['age_filter'] = $this->template_model->get_age_dropdown();
 		$data['subCounty'] = $this->template_model->get_sub_county_dropdown();
+		$data['laborotories'] = $this->template_model->get_lab_dropdown();
 		// $data['breadcrum'] = $this->breadcrum();
 		// echo "<pre>";print_r($data);die();
 		$this->load->view('template_view',$data);
