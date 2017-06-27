@@ -78,6 +78,8 @@
 						$("#first").hide();
 						$("#second").show();
 
+						adata = parseInt(adata);
+
 						$("#samples").html("<center><div class='loader'></div></center>");
 						$("#vlOutcomes").html("<center><div class='loader'></div></center>");
 						$("#gender").html("<center><div class='loader'></div></center>");

@@ -120,6 +120,88 @@ class Trends_model extends MY_Model
 		return $data;
 	}
 
+	function quarterly_trends($county=NULL){
+
+		if($county == NULL || $county == 48){
+			$county = 0;
+		}
+
+		if ($county == 0) {
+			$sql = "CALL `proc_get_vl_national_yearly_trends`();";
+		} else {
+			$sql = "CALL `proc_get_vl_yearly_trends`(" . $county . ");";
+		}
+		
+		$result = $this->db->query($sql)->result_array();
+		
+		$year;
+		$i = 0;
+		$b = true;
+		$limit = 0;
+		$quarter = 1;
+
+		$data;
+
+		foreach ($result as $key => $value) {
+
+			if($b){
+				$b = false;
+				$year = (int) $value['year'];
+			}
+
+			$y = (int) $value['year'];
+			$name = $y . ' Q' . $quarter;
+			if($value['year'] != $year){
+				$year--;
+			}
+
+			$month = (int) $value['month'];
+			$modulo = ($month % 3);
+
+			$month= $modulo-1;
+
+			if($modulo == 0){
+				$month = 2;
+			}
+			
+
+			$tests = (int) $value['suppressed'] + (int) $value['nonsuppressed'];
+
+			$data['suppression_trends'][$i]['name'] = $name;
+			$data['suppression_trends'][$i]['data'][$month] = round(@(($value['suppressed']*100)/$tests), 4, PHP_ROUND_HALF_UP);
+
+
+			$data['test_trends'][$i]['name'] = $name;
+			$data['test_trends'][$i]['data'][$month] = $tests;
+
+			$data['rejected_trends'][$i]['name'] = $name;
+			$data['rejected_trends'][$i]['data'][$month] = round(@(($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP);
+
+			$data['tat_trends'][$i]['name'] = $name;
+			$data['tat_trends'][$i]['data'][$month] = (int) $value['tat4'];
+
+			if($modulo == 0){
+				$i++;
+				$quarter++;
+				$limit++;
+			}
+			if($quarter == 5){
+				$quarter = 1;
+			}
+			if ($limit == 8) {
+				break;
+			}
+
+
+
+		}
+		
+
+		return $data;
+	}
+
+
+
 
 
 

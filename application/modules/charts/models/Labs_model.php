@@ -448,6 +448,56 @@ class Labs_model extends MY_Model
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
+
+	function yearly_trends($lab=NULL){
+
+	
+		$sql = "CALL `proc_get_vl_yearly_lab_trends`(" . $lab . ");";
+		
+		$result = $this->db->query($sql)->result_array();
+		
+		$year;
+		$i = 0;
+		$b = true;
+
+		$data;
+
+		foreach ($result as $key => $value) {
+
+			if($b){
+				$b = false;
+				$year = (int) $value['year'];
+			}
+
+			$y = (int) $value['year'];
+			if($value['year'] != $year){
+				$i++;
+				$year--;
+			}
+
+			$month = (int) $value['month'];
+			$month--;
+
+			$tests = (int) $value['suppressed'] + (int) $value['nonsuppressed'];
+
+			$data['suppression_trends'][$i]['name'] = $value['year'];
+			$data['suppression_trends'][$i]['data'][$month] = round(@(($value['suppressed']*100)/$tests), 4, PHP_ROUND_HALF_UP);
+
+
+			$data['test_trends'][$i]['name'] = $value['year'];
+			$data['test_trends'][$i]['data'][$month] = $tests;
+
+			$data['rejected_trends'][$i]['name'] = $value['year'];
+			$data['rejected_trends'][$i]['data'][$month] = round(@(($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP);
+
+			$data['tat_trends'][$i]['name'] = $value['year'];
+			$data['tat_trends'][$i]['data'][$month] = (int) $value['tat4'];
+
+		}
+		
+
+		return $data;
+	}
 	
 }
 ?>

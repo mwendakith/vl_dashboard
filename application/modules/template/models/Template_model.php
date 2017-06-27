@@ -51,6 +51,19 @@ class Template_model extends MY_Model
 		return $dropdown;
 	}
 
+	function get_lab_dropdown()
+	{
+		$dropdown = '';
+		$this->db->order_by("name","asc");
+		$lab_data = $this->db->get('labs')->result_array();
+
+		foreach ($lab_data as $key => $value) {
+			$dropdown .= '<option value="'.$value['ID'].'">'.$value['labname'].'</option>';
+		}
+		
+		return $dropdown;
+	}
+
 	function get_site_dropdown()
 	{
 		$dropdown = '';

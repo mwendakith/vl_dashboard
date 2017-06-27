@@ -63,5 +63,41 @@ class Trends extends MY_Controller
 		$this->load->view('trends_outcomes_view', $data);
 	}
 
+	function quarterly($county=NULL){
+		$obj = $this->trends_model->quarterly_trends($county);
+		// echo "<pre>";print_r($obj);echo "</pre>";die();
+
+		$data['trends'] = $obj['suppression_trends'];
+		$data['title'] = "Suppression Trends";
+		$data['div_name'] = "suppression_q";
+		$data['suffix'] = "%";
+		$data['yAxis'] = "Suppression Rate (%)";
+		$this->load->view('quarterly_trends_view', $data);
+
+		$data['trends'] = $obj['test_trends'];
+		$data['title'] = "Testing Trends";
+		$data['div_name'] = "tests_q";
+		$data['suffix'] = "";
+		$data['yAxis'] = "Number of  Valid Tests";
+		$this->load->view('quarterly_trends_view', $data);
+
+		
+
+		$data['trends'] = $obj['rejected_trends'];
+		$data['title'] = "Rejection Rate Trends";
+		$data['div_name'] = "rejects_q";
+		$data['suffix'] = "%";
+		$data['yAxis'] = "Rejection (%)";
+		$this->load->view('quarterly_trends_view', $data);
+
+
+		$data['trends'] = $obj['tat_trends'];
+		$data['title'] = "Turn Around Time (Collection - Dispatch)";
+		$data['div_name'] = "tat_q";
+		$data['suffix'] = "";
+		$data['yAxis'] = "TAT(Days)";
+		$this->load->view('quarterly_trends_view', $data);
+	}
+
 
 }

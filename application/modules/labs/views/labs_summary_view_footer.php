@@ -42,6 +42,39 @@
 			}
 		    
 		});
+
+		$("select").change(function(){
+			em = $(this).val();
+			em = parseInt(em);
+			if(em == 0){
+
+			
+				$("#first").show();
+	        	$("#second").hide();
+	        	$("#breadcrum").hide();
+
+	        	$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats");
+				$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends");
+				$("#test_trends").load("<?php echo base_url('charts/labs/testing_trends');?>");
+				$("#samples").load("<?php echo base_url();?>charts/labs/sample_types");
+				$("#ttime").load("<?php echo base_url();?>charts/labs/turn_around_time");
+				$("#results").load("<?php echo base_url();?>charts/labs/results_outcome");
+
+				$(".display_date").load("<?php echo base_url('charts/labs/display_date'); ?>");
+
+			}
+			else{
+				$("#first").hide();
+	        	$("#second").show();
+	        	$("#breadcrum").show();
+	        	var t = $("#my_list option:selected").text();
+	        	$("#breadcrum").html(t);
+	        	$("#graphs").load("<?php echo base_url();?>charts/labs/lab_trends/"+em);
+				
+			}
+			
+	    });
+
 	});
 
 	function date_filter(criteria, id)
