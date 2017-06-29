@@ -92,6 +92,17 @@ class Sites extends MY_Controller
 		$data = $this->sites_model->get_patients_graph($site,$year);
 		$this->load->view('patients_graph',$data);
 	}
+
+	function site_patients($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
+	{
+		$data['outcomes'] = $this->sites_model->site_patients($site,$year,$month,$to_year,$to_month);
+
+		echo "<pre>";print_r($data);die();
+
+
+
+		$this->load->view('sites_gender_view',$data);
+	}
 	
 }
 ?>
