@@ -1,10 +1,10 @@
-<div id="outcomes">
+<div id="<?php echo $div_name; ?>">
 
 </div>
 
 <script type="text/javascript">
     $(function () {
-        $('#outcomes').highcharts({
+        $('#<?php echo $div_name; ?>').highcharts({
             plotOptions: {
                 column: {
                     stacking: 'normal'
@@ -61,10 +61,10 @@
             },
             legend: {
                 layout: 'vertical',
-                align: 'left',
-                x: 120,
+                align: 'right',
+                x: -50,
                 verticalAlign: 'top',
-                y: 80,
+                y: 30,
                 floating: true,
                 backgroundColor: '#FFFFFF'
             },colors: [

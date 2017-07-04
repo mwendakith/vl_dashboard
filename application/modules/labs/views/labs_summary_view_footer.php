@@ -69,6 +69,7 @@
 	        	$("#breadcrum").show();
 	        	var t = $("#my_list option:selected").text();
 	        	$("#breadcrum").html(t);
+	        	$("#lab_summary").load("<?php echo base_url();?>charts/labs/summary/"+em);
 	        	$("#graphs").load("<?php echo base_url();?>charts/labs/lab_trends/"+em);
 				
 			}
@@ -79,6 +80,10 @@
 
 	function date_filter(criteria, id)
  	{
+ 		$("#first").show();
+    	$("#second").hide();
+    	$("#breadcrum").hide();
+	        	
  		if (criteria === "monthly") {
  			year = null;
  			month = id;

@@ -61,14 +61,14 @@ class Sites extends MY_Controller
 	{
 		$data['outcomes'] = $this->sites_model->sites_age($year,$month,$site,$to_year,$to_month);
 
-		$this->load->view('sites_agegroup_view',$data);
+		$this->load->view('agegroup_view',$data);
 	}
 
 	function site_gender($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes'] = $this->sites_model->sites_gender($year,$month,$site,$to_year,$to_month);
 
-		$this->load->view('sites_gender_view',$data);
+		$this->load->view('gender_view',$data);
 	}
 
 	function site_justification($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL)

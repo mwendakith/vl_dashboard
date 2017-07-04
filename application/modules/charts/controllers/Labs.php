@@ -77,6 +77,13 @@ class Labs extends MY_Controller
 		echo "(".($this->session->userdata('filter_year')-1)." - ".$this->session->userdata('filter_year').")";
 	}
 
+	function summary($lab=NULL){
+		$data['trends'] = $this->labs_model->yearly_summary($lab);
+		$data['div_name'] = "lab_outcomes";
+
+		$this->load->view('trends_outcomes_view', $data);
+	}
+
 
 	function lab_trends($lab=NULL){
 		$obj = $this->labs_model->yearly_trends($lab);
@@ -119,5 +126,7 @@ class Labs extends MY_Controller
 		//echo "<pr>";print_r($obj);die;
 
 	}
+
+
 }
 ?>

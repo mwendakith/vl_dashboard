@@ -4,9 +4,12 @@ CREATE PROCEDURE `proc_get_sites_gender`
 (IN S_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT  
-                      SUM(`maletest`) AS `male`, 
-                      SUM(`femaletest`) AS `female` 
-                FROM `vl_site_summary` `vss`
+                    `g`.`name`,
+                      SUM(`Undetected` + `less1000`) AS `suppressed`, 
+                      SUM(`less5000` + `above5000`) AS `nonsuppressed` 
+                FROM `vl_site_gender` `vsg`
+                JOIN `gender` `g`
+                    ON `vsg`.`gender` = `g`.`ID`
                 WHERE 1 ";
 
   
@@ -24,6 +27,8 @@ BEGIN
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " AND `facility` = '",S_id,"' ");
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name` ");
 
     
 

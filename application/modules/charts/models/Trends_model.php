@@ -201,7 +201,101 @@ class Trends_model extends MY_Model
 	}
 
 
+	function quarterly_outcomes($county=NULL){
 
+		if($county == NULL || $county == 48){
+			$county = 0;
+		}
+
+		if ($county == 0) {
+			$sql = "CALL `proc_get_vl_national_yearly_trends`();";
+		} else {
+			$sql = "CALL `proc_get_vl_yearly_trends`(" . $county . ");";
+		}
+		
+		$result = $this->db->query($sql)->result_array();
+		
+		$year;
+		$i = 4;
+		$b = true;
+		$limit = 0;
+		$quarter = 1;
+
+		$data;
+
+		$data['outcomes'][0]['name'] = "Nonsuppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+
+		//$data['outcomes'][0]['drilldown']['color'] = '#913D88';
+		//$data['outcomes'][1]['drilldown']['color'] = '#96281B';
+		//$data['outcomes'][2]['color'] = '#257766';
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
+
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "Outcomes";
+
+		$data['categories'] = array_fill(0, 8, "Null");
+		$data['outcomes'][0]['data'] = array_fill(0, 8, 0);
+		$data['outcomes'][1]['data'] = array_fill(0, 8, 0);
+		$data['outcomes'][2]['data'] = array_fill(0, 8, 0);
+
+
+		foreach ($result as $key => $value) {
+
+			if($b){
+				$b = false;
+				$year = (int) $value['year'];
+			}
+
+			$y = (int) $value['year'];
+			$name = $y . ' Q' . $quarter;
+			if($value['year'] != $year){
+				$year--;
+			}
+
+			$month = (int) $value['month'];
+			$modulo = ($month % 3);
+
+			$data['categories'][$i] = $name;
+
+			$data['outcomes'][0]['data'][$i] += (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$i] += (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$i] += round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
+			
+
+			if($modulo == 0){
+				$data['outcomes'][2]['data'][$i] /= 3;
+				$i++;
+				$quarter++;
+				$limit++;	
+
+				if ($limit == 8) {
+					break;
+				}
+
+			}
+			if($quarter == 5){
+				$quarter = 1;
+				$i = 0;
+			}
+
+
+		}
+
+		return $data;
+
+	}
 
 
 

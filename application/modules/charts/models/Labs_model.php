@@ -498,6 +498,50 @@ class Labs_model extends MY_Model
 
 		return $data;
 	}
+
+	function yearly_summary($lab=NULL){		
+		
+		$sql = "CALL `proc_get_vl_yearly_lab_summary`(" . $lab . ");";
+		
+		// echo "<pre>";print_r($sql);die();
+		
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$year = date("Y");
+		$i = 0;
+
+		$data['outcomes'][0]['name'] = "Nonsuppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+
+		//$data['outcomes'][0]['drilldown']['color'] = '#913D88';
+		//$data['outcomes'][1]['drilldown']['color'] = '#96281B';
+		//$data['outcomes'][2]['color'] = '#257766';
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
+
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		foreach ($result as $key => $value) {
+			$data['categories'][$i] = $value['year'];
+			
+			$data['outcomes'][0]['data'][$i] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$i] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$i] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
+			$i++;
+		}
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "Outcomes";
+
+		return $data;
+	}
 	
 }
 ?>

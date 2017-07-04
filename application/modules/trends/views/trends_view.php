@@ -24,6 +24,10 @@
   </div>
 
   <div id="second">
+
+    <div id="q_outcomes" class="col-md-12">
+    
+    </div>
     
     <div id="q_graphs">
     
@@ -67,6 +71,7 @@
       else{
         $("#first").hide();
         $("#second").show();
+        $("#q_outcomes").load("<?php echo base_url();?>charts/trends/quarterly_outcomes/"+county_id);
         $("#q_graphs").load("<?php echo base_url();?>charts/trends/quarterly/"+county_id);
       }
 
@@ -80,6 +85,7 @@
       localStorage.setItem("my_var", 1);
       $("#first").hide();
       $("#second").show();
+      $("#q_outcomes").load("<?php echo base_url();?>charts/trends/quarterly_outcomes/");
       $("#q_graphs").load("<?php echo base_url();?>charts/trends/quarterly/");
     }
     else{

@@ -360,32 +360,73 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['ageGnd']['name'] = 'Tests';
-		
 		$count = 0;
-		$categories = array('less2','less9','less14','less19','less24','over25');
+		$loop = 0;
+		$name = '';
+		$nonsuppressed = 0;
+		$suppressed = 0;
 		
-		$data["ageGnd"]["data"][0]	=  NULL;
-		$data["ageGnd"]["data"][1]	=  NULL;
-		$data["ageGnd"]["data"][2]	=  NULL;
-		$data["ageGnd"]["data"][3]	=  NULL;
-		$data["ageGnd"]["data"][4]	=  NULL;
-		$data["ageGnd"]["data"][5]	=  NULL;
-		$data['categories'][0]		= 'No Data';
-
-		if ($result) {
-			foreach ($result as $key => $value) {
-				$data['categories']			= 	$categories;
-				$data["ageGnd"]["data"][0]	=  (int) $value['less2'];
-				$data["ageGnd"]["data"][1]	=  (int) $value['less9'];
-				$data["ageGnd"]["data"][2]	=  (int) $value['less14'];
-				$data["ageGnd"]["data"][3]	=  (int) $value['less19'];
-				$data["ageGnd"]["data"][4]	=  (int) $value['less24'];
-				$data["ageGnd"]["data"][5]	=  (int) $value['over25'];
+		// echo "<pre>";print_r($result);die();
+		$data['ageGnd'][0]['name'] = 'Not Suppresed';
+		$data['ageGnd'][1]['name'] = 'Suppresed';
+ 
+		$count = 0;
+		
+		$data["ageGnd"][0]["data"][0]	= $count;
+		$data["ageGnd"][1]["data"][0]	= $count;
+		$data['categories'][0]			= 'No Data';
+ 
+		foreach ($result as $key => $value) {
+			if ($value['name']=='No Data') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='Less 2') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='2-9') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='10-14') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='15-19') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='20-24') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='25+') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
 			}
+			
+			$data['categories'][$loop] 			= $name;
+			$data["ageGnd"][0]["data"][$loop]	=  (int) $nonsuppressed;
+			$data["ageGnd"][1]["data"][$loop]	=  (int) $suppressed;
 		}
-		$data["ageGnd"]["color"] =  '#1BA39C';
-
+		// die();
+		$data['ageGnd'][0]['drilldown']['color'] = '#913D88';
+		$data['ageGnd'][1]['drilldown']['color'] = '#96281B';
+ 
+		// echo "<pre>";print_r($data);die();
+		$data['categories'] = array_values($data['categories']);
+		$data["ageGnd"][0]["data"] = array_values($data["ageGnd"][0]["data"]);
+		$data["ageGnd"][1]["data"] = array_values($data["ageGnd"][1]["data"]);
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
@@ -415,24 +456,24 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['Gnd']['name'] = 'Tests';
-		
+		$data['gender'][0]['name'] = 'Not Suppresed';
+		$data['gender'][1]['name'] = 'Suppresed';
+ 
 		$count = 0;
-		$categories = array('Male','Female');
 		
-		$data["Gnd"]["data"][0]	=  NULL;
-		$data["Gnd"]["data"][1]	=  NULL;
-		$data['categories'][0]		= 'No Data';
-
-		if ($result) {
-			foreach ($result as $key => $value) {
-				$data['categories']			= 	$categories;
-				$data["Gnd"]["data"][0]	=  (int) $value['male'];
-				$data["Gnd"]["data"][1]	=  (int) $value['female'];
-			}
+		$data["gender"][0]["data"][0]	= $count;
+		$data["gender"][1]["data"][0]	= $count;
+		$data['categories'][0]			= 'No Data';
+ 
+		foreach ($result as $key => $value) {
+			$data['categories'][$key] 			= $value['name'];
+			$data["gender"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
+			$data["gender"][1]["data"][$key]	=  (int) $value['suppressed'];
 		}
-		$data["Gnd"]["color"] =  '#1BA39C';
-
+ 
+		$data['gender'][0]['drilldown']['color'] = '#913D88';
+		$data['gender'][1]['drilldown']['color'] = '#96281B';
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 

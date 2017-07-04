@@ -4,13 +4,13 @@ CREATE PROCEDURE `proc_get_sites_age`
 (IN S_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT  
-                      SUM(`less2`) AS `less2`, 
-                      SUM(`less9`) AS `less9`, 
-                      SUM(`less14`) AS `less14`, 
-                      SUM(`less19`) AS `less19`, 
-                      SUM(`less24`) AS `less24`, 
-                      SUM(`over25`) AS `over25` 
-                FROM `vl_site_summary` `vss`
+                    `ac`.`name`, 
+                    SUM(`vsa`.`tests`) AS `agegroups`, 
+                    SUM(`vsa`.`undetected`+`vsa`.`less1000`) AS `suppressed`,
+                    SUM(`vsa`.`less5000`+`vsa`.`above5000`) AS `nonsuppressed`
+                FROM `vl_site_age` `vsa`
+                JOIN `agecategory` `ac`
+                    ON `vsa`.`age` = `ac`.`ID`
                 WHERE 1 ";
 
 
@@ -28,6 +28,8 @@ BEGIN
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " AND `facility` = '",S_id,"' ");
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`ID` ORDER BY `ac`.`ID` ASC ");
 
 
 

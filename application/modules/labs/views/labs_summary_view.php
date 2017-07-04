@@ -94,6 +94,12 @@
 
 <div id="second">
 	<div class="row">
+		<div id="lab_summary">
+  
+  		</div>
+	</div>
+
+	<div class="row">
 		<div id="graphs">
   
   		</div>
