@@ -142,6 +142,7 @@
 								<li><a href="<?php echo base_url();?>partner/sites">Partner Facilities</a></li>
 								<li><a href="<?php echo base_url();?>partner/age">Partner Age</a></li>
 								<li><a href="<?php echo base_url();?>partner/regimen">Partner Regimen</a></li>
+								<li><a href="<?php echo base_url();?>partner/counties">Partner Counties</a></li>
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
