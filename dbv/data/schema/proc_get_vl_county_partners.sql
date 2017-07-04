@@ -17,6 +17,7 @@ BEGIN
                     FROM `vl_site_summary` `vss`
                   LEFT JOIN `view_facilitys` `vf` ON `vf`.`ID` = `vss`.`facility`
                   LEFT JOIN `partners` `p` ON `p`.`ID` = `vf`.`partner`
+                  LEFT JOIN `countys` `c` ON `c`.`ID` = `vf`.`county`
                      WHERE 1 ";
 
     
