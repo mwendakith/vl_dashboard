@@ -23,11 +23,11 @@
 	     
 	        // Put the results in a div
 	        posting.done(function( data ) {
-	        	$.get("<?php echo base_url();?>template/breadcrum", function(data){
-	        		$("#breadcrum").html(data);
+	        	$.get("<?php echo base_url();?>template/breadcrum", function(data2){
+	        		$("#breadcrum").html(data2);
 	        	});
-	        	$.get("<?php echo base_url();?>template/dates", function(data){
-	        		obj = $.parseJSON(data);
+	        	$.get("<?php echo base_url();?>template/dates", function(data2){
+	        		obj = $.parseJSON(data2);
 			
 					if(obj['month'] == "null" || obj['month'] == null){
 						obj['month'] = "";
@@ -47,6 +47,8 @@
 				$("#partners").html("<div>Loading...</div>");
 				$("#subcounty").html("<div>Loading...</div>");
 				$("#facilities").html("<div>Loading...</div>");
+
+				data = $.parseJSON(data);
 
 				$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+null+"/"+null+"/"+data);
 				$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+data);
