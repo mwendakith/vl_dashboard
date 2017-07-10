@@ -499,16 +499,24 @@ class Labs_model extends MY_Model
 		return $data;
 	}
 
-	function yearly_summary($lab=NULL){		
+	function yearly_summary($lab=NULL, $year=NULL){	
+
+		if($lab == NULL || $lab == 'null'){
+			$lab = 0;
+		}
+
+		if($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+
+		$from = $year-1;	
 		
-		$sql = "CALL `proc_get_vl_yearly_lab_summary`(" . $lab . ");";
+		$sql = "CALL `proc_get_vl_yearly_lab_summary`(" . $lab . ",'" . $from . "','" . $year . "');";
 		
 		// echo "<pre>";print_r($sql);die();
 		
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$year = date("Y");
-		$i = 0;
 
 		$data['outcomes'][0]['name'] = "Nonsuppressed";
 		$data['outcomes'][1]['name'] = "Suppressed";
@@ -527,12 +535,11 @@ class Labs_model extends MY_Model
 		$data['outcomes'][1]['yAxis'] = 1;
 
 		foreach ($result as $key => $value) {
-			$data['categories'][$i] = $value['year'];
-			
-			$data['outcomes'][0]['data'][$i] = (int) $value['nonsuppressed'];
-			$data['outcomes'][1]['data'][$i] = (int) $value['suppressed'];
-			$data['outcomes'][2]['data'][$i] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
-			$i++;
+			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
+		
+			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 		}
 		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
