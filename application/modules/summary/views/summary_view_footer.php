@@ -79,12 +79,12 @@
 		    
 		    if (!error_check) {
 			    $("#nattat").html("<div>Loading...</div>");
-		 		$("#samples").html("<center><div class='loader'></div></center>");
-		 		$("#county").html("<center><div class='loader'></div></center>"); 
+		 		$("#samples").html("<center><div class='loader'></div></center>"); 
 				$("#vlOutcomes").html("<center><div class='loader'></div></center>");
 				$("#justification").html("<center><div class='loader'></div></center>");
 				$("#ageGroups").html("<center><div class='loader'></div></center>");
 				$("#gender").html("<center><div class='loader'></div></center>");
+		 		$("#county").html("<center><div class='loader'></div></center>");
 
 				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
 				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+from[1]);
@@ -123,12 +123,12 @@
 		});
  		
 		$("#nattat").html("<div>Loading...</div>");
- 		$("#samples").html("<center><div class='loader'></div></center>");
- 		$("#county").html("<center><div class='loader'></div></center>"); 
+ 		$("#samples").html("<center><div class='loader'></div></center>"); 
 		$("#vlOutcomes").html("<center><div class='loader'></div></center>");
 		$("#justification").html("<center><div class='loader'></div></center>");
 		$("#ageGroups").html("<center><div class='loader'></div></center>");
 		$("#gender").html("<center><div class='loader'></div></center>");
+ 		$("#county").html("<center><div class='loader'></div></center>");
 
 		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+year+"/"+month);
 		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year);

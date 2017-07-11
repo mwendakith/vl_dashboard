@@ -19,6 +19,9 @@ class Summaries extends MY_Controller {
 	function county_outcomes($year=NULL,$month=NULL,$pfil=NULL,$partner=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes'] = $this->summaries_model->county_outcomes($year,$month,$pfil,$partner,$county,$to_year,$to_month);
+		$data['div'] = 'summaries_counties';
+		$data['yAxisText'] = 'Tests';
+		$data['type'] = 'normal';
 
     	$this->load->view('county_outcomes_view',$data);
 	}

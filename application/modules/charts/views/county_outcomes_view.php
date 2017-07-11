@@ -1,10 +1,10 @@
 <?php //echo"<pre>";print_r($outcomes); ?>
-<div class="panel-body" id="county_summary">
+<div class="panel-body" id="<?= @$div; ?>">
 	
 </div>
 <script type="text/javascript">
 	$(function () {
-			    $('#county_summary').highcharts({
+			    $('#<?= @$div; ?>').highcharts({
 			        chart: {
 			            type: 'column'
 			        },
@@ -17,7 +17,7 @@
 			        yAxis: {
 			            min: 0,
 			            title: {
-			                text: 'Tests'
+			                text: '<?= @$yAxisText; ?>'
 			            },
 			            stackLabels: {
 			            	rotation: -75,
@@ -46,7 +46,7 @@
 			        },
 			        plotOptions: {
 			            column: {
-			                stacking: 'normal',
+			                stacking: '<?= @$type; ?>',
 			                dataLabels: {
 			                    enabled: false,
 			                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
