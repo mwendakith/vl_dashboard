@@ -6,8 +6,8 @@ BEGIN
   SET @QUERY =    "SELECT
                     `vls`.`year`,
                      `vls`.`month`, 
-                    SUM(`vls`.`Undetected` + `vls`.`less1000`) AS `suppressed`, 
-                    SUM(`vls`.`above5000` + `vls`.`less5000`) AS `nonsuppressed`
+                    (`vls`.`Undetected` + `vls`.`less1000`) AS `suppressed`, 
+                    (`vls`.`above5000` + `vls`.`less5000`) AS `nonsuppressed`
                 FROM `vl_lab_summary` `vls`
                 WHERE 1  ";
 
@@ -16,7 +16,7 @@ BEGIN
       END IF;  
 
     
-      SET @QUERY = CONCAT(@QUERY, "  AND `year` BETWEEN '",from_year,"' AND '",to_year,"' GROUP BY `month`, `year` ORDER BY `year` ASC, `month` ");
+      SET @QUERY = CONCAT(@QUERY, "  AND `year` BETWEEN '",from_year,"' AND '",to_year,"'  ORDER BY `year` ASC, `month` ");
 
      
 
