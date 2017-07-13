@@ -1091,439 +1091,6 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
-DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_age`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_age`
-(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =  "SELECT 
-                    `ag`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
-                FROM vl_subcounty_age `vsa`
-                LEFT JOIN agecategory `ag`
-                    ON ag.ID = vsa.age
-
-                WHERE 1";
-
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
-    END IF;
-
-
-    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY ag.ID ");
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_age`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_vl_county_sustxfail_age`
-(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =  "SELECT 
-                    `ag`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
-                FROM vl_county_age `vca`
-                LEFT JOIN agecategory `ag`
-                    ON ag.ID = vca.age
-
-                WHERE 1";
-
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
-    END IF;
-
-
-    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY ag.ID ");
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_age`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_vl_national_sustxfail_age`
-(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =  "SELECT 
-                    `ag`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
-                FROM vl_national_age `vna`
-                LEFT JOIN agecategory `ag`
-                    ON ag.ID = vna.age
-
-                WHERE 1";
-
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
-    END IF;
-
-
-    SET @QUERY = CONCAT(@QUERY, " AND ag.ID NOT BETWEEN '1' AND '5' GROUP BY `name` ORDER BY ag.ID ");
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_gender`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_gender`
-(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =  "SELECT 
-                    `g`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
-                FROM vl_subcounty_gender `vcg`
-                LEFT JOIN gender `g`
-                    ON g.ID = vcg.gender 
-                WHERE 1";
-
-  
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
-    END IF;
-
-
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name` ");
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_gender`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_vl_county_sustxfail_gender`
-(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =  "SELECT 
-                    `g`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
-                FROM vl_county_gender `vcg`
-                LEFT JOIN gender `g`
-                    ON g.ID = vcg.gender 
-                WHERE 1";
-
-  
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
-    END IF;
-
-
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name` ");
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_gender`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_vl_national_sustxfail_gender`
-(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =  "SELECT 
-                    `g`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
-                FROM vl_national_gender `vng`
-                LEFT JOIN gender `g`
-                    ON g.ID = vng.gender 
-                WHERE 1";
-
-  
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
-    END IF;
-
-
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name` ");
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_justification`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_justification`
-(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =    "SELECT 
-                    `vj`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
-                FROM vl_subcounty_justification `vsj`
-                LEFT JOIN viraljustifications `vj`
-                    ON vj.ID = vsj.justification
-                WHERE 1";
-
-   
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
-    END IF;
-
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY vj.ID ");
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_justification`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_vl_county_sustxfail_justification`
-(IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =    "SELECT 
-                    `vj`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
-                FROM vl_county_justification `vcj`
-                LEFT JOIN viraljustifications `vj`
-                    ON vj.ID = vcj.justification
-                WHERE 1";
-
-   
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_Id,"' AND `year` = '",filter_year,"' ");
-    END IF;
-
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY vj.ID ");
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_justification`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_vl_national_sustxfail_justification`
-(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =    "SELECT 
-                    `vj`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
-                FROM vl_national_justification `vnj`
-                LEFT JOIN viraljustifications `vj`
-                    ON vj.ID = vnj.justification
-                WHERE 1";
-
-   
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
-    END IF;
-
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY vj.ID ");
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_vl_county_sustxfail`
-(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =    "SELECT 
-                    `c`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
-                FROM vl_county_summary `vcs`
-                LEFT JOIN countys `c`
-                    ON c.ID = vcs.county
-                WHERE 1";
-
-   
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
-    END IF;
-
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY suppressed DESC, nonsuppressed DESC ");
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
-
-DROP PROCEDURE IF EXISTS `proc_get_subcounty_sustxfail_notification`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_subcounty_sustxfail_notification`
-(IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =    "SELECT
-                        SUM(`sustxfail`) AS `sustxfail`, 
-                        ((SUM(`sustxfail`)/SUM(`alltests`))*100) AS `sustxfail_rate` 
-                    FROM `vl_subcounty_summary`
-                WHERE 1";
-
-   
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",SC_Id,"' AND `year` = '",filter_year,"' ");
-    END IF;
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
-
-
-DROP PROCEDURE IF EXISTS `proc_get_counties_sustxfail_stats`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_counties_sustxfail_stats`
-(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
-BEGIN
-  SET @QUERY =  "SELECT 
-                    `c`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
-                FROM vl_county_summary `vcs`
-                LEFT JOIN countys `c`
-                    ON c.ID = vcs.county 
-                WHERE 1";
-
-   
-    IF (from_month != 0 && from_month != '') THEN
-      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
-        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
-          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
-        ELSE
-            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
-        END IF;
-    END IF;
-    ELSE
-        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
-    END IF;
-
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY suppressed DESC ");
-
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-    
-END //
-DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_county_suppression`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_county_suppression`
@@ -2935,7 +2502,8 @@ BEGIN
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_partner_sitessending`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_partner_sitessending`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_partner_sitessending`
 (IN P_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
@@ -3914,7 +3482,8 @@ BEGIN
     EXECUTE stmt;
     
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_age_gender`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_age_gender`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_age_gender`
 (IN A_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
@@ -4191,6 +3760,40 @@ BEGIN
      EXECUTE stmt;
 END //
 DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_samples_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_county_samples_outcomes`
+(IN filter_sampletype INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+                    `c`.`name`,
+                    SUM(`vcs`.`undetected`+`vcs`.`less1000`) AS `suppressed`,
+                    SUM(`vcs`.`less5000`+`vcs`.`above5000`) AS `nonsuppressed`, 
+                    SUM((`vcs`.`undetected`+`vcs`.`less1000`)*100/(`vcs`.`less5000`+`vcs`.`above5000`+`vcs`.`undetected`+`vcs`.`less1000`)) AS `percentage` 
+                FROM `vl_county_sampletype` `vcs`
+                    JOIN `countys` `c` ON `vcs`.`county` = `c`.`ID`
+    WHERE 1 ";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `sampletype` = '",filter_sampletype,"' GROUP BY `vcs`.`county` ORDER BY `percentage` DESC ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_vl_county_shortcodes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_county_shortcodes`
@@ -4297,7 +3900,8 @@ BEGIN
     EXECUTE stmt;
     
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_gender`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_gender`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_county_sustxfail_gender`
 (IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
@@ -4332,7 +3936,8 @@ BEGIN
     EXECUTE stmt;
     
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_justification`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail_justification`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_county_sustxfail_justification`
 (IN C_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
@@ -4367,7 +3972,8 @@ BEGIN
     EXECUTE stmt;
     
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_county_sustxfail`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_county_sustxfail`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
@@ -4401,7 +4007,8 @@ BEGIN
     EXECUTE stmt;
     
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_lab_performance_stats`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_lab_performance_stats`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_lab_performance_stats`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
@@ -4478,7 +4085,8 @@ BEGIN
     EXECUTE stmt;
     
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_gender`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_gender`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_national_sustxfail_gender`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
@@ -4513,7 +4121,8 @@ BEGIN
     EXECUTE stmt;
     
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_justification`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_justification`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_national_sustxfail_justification`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
@@ -4548,7 +4157,8 @@ BEGIN
     EXECUTE stmt;
     
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_national_yearly_summary`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_national_yearly_summary`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_national_yearly_summary`
 ()
@@ -5240,6 +4850,167 @@ BEGIN
      EXECUTE stmt;
 END //
 DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_samples_age`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_samples_age`
+(IN S_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+        SUM(`noage`) AS `noage`,
+        SUM(`less2`) AS `less2`,
+        SUM(`less9`) AS `less9`,
+        SUM(`less14`) AS `less14`,
+        SUM(`less19`) AS `less19`,
+        SUM(`less24`) AS `less24`,
+        SUM(`over25`) AS `over25`
+    FROM `vl_national_sampletype`
+    WHERE 1 ";
+
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `sampletype` = '",S_id,"' ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_samples_gender`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_samples_gender`
+(IN S_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+        SUM(`maletest`) AS `maletest`,
+        SUM(`femaletest`) AS `femaletest`
+    FROM `vl_national_sampletype`
+    WHERE 1 ";
+
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `sampletype` = '",S_id,"' ");
+
+   
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_samples_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_samples_outcomes`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+						`vs`.`name`, 
+						SUM(`vns`.`less5000`+`vns`.`above5000`) AS `nonsuppressed`, 
+						SUM(`vns`.`Undetected`+`vns`.`less1000`) AS `suppressed` 
+						FROM `vl_national_sampletype` `vns`
+						LEFT JOIN `viralsampletype` `vs` 
+						ON `vns`.`sampletype` = `vs`.`ID`
+					WHERE 1";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY `suppressed` DESC, `nonsuppressed` ");
+    
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_sample_summary`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_sample_summary`
+(IN S_id INT(11), IN from_year INT(11), IN to_year INT(11))
+BEGIN
+  SET @QUERY =    "SELECT 
+            `year`, 
+            `month`, 
+            (`undetected`+`less1000`) AS `suppressed`,
+            (`less5000`+`above5000`) AS `nonsuppressed`, 
+            ((`undetected`+`less1000`)*100/(`less5000`+`above5000`+`undetected`+`less1000`)) AS `percentage`  
+            FROM `vl_national_sampletype`
+                WHERE 1";
+
+    SET @QUERY = CONCAT(@QUERY, " AND `sampletype` = '",S_id,"' AND `year` BETWEEN '",from_year,"' AND '",to_year,"' ORDER BY `year` ASC, `month` ");
+    
+    PREPARE stmt FROM @QUERY;
+    EXECUTE stmt;
+END //
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_samples_vl_outcomes`;
+DELIMITER //
+CREATE PROCEDURE `proc_get_vl_samples_vl_outcomes`
+(IN S_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+BEGIN
+  SET @QUERY =    "SELECT
+       SUM(`confirmtx`) AS `confirmtx`,
+        SUM(`confirm2vl`) AS `confirm2vl`,
+        SUM(`Undetected`) AS `undetected`,
+        SUM(`less1000`) AS `less1000`,
+        SUM(`less5000`) AS `less5000`,
+        SUM(`above5000`) AS `above5000`,
+        SUM(`tests`) AS `alltests`,
+        SUM(`sustxfail`) AS `sustxfail`,
+        SUM(`rejected`) AS `rejected`, 
+        SUM(`repeattests`) AS `repeats`, 
+        SUM(`invalids`) AS `invalids`
+    FROM `vl_national_sampletype`
+    WHERE 1 ";
+
+    IF (from_month != 0 && from_month != '') THEN
+      IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
+        ELSE IF(to_month != 0 && to_month != '' && filter_year != to_year) THEN
+          SET @QUERY = CONCAT(@QUERY, " AND ((`year` = '",filter_year,"' AND `month` >= '",from_month,"')  OR (`year` = '",to_year,"' AND `month` <= '",to_month,"') OR (`year` > '",filter_year,"' AND `year` < '",to_year,"')) ");
+        ELSE
+            SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month`='",from_month,"' ");
+        END IF;
+    END IF;
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " AND `sampletype` = '",S_id,"' ");
+
+     PREPARE stmt FROM @QUERY;
+     EXECUTE stmt;
+END //
+DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_vl_sample_types`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_sample_types`
@@ -5300,7 +5071,8 @@ BEGIN
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_sites_shortcodes`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_sites_shortcodes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_sites_shortcodes`
 (IN C_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
@@ -5622,7 +5394,8 @@ BEGIN
     EXECUTE stmt;
     
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_gender`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_gender`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_gender`
 (IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
@@ -5657,7 +5430,8 @@ BEGIN
     EXECUTE stmt;
     
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_justification`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_sustxfail_justification`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_justification`
 (IN SC_Id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
@@ -5692,7 +5466,8 @@ BEGIN
     EXECUTE stmt;
     
 END //
-DELIMITER ;DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_vl_outcomes`;
+DELIMITER ;
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_vl_outcomes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_subcounty_vl_outcomes`
 (IN filter_subcounty INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))

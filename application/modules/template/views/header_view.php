@@ -125,6 +125,7 @@
 						<li><a href="<?php echo base_url();?>trends">Trends</a></li>
 						<li><a href="<?php echo base_url();?>regimen">Regimen</a></li>
 						<li><a href="<?php echo base_url();?>age">Age</a></li>
+						<li><a href="<?php echo base_url();?>sample">Sample</a></li>
 						<li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">County/Sub-County
 							<b class="caret"></b></a>

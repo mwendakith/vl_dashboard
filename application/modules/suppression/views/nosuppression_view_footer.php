@@ -48,7 +48,9 @@
 				$("#subcounty").html("<div>Loading...</div>");
 				$("#facilities").html("<div>Loading...</div>");
 
-				data = $.parseJSON(data);
+				if(data!=""){
+	        		data = JSON.parse(data);
+	        	}
 
 				$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+null+"/"+null+"/"+data);
 				$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+data);

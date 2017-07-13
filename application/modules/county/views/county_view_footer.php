@@ -24,7 +24,11 @@
 	     
 	        // Put the results in a div
 	        posting.done(function( county ) {
-	        	county = JSON.parse(county);
+	        	if(county!=""){
+	        		county = JSON.parse(county);
+	        	}
+	        	
+	        	// alert(county);
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+county, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
@@ -41,7 +45,8 @@
 	        	// alert(data);
 	        	//
 
-	        	if(em == 48){
+	        	if(em == "48"){
+	        		
 	        		$("#first").show();
 					$("#second").hide();
 

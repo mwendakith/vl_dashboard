@@ -1,19 +1,17 @@
-DROP PROCEDURE IF EXISTS `proc_get_vl_national_sustxfail_justification`;
+DROP PROCEDURE IF EXISTS `proc_get_vl_samples_outcomes`;
 DELIMITER //
-CREATE PROCEDURE `proc_get_vl_national_sustxfail_justification`
+CREATE PROCEDURE `proc_get_vl_samples_outcomes`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
-                    `vj`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
-                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
-                FROM vl_national_justification `vnj`
-                LEFT JOIN viraljustifications `vj`
-                    ON vj.ID = vnj.justification
-                WHERE 1";
+						`vs`.`name`, 
+						SUM(`vns`.`less5000`+`vns`.`above5000`) AS `nonsuppressed`, 
+						SUM(`vns`.`Undetected`+`vns`.`less1000`) AS `suppressed` 
+						FROM `vl_national_sampletype` `vns`
+						LEFT JOIN `viralsampletype` `vs` 
+						ON `vns`.`sampletype` = `vs`.`ID`
+					WHERE 1";
 
-   
     IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
             SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
@@ -27,10 +25,9 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vj`.`name` ORDER BY `pecentage` DESC ");
-
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY `suppressed` DESC, `nonsuppressed` ");
+    
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
-    
 END //
 DELIMITER ;

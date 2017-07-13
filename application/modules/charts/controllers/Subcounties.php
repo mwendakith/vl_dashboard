@@ -16,6 +16,8 @@ class Subcounties extends MY_Controller
 	function subcounty_outcomes($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes']= $this->subcounty_model->subcounty_outcomes($year,$month,$to_year,$to_month);
+		$data['div'] = "random_div";
+		$data['type'] = "normal";
 
 		$this->load->view('county_outcomes_view', $data);
 	}

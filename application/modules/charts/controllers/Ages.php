@@ -15,6 +15,8 @@ class Ages extends MY_Controller
 	function age_outcomes($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)
 	{
 		$data['outcomes']= $this->ages_model->ages_outcomes($year,$month,$to_year,$to_month,$partner);
+		$data['div'] = "random_div";
+		$data['type'] = "normal";
 
 		$this->load->view('county_outcomes_view', $data);
 	}

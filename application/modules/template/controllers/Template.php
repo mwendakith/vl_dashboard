@@ -24,6 +24,7 @@ class Template extends MY_Controller
 		$data['age_filter'] = $this->template_model->get_age_dropdown();
 		$data['subCounty'] = $this->template_model->get_sub_county_dropdown();
 		$data['laborotories'] = $this->template_model->get_lab_dropdown();
+		$data['samples'] = $this->template_model->get_sample_dropdown();
 		// $data['breadcrum'] = $this->breadcrum();
 		// echo "<pre>";print_r($data);die();
 		$this->load->view('template_view',$data);
@@ -98,6 +99,17 @@ class Template extends MY_Controller
 		$this->filter_ages($data);
 
 		echo $this->session->userdata('age_category_filter');
+	}
+
+	function filter_sample_data()
+	{
+		$data = array(
+				'sample' => $this->input->post('sample')
+			);
+
+		$this->filter_sample($data);
+
+		echo $this->session->userdata('sample_filter');
 	}
 
 	function filter_partner_age_data()

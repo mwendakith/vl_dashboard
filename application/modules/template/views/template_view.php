@@ -8,6 +8,8 @@
 		$this->load->view('utils/partner_filter_view');
 	}else if ($sit) {
 		$this->load->view('utils/site_filter_view');
+	}else if ($sample) {
+		$this->load->view('utils/sample_filter_view');
 	}else if ($cout) {
 		$this->load->view('utils/filter_view');
 	}else if ($reg) {

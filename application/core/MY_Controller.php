@@ -20,6 +20,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			$this->data['sub_county'] = FALSE;
 			$this->data['live'] = FALSE;
 			$this->data['codes'] = FALSE;
+			$this->data['samples'] = FALSE;
 		}
 
 		public function load_libraries($arr){
@@ -85,6 +86,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 								'site_filter',
 								'regimen_filter',
 								'age_category_filter',
+								'sample_filter',
 								'filter_year',
 								'filter_month'
 								);
@@ -240,6 +242,33 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('county_filter');
 				}else{
 					$this->session->set_userdata('age_category_filter', $data['age_category']);
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('partner_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+				}
+			}
+			
+			return TRUE;
+		}
+
+		function filter_sample($data=NULL)
+		{
+			if (!$data) {
+				
+			} else {
+				if ($data['sample']=='NA'||$data['sample']==0) {
+					$this->session->unset_userdata('sample_filter');
+					$this->session->unset_userdata('age_category_filter');
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('partner_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+				}else{
+					$this->session->set_userdata('sample_filter', $data['sample']);
+					$this->session->unset_userdata('age_category_filter');
 					$this->session->unset_userdata('regimen_filter');
 					$this->session->unset_userdata('site_filter');
 					$this->session->unset_userdata('partner_filter');
