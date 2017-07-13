@@ -11,7 +11,7 @@ class Samples_model extends MY_Model
 		parent::__construct();
 	}
 
-	function samples_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null)
+	function samples_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
 		//return "this";
 		
@@ -58,7 +58,7 @@ class Samples_model extends MY_Model
 		return $data;
 	}
 
-	function samples_vl_outcomes($year=NULL,$month=NULL,$sample=NULL,$to_year=null,$to_month=null)
+	function samples_vl_outcomes($year=NULL,$month=NULL,$sample=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
 		
 		if ($sample==null || $sample=='null') {
@@ -159,7 +159,7 @@ class Samples_model extends MY_Model
 		return $data;
 	}
 
-	function samples_gender($year=NULL,$month=NULL,$sample=NULL,$to_year=null,$to_month=null)
+	function samples_gender($year=NULL,$month=NULL,$sample=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
 		
 		if ($sample==null || $sample=='null') {
@@ -211,7 +211,7 @@ class Samples_model extends MY_Model
 		return $data;
 	}
 
-	function samples_age($year=NULL,$month=NULL,$sample=NULL,$to_year=null,$to_month=null)
+	function samples_age($year=NULL,$month=NULL,$sample=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
 		
 		if ($sample==null || $sample=='null') {
@@ -323,14 +323,15 @@ class Samples_model extends MY_Model
 			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
-			$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
+			//$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
 			
 		}
 		
 		return $data;
 	}
 
-	function county_outcomes($year=null,$month=null,$sample=null,$to_year=null,$to_month=null)
+	function county_outcomes($year=null,$month=null,$sample=null,$to_year=null,$to_month=null,$partner=null)
 	{
 		
 		
@@ -394,7 +395,8 @@ class Samples_model extends MY_Model
 
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
-			$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
+			//$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
