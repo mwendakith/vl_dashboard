@@ -54,10 +54,11 @@ class Live_model extends MY_Model
 			$data[$key] = number_format((int) $value);
 		}
 
-		$data['enteredsamplesatsite'] = $totals->enteredsamplesatsite;
-		$data['enteredsamplesatlab'] = $totals->enteredsamplesatlab;
-		$data['enteredreceivedsameday'] = $totals->enteredreceivedsameday;
-		$data['enterednotreceivedsameday'] = $totals->enterednotreceivedsameday;
+		$data['enteredsamplesatsite'] = (int) $totals->enteredsamplesatsite;
+		$data['enteredsamplesatlab'] = (int) $totals->enteredsamplesatlab;
+		$data['enteredreceivedsameday'] = (int) $totals->enteredreceivedsameday;
+		$data['enterednotreceivedsameday'] = (int) $totals->enterednotreceivedsameday;
+
 
 		$data['machines'][0] = "Abbot";
 		$data['machines'][1] = "Panther";
