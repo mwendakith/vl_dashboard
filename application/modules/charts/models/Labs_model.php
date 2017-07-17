@@ -152,7 +152,7 @@ class Labs_model extends MY_Model
 
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-		echo "<pre>";print_r($result);die();
+		//echo "<pre>";print_r($result);die();
 		if ($result) {
 			$categories = array();
 			foreach ($result as $key => $value) {
