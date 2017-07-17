@@ -123,9 +123,6 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="<?php echo base_url();?>">Summary</a></li>
 						<li><a href="<?php echo base_url();?>trends">Trends</a></li>
-						<li><a href="<?php echo base_url();?>regimen">Regimen</a></li>
-						<li><a href="<?php echo base_url();?>age">Age</a></li>
-						<li><a href="<?php echo base_url();?>sample">Sample</a></li>
 						<li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">County/Sub-County
 							<b class="caret"></b></a>
@@ -148,7 +145,17 @@
 						</li>
 						<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
 						<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
-						<li><a href="<?php echo base_url();?>suppression/nosuppression">Non-Suppression</a></li>
+
+						<li class="dropdown">
+							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Non-Suppression
+							<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url();?>suppression/nosuppression">Non-suppression</a></li>
+								<li><a href="<?php echo base_url();?>regimen">Regimen Analysis</a></li>
+								<li><a href="<?php echo base_url();?>age">Age Analysis</a></li>
+								<li><a href="<?php echo base_url();?>sample">Sample Analysis</a></li>
+							</ul>
+						</li>
 						<li><a href="<?php echo base_url();?>live">Live Data</a></li>
 						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
 						<!-- <li><a href="<?php echo base_url();?>county">County View</a></li> -->

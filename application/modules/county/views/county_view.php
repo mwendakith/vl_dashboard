@@ -43,7 +43,7 @@
 		<div class="col-md-6 col-sm-12 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading" id="heading">
-			  Sub-Counties Positivity <div class="display_date"></div>
+			  Sub-Counties Suppression <div class="display_date"></div>
 			  </div>
 			  <div class="panel-body" id="subcountypos">
 			    <center><div class="loader"></div></center>
