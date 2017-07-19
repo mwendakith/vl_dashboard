@@ -45,7 +45,8 @@
 	        	// alert(data);
 	        	//
 
-	        	if(em == "48"){
+	        	if(county == ""){
+
 	        		
 	        		$("#first").show();
 					$("#second").hide();

@@ -4,11 +4,16 @@ CREATE PROCEDURE `proc_get_vl_subcounty_gender`
 (IN filter_subcounty INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-        SUM(`maletest`) AS `maletest`,
-        SUM(`femaletest`) AS `femaletest`,
-        SUM(`nogendertest`) AS `nodata`
-    FROM `vl_subcounty_summary`
+        `name`,
+        SUM(`tests`) AS `tests`, 
+        SUM(`Undetected` + `less1000`) AS `suppressed`, 
+        SUM(`less5000` + `above5000`) AS `nonsuppressed`
+
+    FROM `vl_subcounty_gender`
+    JOIN `gender` 
+                    ON `vl_subcounty_gender`.`gender` = `gender`.`ID`
     WHERE 1 ";
+
 
     IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
@@ -24,6 +29,8 @@ BEGIN
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",filter_subcounty,"' ");
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ");
 
 
 

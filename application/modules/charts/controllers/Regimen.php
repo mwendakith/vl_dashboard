@@ -15,18 +15,18 @@ class Regimen extends MY_Controller
 
 	function regimen_outcomes($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)
 	{
-		$data['outcomes']= $this->regimen_model->regimens_outcomes($year,$month,$to_year,$to_month,$partner);
-		$data['div'] = "random_div";
-		$data['type'] = "normal";
+		$data['trends']= $this->regimen_model->regimens_outcomes($year,$month,$to_year,$to_month,$partner);
+		$data['div_name'] = "regimen_summary_outcomes";		
 
-		$this->load->view('county_outcomes_view', $data);
+		$this->load->view('trends_outcomes_view', $data);
 	}
 
 	function regimen_county_outcomes($year=NULL,$month=NULL,$regimen=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)
 	{
-		$data['outcomes'] = $this->regimen_model->county_outcomes($year,$month,$regimen,$to_year,$to_month,$partner);
+		$data['trends'] = $this->regimen_model->county_outcomes($year,$month,$regimen,$to_year,$to_month,$partner);
+		$data['div_name'] = "regimen_county_outcomes";		
 
-    	$this->load->view('county_outcomes_view_two',$data);
+		$this->load->view('trends_outcomes_view', $data);
 	}
 
 	function regimen_vl_outcome($year=NULL,$month=NULL,$regimen=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)

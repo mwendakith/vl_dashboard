@@ -41,19 +41,30 @@ class Regimen_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
-		$data['county_outcomes'][1]['name'] = 'Suppresed';
 
-		$count = 0;
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
 		
-		$data["county_outcomes"][0]["data"][0]	= $count;
-		$data["county_outcomes"][1]["data"][0]	= $count;
-		$data['categories'][0]					= 'No Data';
 
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+ 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
-			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
-			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
@@ -379,19 +390,30 @@ class Regimen_model extends MY_Model
 		
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
-		$data['county_outcomes'][1]['name'] = 'Suppresed';
 
-		$count = 0;
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
 		
-		$data["county_outcomes"][0]["data"][0]	= $count;
-		$data["county_outcomes"][1]["data"][0]	= $count;
-		$data['categories'][0]					= 'No Data';
 
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+ 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
-			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
-			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
