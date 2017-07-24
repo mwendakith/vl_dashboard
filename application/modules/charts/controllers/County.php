@@ -80,7 +80,7 @@ class County extends MY_Controller
 		$data['type'] = 'percent';
 		$data['yAxisText'] = 'Non-suppression';
 		$data['div'] = 'sub_counties_positivity_chart';
-
+		// die();
 		$this->load->view('county_outcomes_view',$data);
 	}
 
