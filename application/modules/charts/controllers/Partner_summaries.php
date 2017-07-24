@@ -16,9 +16,10 @@ class Partner_summaries extends MY_Controller
 
 	function partner_counties_outcomes($year=NULL,$month=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->partner_summaries_model->partner_counties_outcomes($year,$month,$partner,$to_year,$to_month);
+		$data['trends'] = $this->partner_summaries_model->partner_counties_outcomes($year,$month,$partner,$to_year,$to_month);
+		$data['div_name'] = "partner_county_outcomes";		
 
-    	$this->load->view('gender_view',$data);
+		$this->load->view('trends_outcomes_view', $data);
 	}
 
 	function partner_counties_table($year=NULL,$month=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)

@@ -37,20 +37,33 @@ class Subcounty_model extends MY_Model
 		$result = array_splice($res, 0, 50);
 
 		// echo "<pre>";print_r($result);die();
-		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
-		$data['county_outcomes'][1]['name'] = 'Suppresed';
 
-		$count = 0;
+
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
 		
-		$data["county_outcomes"][0]["data"][0]	= $count;
-		$data["county_outcomes"][1]["data"][0]	= $count;
-		$data['categories'][0]					= 'No Data';
 
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+ 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
-			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
-			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 		}
+
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
@@ -184,7 +197,9 @@ class Subcounty_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Test';
+
+		$data['gender'][0]['name'] = 'Not Suppresed';
+		$data['gender'][1]['name'] = 'Suppresed';
 
 		$count = 0;
 		
@@ -193,16 +208,12 @@ class Subcounty_model extends MY_Model
 		$data['categories'][0]			= 'No Data';
 
 		foreach ($result as $key => $value) {
-			$data['categories'][0] 			= 'Male';
-			$data['categories'][1] 			= 'Female';
-			$data['categories'][2] 			= 'No Data';
-			$data["gender"][0]["data"][0]	=  (int) $value['maletest'];
-			$data["gender"][0]["data"][1]	=  (int) $value['femaletest'];
-			$data["gender"][0]["data"][2]	= (int) $value['nodata'];
+			$data['categories'][$key] 			= $value['name'];
+			$data['gender'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['gender'][1]['data'][$key] = (int) $value['suppressed'];
 		}
-
-		// $data['gender'][0]['drilldown']['color'] = '#913D88';
-		// $data['gender'][0]['drilldown']['color'] = '#913D88';
+		$data['gender'][0]['drilldown']['color'] = '#913D88';
+		$data['gender'][1]['drilldown']['color'] = '#96281B';
 		
 		return $data;
 	}
@@ -233,32 +244,22 @@ class Subcounty_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['ageGnd'][0]['name'] = 'Test';
-
+		
+		$data['ageGnd'][0]['name'] = 'Not Suppresed';
+		$data['ageGnd'][1]['name'] = 'Suppresed';
+ 
 		$count = 0;
 		
 		$data["ageGnd"][0]["data"][0]	= $count;
-		$data["ageGnd"][0]["data"][1]	= $count;
-		$data['categories'][0]			= 'No Data';
+		$data["ageGnd"][1]["data"][0]	= $count;
 
 		foreach ($result as $key => $value) {
-			$data['categories'][0] 			= 'No Age';
-			$data['categories'][1] 			= 'Less 2';
-			$data['categories'][2] 			= 'Less 9';
-			$data['categories'][3] 			= 'Less 14';
-			$data['categories'][4] 			= 'Less 19';
-			$data['categories'][5] 			= 'Less 24';
-			$data['categories'][6] 			= 'over 25';
-			$data["ageGnd"][0]["data"][0]	=  (int) $value['noage'];
-			$data["ageGnd"][0]["data"][1]	=  (int) $value['less2'];
-			$data["ageGnd"][0]["data"][2]	=  (int) $value['less9'];
-			$data["ageGnd"][0]["data"][3]	=  (int) $value['less14'];
-			$data["ageGnd"][0]["data"][4]	=  (int) $value['less19'];
-			$data["ageGnd"][0]["data"][5]	=  (int) $value['less24'];
-			$data["ageGnd"][0]["data"][6]	=  (int) $value['over25'];
+			$data['categories'][$key] 			= $value['name'];
+			$data['ageGnd'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['ageGnd'][1]['data'][$key] = (int) $value['suppressed'];
 		}
-		// $data['gender'][0]['drilldown']['color'] = '#913D88';
-		// $data['gender'][0]['drilldown']['color'] = '#913D88';
+		$data['ageGnd'][0]['drilldown']['color'] = '#913D88';
+		$data['ageGnd'][0]['drilldown']['color'] = '#913D88';
 		
 		return $data;
 	}

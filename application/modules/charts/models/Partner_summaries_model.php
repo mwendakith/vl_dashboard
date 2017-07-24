@@ -39,22 +39,29 @@ class Partner_summaries_model extends MY_Model
 
 		// echo "<pre>";print_r($result);die();
 
-		$data['gender'][0]['name'] = 'Not Suppresed';
-		$data['gender'][1]['name'] = 'Suppresed';
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
 
-		$count = 0;
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
 		
-		$data['categories'][0] = 'No Data';
-		$data["gender"][0]["data"][0]	= $count;
-		$data["gender"][1]["data"][0]	= $count;
 
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+ 
 		foreach ($result as $key => $value) {
-			
-				$data['categories'][$key] = $value['county'];
-
-				$data["gender"][0]["data"][$key]	= (int) $value['nonsuppressed'];
-				$data["gender"][1]["data"][$key]	= (int) $value['suppressed'];
-			
+			$data['categories'][$key] 					= $value['county'];
+			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;

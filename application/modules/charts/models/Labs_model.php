@@ -152,7 +152,7 @@ class Labs_model extends MY_Model
 
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-		echo "<pre>";print_r($result);die();
+		//echo "<pre>";print_r($result);die();
 		if ($result) {
 			$categories = array();
 			foreach ($result as $key => $value) {
@@ -307,22 +307,33 @@ class Labs_model extends MY_Model
 
 	function labs_turnaround($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
+		$title = null;
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
+
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+				$title = " (" . $year . ")";
+			}else {
+				$month = 0;
+			}
+		}
+
+		if(!$title){
+			$title = " (" . $year . ", " . $this->resolve_month($month) . ")";
+		}
+
 		if ($to_month==null || $to_month=='null') {
 			$to_month = 0;
 		}
 		if ($to_year==null || $to_year=='null') {
 			$to_year = 0;
+		}else {
+			$title = " (" . $year . ", " . $this->resolve_month($month) . " - ". $to_year . ", " . $this->resolve_month($to_month) .")";
 		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
+
 
 		$sql = "CALL `proc_get_labs_tat`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -340,6 +351,7 @@ class Labs_model extends MY_Model
 			foreach ($result as $key => $value) {
 				
 					$labname = strtolower(str_replace(" ", "_", $value['labname']));
+					// $labname = $value['labname'];
 					if ($lab) {
 						if ($lab==$value['labname']) {
 							$tat1 = $tat1+$value['tat1'];
@@ -393,6 +405,8 @@ class Labs_model extends MY_Model
 			}
 			// echo "<pre>";print_r($tat);die();
 			foreach ($tat as $key => $value) {
+				$data[$key]['name'] = $value['lab'];
+				$data[$key]['div_name'] = "container" . $key;
 				$data[$key]['tat1'] = round($value['tat1']/$value['count']);
 				$data[$key]['tat2'] = round(($value['tat2']/$value['count']) + $data[$key]['tat1']);
 				$data[$key]['tat3'] = round(($value['tat3']/$value['count']) + $data[$key]['tat2']);

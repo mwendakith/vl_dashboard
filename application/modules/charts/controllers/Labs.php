@@ -53,11 +53,18 @@ class Labs extends MY_Controller
 
 	function turn_around_time($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['trends'] = $this->labs_model->labs_turnaround($year,$month,$to_year,$to_month);
+		// $data['trends'] = $this->labs_model->labs_turnaround($year,$month,$to_year,$to_month);
+		$data = $this->labs_model->labs_turnaround($year,$month,$to_year,$to_month);
+
+		foreach ($data as $key => $value) {
+			$this->load->view('lab_tat_view', $value);
+		}
+		
+		$this->load->view('lab_turnaround_key_view');
 
 		 // echo "<pre>";print_r($data);
 
-		$this->load->view('labs_turnaround_time',$data);
+		//$this->load->view('labs_turnaround_time',$data);
 	}
 
 	function results_outcome($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
