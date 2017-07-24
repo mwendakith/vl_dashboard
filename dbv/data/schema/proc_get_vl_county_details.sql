@@ -12,7 +12,8 @@ BEGIN
                     SUM(`vcs`.`adults`) AS `adults`, 
                     SUM(`vcs`.`paeds`) AS `paeds`, 
                     SUM(`vcs`.`maletest`) AS `maletest`, 
-                    SUM(`vcs`.`femaletest`) AS `femaletest` FROM `vl_county_summary` `vcs`
+                    SUM(`vcs`.`femaletest`) AS `femaletest`,
+                    AVG(`vcs`.`sitessending`) AS `sitessending` FROM `vl_county_summary` `vcs`
                    JOIN `countys` ON `vcs`.`county` = `countys`.`ID`  WHERE 1";
 
   

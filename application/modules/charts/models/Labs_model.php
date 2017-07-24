@@ -39,7 +39,7 @@ class Labs_model extends MY_Model
 						<td>".number_format((int) $value['sitesending'])."</td>
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
-							round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP)."%)</td>
+							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
 						<td>".number_format((int) $value['invalids'])."</td>
 
 						<td>".number_format((int) $value['alltests'])."</td>
@@ -50,11 +50,11 @@ class Labs_model extends MY_Model
 
 						<td>".number_format( (int) $value['less5000'] + (int) $value['above5000'])."</td>
 						
-						<td>".round(((($value['less5000'] + $value['above5000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP)."%</td>
+						<td>".round(((($value['less5000'] + $value['above5000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 1, PHP_ROUND_HALF_UP)."%</td>
 
 						<td>".number_format((int) $value['undetected'] + (int) $value['less1000'])."</td>
 
-						<td>".round(((($value['undetected'] + $value['less1000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP)."%</td>
+						<td>".round(((($value['undetected'] + $value['less1000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 1, PHP_ROUND_HALF_UP)."%</td>
 
 						
 					</tr>";
@@ -99,7 +99,7 @@ class Labs_model extends MY_Model
 			$sheet[$key]['sites_sending'] = (int) $value['sitesending'];
 			$sheet[$key]['received'] = (int) $value['received'];
 			$sheet[$key]['rejected'] = (int) $value['rejected'];
-			$sheet[$key]['rejection_rate'] = round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP)."%";
+			$sheet[$key]['rejection_rate'] = round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%";
 			$sheet[$key]['invalid_tests'] = (int) $value['invalids'];
 			$sheet[$key]['all_tests'] = (int) $value['alltests'];
 			$sheet[$key]['valid_tests'] = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
@@ -107,9 +107,9 @@ class Labs_model extends MY_Model
 			$sheet[$key]['confirmatory_repeat_tests'] = (int) $value['confirmtx'];
 			$sheet[$key]['total_tests'] = ((int) $value['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx']);
 			$sheet[$key]['>1000_copies'] = ( (int) $value['less5000'] + (int) $value['above5000']);
-			$sheet[$key]['>1000_copies5'] = round(((($value['less5000'] + $value['above5000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP) . "%";
+			$sheet[$key]['>1000_copies5'] = round(((($value['less5000'] + $value['above5000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 1, PHP_ROUND_HALF_UP) . "%";
 			$sheet[$key]['<1000_copies'] = ((int) $value['undetected'] + (int) $value['less1000']);
-			$sheet[$key]['<1000_copies%'] = round(((($value['undetected'] + $value['less1000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP) . "%";
+			$sheet[$key]['<1000_copies%'] = round(((($value['undetected'] + $value['less1000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 1, PHP_ROUND_HALF_UP) . "%";
 						
 		}
 
@@ -227,7 +227,7 @@ class Labs_model extends MY_Model
 					foreach ($result as $key2 => $value2) {
 						if ((int) $value1 == (int) $value2['month'] && $value == $value2['labname']) {
 							$data['reject_trend'][$key]['name'] = $value;
-							$data['reject_trend'][$key]['data'][$count] = round(@((int) $value2['rejected'] * 100 / (int) $value2['received']), 2);
+							$data['reject_trend'][$key]['data'][$count] = round(@((int) $value2['rejected'] * 100 / (int) $value2['received']), 1);
 						}
 					}
 					$count++;
@@ -248,7 +248,7 @@ class Labs_model extends MY_Model
 		foreach ($result2 as $key => $value) {
 				
 			$data['reject_trend'][$i]['name'] = 'National Rejection Rate';
-			$data['reject_trend'][$i]['data'][$count] = round(@((int) $value['rejected'] * 100 / (int) $value['received']), 2);
+			$data['reject_trend'][$i]['data'][$count] = round(@((int) $value['rejected'] * 100 / (int) $value['received']), 1);
 			$count++;
 		}
 
@@ -495,14 +495,14 @@ class Labs_model extends MY_Model
 			$tests = (int) $value['suppressed'] + (int) $value['nonsuppressed'];
 
 			$data['suppression_trends'][$i]['name'] = $value['year'];
-			$data['suppression_trends'][$i]['data'][$month] = round(@(($value['suppressed']*100)/$tests), 4, PHP_ROUND_HALF_UP);
+			$data['suppression_trends'][$i]['data'][$month] = round(@(($value['suppressed']*100)/$tests), 1, PHP_ROUND_HALF_UP);
 
 
 			$data['test_trends'][$i]['name'] = $value['year'];
 			$data['test_trends'][$i]['data'][$month] = $tests;
 
 			$data['rejected_trends'][$i]['name'] = $value['year'];
-			$data['rejected_trends'][$i]['data'][$month] = round(@(($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP);
+			$data['rejected_trends'][$i]['data'][$month] = round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP);
 
 			$data['tat_trends'][$i]['name'] = $value['year'];
 			$data['tat_trends'][$i]['data'][$month] = (int) $value['tat4'];

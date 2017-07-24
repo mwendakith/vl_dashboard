@@ -15,6 +15,7 @@ class County extends MY_Controller
 	function county_table($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes']= $this->county_model->county_table($year,$month,$to_year,$to_month);
+		$data['sites'] = TRUE;		
 
 		$link = $year . '/' . $month . '/' . $to_year . '/' . $to_month;
 
@@ -32,6 +33,7 @@ class County extends MY_Controller
 	function county_subcounties($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes'] = $this->county_model->county_subcounties($year,$month,$county,$to_year,$to_month);
+		$data['sites'] = TRUE;
 
 		$link = $year . '/' . $month . '/' . $county . '/' . $to_year . '/' . $to_month;
 
@@ -49,6 +51,7 @@ class County extends MY_Controller
 	function county_partners($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes'] = $this->county_model->county_partners($year,$month,$county,$to_year,$to_month);
+		$data['sites'] = FALSE;
 
 		$link = $year . '/' . $month . '/' . $county . '/' . $to_year . '/' . $to_month;
 
@@ -77,7 +80,7 @@ class County extends MY_Controller
 		$data['type'] = 'percent';
 		$data['yAxisText'] = 'Non-suppression';
 		$data['div'] = 'sub_counties_positivity_chart';
-
+		// die();
 		$this->load->view('county_outcomes_view',$data);
 	}
 
