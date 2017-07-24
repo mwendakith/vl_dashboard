@@ -118,14 +118,14 @@ class Samples_model extends MY_Model
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
-	    		<td>'.round((($greater/$total)*100),2).'%</td>
+	    		<td>'.round((($greater/$total)*100),1).'%</td>
 	    	</tr>
 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
 	    		<td>'.number_format($less).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((($less/$total)*100),2).'%</td>
+	    		<td>'.round((($less/$total)*100),1).'%</td>
 	    	</tr>
 
 	    	<tr>
@@ -144,7 +144,7 @@ class Samples_model extends MY_Model
 	    		<td>Rejected Samples:</td>
 	    		<td>'.number_format($value['rejected']).'</td>
 	    		<td>Percentage Rejection Rate</td>
-	    		<td>'. round((($value['rejected']*100)/$value['alltests']), 4, PHP_ROUND_HALF_UP).'%</td>
+	    		<td>'. round((($value['rejected']*100)/$value['alltests']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
@@ -323,7 +323,7 @@ class Samples_model extends MY_Model
 			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
-			$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
+			$data['outcomes'][2]['data'][$key] = round($value['percentage'], 1);
 			
 		}
 		
@@ -394,7 +394,7 @@ class Samples_model extends MY_Model
 
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
-			$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
+			$data['outcomes'][2]['data'][$key] = round($value['percentage'], 1);
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;

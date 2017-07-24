@@ -90,6 +90,7 @@ class County_model extends MY_Model
 			// $table .= '<td>'.$value['MFLCode'].'</td>';
 			// $table .= '<td>'.$value['name'].'</td>';
 			$table .= '<td>'.$value['county'].'</td>';
+			$table .= '<td>'.number_format(round($value['sitessending'])).'</td>';
 			$table .= '<td>'.number_format($value['tests']).'</td>';
 			$table .= '<td>'.number_format($value['sustxfail']).'</td>';
 			$table .= '<td>'.number_format($value['confirmtx']).'</td>';
@@ -141,7 +142,7 @@ class County_model extends MY_Model
 	    $f = fopen('php://memory', 'w');
 	    /** loop through array  */
 
-	    $b = array('County', 'Tests', '>1000cp/ml', 'Confirm Repeat Tests', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female');
+	    $b = array('County', 'Tests', '>1000cp/ml', 'Confirm Repeat Tests', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female', 'Sites');
 
 	    fputcsv($f, $b, $delimiter);
 
@@ -194,6 +195,7 @@ class County_model extends MY_Model
 			// $table .= '<td>'.$value['MFLCode'].'</td>';
 			// $table .= '<td>'.$value['name'].'</td>';
 			$table .= '<td>'.$value['subcounty'].'</td>';
+			$table .= '<td>'.number_format(round($value['sitessending'])).'</td>';
 			$table .= '<td>'.number_format($value['tests']).'</td>';
 			$table .= '<td>'.number_format($value['sustxfail']).'</td>';
 			$table .= '<td>'.number_format($value['confirmtx']).'</td>';
@@ -248,7 +250,7 @@ class County_model extends MY_Model
 	    $f = fopen('php://memory', 'w');
 	    /** loop through array  */
 
-	    $b = array('County', 'Subcounty', 'Tests', '>1000cp/ml', 'Confirm Repeat Tests', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female');
+	    $b = array('County', 'Subcounty', 'Tests', '>1000cp/ml', 'Confirm Repeat Tests', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female', 'Sites');
 
 	    fputcsv($f, $b, $delimiter);
 
