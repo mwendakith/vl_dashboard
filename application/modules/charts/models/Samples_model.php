@@ -323,12 +323,8 @@ class Samples_model extends MY_Model
 			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
-<<<<<<< HEAD
-			$data['outcomes'][2]['data'][$key] = round($value['percentage'], 1);
-=======
 			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 			//$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
->>>>>>> 2fd580b0c8f2159606778965c78402a89564853e
 			
 		}
 		
@@ -399,12 +395,8 @@ class Samples_model extends MY_Model
 
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
-<<<<<<< HEAD
-			$data['outcomes'][2]['data'][$key] = round($value['percentage'], 1);
-=======
 			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 			//$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
->>>>>>> 2fd580b0c8f2159606778965c78402a89564853e
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;

@@ -694,16 +694,11 @@ class Sites_model extends MY_Model
 
 		$facility = $query->facilitycode;
 
-		$params = "http://localhost:8000/api/vl/ver2.0/patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+		$params = "http://api.nascop.org/vl/ver2.0/patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 
 		$data = $this->req($params);
 
 		return $data;
-
-
-
-		
-
 	}
 }
 ?>
