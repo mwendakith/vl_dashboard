@@ -45,7 +45,7 @@ class Ages extends MY_Controller
 	function age_breakdowns($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL,$county=null,$partner=null,$subcounty=null)
 	{
 		$data['outcomes'] = $this->ages_model->ages_breakdowns($year,$month,$age,$to_year,$to_month,$county,$partner,$subcounty);
-
+		
 		$this->load->view('age_breakdown_listing',$data);
 	}
 

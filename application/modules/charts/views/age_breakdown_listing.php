@@ -1,9 +1,12 @@
+<?php
+  $function = 'expandSiteListing'.$outcomes['modal_name'];
+?>
 <div class="list-group" style="height: 362px;">
 	<?php echo $outcomes['ul'];?>
 </div>
-<button class="btn btn-primary"  onclick="expandSiteListing();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">View Full Listing</button>
+<button class="btn btn-primary"  onclick="<?= @$function;?>();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">View Full Listing</button>
 
-<div class="modal fade" tabindex="-1" role="dialog" id="expSiteList">
+<div class="modal fade" tabindex="-1" role="dialog" id="<?php echo $outcomes['modal_name'];?>">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -44,8 +47,8 @@
 			condensed: true
 		});
 	});
-	function expandSiteListing()
+	function <?= @$function;?>()
 	{
-		$('#expSiteList').modal('show');
+		$('#<?php echo $outcomes['modal_name'];?>').modal('show');
 	}
 </script>
