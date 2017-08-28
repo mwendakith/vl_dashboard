@@ -122,7 +122,7 @@ class Subcounty_model extends MY_Model
 	    	</tr>
 
 			<tr>
-	    		<td colspan="2">First VL Tests with Valid Outcomes:</td>
+	    		<td colspan="2">Routine VL Tests with Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
 
@@ -139,12 +139,12 @@ class Subcounty_model extends MY_Model
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((($less/$total)*100),1).'%</td>
 	    	</tr>
-
+ 
 	    	<tr>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
+	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
+	    		<td>'.number_format($value['baseline']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
 
 	    	<tr>

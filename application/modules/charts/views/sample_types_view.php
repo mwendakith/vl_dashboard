@@ -19,11 +19,11 @@
 			                text: 'Tests'
 			            },
 			            stackLabels: {
-			                enabled: true,
-			                style: {
-			                    fontWeight: 'bold',
-			                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-			                }
+			                enabled: true
+			                // style: {
+			                //     fontWeight: 'bold',
+			                //     color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+			                // }
 			            }
 			        },
 			        legend: {

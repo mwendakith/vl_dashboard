@@ -4,7 +4,9 @@ CREATE PROCEDURE `proc_get_vl_subcounty_vl_outcomes`
 (IN filter_subcounty INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-       SUM(`confirmtx`) AS `confirmtx`,
+        SUM(`baseline`) AS `baseline`, 
+        SUM(`baselinesustxfail`) AS `baselinesustxfail`, 
+        SUM(`confirmtx`) AS `confirmtx`,
         SUM(`confirm2vl`) AS `confirm2vl`,
         SUM(`Undetected`) AS `undetected`,
         SUM(`less1000`) AS `less1000`,
