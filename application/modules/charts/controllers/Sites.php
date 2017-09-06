@@ -15,9 +15,10 @@ class Sites extends MY_Controller
 
 	function site_outcomes($year=NULL,$month=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->sites_model->sites_outcomes($year,$month,$partner,$to_year,$to_month);
+		$data['trends'] = $this->sites_model->sites_outcomes($year,$month,$partner,$to_year,$to_month);
+		$data['div_name'] = "site_sites_outcomes";		
 
-    	$this->load->view('site_outcomes_view',$data);
+		$this->load->view('trends_outcomes_view', $data);
 	}
 
 	function partner_sites($year=NULL,$month=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
@@ -61,14 +62,14 @@ class Sites extends MY_Controller
 	{
 		$data['outcomes'] = $this->sites_model->sites_age($year,$month,$site,$to_year,$to_month);
 
-		$this->load->view('sites_agegroup_view',$data);
+		$this->load->view('agegroup_view',$data);
 	}
 
 	function site_gender($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes'] = $this->sites_model->sites_gender($year,$month,$site,$to_year,$to_month);
 
-		$this->load->view('sites_gender_view',$data);
+		$this->load->view('gender_view',$data);
 	}
 
 	function site_justification($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL)
@@ -91,6 +92,17 @@ class Sites extends MY_Controller
 	function get_patients_graph($site=null,$year=null){
 		$data = $this->sites_model->get_patients_graph($site,$year);
 		$this->load->view('patients_graph',$data);
+	}
+
+	function site_patients($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
+	{
+		$data['outcomes'] = $this->sites_model->site_patients($site,$year,$month,$to_year,$to_month);
+
+		echo "<pre>";print_r($data);die();
+
+
+
+		$this->load->view('sites_gender_view',$data);
 	}
 	
 }

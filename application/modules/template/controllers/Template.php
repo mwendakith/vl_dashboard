@@ -14,6 +14,7 @@ class Template extends MY_Controller
 
 	public function load_template($data)
 	{
+
 		$this->load->model('template_model');
 
 		$data['filter'] = $this->template_model->get_counties_dropdown();
@@ -22,6 +23,8 @@ class Template extends MY_Controller
 		$data['regimen'] = $this->template_model->get_regimen_dropdown();
 		$data['age_filter'] = $this->template_model->get_age_dropdown();
 		$data['subCounty'] = $this->template_model->get_sub_county_dropdown();
+		$data['laborotories'] = $this->template_model->get_lab_dropdown();
+		$data['samples'] = $this->template_model->get_sample_dropdown();
 		// $data['breadcrum'] = $this->breadcrum();
 		// echo "<pre>";print_r($data);die();
 		$this->load->view('template_view',$data);
@@ -98,6 +101,17 @@ class Template extends MY_Controller
 		echo $this->session->userdata('age_category_filter');
 	}
 
+	function filter_sample_data()
+	{
+		$data = array(
+				'sample' => $this->input->post('sample')
+			);
+
+		$this->filter_sample($data);
+
+		echo $this->session->userdata('sample_filter');
+	}
+
 	function filter_partner_age_data()
 	{
 		$data = array(
@@ -130,11 +144,24 @@ class Template extends MY_Controller
 		echo $this->set_filter_date($data);
 	}
 
-	function breadcrum($data=null,$partner=NULL)
+	function breadcrum($data=null,$partner=NULL,$site=NULL,$sub_county=NULL)
 	{
 		$this->load->model('template_model');
 		$data = trim($data,"%22");
 		// echo $data;
+		if ($partner=='null'||$partner==null) {
+			$partner = NULL;
+		}
+		if ($site=='null'||$site==null) {
+			$site = NULL;
+		}
+		if ($data=='null'||$data==null) {
+			$data = NULL;
+		}
+		if ($sub_county=='null'||$sub_county==null) {
+			$sub_county = NULL;
+		}
+		
 		if ($partner) {
 			if ($data==null || $data=='null') {
 				// echo "No partner is set";
@@ -149,6 +176,32 @@ class Template extends MY_Controller
 				$partner = $this->template_model->get_partner_name($data);
 				echo "<a href='javascript:void(0)' class='alert-link'><strong>".$partner."</strong></a>";
 			}
+		} else if ($site) {
+			if (!$data) {
+				if (!$this->session->userdata('site_filter')) {
+					echo "<a href='javascript:void(0)' class='alert-link'><strong>All Sites</strong></a>";
+				} else {
+					$site = $this->template_model->get_site_name($this->session->userdata('site_filter'));
+					echo "<a href='javascript:void(0)' class='alert-link'><strong>".$site."</strong></a>";
+				}
+			} else {
+				$site = $this->template_model->get_site_name($data);
+				echo "<a href='javascript:void(0)' class='alert-link'><strong>".$site."</strong></a>";
+			}
+			
+		} else if ($sub_county) {
+			if (!$data) {
+				if (!$this->session->userdata('sub_county_filter')) {
+					echo "<a href='javascript:void(0)' class='alert-link'><strong>All Sub-Counties</strong></a>";
+				} else {
+					$sub_county = $this->template_model->get_sub_county_name($this->session->userdata('sub_county_filter'));
+					echo "<a href='javascript:void(0)' class='alert-link'><strong>".$sub_county."</strong></a>";
+				}
+			} else {
+				$sub_county = $this->template_model->get_sub_county_name($data);
+				echo "<a href='javascript:void(0)' class='alert-link'><strong>".$sub_county."</strong></a>";
+			}
+			
 		} else {
 			if (!$data) {
 				if (!$this->session->userdata('county_filter')) {

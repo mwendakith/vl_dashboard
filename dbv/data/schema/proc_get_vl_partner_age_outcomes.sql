@@ -27,7 +27,7 @@ BEGIN
     END IF;
 
 
-    SET @QUERY = CONCAT(@QUERY, " AND `vna`.`partner` = '",P_Id,"' GROUP BY `name` ORDER BY `suppressed` DESC, `nonsuppressed` ");
+    SET @QUERY = CONCAT(@QUERY, " AND `vna`.`partner` = '",P_Id,"' GROUP BY `name` ORDER BY `ac`.`ID` ");
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

@@ -74,7 +74,7 @@
         },
         yAxis: {
             min: 0,
-            max: <?php echo json_encode($outcomes['tat3']);?>,
+            max: <?php echo json_encode($outcomes['tat4']);?>,
             tickLength: 3,
             tickWidth: 1,
             tickColor: '#C0C0C0',

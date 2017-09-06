@@ -44,19 +44,30 @@ class Ages_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
-		$data['county_outcomes'][1]['name'] = 'Suppresed';
 
-		$count = 0;
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
 		
-		$data["county_outcomes"][0]["data"][0]	= $count;
-		$data["county_outcomes"][1]["data"][0]	= $count;
-		$data['categories'][0]					= 'No Data';
 
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+ 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
-			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
-			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
@@ -114,43 +125,58 @@ class Ages_model extends MY_Model
 			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
 			$less = (int) ($value['undetected']+$value['less1000']);
 			$greater = (int) ($value['less5000']+$value['above5000']);
-
-			$data['ul'] .= '<tr>
-	    		<td colspan="2">Tests With Valid Outcomes:</td>
+			$non_suppressed = $greater + (int) $value['confirm2vl'];
+			$total_tests = (int) $value['confirmtx'] + $total;
+			
+			// 	<td colspan="2">Cumulative Tests (All Samples Run):</td>
+	    	// 	<td colspan="2">'.number_format($value['alltests']).'</td>
+	    	// </tr>
+	    	// <tr>
+			$data['ul'] .= '
+			<tr>
+	    		<td>Total VL tests done:</td>
+	    		<td>'.number_format($total_tests ).'</td>
+	    		<td>Non Suppression</td>
+	    		<td>'. number_format($non_suppressed) . ' (' . round((($non_suppressed / $total_tests  )*100),1).'%)</td>
+	    	</tr>
+ 
+			<tr>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Routine VL Tests with Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
-	    		<td>'.round((($greater/$total)*100),2).'%</td>
+	    		<td>'.round((($greater/$total)*100),1).'%</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
 	    		<td>'.number_format($less).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((($less/$total)*100),2).'%</td>
+	    		<td>'.round((($less/$total)*100),1).'%</td>
 	    	</tr>
-
+ 
 	    	<tr>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
+	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
+	    		<td>'.number_format($value['baseline']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
-
 	    	<tr>
-	    		<td colspan="2">Confirmatory Repeat Tests:</td>
-	    		<td colspan="2">'.number_format($value['confirmtx']).'</td>
+	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
+	    		<td>'.number_format($value['confirmtx']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['confirm2vl']). ' (' .round(($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>Rejected Samples:</td>
 	    		<td>'.number_format($value['rejected']).'</td>
 	    		<td>Percentage Rejection Rate</td>
-	    		<td>'. round((($value['rejected']*100)/$value['alltests']), 4, PHP_ROUND_HALF_UP).'%</td>
+	    		<td>'. round((($value['rejected']*100)/$value['alltests']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
@@ -284,6 +310,79 @@ class Ages_model extends MY_Model
 		
 		return $data;
 	}
+	function ages_breakdowns($year=null,$month=null,$age_cat=null,$to_year=null,$to_month=null,$county=null,$partner=null,$subcounty=null)
+	{
+		$default = 0;
+		$li = '';
+		$table = '';
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		//Assigning the value of the month or setting it to the selected value
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		if ($age_cat==null || $age_cat=='null') {
+			$age_cat = $this->session->userdata('age_category_filter');
+		}
+
+		if ($county == 1 || $county == '1') {
+			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$default."','".$default."')";
+			$div_name = 'countyLising';
+			$modal_name = 'countyModal';
+		} elseif ($partner == 1 || $partner == '1') {
+			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$partner."','".$default."')";
+			$div_name = 'partnerLising';
+			$modal_name = 'partnerModal';
+		} elseif ($subcounty == 1 || $subcounty == '1') {
+			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$subcounty."')";
+			$div_name = 'subcountyLising';
+			$modal_name = 'subcountyModal';
+		}
+
+		$result = $this->db->query($sql)->result_array();
+		
+		$count = 1;
+
+		if($result)
+		{
+			foreach ($result as $key => $value)
+			{
+				if ($count<16) {
+					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;&nbsp;&nbsp;'.round($value['percentage'],1).'%&nbsp;&nbsp;&nbsp;('.number_format($value['total']).')</a>';
+				}
+					$table .= '<tr>';
+					$table .= '<td>'.$count.'</td>';
+					$table .= '<td>'.$value['name'].'</td>';
+					$table .= '<td>'.number_format((int) $value['total']).'</td>';
+					$table .= '<td>'.number_format((int) $value['suppressed']).'</td>';
+					$table .= '<td>'.number_format((int) $value['nonsuppressed']).'</td>';
+					$table .= '<td>'.round($value['percentage'],1).'%</td>';
+					$table .= '</tr>';
+					$count++;
+			}
+		}else{
+			$li = 'No Data';
+		}
+		
+		$data = array(
+						'ul' => $li,
+						'table' => $table,
+						'div_name' => $div_name,
+						'modal_name' => $modal_name);
+		return $data;
+	}
 
 	function county_outcomes($year=null,$month=null,$age_cat=null,$to_year=null,$to_month=null,$partner=null)
 	{
@@ -321,19 +420,30 @@ class Ages_model extends MY_Model
 		
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
-		$data['county_outcomes'][1]['name'] = 'Suppresed';
 
-		$count = 0;
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
 		
-		$data["county_outcomes"][0]["data"][0]	= $count;
-		$data["county_outcomes"][1]["data"][0]	= $count;
-		$data['categories'][0]					= 'No Data';
 
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+ 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
-			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
-			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;

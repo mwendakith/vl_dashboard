@@ -3,6 +3,7 @@
 		<tr class="colhead">
 			<th>#</th>
 			<th>Name</th>
+			<?php if($sites){?><th>Sites</th><?php } ?>
 			<th>Tests</th>
 			<th>&gt; 1000 cp/ml</th>
 			<th>Confirm Repeat Tests</th>

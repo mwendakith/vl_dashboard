@@ -36,25 +36,25 @@ class Labs_model extends MY_Model
 			$ul .= "<tr>
 						<td>".($key+1)."</td>
 						<td>".$value['name']."</td>
-						<td>".(int) $value['sitesending']."</td>
-						<td>".(int) $value['received']."</td>
-						<td>".(int) $value['rejected'] . " (" . 
-							round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP)."%)</td>
-						<td>".(int) $value['invalids']."</td>
+						<td>".number_format((int) $value['sitesending'])."</td>
+						<td>".number_format((int) $value['received'])."</td>
+						<td>".number_format((int) $value['rejected']) . " (" . 
+							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+						<td>".number_format((int) $value['invalids'])."</td>
 
-						<td>".(int) $value['alltests']."</td>
-						<td>".((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000'])."</td>
-						<td>".(int) $value['eqa']."</td>
-						<td>".(int) $value['confirmtx']."</td>
-						<td>".((int) $value['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx'])."</td>
+						<td>".number_format((int) $value['alltests'])."</td>
+						<td>".number_format(((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']))."</td>
+						<td>".number_format((int) $value['eqa'])."</td>
+						<td>".number_format((int) $value['confirmtx'])."</td>
+						<td>".number_format(((int) $value['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx']))."</td>
 
-						<td>".( (int) $value['less5000'] + (int) $value['above5000'])."</td>
+						<td>".number_format( (int) $value['less5000'] + (int) $value['above5000'])."</td>
 						
-						<td>".round(((($value['less5000'] + $value['above5000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP)."%</td>
+						<td>".round(((($value['less5000'] + $value['above5000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 1, PHP_ROUND_HALF_UP)."%</td>
 
-						<td>".((int) $value['undetected'] + (int) $value['less1000'])."</td>
+						<td>".number_format((int) $value['undetected'] + (int) $value['less1000'])."</td>
 
-						<td>".round(((($value['undetected'] + $value['less1000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP)."%</td>
+						<td>".round(((($value['undetected'] + $value['less1000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 1, PHP_ROUND_HALF_UP)."%</td>
 
 						
 					</tr>";
@@ -99,7 +99,7 @@ class Labs_model extends MY_Model
 			$sheet[$key]['sites_sending'] = (int) $value['sitesending'];
 			$sheet[$key]['received'] = (int) $value['received'];
 			$sheet[$key]['rejected'] = (int) $value['rejected'];
-			$sheet[$key]['rejection_rate'] = round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP)."%";
+			$sheet[$key]['rejection_rate'] = round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%";
 			$sheet[$key]['invalid_tests'] = (int) $value['invalids'];
 			$sheet[$key]['all_tests'] = (int) $value['alltests'];
 			$sheet[$key]['valid_tests'] = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
@@ -107,9 +107,9 @@ class Labs_model extends MY_Model
 			$sheet[$key]['confirmatory_repeat_tests'] = (int) $value['confirmtx'];
 			$sheet[$key]['total_tests'] = ((int) $value['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx']);
 			$sheet[$key]['>1000_copies'] = ( (int) $value['less5000'] + (int) $value['above5000']);
-			$sheet[$key]['>1000_copies5'] = round(((($value['less5000'] + $value['above5000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP) . "%";
+			$sheet[$key]['>1000_copies5'] = round(((($value['less5000'] + $value['above5000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 1, PHP_ROUND_HALF_UP) . "%";
 			$sheet[$key]['<1000_copies'] = ((int) $value['undetected'] + (int) $value['less1000']);
-			$sheet[$key]['<1000_copies%'] = round(((($value['undetected'] + $value['less1000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 2, PHP_ROUND_HALF_UP) . "%";
+			$sheet[$key]['<1000_copies%'] = round(((($value['undetected'] + $value['less1000'])*100)/($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000'])), 1, PHP_ROUND_HALF_UP) . "%";
 						
 		}
 
@@ -152,7 +152,7 @@ class Labs_model extends MY_Model
 
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-		// echo "<pre>";print_r($result);die();
+		//echo "<pre>";print_r($result);die();
 		if ($result) {
 			$categories = array();
 			foreach ($result as $key => $value) {
@@ -168,7 +168,7 @@ class Labs_model extends MY_Model
 					foreach ($result as $key2 => $value2) {
 						if ((int) $value1 == (int) $value2['month'] && $value == $value2['labname']) {
 							$data['test_trends'][$key]['name'] = $value;
-							$data['test_trends'][$key]['data'][$count] = (int) $value2['alltests'];
+							$data['test_trends'][$key]['data'][$count] = (int) $value2['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx'];
 						}
 					}
 					$count++;
@@ -227,7 +227,7 @@ class Labs_model extends MY_Model
 					foreach ($result as $key2 => $value2) {
 						if ((int) $value1 == (int) $value2['month'] && $value == $value2['labname']) {
 							$data['reject_trend'][$key]['name'] = $value;
-							$data['reject_trend'][$key]['data'][$count] = round(@((int) $value2['rejected'] * 100 / (int) $value2['received']), 2);
+							$data['reject_trend'][$key]['data'][$count] = round(@((int) $value2['rejected'] * 100 / (int) $value2['received']), 1);
 						}
 					}
 					$count++;
@@ -248,7 +248,7 @@ class Labs_model extends MY_Model
 		foreach ($result2 as $key => $value) {
 				
 			$data['reject_trend'][$i]['name'] = 'National Rejection Rate';
-			$data['reject_trend'][$i]['data'][$count] = round(@((int) $value['rejected'] * 100 / (int) $value['received']), 2);
+			$data['reject_trend'][$i]['data'][$count] = round(@((int) $value['rejected'] * 100 / (int) $value['received']), 1);
 			$count++;
 		}
 
@@ -307,22 +307,33 @@ class Labs_model extends MY_Model
 
 	function labs_turnaround($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
+		$title = null;
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
+
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+				$title = " (" . $year . ")";
+			}else {
+				$month = 0;
+			}
+		}
+
+		if(!$title){
+			$title = " (" . $year . ", " . $this->resolve_month($month) . ")";
+		}
+
 		if ($to_month==null || $to_month=='null') {
 			$to_month = 0;
 		}
 		if ($to_year==null || $to_year=='null') {
 			$to_year = 0;
+		}else {
+			$title = " (" . $year . ", " . $this->resolve_month($month) . " - ". $to_year . ", " . $this->resolve_month($to_month) .")";
 		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
+
 
 		$sql = "CALL `proc_get_labs_tat`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -340,6 +351,7 @@ class Labs_model extends MY_Model
 			foreach ($result as $key => $value) {
 				
 					$labname = strtolower(str_replace(" ", "_", $value['labname']));
+					// $labname = $value['labname'];
 					if ($lab) {
 						if ($lab==$value['labname']) {
 							$tat1 = $tat1+$value['tat1'];
@@ -393,6 +405,8 @@ class Labs_model extends MY_Model
 			}
 			// echo "<pre>";print_r($tat);die();
 			foreach ($tat as $key => $value) {
+				$data[$key]['name'] = $value['lab'];
+				$data[$key]['div_name'] = "container" . $key;
 				$data[$key]['tat1'] = round($value['tat1']/$value['count']);
 				$data[$key]['tat2'] = round(($value['tat2']/$value['count']) + $data[$key]['tat1']);
 				$data[$key]['tat3'] = round(($value['tat3']/$value['count']) + $data[$key]['tat2']);
@@ -446,6 +460,107 @@ class Labs_model extends MY_Model
 			}
 		
 		// echo "<pre>";print_r($data);die();
+		return $data;
+	}
+
+	function yearly_trends($lab=NULL){
+
+	
+		$sql = "CALL `proc_get_vl_yearly_lab_trends`(" . $lab . ");";
+		
+		$result = $this->db->query($sql)->result_array();
+		
+		$year;
+		$i = 0;
+		$b = true;
+
+		$data;
+
+		foreach ($result as $key => $value) {
+
+			if($b){
+				$b = false;
+				$year = (int) $value['year'];
+			}
+
+			$y = (int) $value['year'];
+			if($value['year'] != $year){
+				$i++;
+				$year--;
+			}
+
+			$month = (int) $value['month'];
+			$month--;
+
+			$tests = (int) $value['suppressed'] + (int) $value['nonsuppressed'];
+
+			$data['suppression_trends'][$i]['name'] = $value['year'];
+			$data['suppression_trends'][$i]['data'][$month] = round(@(($value['suppressed']*100)/$tests), 1, PHP_ROUND_HALF_UP);
+
+
+			$data['test_trends'][$i]['name'] = $value['year'];
+			$data['test_trends'][$i]['data'][$month] = $tests;
+
+			$data['rejected_trends'][$i]['name'] = $value['year'];
+			$data['rejected_trends'][$i]['data'][$month] = round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP);
+
+			$data['tat_trends'][$i]['name'] = $value['year'];
+			$data['tat_trends'][$i]['data'][$month] = (int) $value['tat4'];
+
+		}
+		
+
+		return $data;
+	}
+
+	function yearly_summary($lab=NULL, $year=NULL){	
+
+		if($lab == NULL || $lab == 'null'){
+			$lab = 0;
+		}
+
+		if($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+
+		$from = $year-1;	
+		
+		$sql = "CALL `proc_get_vl_yearly_lab_summary`(" . $lab . ",'" . $from . "','" . $year . "');";
+		
+		// echo "<pre>";print_r($sql);die();
+		
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+
+		$data['outcomes'][0]['name'] = "Nonsuppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+
+		//$data['outcomes'][0]['drilldown']['color'] = '#913D88';
+		//$data['outcomes'][1]['drilldown']['color'] = '#96281B';
+		//$data['outcomes'][2]['color'] = '#257766';
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
+
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		foreach ($result as $key => $value) {
+			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
+		
+			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
+		}
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "Outcomes";
+
 		return $data;
 	}
 	

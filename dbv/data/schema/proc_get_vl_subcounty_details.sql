@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_details`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_subcounty_details`
-(IN filter_county INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11) IN to_month INT(11))
+(IN filter_county INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT  
                     `countys`.`name` AS `county`,
@@ -13,7 +13,8 @@ BEGIN
                     SUM(`vcs`.`adults`) AS `adults`, 
                     SUM(`vcs`.`paeds`) AS `paeds`, 
                     SUM(`vcs`.`maletest`) AS `maletest`, 
-                    SUM(`vcs`.`femaletest`) AS `femaletest` FROM `vl_subcounty_summary` `vcs`
+                    SUM(`vcs`.`femaletest`) AS `femaletest`,
+                    AVG(`vcs`.`sitessending`) AS `sitessending` FROM `vl_subcounty_summary` `vcs`
                    JOIN `districts` ON `vcs`.`subcounty` = `districts`.`ID`
                   JOIN `countys` ON `countys`.`ID` = `districts`.`county`
                      WHERE 1 ";

@@ -1,13 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+ 
 class Summaries_model extends MY_Model
 {
 	function __construct()
 	{
 		parent:: __construct();
 	}
-
+ 
 	function turnaroundtime($year=null,$month=null,$county=null,$to_year=null,$to_month=null)
 	{
 		if ($year==null || $year=='null') {
@@ -26,7 +26,7 @@ class Summaries_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
-
+ 
 		$sql = "CALL `proc_get_national_tat`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
@@ -41,7 +41,7 @@ class Summaries_model extends MY_Model
 		foreach ($result as $key => $value) {
 			if (($value['tat1']!=0) || ($value['tat2']!=0) || ($value['tat3']!=0) || ($value['tat4']!=0)) {
 				$count++;
-
+ 
 				$tat1 = $tat1+$value['tat1'];
 				$tat2 = $tat2+$value['tat2'];
 				$tat3 = $tat3+$value['tat3'];
@@ -65,7 +65,7 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
-
+ 
 	function county_outcomes($year=null,$month=null,$pfil=null,$partner=null,$county=null,$to_year=null,$to_month=null)
 	{
 		// echo "Year:".$year.":--: Month:".$month.":--: County:".$county.":--: Partner:".$partner.":--: pfil:".$pfil;die();
@@ -87,7 +87,7 @@ class Summaries_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
-
+ 
 		// Assigning the value of the county
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
@@ -115,24 +115,35 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($sql);echo "</pre>";die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
-		$data['county_outcomes'][1]['name'] = 'Suppresed';
 
-		$count = 0;
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
 		
-		$data["county_outcomes"][0]["data"][0]	= $count;
-		$data["county_outcomes"][1]["data"][0]	= $count;
-		$data['categories'][0]					= 'No Data';
 
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+ 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
-			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
-			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
-
+ 
 	function vl_outcomes($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
@@ -147,7 +158,7 @@ class Summaries_model extends MY_Model
 		if ($to_year==null || $to_year=='null') {
 			$to_year = 0;
 		}
-
+ 
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -158,7 +169,7 @@ class Summaries_model extends MY_Model
 				$month = 0;
 			}
 		}
-
+ 
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -176,76 +187,87 @@ class Summaries_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		$this->db->close();
 		$sitessending = $this->db->query($sql2)->result_array();
-		// echo "<pre>";print_r($sitessending);
+		// echo "<pre>";print_r($result);echo "</pre>";
+		// echo "<pre>";print_r($sitessending);echo "</pre>";die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
-
+ 
 		$data['vl_outcomes']['name'] = 'Tests';
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
-
+ 
 		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
 		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
-
+ 
 		$count = 0;
-
+ 
 		$data['vl_outcomes']['data'][0]['y'] = $count;
 		$data['vl_outcomes']['data'][1]['y'] = $count;
-
+ 
 		foreach ($result as $key => $value) {
 			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
 			$less = (int) ($value['undetected']+$value['less1000']);
 			$greater = (int) ($value['less5000']+$value['above5000']);
+			$non_suppressed = $greater + (int) $value['confirm2vl'];
+			$total_tests = (int) $value['confirmtx'] + $total;
+			
 			// 	<td colspan="2">Cumulative Tests (All Samples Run):</td>
 	    	// 	<td colspan="2">'.number_format($value['alltests']).'</td>
 	    	// </tr>
 	    	// <tr>
-			$data['ul'] .= '<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Tests With Valid Outcomes:</td>
+			$data['ul'] .= '
+			<tr>
+	    		<td>Total VL tests done:</td>
+	    		<td>'.number_format($total_tests ).'</td>
+	    		<td>Non Suppression</td>
+	    		<td>'. number_format($non_suppressed) . ' (' . round((($non_suppressed / $total_tests  )*100),1).'%)</td>
+	    	</tr>
+ 
+			<tr>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Routine VL Tests with Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
-	    		<td>'.round((($greater/$total)*100),2).'%</td>
+	    		<td>'.round((($greater/$total)*100),1).'%</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
 	    		<td>'.number_format($less).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((($less/$total)*100),2).'%</td>
+	    		<td>'.round((($less/$total)*100),1).'%</td>
 	    	</tr>
-
+ 
 	    	<tr>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
+	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
+	    		<td>'.number_format($value['baseline']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
-
 	    	<tr>
-	    		<td>Confirmatory Repeat Tests:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
 	    		<td>'.number_format($value['confirmtx']).'</td>
 	    		<td>Non Suppression ( &gt; 1000cpml)</td>
-	    		<td>'.number_format($value['confirm2vl']). ' (' .round(($value['confirm2vl'] * 100 / $value['confirmtx']), 2). '%)' .'</td>
+	    		<td>'.number_format($value['confirm2vl']). ' (' .round(($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>Rejected Samples:</td>
 	    		<td>'.number_format($value['rejected']).'</td>
 	    		<td>Percentage Rejection Rate</td>
-	    		<td>'. round((($value['rejected']*100)/$value['received']), 2, PHP_ROUND_HALF_UP).'%</td>
+	    		<td>'. round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less5000']+(int) $value['above5000'];
-
+ 
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
 			$data['vl_outcomes']['data'][1]['color'] = '#F2784B';
 		}
-
+ 
 		$count = 0;
 		$sites = 0;
 		foreach ($sitessending as $key => $value) {
@@ -258,13 +280,13 @@ class Summaries_model extends MY_Model
 		$data['ul'] .= "<tr> <td colspan=2>Average Sites Sending:</td><td colspan=2>".number_format(round(@$sites / $count))."</td></tr>";
 		$count = 1;
 		$sites = 0;
-
+ 
 		$data['vl_outcomes']['data'][0]['sliced'] = true;
 		$data['vl_outcomes']['data'][0]['selected'] = true;
 		
 		return $data;
 	}
-
+ 
 	function justification($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
@@ -279,7 +301,7 @@ class Summaries_model extends MY_Model
 		if ($to_year==null || $to_year=='null') {
 			$to_year = 0;
 		}
-
+ 
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -290,7 +312,7 @@ class Summaries_model extends MY_Model
 				$month = 0;
 			}
 		}
-
+ 
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_justification`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
@@ -305,11 +327,11 @@ class Summaries_model extends MY_Model
 		
 		$data['justification']['name'] = 'Tests';
 		$data['justification']['colorByPoint'] = true;
-
+ 
 		$count = 0;
-
+ 
 		$data['justification']['data'][0]['name'] = 'No Data';
-
+ 
 		foreach ($result as $key => $value) {
 			if($value['name'] == 'Routine VL'){
 				$data['justification']['data'][$key]['color'] = '#5C97BF';
@@ -319,13 +341,13 @@ class Summaries_model extends MY_Model
 			$data['justification']['data'][$key]['name'] = $value['name'];
 			$data['justification']['data'][$key]['y'] = (int) $value['justifications'];
 		}
-
+ 
 		$data['justification']['data'][0]['sliced'] = true;
 		$data['justification']['data'][0]['selected'] = true;
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
-
+ 
 	function justification_breakdown($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
@@ -340,14 +362,14 @@ class Summaries_model extends MY_Model
 		if ($to_year==null || $to_year=='null') {
 			$to_year = 0;
 		}
-
+ 
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
 		if ($month==null || $month=='null') {
 			$month = $this->session->userdata('filter_month');
 		}
-
+ 
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_justification_breakdown`('6','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql2 = "CALL `proc_get_partner_justification_breakdown`('9','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -370,31 +392,31 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($lac_mo);die();
 		$data['just_breakdown'][0]['name'] = 'Not Suppresed';
 		$data['just_breakdown'][1]['name'] = 'Suppresed';
-
+ 
 		$count = 0;
 		
 		$data["just_breakdown"][0]["data"][0]	= $count;
 		$data["just_breakdown"][1]["data"][0]	= $count;
 		$data['categories'][0]			= 'No Data';
-
+ 
 		foreach ($preg_mo as $key => $value) {
 			$data['categories'][0] 			= 'Pregnant Mothers';
 			$data["just_breakdown"][0]["data"][0]	=  (int) $value['less5000'] + (int) $value['above5000'];
 			$data["just_breakdown"][1]["data"][0]	=  (int) $value['Undetected'] + (int) $value['less1000'];
 		}
-
+ 
 		foreach ($lac_mo as $key => $value) {
 			$data['categories'][1] 			= 'Lactating Mothers';
 			$data["just_breakdown"][0]["data"][1]	=  (int) $value['less5000'] + (int) $value['above5000'];
 			$data["just_breakdown"][1]["data"][1]	=  (int) $value['Undetected'] + (int) $value['less1000'];
 		}
-
+ 
 		$data['just_breakdown'][0]['drilldown']['color'] = '#913D88';
 		$data['just_breakdown'][1]['drilldown']['color'] = '#96281B';
 				
 		return $data;
 	}
-
+ 
 	function age($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
@@ -409,7 +431,7 @@ class Summaries_model extends MY_Model
 		if ($to_year==null || $to_year=='null') {
 			$to_year = 0;
 		}
-
+ 
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -420,7 +442,7 @@ class Summaries_model extends MY_Model
 				$month = 0;
 			}
 		}
-
+ 
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
@@ -442,13 +464,13 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($result);die();
 		$data['ageGnd'][0]['name'] = 'Not Suppresed';
 		$data['ageGnd'][1]['name'] = 'Suppresed';
-
+ 
 		$count = 0;
 		
 		$data["ageGnd"][0]["data"][0]	= $count;
 		$data["ageGnd"][1]["data"][0]	= $count;
 		$data['categories'][0]			= 'No Data';
-
+ 
 		foreach ($result as $key => $value) {
 			if ($value['name']=='No Data') {
 				$loop = $key;
@@ -494,7 +516,7 @@ class Summaries_model extends MY_Model
 		// die();
 		$data['ageGnd'][0]['drilldown']['color'] = '#913D88';
 		$data['ageGnd'][1]['drilldown']['color'] = '#96281B';
-
+ 
 		// echo "<pre>";print_r($data);die();
 		$data['categories'] = array_values($data['categories']);
 		$data["ageGnd"][0]["data"] = array_values($data["ageGnd"][0]["data"]);
@@ -502,7 +524,7 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
-
+ 
 	function age_breakdown($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
@@ -517,7 +539,7 @@ class Summaries_model extends MY_Model
 		if ($to_year==null || $to_year=='null') {
 			$to_year = 0;
 		}
-
+ 
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -528,7 +550,7 @@ class Summaries_model extends MY_Model
 				$month = 0;
 			}
 		}
-
+ 
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
@@ -541,10 +563,10 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-
+ 
 		$data['children']['name'] = 'Tests';
 		$data['children']['colorByPoint'] = true;
-
+ 
 		$data['adults']['name'] = 'Tests';
 		$data['adults']['colorByPoint'] = true;
 		$adults = 0;
@@ -552,7 +574,7 @@ class Summaries_model extends MY_Model
 		$children = 0;
 		$schildren = 0;
 		$count = 0;
-
+ 
 		foreach ($result as $key => $value) {
 			
 			if ($value['name']=='Less 2' || $value['name']=='2-9' || $value['name']=='10-14') {
@@ -562,7 +584,7 @@ class Summaries_model extends MY_Model
 				$data['children']['data'][$key]['y'] = $count;
 				$data['children']['data'][$key]['name'] = $value['name'];
 				$data['children']['data'][$key]['y'] = (int) $value['agegroups'];
-
+ 
 			} else if ($value['name']=='15-19' || $value['name']=='20-24' || $value['name']=='25+') {
 				$data['ul']['adults'] = '';
 				$adults = (int) $adults + (int) $value['agegroups'];
@@ -581,18 +603,18 @@ class Summaries_model extends MY_Model
 		$data['ul']['adults'] = '<li>Adult Suppression : '.(int)(((int) $sadult/(int) $adults)*100).'%</li>';
 		$data['children']['data'] = array_values($data['children']['data']);
 		$data['adults']['data'] = array_values($data['adults']['data']);
-
+ 
 		$data['children']['data'][0]['sliced'] = true;
 		$data['children']['data'][0]['selected'] = true;
-
+ 
 		$data['adults']['data'][0]['sliced'] = true;
 		$data['adults']['data'][0]['selected'] = true;
-
+ 
 		// echo "<pre>";print_r($data);die();
 		
 		return $data;
 	}
-
+ 
 	function gender($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
 		if ($county==null || $county=='null') {
@@ -607,7 +629,7 @@ class Summaries_model extends MY_Model
 		if ($to_year==null || $to_year=='null') {
 			$to_year = 0;
 		}
-
+ 
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -618,7 +640,7 @@ class Summaries_model extends MY_Model
 				$month = 0;
 			}
 		}
-
+ 
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_gender`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
@@ -633,46 +655,46 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($result);die();
 		$data['gender'][0]['name'] = 'Not Suppresed';
 		$data['gender'][1]['name'] = 'Suppresed';
-
+ 
 		$count = 0;
 		
 		$data["gender"][0]["data"][0]	= $count;
 		$data["gender"][1]["data"][0]	= $count;
 		$data['categories'][0]			= 'No Data';
-
+ 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 			= $value['name'];
 			$data["gender"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
 			$data["gender"][1]["data"][$key]	=  (int) $value['suppressed'];
 		}
-
+ 
 		$data['gender'][0]['drilldown']['color'] = '#913D88';
 		$data['gender'][1]['drilldown']['color'] = '#96281B';
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
-
+ 
 	function sample_types($year=null,$county=null,$partner=null)
 	{
 		$array1 = array();
 		$array2 = array();
 		$sql2 = NULL;
-
+ 
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
 		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_filter');
 		}
-
-
+ 
+ 
 		if ($year==null || $year=='null') {
 			$to = $this->session->userdata('filter_year');
 		}else {
 			$to = $year;
 		}
 		$from = $to-1;
-
+ 
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_sample_types`('".$partner."','".$from."')";
 			$sql2 = "CALL `proc_get_partner_sample_types`('".$partner."','".$to."')";
@@ -692,24 +714,24 @@ class Summaries_model extends MY_Model
 			$this->db->close();
 			$array2 = $this->db->query($sql2)->result_array();
 		}
-
+ 
 		$result = array_merge($array1,$array2);
 		// echo "<pre>";print_r($result);die();
 		$data['sample_types'][0]['name'] = 'EDTA';
 		$data['sample_types'][1]['name'] = 'DBS';
 		$data['sample_types'][2]['name'] = 'Plasma';
-
+ 
 		$count = 0;
 		
 		$data['categories'][0] = 'No Data';
 		$data["sample_types"][0]["data"][0]	= $count;
 		$data["sample_types"][1]["data"][0]	= $count;
 		$data["sample_types"][2]["data"][0]	= $count;
-
+ 
 		foreach ($result as $key => $value) {
 			
 				$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
-
+ 
 				$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
 				$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
 				$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
@@ -717,9 +739,11 @@ class Summaries_model extends MY_Model
 		}
 		
 		return $data;
-	}
-
-	
-
+	} 
 }
 ?>
+ 
+ 
+ 
+ 
+ 

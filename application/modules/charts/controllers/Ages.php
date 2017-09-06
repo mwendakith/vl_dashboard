@@ -14,16 +14,18 @@ class Ages extends MY_Controller
 
 	function age_outcomes($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)
 	{
-		$data['outcomes']= $this->ages_model->ages_outcomes($year,$month,$to_year,$to_month,$partner);
+		$data['trends']= $this->ages_model->ages_outcomes($year,$month,$to_year,$to_month,$partner);
+		$data['div_name'] = "age_summary_outcomes";		
 
-		$this->load->view('county_outcomes_view', $data);
+		$this->load->view('trends_outcomes_view', $data);
 	}
 
 	function age_county_outcomes($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)
 	{
-		$data['outcomes'] = $this->ages_model->county_outcomes($year,$month,$age,$to_year,$to_month,$partner);
+		$data['trends'] = $this->ages_model->county_outcomes($year,$month,$age,$to_year,$to_month,$partner);
+		$data['div_name'] = "age_county_outcomes";		
 
-    	$this->load->view('county_outcomes_view_two',$data);
+		$this->load->view('trends_outcomes_view', $data);
 	}
 
 	function age_vl_outcome($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)
@@ -38,6 +40,13 @@ class Ages extends MY_Controller
 		$data['outcomes'] = $this->ages_model->ages_gender($year,$month,$age,$to_year,$to_month,$partner);
 		
     	$this->load->view('age_regimen_gender_view',$data);
+	}
+
+	function age_breakdowns($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL,$county=null,$partner=null,$subcounty=null)
+	{
+		$data['outcomes'] = $this->ages_model->ages_breakdowns($year,$month,$age,$to_year,$to_month,$county,$partner,$subcounty);
+		
+		$this->load->view('age_breakdown_listing',$data);
 	}
 
 	function sample_types($year=NULL,$age=NULL,$partner=NULL)

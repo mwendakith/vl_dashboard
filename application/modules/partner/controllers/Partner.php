@@ -57,6 +57,17 @@ class Partner extends MY_Controller
 		$this -> template($this->data);
 	}
 
+	function counties()
+	{
+		$this->clear_all_session_data();
+		$this->session->unset_userdata('partner_filter');
+		$this->load->module('charts/partner_summaries');
+
+		$this->data['content_view'] = 'partner/partner_counties_view';
+		// echo "<pre>";print_r($this->data);die();
+		$this -> template($this->data);
+	}
+
 	public function sites()
 	{
 		$this->load->module('charts/sites');

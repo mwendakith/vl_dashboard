@@ -37,20 +37,33 @@ class Subcounty_model extends MY_Model
 		$result = array_splice($res, 0, 50);
 
 		// echo "<pre>";print_r($result);die();
-		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
-		$data['county_outcomes'][1]['name'] = 'Suppresed';
 
-		$count = 0;
+
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
 		
-		$data["county_outcomes"][0]["data"][0]	= $count;
-		$data["county_outcomes"][1]["data"][0]	= $count;
-		$data['categories'][0]					= 'No Data';
 
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+ 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
-			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
-			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 		}
+
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
@@ -100,8 +113,16 @@ class Subcounty_model extends MY_Model
 			$less = (int) ($value['undetected']+$value['less1000']);
 			$greater = (int) ($value['less5000']+$value['above5000']);
 
-			$data['ul'] .= '<tr>
-	    		<td colspan="2">Tests With Valid Outcomes:</td>
+			$data['ul'] .= '
+			<tr>
+	    		<td>Total VL tests done:</td>
+	    		<td>'.number_format( (int) $value['alltests']).'</td>
+	    		<td>Non Suppression</td>
+	    		<td>'.round((($greater/ ( (int) $value['alltests'])  )*100),1).'%</td>
+	    	</tr>
+
+			<tr>
+	    		<td colspan="2">Routine VL Tests with Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
 
@@ -109,21 +130,21 @@ class Subcounty_model extends MY_Model
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
-	    		<td>'.round((($greater/$total)*100),2).'%</td>
+	    		<td>'.round((($greater/$total)*100),1).'%</td>
 	    	</tr>
 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
 	    		<td>'.number_format($less).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((($less/$total)*100),2).'%</td>
+	    		<td>'.round((($less/$total)*100),1).'%</td>
 	    	</tr>
-
+ 
 	    	<tr>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
+	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
+	    		<td>'.number_format($value['baseline']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
 
 	    	<tr>
@@ -135,7 +156,7 @@ class Subcounty_model extends MY_Model
 	    		<td>Rejected Samples:</td>
 	    		<td>'.number_format($value['rejected']).'</td>
 	    		<td>Percentage Rejection Rate</td>
-	    		<td>'. round((($value['rejected']*100)/$value['alltests']), 4, PHP_ROUND_HALF_UP).'%</td>
+	    		<td>'. round((($value['rejected']*100)/$value['alltests']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
@@ -176,7 +197,9 @@ class Subcounty_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Test';
+
+		$data['gender'][0]['name'] = 'Not Suppresed';
+		$data['gender'][1]['name'] = 'Suppresed';
 
 		$count = 0;
 		
@@ -185,16 +208,12 @@ class Subcounty_model extends MY_Model
 		$data['categories'][0]			= 'No Data';
 
 		foreach ($result as $key => $value) {
-			$data['categories'][0] 			= 'Male';
-			$data['categories'][1] 			= 'Female';
-			$data['categories'][2] 			= 'No Data';
-			$data["gender"][0]["data"][0]	=  (int) $value['maletest'];
-			$data["gender"][0]["data"][1]	=  (int) $value['femaletest'];
-			$data["gender"][0]["data"][2]	= (int) $value['nodata'];
+			$data['categories'][$key] 			= $value['name'];
+			$data['gender'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['gender'][1]['data'][$key] = (int) $value['suppressed'];
 		}
-
-		// $data['gender'][0]['drilldown']['color'] = '#913D88';
-		// $data['gender'][0]['drilldown']['color'] = '#913D88';
+		$data['gender'][0]['drilldown']['color'] = '#913D88';
+		$data['gender'][1]['drilldown']['color'] = '#96281B';
 		
 		return $data;
 	}
@@ -225,32 +244,22 @@ class Subcounty_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['ageGnd'][0]['name'] = 'Test';
-
+		
+		$data['ageGnd']['name'] = 'Not Suppresed';
+		$data['ageGnd']['name'] = 'Suppresed';
+ 
 		$count = 0;
 		
 		$data["ageGnd"][0]["data"][0]	= $count;
-		$data["ageGnd"][0]["data"][1]	= $count;
-		$data['categories'][0]			= 'No Data';
+		$data["ageGnd"][1]["data"][0]	= $count;
 
 		foreach ($result as $key => $value) {
-			$data['categories'][0] 			= 'No Age';
-			$data['categories'][1] 			= 'Less 2';
-			$data['categories'][2] 			= 'Less 9';
-			$data['categories'][3] 			= 'Less 14';
-			$data['categories'][4] 			= 'Less 19';
-			$data['categories'][5] 			= 'Less 24';
-			$data['categories'][6] 			= 'over 25';
-			$data["ageGnd"][0]["data"][0]	=  (int) $value['noage'];
-			$data["ageGnd"][0]["data"][1]	=  (int) $value['less2'];
-			$data["ageGnd"][0]["data"][2]	=  (int) $value['less9'];
-			$data["ageGnd"][0]["data"][3]	=  (int) $value['less14'];
-			$data["ageGnd"][0]["data"][4]	=  (int) $value['less19'];
-			$data["ageGnd"][0]["data"][5]	=  (int) $value['less24'];
-			$data["ageGnd"][0]["data"][6]	=  (int) $value['over25'];
+			$data['categories'][$key] 			= $value['name'];
+			$data['ageGnd'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['ageGnd'][1]['data'][$key] = (int) $value['suppressed'];
 		}
-		// $data['gender'][0]['drilldown']['color'] = '#913D88';
-		// $data['gender'][0]['drilldown']['color'] = '#913D88';
+		$data['ageGnd'][0]['drilldown']['color'] = '#913D88';
+		$data['ageGnd'][0]['drilldown']['color'] = '#913D88';
 		
 		return $data;
 	}
@@ -343,14 +352,14 @@ class Subcounty_model extends MY_Model
 			$table .= '<td>'.$value['MFLCode'].'</td>';
 			$table .= '<td>'.$value['name'].'</td>';
 			$table .= '<td>'.$value['county'].'</td>';
-			$table .= '<td>'.$value['tests'].'</td>';
-			$table .= '<td>'.$value['sustxfail'].'</td>';
-			$table .= '<td>'.$value['confirmtx'].'</td>';
-			$table .= '<td>'.$value['rejected'].'</td>';
-			$table .= '<td>'.$value['adults'].'</td>';
-			$table .= '<td>'.$value['paeds'].'</td>';
-			$table .= '<td>'.$value['maletest'].'</td>';
-			$table .= '<td>'.$value['femaletest'].'</td>';
+			$table .= '<td>'.number_format($value['tests']).'</td>';
+			$table .= '<td>'.number_format($value['sustxfail']).'</td>';
+			$table .= '<td>'.number_format($value['confirmtx']).'</td>';
+			$table .= '<td>'.number_format($value['rejected']).'</td>';
+			$table .= '<td>'.number_format($value['adults']).'</td>';
+			$table .= '<td>'.number_format($value['paeds']).'</td>';
+			$table .= '<td>'.number_format($value['maletest']).'</td>';
+			$table .= '<td>'.number_format($value['femaletest']).'</td>';
 			$table .= '</tr>';
 			$count++;
 		}

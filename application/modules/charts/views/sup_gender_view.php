@@ -55,7 +55,12 @@
 			                    }
 			                }
 			            }
-			        },colors: [
+			        },navigation: {
+				        buttonOptions: {
+				            verticalAlign: 'bottom',
+				            y: -20
+				        }
+				    },colors: [
 				        '#F2784B',
 				        '#1BA39C'
 				    ],

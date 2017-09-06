@@ -25,8 +25,32 @@
 }
 </style>
 <div class="row" id="filter">
+
   
-  <div class="col-md-6 col-md-offset-2" id="year-month-filter">
+  <div class="col-md-3">
+    <form action="<?php echo base_url();?>template/filter_partner_data" method="post" id="filter_form">
+      <div class="row">
+        <div class="col-md-12">
+          <select id="my_list" class="btn js-example-basic-single" style="width:220px;background-color: #C5EFF7;" name="partner">
+            <option disabled="true" selected="true">Select Laborotory:</option>
+            <option value="0" >All Laborotories</option>
+            <!-- <optgroup value="Counties"> -->
+            <?php echo $laborotories; ?>
+            <!-- </optgroup> -->
+          </select>
+        </div>
+       
+      </div>
+     
+    </form>
+  </div>
+  <div class="col-md-2">
+    <div id="breadcrum" class="alert" style="background-color: #1BA39C;display:none;">
+      
+    </div>
+  </div>
+  
+  <div class="col-md-4 " id="year-month-filter">
     <div class="filter">
       Year: 
       <a href="javascript:void(0)" onclick="date_filter('yearly', 2010 )" class="alert-link"> 2010 </a>|
@@ -57,7 +81,7 @@
     </div>
   </div>
 
-  <div class="col-md-3">
+  <div class="col-md-2">
       <div class="row" id="range">
           <div class="col-md-4">
               <input name="startDate" id="startDate" class="date-picker" placeholder="From:" />
@@ -101,6 +125,7 @@
   
   $().ready(function(){
     $('#errorAlertDateRange').hide();
+    $(".js-example-basic-single").select2();
     
   });
 </script>

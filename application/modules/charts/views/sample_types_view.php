@@ -19,19 +19,19 @@
 			                text: 'Tests'
 			            },
 			            stackLabels: {
-			                enabled: true,
-			                style: {
-			                    fontWeight: 'bold',
-			                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-			                }
+			                enabled: true
+			                // style: {
+			                //     fontWeight: 'bold',
+			                //     color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+			                // }
 			            }
 			        },
 			        legend: {
 			            align: 'right',
-			            x: -30,
-			            verticalAlign: 'top',
-			            y: 25,
-			            floating: true,
+			            x: -20,
+			            verticalAlign: 'bottom',
+			            y: 0,
+			            floating: false,
 			            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
 			            borderColor: '#CCC',
 			            borderWidth: 1,

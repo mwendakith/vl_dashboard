@@ -15,6 +15,7 @@ class County extends MY_Controller
 	function county_table($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes']= $this->county_model->county_table($year,$month,$to_year,$to_month);
+		$data['sites'] = TRUE;		
 
 		$link = $year . '/' . $month . '/' . $to_year . '/' . $to_month;
 
@@ -32,6 +33,7 @@ class County extends MY_Controller
 	function county_subcounties($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes'] = $this->county_model->county_subcounties($year,$month,$county,$to_year,$to_month);
+		$data['sites'] = TRUE;
 
 		$link = $year . '/' . $month . '/' . $county . '/' . $to_year . '/' . $to_month;
 
@@ -46,10 +48,39 @@ class County extends MY_Controller
 		
 	}
 
+	function county_partners($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['outcomes'] = $this->county_model->county_partners($year,$month,$county,$to_year,$to_month);
+		$data['sites'] = FALSE;
+
+		$link = $year . '/' . $month . '/' . $county . '/' . $to_year . '/' . $to_month;
+
+		$data['link'] =  base_url('charts/county/download_partner_county_table/' . $link);
+
+    	$this->load->view('counties_table_view',$data);
+	}
+
+	function download_partner_county_table($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$this->county_model->download_partners_county_table($year,$month,$county,$to_year,$to_month);
+		
+	}
+
 	function subcounty_outcomes($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->county_model->subcounty_outcomes($year,$month,$county,$to_year,$to_month);
+		$data['trends'] = $this->county_model->subcounty_outcomes($year,$month,$county,$to_year,$to_month);
+		$data['div_name'] = "county_subcounties_outcomes";		
 
+		$this->load->view('trends_outcomes_view', $data);
+	}
+
+	function subcounty_outcomes_positivity($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['outcomes'] = $this->county_model->subcounty_outcomes($year,$month,$county,$to_year,$to_month);
+		$data['type'] = 'percent';
+		$data['yAxisText'] = 'Non-suppression';
+		$data['div'] = 'sub_counties_positivity_chart';
+		// die();
 		$this->load->view('county_outcomes_view',$data);
 	}
 

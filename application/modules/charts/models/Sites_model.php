@@ -46,20 +46,33 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['sites_outcomes'][0]['name'] = 'Not Suppresed';
-		$data['sites_outcomes'][1]['name'] = 'Suppresed';
 
-		$count = 0;
+
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
 		
-		$data["sites_outcomes"][0]["data"][0]	= $count;
-		$data["sites_outcomes"][1]["data"][0]	= $count;
-		$data['categories'][0]					= 'No Data';
 
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+ 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
-			$data["sites_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
-			$data["sites_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 		}
+		
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
@@ -266,43 +279,59 @@ class Sites_model extends MY_Model
 			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
 			$less = (int) ($value['undetected']+$value['less1000']);
 			$greater = (int) ($value['less5000']+$value['above5000']);
-
-			$data['ul'] .= '<tr>
-	    		<td colspan="2">&nbsp;Tests With Valid Outcomes:</td>
+			$non_suppressed = $greater + (int) $value['confirm2vl'];
+			$total_tests = (int) $value['confirmtx'] + $total;
+			
+			// 	<td colspan="2">Cumulative Tests (All Samples Run):</td>
+	    	// 	<td colspan="2">'.number_format($value['alltests']).'</td>
+	    	// </tr>
+	    	// <tr>
+			$data['ul'] .= '
+			<tr>
+	    		<td>Total VL tests done:</td>
+	    		<td>'.number_format($total_tests ).'</td>
+	    		<td>Non Suppression</td>
+	    		<td>'. number_format($non_suppressed) . ' (' . round((($non_suppressed / $total_tests  )*100),1).'%)</td>
+	    	</tr>
+ 
+			<tr>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Routine VL Tests with Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
-	    		<td>'.round((($greater/$total)*100),2).'%</td>
+	    		<td>'.round((($greater/$total)*100),1).'%</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
 	    		<td>'.number_format($less).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((($less/$total)*100),2).'%</td>
+	    		<td>'.round((($less/$total)*100),1).'%</td>
 	    	</tr>
-
+ 
 	    	<tr>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
+	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
+	    		<td>'.number_format($value['baseline']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(($value['baseline'] * 100 / $value['baselinesustxfail']), 1). '%)' .'</td>
 	    	</tr>
-
+ 
 	    	<tr>
-	    		<td colspan="2">Confirmatory Repeat Tests:</td>
-	    		<td colspan="2">'.number_format($value['confirmtx']).'</td>
+	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
+	    		<td>'.number_format($value['confirmtx']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['confirm2vl']). ' (' .round(($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>Rejected Samples:</td>
 	    		<td>'.number_format($value['rejected']).'</td>
 	    		<td>Percentage Rejection Rate</td>
-	    		<td>'. round((($value['rejected']*100)/$value['received']), 4, PHP_ROUND_HALF_UP).'%</td>
+	    		<td>'. round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
@@ -344,32 +373,73 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['ageGnd']['name'] = 'Tests';
-		
 		$count = 0;
-		$categories = array('less2','less9','less14','less19','less24','over25');
+		$loop = 0;
+		$name = '';
+		$nonsuppressed = 0;
+		$suppressed = 0;
 		
-		$data["ageGnd"]["data"][0]	=  NULL;
-		$data["ageGnd"]["data"][1]	=  NULL;
-		$data["ageGnd"]["data"][2]	=  NULL;
-		$data["ageGnd"]["data"][3]	=  NULL;
-		$data["ageGnd"]["data"][4]	=  NULL;
-		$data["ageGnd"]["data"][5]	=  NULL;
-		$data['categories'][0]		= 'No Data';
-
-		if ($result) {
-			foreach ($result as $key => $value) {
-				$data['categories']			= 	$categories;
-				$data["ageGnd"]["data"][0]	=  (int) $value['less2'];
-				$data["ageGnd"]["data"][1]	=  (int) $value['less9'];
-				$data["ageGnd"]["data"][2]	=  (int) $value['less14'];
-				$data["ageGnd"]["data"][3]	=  (int) $value['less19'];
-				$data["ageGnd"]["data"][4]	=  (int) $value['less24'];
-				$data["ageGnd"]["data"][5]	=  (int) $value['over25'];
+		// echo "<pre>";print_r($result);die();
+		$data['ageGnd'][0]['name'] = 'Not Suppresed';
+		$data['ageGnd'][1]['name'] = 'Suppresed';
+ 
+		$count = 0;
+		
+		$data["ageGnd"][0]["data"][0]	= $count;
+		$data["ageGnd"][1]["data"][0]	= $count;
+		$data['categories'][0]			= 'No Data';
+ 
+		foreach ($result as $key => $value) {
+			if ($value['name']=='No Data') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='Less 2') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='2-9') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='10-14') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='15-19') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='20-24') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
+			} else if ($value['name']=='25+') {
+				$loop = $key;
+				$name = $value['name'];
+				$nonsuppressed = $value['nonsuppressed'];
+				$suppressed = $value['suppressed'];
 			}
+			
+			$data['categories'][$loop] 			= $name;
+			$data["ageGnd"][0]["data"][$loop]	=  (int) $nonsuppressed;
+			$data["ageGnd"][1]["data"][$loop]	=  (int) $suppressed;
 		}
-		$data["ageGnd"]["color"] =  '#1BA39C';
-
+		// die();
+		$data['ageGnd'][0]['drilldown']['color'] = '#913D88';
+		$data['ageGnd'][1]['drilldown']['color'] = '#96281B';
+ 
+		// echo "<pre>";print_r($data);die();
+		$data['categories'] = array_values($data['categories']);
+		$data["ageGnd"][0]["data"] = array_values($data["ageGnd"][0]["data"]);
+		$data["ageGnd"][1]["data"] = array_values($data["ageGnd"][1]["data"]);
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
@@ -399,24 +469,24 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['Gnd']['name'] = 'Tests';
-		
+		$data['gender'][0]['name'] = 'Not Suppresed';
+		$data['gender'][1]['name'] = 'Suppresed';
+ 
 		$count = 0;
-		$categories = array('Male','Female');
 		
-		$data["Gnd"]["data"][0]	=  NULL;
-		$data["Gnd"]["data"][1]	=  NULL;
-		$data['categories'][0]		= 'No Data';
-
-		if ($result) {
-			foreach ($result as $key => $value) {
-				$data['categories']			= 	$categories;
-				$data["Gnd"]["data"][0]	=  (int) $value['male'];
-				$data["Gnd"]["data"][1]	=  (int) $value['female'];
-			}
+		$data["gender"][0]["data"][0]	= $count;
+		$data["gender"][1]["data"][0]	= $count;
+		$data['categories'][0]			= 'No Data';
+ 
+		foreach ($result as $key => $value) {
+			$data['categories'][$key] 			= $value['name'];
+			$data["gender"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
+			$data["gender"][1]["data"][$key]	=  (int) $value['suppressed'];
 		}
-		$data["Gnd"]["color"] =  '#1BA39C';
-
+ 
+		$data['gender'][0]['drilldown']['color'] = '#913D88';
+		$data['gender'][1]['drilldown']['color'] = '#96281B';
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
@@ -580,6 +650,55 @@ class Sites_model extends MY_Model
 		return $data;
 
 
+	}
+
+
+	function site_patients($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
+	{
+		$type = 0;
+
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
+
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+				$type = 1;
+			}else {
+				$month = $this->session->userdata('filter_month');
+				$type = 3;
+			}
+		}
+		
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+
+		if ($type == 0) {
+			if($to_year == 0){
+				$type = 3;
+			}
+			else{
+				$type = 5;
+			}
+		}		
+
+		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
+
+		$facility = $query->facilitycode;
+
+		$params = "http://api.nascop.org/vl/ver2.0/patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+
+		$data = $this->req($params);
+
+		return $data;
 	}
 }
 ?>

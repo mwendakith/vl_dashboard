@@ -4,6 +4,8 @@ CREATE PROCEDURE `proc_get_national_vl_outcomes`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
+        SUM(`baseline`) AS `baseline`, 
+        SUM(`baselinesustxfail`) AS `baselinesustxfail`, 
         SUM(`confirmtx`) AS `confirmtx`,
         SUM(`confirm2vl`) AS `confirm2vl`,
         SUM(`Undetected`) AS `undetected`,
