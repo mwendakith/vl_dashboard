@@ -245,8 +245,8 @@ class Subcounty_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		
-		$data['ageGnd'][0]['name'] = 'Not Suppresed';
-		$data['ageGnd'][1]['name'] = 'Suppresed';
+		$data['ageGnd']['name'] = 'Not Suppresed';
+		$data['ageGnd']['name'] = 'Suppresed';
  
 		$count = 0;
 		
