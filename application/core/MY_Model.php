@@ -60,8 +60,9 @@ class MY_Model extends CI_Model
 		$this->load->library('requests/library/requests');
 		$this->requests->register_autoloader();
 		// $headers = array('X-Auth-Token' => 'jhWXc65gZUI=yG5ndWkpAGNsaW50b85oZWFsdGhhY2Nlc3Mub3Jn');
-		$headers = null;
+		$headers = array();
 		$my_url = "https://api.nascop.org/vl/ver2.0/" . $url;
+		$a = array($my_url);
 		$request = $this->requests->get($my_url, $headers);
 
 		// return json_decode(json_encode(json_decode($request->body)), true);

@@ -35,20 +35,23 @@
 			$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+null+"/"+null+"/"+site);
 			$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+null+"/"+null+"/"+site);
 			$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+null+"/"+null+"/"+site);
-			$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+site);
-			$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+site);
-			$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+site);
+			$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+null+"/"+null+"/"+site);
+			$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+null+"/"+null+"/"+site);
+			$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+null+"/"+null+"/"+site);
 
 		}
 		
 		$("select").change(function() {
 			em = $(this).val();
+			localStorage.setItem("site", em);
 
 			// Send the data using post
 	        var posting = $.post( "<?php echo base_url();?>template/filter_site_data", { site: em } );
 
+
 	        // Put the results in a div
 	        posting.done(function( data ) {
+	        	console.log(data);
 	        	$.get("<?php echo base_url();?>template/dates", function(data){
 	        		obj = $.parseJSON(data);
 			
@@ -87,9 +90,9 @@
 					$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+null+"/"+null+"/"+em);
 					$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+null+"/"+null+"/"+em);
 					$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+null+"/"+null+"/"+em);
-					$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+em);
-					$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+em+"/"+null);
-					$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+em);
+					$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+null+"/"+null+"/"+em);
+					$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+null+"/"+null+"/"+em);
+					$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+null+"/"+null+"/"+em);
 				}
 	        });
 		});
@@ -113,8 +116,10 @@
 		    if (!error_check) {
 			    $.get("<?php echo base_url('sites/check_site_select');?>", function(site) {
 					//Checking if site was previously selected and calling the relevant views
-					site = JSON.parse(site);
-					if (site==0) {
+					// site = JSON.parse(site);
+					site = localStorage.getItem("site");
+					console.log(site);
+					if (site=="NA") {
 						$("#siteOutcomes").html("<center><div class='loader'></div></center>");
 						$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
 					} else {
@@ -124,12 +129,19 @@
 						$("#ageGroups").html("<center><div class='loader'></div></center>");
 						$("#gender").html("<center><div class='loader'></div></center>");
 
+						$("#pat_stats").html("<center><div class='loader'></div></center>");
+						$("#pat_out").html("<center><div class='loader'></div></center>");
+						$("#pat_graph").html("<center><div class='loader'></div></center>");
+
 						$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
 						$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
 						$("#vlOutcomes").load("<?php echo base_url('charts/sites/site_Vlotcomes');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
 						$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
 						$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
 						$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
+						$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
+						$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
+						$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
 					}
 				});
 			}
@@ -139,7 +151,7 @@
 
 	function date_filter(criteria, id)
  	{
- 		$("#partner").html("<div>Loading...</div>");
+ 		// $("#partner").html("<div>Loading...</div>");
 
  		if (criteria === "monthly") {
  			year = null;
@@ -153,24 +165,31 @@
 
  		// Put the results in a div
 		posting.done(function( data ) {
-			$.get("<?php echo base_url();?>template/dates", function(data){
-	        		obj = $.parseJSON(data);
+
+			obj = $.parseJSON(data);
 			
-					if(obj['month'] == "null" || obj['month'] == null){
-						obj['month'] = "";
-					}
-					$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
-					$(".display_range").html("( "+obj['year']+" )");
-	        	});
+			if(obj['month'] == "null" || obj['month'] == null){
+				obj['month'] = "";
+			}
+			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
+			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
 		});
-		// var site = <?php //echo json_encode($this->session->userdata("site_filter")); ?>;
-		// console.log(site);
+		
 
 		$.get("<?php echo base_url('sites/check_site_select');?>", function(site) {
 			//Checking if site was previously selected and calling the relevant views
-			site = JSON.parse(site);
-			if (site==0) {
+			site = $.parseJSON(site);
+			// alert(site);
+
+			// site = null;
+
+			// console.log("site is " +site+" .");
+
+			site = localStorage.getItem("site");
+			console.log(site);			
+
+			if (site=="NA") {
 				$("#siteOutcomes").html("<center><div class='loader'></div></center>");
 				$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>/"+year+"/"+month);
 			} else {
@@ -188,9 +207,9 @@
 				$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+year+"/"+month+"/"+site);
 				$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+year+"/"+month+"/"+site);
 				$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+year+"/"+month+"/"+site);
-				$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+site+"/"+year);
-				$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+site+"/"+year);
-				$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+site+"/"+year);
+				$("#pat_stats").load("<?php echo base_url('charts/sites/get_patients');?>/"+year+"/"+month+"/"+site);
+				$("#pat_out").load("<?php echo base_url('charts/sites/get_patients_outcomes');?>/"+year+"/"+month+"/"+site);
+				$("#pat_graph").load("<?php echo base_url('charts/sites/get_patients_graph');?>/"+year+"/"+month+"/"+site);
 
 			}
 		});

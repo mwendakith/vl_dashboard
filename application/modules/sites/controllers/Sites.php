@@ -30,7 +30,8 @@ class Sites extends MY_Controller
 		} else {
 			$site = 0;
 		}
-		echo json_encode($site);
+		echo json_decode($site);
+		// echo json_encode($this->session->userdata('site_filter'));
 	}
 }
 ?>

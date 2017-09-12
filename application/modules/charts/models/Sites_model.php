@@ -581,76 +581,240 @@ class Sites_model extends MY_Model
 		
 	}
 
-	function get_patients($site=null,$year=null){
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
+	function get_patients($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
+	{
+		$type = 0;
+
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
 		}
 
-		$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
-		// echo "<pre>";print_r($sql);die();
-		$result = $this->db->query($sql)->row();
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+				$type = 1;
+			}else {
+				$month = $this->session->userdata('filter_month');
+				$type = 3;
+			}
+		}
+		
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
 
-		$data['stats'] = "<tr><td>" . $result->alltests . "</td><td>" . $result->onevl . "</td><td>" . $result->twovl . "</td><td>" . $result->threevl . "</td><td>" . $result->above3vl . "</td></tr>";
+		if ($type == 0) {
+			if($to_year == 0){
+				$type = 3;
+			}
+			else{
+				$type = 5;
+			}
+		}		
 
-		$data['tests'] = $result->alltests;
-		$data['patients'] = $result->totalartmar;
-		$unmet = (int) $result->totalartmar - (int) $result->alltests;
-		$unmet_p = round((($unmet / (int) $result->totalartmar) * 100),2);
-		$data['unmet'] = $unmet_p;
+		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
+
+		$facility = $query->facilitycode;
+
+		$params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+
+		$result = $this->req($params);
+
+		$data['stats'] = "<tr><td>" . $result->total_viralloads . "</td><td>" . $result->one . "</td><td>" . $result->two . "</td><td>" . $result->three . "</td><td>" . $result->three_g . "</td></tr>";
+
+		$data['tests'] = $result->total_viralloads;
+		$data['patients'] = $result->total_patients;
 
 		return $data;
-
-
 	}
 
-	function get_patients_outcomes($site=null,$year=null){
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
+	function get_patients_outcomes($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
+	{
+		$type = 0;
+
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
 		}
 
-		$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
-		// echo "<pre>";print_r($sql);die();
-		$result = $this->db->query($sql)->row();
-		// echo "<pre>";print_r($result);die();
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+				$type = 1;
+			}else {
+				$month = $this->session->userdata('filter_month');
+				$type = 3;
+			}
+		}
+		
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+
+		if ($type == 0) {
+			if($to_year == 0){
+				$type = 3;
+			}
+			else{
+				$type = 5;
+			}
+		}		
+
+		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
+
+		$facility = $query->facilitycode;
+
+		$params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+
+		$result = $this->req($params);
+
 		$data['categories'] = array('Total Patients', "VL's Done");
 		$data['outcomes']['name'] = 'Tests';
-		$data['outcomes']['data'][0] = (int) $result->totalartmar;
-		$data['outcomes']['data'][1] = (int) $result->alltests;
+		$data['outcomes']['data'][0] = (int) $result->total_patients;
+		$data['outcomes']['data'][1] = (int) $result->total_viralloads;
 		$data["outcomes"]["color"] =  '#1BA39C';
 
 		return $data;
 	}
 
-	function get_patients_graph($site=null,$year=null){
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
+	function get_patients_graph($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
+	{
+		$type = 0;
+
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
 		}
 
-		$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
-		// echo "<pre>";print_r($sql);die();
-		$result = $this->db->query($sql)->row();
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+				$type = 1;
+			}else {
+				$month = $this->session->userdata('filter_month');
+				$type = 3;
+			}
+		}
+		
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+
+		if ($type == 0) {
+			if($to_year == 0){
+				$type = 3;
+			}
+			else{
+				$type = 5;
+			}
+		}		
+
+		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
+
+		$facility = $query->facilitycode;
+
+		$params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+
+		$result = $this->req($params);
 
 		$data['categories'] = array('1 VL', '2 VL', '3 VL', '> 3 VL');
 		$data['outcomes']['name'] = 'Tests';
-		$data['outcomes']['data'][0] = (int) $result->onevl;
-		$data['outcomes']['data'][1] = (int) $result->twovl;
-		$data['outcomes']['data'][2] = (int) $result->threevl;
-		$data['outcomes']['data'][3] = (int) $result->above3vl;
+		$data['outcomes']['data'][0] = (int) $result->one;
+		$data['outcomes']['data'][1] = (int) $result->two;
+		$data['outcomes']['data'][2] = (int) $result->three;
+		$data['outcomes']['data'][3] = (int) $result->three_g;
 		$data["outcomes"]["color"] =  '#1BA39C';
 
 		return $data;
-
-
 	}
+	
+
+	// function get_patients($site=null,$year=null){
+	// 	if ($year==null || $year=='null') {
+	// 		$year = $this->session->userdata('filter_year');
+	// 	}
+	// 	if ($site==null || $site=='null') {
+	// 		$site = $this->session->userdata('site_filter');
+	// 	}
+
+	// 	$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
+	// 	// echo "<pre>";print_r($sql);die();
+	// 	$result = $this->db->query($sql)->row();
+
+	// 	$data['stats'] = "<tr><td>" . $result->alltests . "</td><td>" . $result->onevl . "</td><td>" . $result->twovl . "</td><td>" . $result->threevl . "</td><td>" . $result->above3vl . "</td></tr>";
+
+	// 	$data['tests'] = $result->alltests;
+	// 	$data['patients'] = $result->totalartmar;
+	// 	$unmet = (int) $result->totalartmar - (int) $result->alltests;
+	// 	$unmet_p = round((($unmet / (int) $result->totalartmar) * 100),2);
+	// 	$data['unmet'] = $unmet_p;
+
+	// 	return $data;
+	// }
+
+	// function get_patients_outcomes($site=null,$year=null){
+	// 	if ($year==null || $year=='null') {
+	// 		$year = $this->session->userdata('filter_year');
+	// 	}
+	// 	if ($site==null || $site=='null') {
+	// 		$site = $this->session->userdata('site_filter');
+	// 	}
+
+	// 	$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
+	// 	// echo "<pre>";print_r($sql);die();
+	// 	$result = $this->db->query($sql)->row();
+	// 	// echo "<pre>";print_r($result);die();
+	// 	$data['categories'] = array('Total Patients', "VL's Done");
+	// 	$data['outcomes']['name'] = 'Tests';
+	// 	$data['outcomes']['data'][0] = (int) $result->totalartmar;
+	// 	$data['outcomes']['data'][1] = (int) $result->alltests;
+	// 	$data["outcomes"]["color"] =  '#1BA39C';
+
+	// 	return $data;
+	// }
+
+	
+
+	// function get_patients_graph($site=null,$year=null){
+	// 	if ($year==null || $year=='null') {
+	// 		$year = $this->session->userdata('filter_year');
+	// 	}
+	// 	if ($site==null || $site=='null') {
+	// 		$site = $this->session->userdata('site_filter');
+	// 	}
+
+	// 	$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
+	// 	// echo "<pre>";print_r($sql);die();
+	// 	$result = $this->db->query($sql)->row();
+
+	// 	$data['categories'] = array('1 VL', '2 VL', '3 VL', '> 3 VL');
+	// 	$data['outcomes']['name'] = 'Tests';
+	// 	$data['outcomes']['data'][0] = (int) $result->onevl;
+	// 	$data['outcomes']['data'][1] = (int) $result->twovl;
+	// 	$data['outcomes']['data'][2] = (int) $result->threevl;
+	// 	$data['outcomes']['data'][3] = (int) $result->above3vl;
+	// 	$data["outcomes"]["color"] =  '#1BA39C';
+
+	// 	return $data;
+
+
+	// }
 
 
 	function site_patients($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
@@ -694,7 +858,7 @@ class Sites_model extends MY_Model
 
 		$facility = $query->facilitycode;
 
-		$params = "http://api.nascop.org/vl/ver2.0/patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+		$params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 
 		$data = $this->req($params);
 
