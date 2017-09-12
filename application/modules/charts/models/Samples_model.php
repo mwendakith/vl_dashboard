@@ -113,33 +113,34 @@ class Samples_model extends MY_Model
 	    		<td colspan="2">Tests With Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
 	    		<td>'.round((($greater/$total)*100),1).'%</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
 	    		<td>'.number_format($less).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((($less/$total)*100),1).'%</td>
 	    	</tr>
-
+ 
 	    	<tr>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
+	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
+	    		<td>'.number_format($value['baseline']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
-
 	    	<tr>
-	    		<td colspan="2">Confirmatory Repeat Tests:</td>
-	    		<td colspan="2">'.number_format($value['confirmtx']).'</td>
+	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
+	    		<td>'.number_format($value['confirmtx']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['confirm2vl']). ' (' .round(($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
 	    	</tr>
-
+ 
 	    	<tr>
 	    		<td>Rejected Samples:</td>
 	    		<td>'.number_format($value['rejected']).'</td>
@@ -286,12 +287,12 @@ class Samples_model extends MY_Model
 		}
 		$from = $to-1;
 
-		if ($partner==null || $partner=='null') {
+		//if ($partner==null || $partner=='null') {
 			$sql = "CALL `proc_get_vl_sample_summary`('".$sample."','".$from."','".$to."')";
-		} else {
+		/*} else {
 			$sql = "CALL `proc_get_vl_partner_samples_sample_types`('".$partner."','".$sample."','".$from."')";
 			$sql2 = "CALL `proc_get_vl_partner_samples_sample_types`('".$partner."','".$sample."','".$to."')";
-		}
+		}*/
 		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();

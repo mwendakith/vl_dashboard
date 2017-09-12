@@ -145,12 +145,14 @@
 	{
 		$('#agemodal').modal('show');
 		$('#CatAge').load('<?php echo base_url();?>charts/summaries/agebreakdown');
+		// window.location.reload();
 	}
 
 	function justificationModal()
 	{
-		$('#justificationmodal').modal('show');
-		$('#CatJust').load('<?php echo base_url();?>charts/summaries/justificationbreakdown');
+		alert('Why are you not working!');
+		// $('#justificationmodal').modal('show');
+		// $('#CatJust').load('<?php echo base_url();?>charts/summaries/justificationbreakdown');
 	}
 	
 </script>

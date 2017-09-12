@@ -48,11 +48,17 @@
 					$("#gender").html("<center><div class='loader'></div></center>");
 					$("#samples").html("<center><div class='loader'></div></center>");
 					$("#county").html("<center><div class='loader'></div></center>");
+					$("#countiesAge").html("<center><div class='loader'></div></center>");
+					$("#partnersAge").html("<center><div class='loader'></div></center>");
+					$("#subcountiesAge").html("<center><div class='loader'></div></center>");
 					
 					$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>");
 					$("#gender").load("<?php echo base_url('charts/ages/age_gender'); ?>/"+null+"/"+null+"/"+age); 
 					$("#samples").load("<?php echo base_url('charts/ages/sample_types'); ?>/"+null+"/"+age);
 					$("#county").load("<?php echo base_url('charts/ages/age_county_outcomes'); ?>/"+null+"/"+null+"/"+age);
+					$("#countiesAge").load("<?= @base_url('charts/ages/age_breakdowns'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null+"/"+1);
+					$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null+"/"+null+"/"+1);
+					$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
 	        	}      	
 	        });
 	    });
@@ -89,11 +95,17 @@
 						$("#gender").html("<center><div class='loader'></div></center>");
 						$("#samples").html("<center><div class='loader'></div></center>");
 						$("#county").html("<center><div class='loader'></div></center>");
+						$("#countiesAge").html("<center><div class='loader'></div></center>");
+						$("#partnersAge").html("<center><div class='loader'></div></center>");
+						$("#subcountiesAge").html("<center><div class='loader'></div></center>");
 						
 						$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
 						$("#gender").load("<?php echo base_url('charts/ages/age_gender'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
 						$("#samples").load("<?php echo base_url('charts/ages/sample_types'); ?>/"+from[1]+"/"+data);
 						$("#county").load("<?php echo base_url('charts/ages/age_county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
+						$("#countiesAge").load("<?= @base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+1);
+						$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+1);
+						$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+1);
 					}
 				});
 			}
@@ -139,11 +151,17 @@
 					$("#gender").html("<center><div class='loader'></div></center>");
 					$("#samples").html("<center><div class='loader'></div></center>");
 					$("#county").html("<center><div class='loader'></div></center>");
+					$("#countiesAge").html("<center><div class='loader'></div></center>");
+					$("#partnersAge").html("<center><div class='loader'></div></center>");
+					$("#subcountiesAge").html("<center><div class='loader'></div></center>");
 					
 					$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>/"+year+"/"+month+"/"+data);
 					$("#gender").load("<?php echo base_url('charts/ages/age_gender'); ?>/"+year+"/"+month+"/"+data); 
 					$("#samples").load("<?php echo base_url('charts/ages/sample_types'); ?>/"+year+"/"+data);
 					$("#county").load("<?php echo base_url('charts/ages/age_county_outcomes'); ?>/"+year+"/"+month+"/"+data);
+					$("#countiesAge").load("<?= @base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+to[1]+"/"+to[0]+"/"+1);
+					$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+1);
+					$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
 				}
 			});
 			

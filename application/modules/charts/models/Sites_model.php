@@ -295,7 +295,7 @@ class Sites_model extends MY_Model
 	    	</tr>
  
 			<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;First VL Tests with Valid Outcomes:</td>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Routine VL Tests with Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
  
@@ -314,10 +314,10 @@ class Sites_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
+	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
+	    		<td>'.number_format($value['baseline']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(($value['baseline'] * 100 / $value['baselinesustxfail']), 1). '%)' .'</td>
 	    	</tr>
  
 	    	<tr>
@@ -694,16 +694,11 @@ class Sites_model extends MY_Model
 
 		$facility = $query->facilitycode;
 
-		$params = "http://localhost:8000/api/vl/ver2.0/patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+		$params = "http://api.nascop.org/vl/ver2.0/patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 
 		$data = $this->req($params);
 
 		return $data;
-
-
-
-		
-
 	}
 }
 ?>

@@ -187,7 +187,8 @@ class Summaries_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		$this->db->close();
 		$sitessending = $this->db->query($sql2)->result_array();
-		// echo "<pre>";print_r($sitessending);
+		// echo "<pre>";print_r($result);echo "</pre>";
+		// echo "<pre>";print_r($sitessending);echo "</pre>";die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
  
 		$data['vl_outcomes']['name'] = 'Tests';
@@ -222,7 +223,7 @@ class Summaries_model extends MY_Model
 	    	</tr>
  
 			<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;First VL Tests with Valid Outcomes:</td>
+	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Routine VL Tests with Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
  
@@ -241,17 +242,16 @@ class Summaries_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
-	    		<td></td>
+	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
+	    		<td>'.number_format($value['baseline']).'</td>
+	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
- 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
 	    		<td>'.number_format($value['confirmtx']).'</td>
 	    		<td>Non Suppression ( &gt; 1000cpml)</td>
-	    		<td>'.number_format($value['confirm2vl']). ' (' .round(($value['confirm2vl'] * 100 / $value['confirmtx']), 2). '%)' .'</td>
+	    		<td>'.number_format($value['confirm2vl']). ' (' .round(($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
 	    	</tr>
  
 	    	<tr>
