@@ -799,7 +799,7 @@ class Summaries_model extends MY_Model
 
 		$result = $this->req($params);
 
-		echo "<pre>";print_r($result);die();
+		// echo "<pre>";print_r($result);die();
 
 		$data['stats'] = "<tr><td>" . $result->total_viralloads . "</td><td>" . $result->one . "</td><td>" . $result->two . "</td><td>" . $result->three . "</td><td>" . $result->three_g . "</td></tr>";
 
