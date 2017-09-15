@@ -1,7 +1,6 @@
 <p style="height: 200px;">
-	Total Patients as of <?= @Date('M').", ".Date('Y'); ?> : <?php echo number_format($patients); ?>  <br />
+	Total Patients : <?php echo number_format($patients); ?>  <br />
 	Total Viral Loads Done : <?php echo number_format($tests); ?>  <br />
-	Unmet Need : <?php echo $unmet; ?>%  <br />
 
 </p>
 

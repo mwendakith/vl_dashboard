@@ -108,23 +108,9 @@ class Samples_model extends MY_Model
 			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
 			$less = (int) ($value['undetected']+$value['less1000']);
 			$greater = (int) ($value['less5000']+$value['above5000']);
-			$non_suppressed = $greater + (int) $value['confirm2vl'];
-			$total_tests = (int) $value['confirmtx'] + $total;
-			
-			// 	<td colspan="2">Cumulative Tests (All Samples Run):</td>
-	    	// 	<td colspan="2">'.number_format($value['alltests']).'</td>
-	    	// </tr>
-	    	// <tr>
-			$data['ul'] .= '
-			<tr>
-	    		<td>Total VL tests done:</td>
-	    		<td>'.number_format($total_tests ).'</td>
-	    		<td>Non Suppression</td>
-	    		<td>'. number_format($non_suppressed) . ' (' . round((($non_suppressed / $total_tests  )*100),1).'%)</td>
-	    	</tr>
- 
-			<tr>
-	    		<td colspan="2">&nbsp;&nbsp;&nbsp;Routine VL Tests with Valid Outcomes:</td>
+
+			$data['ul'] .= '<tr>
+	    		<td colspan="2">Tests With Valid Outcomes:</td>
 	    		<td colspan="2">'.number_format($total).'</td>
 	    	</tr>
  
@@ -338,6 +324,7 @@ class Samples_model extends MY_Model
 			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+
 			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 			//$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
 			
@@ -410,6 +397,7 @@ class Samples_model extends MY_Model
 
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
+
 			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 			//$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
 		}

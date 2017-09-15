@@ -79,24 +79,24 @@ class Sites extends MY_Controller
 		$this->load->view('',$data);
 	}
 
-	function get_patients($site=null,$year=null){
-		$data = $this->sites_model->get_patients($site,$year);
+	function get_patients($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL){
+		$data = $this->sites_model->get_patients($site,$year,$month,$to_year,$to_month);
 		$this->load->view('patients_view',$data);
 	}
 
-	function get_patients_outcomes($site=null,$year=null){
-		$data = $this->sites_model->get_patients_outcomes($site,$year);
+	function get_patients_outcomes($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL){
+		$data = $this->sites_model->get_patients_outcomes($site,$year,$month,$to_year,$to_month);
 		$this->load->view('patients_outcomes_graph',$data);
 	}
 
-	function get_patients_graph($site=null,$year=null){
-		$data = $this->sites_model->get_patients_graph($site,$year);
+	function get_patients_graph($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL){
+		$data = $this->sites_model->get_patients_graph($site,$year,$month,$to_year,$to_month);
 		$this->load->view('patients_graph',$data);
 	}
 
 	function site_patients($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = $this->sites_model->site_patients($site,$year,$month,$to_year,$to_month);
+		$data = $this->sites_model->site_patients($site,$year,$month,$to_year,$to_month);
 
 		echo "<pre>";print_r($data);die();
 
@@ -104,6 +104,8 @@ class Sites extends MY_Controller
 
 		$this->load->view('sites_gender_view',$data);
 	}
+
+	
 	
 }
 ?>

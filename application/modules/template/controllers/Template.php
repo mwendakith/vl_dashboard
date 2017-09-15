@@ -76,6 +76,8 @@ class Template extends MY_Controller
 		
 		$this->filter_site($data);
 
+		// echo $this->input->post('site');
+
 		echo $this->session->userdata('site_filter');
 	}
 
