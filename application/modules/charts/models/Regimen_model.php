@@ -484,5 +484,79 @@ class Regimen_model extends MY_Model
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
+
+	function regimens_breakdowns($year=null,$month=null,$regimen=null,$to_year=null,$to_month=null,$county=null,$partner=null,$subcounty=null)
+	{
+		$default = 0;
+		$li = '';
+		$table = '';
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		//Assigning the value of the month or setting it to the selected value
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		if ($regimen==null || $regimen=='null') {
+			$regimen = $this->session->userdata('regimen_filter');
+		}
+
+		if ($county == 1 || $county == '1') {
+			$sql = "CALL `proc_get_vl_regimens_breakdowns_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$default."','".$default."')";
+			$div_name = 'countyLising';
+			$modal_name = 'countyModal';
+		} elseif ($partner == 1 || $partner == '1') {
+			$sql = "CALL `proc_get_vl_regimens_breakdowns_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$partner."','".$default."')";
+			$div_name = 'partnerLising';
+			$modal_name = 'partnerModal';
+		} elseif ($subcounty == 1 || $subcounty == '1') {
+			$sql = "CALL `proc_get_vl_regimens_breakdowns_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$subcounty."')";
+			$div_name = 'subcountyLising';
+			$modal_name = 'subcountyModal';
+		}
+
+		$result = $this->db->query($sql)->result_array();
+		
+		$count = 1;
+
+		if($result)
+		{
+			foreach ($result as $key => $value)
+			{
+				if ($count<16) {
+					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;&nbsp;&nbsp;'.round($value['percentage'],1).'%&nbsp;&nbsp;&nbsp;('.number_format($value['total']).')</a>';
+				}
+					$table .= '<tr>';
+					$table .= '<td>'.$count.'</td>';
+					$table .= '<td>'.$value['name'].'</td>';
+					$table .= '<td>'.number_format((int) $value['total']).'</td>';
+					$table .= '<td>'.number_format((int) $value['suppressed']).'</td>';
+					$table .= '<td>'.number_format((int) $value['nonsuppressed']).'</td>';
+					$table .= '<td>'.round($value['percentage'],1).'%</td>';
+					$table .= '</tr>';
+					$count++;
+			}
+		}else{
+			$li = 'No Data';
+		}
+		
+		$data = array(
+						'ul' => $li,
+						'table' => $table,
+						'div_name' => $div_name,
+						'modal_name' => $modal_name);
+		return $data;
+	}
 }
 ?>
