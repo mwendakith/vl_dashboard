@@ -8,7 +8,10 @@ BEGIN
 					`year`,
 					`edta`,
 					`dbs`,
-					`plasma`
+					`plasma`,
+					(`Undetected`+`less1000`) AS `suppressed`,
+					(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
+					((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression`
 				FROM `vl_national_summary`
                 WHERE 1";
 

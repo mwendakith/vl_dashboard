@@ -154,7 +154,10 @@ BEGIN
           `year`,
           SUM(`edta`) AS `edta`,
           SUM(`dbs`) AS `dbs`,
-          SUM(`plasma`) AS `plasma` 
+          SUM(`plasma`) AS `plasma`,
+          SUM(`Undetected`+`less1000`) AS `suppressed`,
+          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
+          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression`  
     FROM `vl_partner_regimen`
     WHERE 1";
 
@@ -164,6 +167,7 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
+
 
 DROP PROCEDURE IF EXISTS `proc_get_vl_partner_county_regimen_outcomes`;
 DELIMITER //
@@ -249,7 +253,11 @@ BEGIN
           `year`,
           SUM(`edta`) AS `edta`,
           SUM(`dbs`) AS `dbs`,
-          SUM(`plasma`) AS `plasma` 
+          SUM(`plasma`) AS `plasma`,
+          SUM(`Undetected`+`less1000`) AS `suppressed`,
+          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
+          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression` 
+
     FROM `vl_partner_age`
     WHERE 1";
 
@@ -259,6 +267,7 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
+
 
 DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_gender`;
 DELIMITER //

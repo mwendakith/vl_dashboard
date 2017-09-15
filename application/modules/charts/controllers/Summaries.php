@@ -70,8 +70,16 @@ class Summaries extends MY_Controller {
 	function sample_types($year=NULL,$county=NULL,$partner=NULL)
 	{
 		$data['outcomes'] = $this->summaries_model->sample_types($year,$county,$partner);
+		$link = $year . '/' . $county . '/' . $partner;
+
+		$data['link'] = base_url('charts/summaries/download_sampletypes/' . $link);
 
     	$this->load->view('sample_types_view',$data);
+	}
+
+	function download_sampletypes($year=NULL,$county=NULL,$partner=NULL)
+	{
+		$this->summaries_model->download_sampletypes($year,$county,$partner);
 	}
 
 	function display_date()
