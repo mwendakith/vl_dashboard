@@ -673,8 +673,8 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
- 
-	function sample_types($year=null,$county=null,$partner=null)
+
+	function get_sampletypesData($year=null,$county=null,$partner=null)
 	{
 		$array1 = array();
 		$array2 = array();
@@ -715,11 +715,31 @@ class Summaries_model extends MY_Model
 			$array2 = $this->db->query($sql2)->result_array();
 		}
  
-		$result = array_merge($array1,$array2);
+		return array_merge($array1,$array2);
+	}
+ 
+	function sample_types($year=null,$county=null,$partner=null)
+	{
+		$result = $this->get_sampletypesData($year,$county,$partner);
 		// echo "<pre>";print_r($result);die();
 		$data['sample_types'][0]['name'] = 'EDTA';
 		$data['sample_types'][1]['name'] = 'DBS';
 		$data['sample_types'][2]['name'] = 'Plasma';
+		$data['sample_types'][3]['name'] = 'Suppression';
+
+		$data['sample_types'][0]['type'] = "column";
+		$data['sample_types'][1]['type'] = "column";
+		$data['sample_types'][2]['type'] = "column";
+		$data['sample_types'][3]['type'] = "spline";
+
+		$data['sample_types'][0]['yAxis'] = 1;
+		$data['sample_types'][1]['yAxis'] = 1;
+		$data['sample_types'][2]['yAxis'] = 1;
+
+		$data['sample_types'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['sample_types'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['sample_types'][2]['tooltip'] = array("valueSuffix" => ' ');
+		$data['sample_types'][3]['tooltip'] = array("valueSuffix" => ' %');
  
 		$count = 0;
 		
@@ -727,6 +747,7 @@ class Summaries_model extends MY_Model
 		$data["sample_types"][0]["data"][0]	= $count;
 		$data["sample_types"][1]["data"][0]	= $count;
 		$data["sample_types"][2]["data"][0]	= $count;
+		$data["sample_types"][3]["data"][0]	= $count;
  
 		foreach ($result as $key => $value) {
 			
@@ -735,10 +756,42 @@ class Summaries_model extends MY_Model
 				$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
 				$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
 				$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
+				$data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
 			
 		}
 		
 		return $data;
+	}
+
+	function download_sampletypes($year=null,$county=null,$partner=null)
+	{
+		$data = $this->get_sampletypesData($year,$county,$partner);
+		// echo "<pre>";print_r($result);die();
+		$this->load->helper('file');
+        $this->load->helper('download');
+        $delimiter = ",";
+        $newline = "\r\n";
+
+	    /** open raw memory as file, no need for temp files, be careful not to run out of memory thought */
+	    $f = fopen('php://memory', 'w');
+	    /** loop through array  */
+
+	    $b = array('Month', 'Year', 'EDTA', 'DBS', 'Plasma', 'Suppressed', 'Tests', 'Suppression');
+
+	    fputcsv($f, $b, $delimiter);
+
+	    foreach ($data as $line) {
+	        /** default php csv handler **/
+	        fputcsv($f, $line, $delimiter);
+	    }
+	    /** rewrind the "file" with the csv lines **/
+	    fseek($f, 0);
+	    /** modify header to be downloadable csv file **/
+	    header('Content-Type: application/csv');
+	    header('Content-Disposition: attachement; filename="'.Date('YmdH:i:s').'vl_sampleTypes.csv";');
+	    /** Send file to browser for download */
+	    fpassthru($f);
+
 	} 
 
 
@@ -799,7 +852,7 @@ class Summaries_model extends MY_Model
 
 		$result = $this->req($params);
 
-		echo "<pre>";print_r($result);die();
+		// echo "<pre>";print_r($result);die();
 
 		$data['stats'] = "<tr><td>" . $result->total_viralloads . "</td><td>" . $result->one . "</td><td>" . $result->two . "</td><td>" . $result->three . "</td><td>" . $result->three_g . "</td></tr>";
 

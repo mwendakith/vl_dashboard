@@ -623,27 +623,6 @@ BEGIN
 END //
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_sample_types`;
-DELIMITER //
-CREATE PROCEDURE `proc_get_vl_partner_regimen_sample_types`
-(IN P_id INT(11), IN R_id INT(11), IN filter_year INT(11))
-BEGIN
-  SET @QUERY =    "SELECT
-          `month`,
-          `year`,
-          SUM(`edta`) AS `edta`,
-          SUM(`dbs`) AS `dbs`,
-          SUM(`plasma`) AS `plasma` 
-    FROM `vl_partner_regimen`
-    WHERE 1";
-
-    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `regimen` = '",R_id,"' AND `year` = '",filter_year,"' GROUP BY `month` ORDER BY `year` ASC, `month` ");
-    
-    PREPARE stmt FROM @QUERY;
-    EXECUTE stmt;
-END //
-DELIMITER ;
-
 DROP PROCEDURE IF EXISTS `proc_get_vl_partner_county_regimen_outcomes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_partner_county_regimen_outcomes`
@@ -728,7 +707,11 @@ BEGIN
           `year`,
           SUM(`edta`) AS `edta`,
           SUM(`dbs`) AS `dbs`,
-          SUM(`plasma`) AS `plasma` 
+          SUM(`plasma`) AS `plasma`,
+          SUM(`Undetected`+`less1000`) AS `suppressed`,
+          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
+          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression` 
+
     FROM `vl_partner_age`
     WHERE 1";
 
@@ -738,6 +721,7 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
+
 
 DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_gender`;
 DELIMITER //
@@ -1827,7 +1811,10 @@ BEGIN
 					`year`,
 					`edta`,
 					`dbs`,
-					`plasma`
+					`plasma`,
+          (`Undetected`+`less1000`) AS `suppressed`,
+          (`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
+          ((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression`
 				FROM `vl_national_summary`
                 WHERE 1";
 
@@ -2419,12 +2406,15 @@ CREATE PROCEDURE `proc_get_partner_sample_types`
 (IN P_id INT(11), IN filter_year INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-					`month`,
-					`year`,
-					SUM(`edta`) AS `edta`,
- 					SUM(`dbs`) AS `dbs`,
- 					SUM(`plasma`) AS `plasma`
-				FROM `vl_partner_summary`
+          `month`,
+          `year`,
+          SUM(`edta`) AS `edta`,
+          SUM(`dbs`) AS `dbs`,
+          SUM(`plasma`) AS `plasma`,
+          SUM(`Undetected`+`less1000`) AS `suppressed`,
+          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
+          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression`
+        FROM `vl_partner_summary`
                 WHERE 1";
 
     SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `year` = '",filter_year,"' GROUP BY `year`, `month` ORDER BY `year` ASC, `month` ");
@@ -2433,6 +2423,7 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `proc_get_partner_sites_details`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_partner_sites_details`
@@ -2891,17 +2882,21 @@ BEGIN
 END //
 DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_get_regional_sample_types`;
+DROP PROCEDURE IF EXISTS `proc_get_regional_sample_types`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_regional_sample_types`
 (IN C_id INT(11), IN filter_year INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-					`month`,
-					`year`,
-					SUM(`edta`) AS `edta`,
- 					SUM(`dbs`) AS `dbs`,
- 					SUM(`plasma`) AS `plasma`
-				FROM `vl_county_summary`
+          `month`,
+          `year`,
+          SUM(`edta`) AS `edta`,
+          SUM(`dbs`) AS `dbs`,
+          SUM(`plasma`) AS `plasma`,
+          SUM(`Undetected`+`less1000`) AS `suppressed`,
+          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
+          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression`
+        FROM `vl_county_summary`
                 WHERE 1";
 
     SET @QUERY = CONCAT(@QUERY, " AND `county` = '",C_id,"' AND `year` = '",filter_year,"' GROUP BY `year`, `month` ORDER BY `year` ASC, `month` ");
@@ -2910,6 +2905,7 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `proc_get_regional_sitessending`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_regional_sitessending`
@@ -3563,7 +3559,10 @@ BEGIN
           `year`,
           SUM(`edta`) AS `edta`,
           SUM(`dbs`) AS `dbs`,
-          SUM(`plasma`) AS `plasma` 
+          SUM(`plasma`) AS `plasma`,
+          SUM(`Undetected`+`less1000`) AS `suppressed`,
+          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
+          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression` 
     FROM `vl_national_age`
     WHERE 1";
 
@@ -3573,6 +3572,7 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `proc_get_vl_age_vl_outcomes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_age_vl_outcomes`
@@ -4562,7 +4562,10 @@ BEGIN
           `year`,
           SUM(`edta`) AS `edta`,
           SUM(`dbs`) AS `dbs`,
-          SUM(`plasma`) AS `plasma` 
+          SUM(`plasma`) AS `plasma`,
+          SUM(`Undetected`+`less1000`) AS `suppressed`,
+          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
+          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression`  
     FROM `vl_partner_regimen`
     WHERE 1";
 
@@ -4572,6 +4575,7 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `proc_get_vl_partner_regimen_vl_outcomes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_partner_regimen_vl_outcomes`
@@ -5021,7 +5025,10 @@ BEGIN
           `year`,
           SUM(`edta`) AS `edta`,
           SUM(`dbs`) AS `dbs`,
-          SUM(`plasma`) AS `plasma` 
+          SUM(`plasma`) AS `plasma`,
+          SUM(`Undetected`+`less1000`) AS `suppressed`,
+          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
+          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression` 
     FROM `vl_national_regimen`
     WHERE 1";
 
@@ -5031,6 +5038,7 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `proc_get_vl_shortcodes_requests`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_shortcodes_requests`
@@ -5262,12 +5270,15 @@ CREATE PROCEDURE `proc_get_vl_subcounty_sample_types`
 (IN C_id INT(11), IN filter_year INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-					`month`,
-					`year`,
-					SUM(`edta`) AS `edta`,
- 					SUM(`dbs`) AS `dbs`,
- 					SUM(`plasma`) AS `plasma`
-				FROM `vl_subcounty_summary`
+          `month`,
+          `year`,
+          SUM(`edta`) AS `edta`,
+          SUM(`dbs`) AS `dbs`,
+          SUM(`plasma`) AS `plasma`,
+          SUM(`Undetected`+`less1000`) AS `suppressed`,
+          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
+          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression`
+        FROM `vl_subcounty_summary`
                 WHERE 1";
 
     SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",C_id,"' AND `year` = '",filter_year,"' GROUP BY `year`, `month` ORDER BY `year` ASC, `month` ");
@@ -5276,6 +5287,7 @@ BEGIN
     EXECUTE stmt;
 END //
 DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_shortcodes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_subcounty_shortcodes`

@@ -56,8 +56,24 @@ class Regimen extends MY_Controller
 	function sample_types($year=NULL,$regimen=NULL,$partner=NULL)
 	{
 		$data['outcomes'] = $this->regimen_model->regimen_samples($year,$regimen,$partner);
+		$link = $year . '/' . $regimen . '/' . $partner;
+
+		$data['link'] =  base_url('charts/regimen/download_sampletypes/' . $link);
 
     	$this->load->view('sample_types_view',$data);
+	}
+
+
+	function download_sampletypes($year=NULL,$regimen=NULL,$partner=NULL)
+	{
+		$this->regimen_model->download_sampletypes($year,$regimen,$partner);
+	}
+
+	function regimen_breakdowns($year=NULL,$month=NULL,$regimen=NULL,$to_year=NULL,$to_month=NULL,$county=null,$partner=null,$subcounty=null)
+	{
+		$data['outcomes'] = $this->regimen_model->regimens_breakdowns($year,$month,$regimen,$to_year,$to_month,$county,$partner,$subcounty);
+		
+		$this->load->view('age_breakdown_listing',$data);
 	}
 }
 ?>

@@ -307,7 +307,7 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
-	function regimen_samples($year=NULL,$regimen=NULL,$partner=NULL)
+	function get_sampletypesData($year=NULL,$regimen=NULL,$partner=null)
 	{
 		$array1 = array();
 		$array2 = array();
@@ -334,7 +334,6 @@ class Regimen_model extends MY_Model
 			$sql = "CALL `proc_get_vl_partner_regimen_sample_types`('".$partner."','".$regimen."','".$from."')";
 			$sql2 = "CALL `proc_get_vl_partner_regimen_sample_types`('".$partner."','".$regimen."','".$to."')";
 		}
-		
 		// echo "<pre>";print_r($sql);die();
 		$array1 = $this->db->query($sql)->result_array();
 		
@@ -342,31 +341,83 @@ class Regimen_model extends MY_Model
 			$this->db->close();
 			$array2 = $this->db->query($sql2)->result_array();
 		}
+ 
+		return array_merge($array1,$array2);
+	}
 
-		$result = array_merge($array1,$array2);
+	function regimen_samples($year=NULL,$regimen=NULL,$partner=NULL)
+	{
+		$result = $this->get_sampletypesData($year,$regimen,$partner);
 
 		$data['sample_types'][0]['name'] = 'EDTA';
 		$data['sample_types'][1]['name'] = 'DBS';
 		$data['sample_types'][2]['name'] = 'Plasma';
+		$data['sample_types'][3]['name'] = 'Suppression';
 
+		$data['sample_types'][0]['type'] = "column";
+		$data['sample_types'][1]['type'] = "column";
+		$data['sample_types'][2]['type'] = "column";
+		$data['sample_types'][3]['type'] = "spline";
+
+		$data['sample_types'][0]['yAxis'] = 1;
+		$data['sample_types'][1]['yAxis'] = 1;
+		$data['sample_types'][2]['yAxis'] = 1;
+
+		$data['sample_types'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['sample_types'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['sample_types'][2]['tooltip'] = array("valueSuffix" => ' ');
+		$data['sample_types'][3]['tooltip'] = array("valueSuffix" => ' %');
+ 
 		$count = 0;
 		
 		$data['categories'][0] = 'No Data';
 		$data["sample_types"][0]["data"][0]	= $count;
 		$data["sample_types"][1]["data"][0]	= $count;
 		$data["sample_types"][2]["data"][0]	= $count;
-
+		$data["sample_types"][3]["data"][0]	= $count;
+ 
 		foreach ($result as $key => $value) {
 			
 				$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
-
+ 
 				$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
 				$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
 				$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
+				$data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
 			
 		}
 		
 		return $data;
+	}
+
+	function download_sampletypes($year=NULL,$regimen=NULL,$partner=null)
+	{
+		$data = $this->get_sampletypesData($year,$regimen,$partner);
+		// echo "<pre>";print_r($result);die();
+		$this->load->helper('file');
+        $this->load->helper('download');
+        $delimiter = ",";
+        $newline = "\r\n";
+
+	    /** open raw memory as file, no need for temp files, be careful not to run out of memory thought */
+	    $f = fopen('php://memory', 'w');
+	    /** loop through array  */
+
+	    $b = array('Month', 'Year', 'EDTA', 'DBS', 'Plasma', 'Suppressed', 'Tests', 'Suppression');
+
+	    fputcsv($f, $b, $delimiter);
+
+	    foreach ($data as $line) {
+	        /** default php csv handler **/
+	        fputcsv($f, $line, $delimiter);
+	    }
+	    /** rewrind the "file" with the csv lines **/
+	    fseek($f, 0);
+	    /** modify header to be downloadable csv file **/
+	    header('Content-Type: application/csv');
+	    header('Content-Disposition: attachement; filename="'.Date('YmdH:i:s').'vl_regimensampleTypes.csv";');
+	    /** Send file to browser for download */
+	    fpassthru($f);
 	}
 
 	function county_outcomes($year=null,$month=null,$regimen=null,$to_year=null,$to_month=null,$partner=NULL)
@@ -431,6 +482,80 @@ class Regimen_model extends MY_Model
 			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
 		}
 		// echo "<pre>";print_r($data);die();
+		return $data;
+	}
+
+	function regimens_breakdowns($year=null,$month=null,$regimen=null,$to_year=null,$to_month=null,$county=null,$partner=null,$subcounty=null)
+	{
+		$default = 0;
+		$li = '';
+		$table = '';
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		//Assigning the value of the month or setting it to the selected value
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		if ($regimen==null || $regimen=='null') {
+			$regimen = $this->session->userdata('regimen_filter');
+		}
+
+		if ($county == 1 || $county == '1') {
+			$sql = "CALL `proc_get_vl_regimens_breakdowns_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$default."','".$default."')";
+			$div_name = 'countyLising';
+			$modal_name = 'countyModal';
+		} elseif ($partner == 1 || $partner == '1') {
+			$sql = "CALL `proc_get_vl_regimens_breakdowns_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$partner."','".$default."')";
+			$div_name = 'partnerLising';
+			$modal_name = 'partnerModal';
+		} elseif ($subcounty == 1 || $subcounty == '1') {
+			$sql = "CALL `proc_get_vl_regimens_breakdowns_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$subcounty."')";
+			$div_name = 'subcountyLising';
+			$modal_name = 'subcountyModal';
+		}
+
+		$result = $this->db->query($sql)->result_array();
+		
+		$count = 1;
+
+		if($result)
+		{
+			foreach ($result as $key => $value)
+			{
+				if ($count<16) {
+					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;&nbsp;&nbsp;'.round($value['percentage'],1).'%&nbsp;&nbsp;&nbsp;('.number_format($value['total']).')</a>';
+				}
+					$table .= '<tr>';
+					$table .= '<td>'.$count.'</td>';
+					$table .= '<td>'.$value['name'].'</td>';
+					$table .= '<td>'.number_format((int) $value['total']).'</td>';
+					$table .= '<td>'.number_format((int) $value['suppressed']).'</td>';
+					$table .= '<td>'.number_format((int) $value['nonsuppressed']).'</td>';
+					$table .= '<td>'.round($value['percentage'],1).'%</td>';
+					$table .= '</tr>';
+					$count++;
+			}
+		}else{
+			$li = 'No Data';
+		}
+		
+		$data = array(
+						'ul' => $li,
+						'table' => $table,
+						'div_name' => $div_name,
+						'modal_name' => $modal_name);
 		return $data;
 	}
 }

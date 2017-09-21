@@ -52,8 +52,19 @@ class Ages extends MY_Controller
 	function sample_types($year=NULL,$age=NULL,$partner=NULL)
 	{
 		$data['outcomes'] = $this->ages_model->ages_samples($year,$age,$partner);
+		$link = $year . '/' . $age . '/' . $partner;
+
+		$data['link'] =  base_url('charts/ages/download_sampletypes/' . $link);
 
     	$this->load->view('sample_types_view',$data);
 	}
+
+
+	function download_sampletypes($year=NULL,$age=NULL,$partner=NULL)
+	{
+		$this->ages_model->download_sampletypes($year,$age,$partner);
+	}
+
+
 }
 ?>
