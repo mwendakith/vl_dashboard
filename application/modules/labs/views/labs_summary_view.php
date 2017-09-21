@@ -106,5 +106,21 @@
 	</div>
 	
 </div>
+
+<div id="third">
+	<div class="row">
+	  <div class="col-md-12 col-sm-12 col-xs-12">
+	    <div class="panel panel-default">
+	      <div class="panel-heading">
+	        Samples Rejections <div class="display_date"></div>
+	      </div>
+	      <div class="panel-body" id="lab_rejections">
+	        <center><div class="loader"></div></center>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+</div>
 		
 <?php $this->load->view('labs_summary_view_footer'); ?>

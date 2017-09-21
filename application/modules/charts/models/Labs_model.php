@@ -563,6 +563,60 @@ class Labs_model extends MY_Model
 
 		return $data;
 	}
+
+	function rejections($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL){	
+
+		if($lab == NULL || $lab == 'null'){
+			$lab = 0;
+		}
+
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+			}else {
+				$month = 0;
+			}
+		}
+		
+		$sql = "CALL `proc_get_vl_lab_rejections`({$lab}, '{$year}', '{$month}', '{$to_year}', '{$to_month}' );";
+		
+		// echo "<pre>";print_r($sql);die();
+		
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+
+		$data['outcomes'][0]['name'] = "Rejected Samples";
+
+		$data['outcomes'][0]['type'] = "column";
+
+		$data['outcomes'][0]['yAxis'] = 1;
+
+		foreach ($result as $key => $value) {
+			$data['categories'][$key] = $value['alias'];
+		
+			$data['outcomes'][0]['data'][$key] = (int) $value['total'];
+		}
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+
+		if($lab == 0){
+			$data['title'] = "National Rejections";
+		}
+		else{
+			$data['title'] = "Lab Rejections";
+		}
+
+
+		return $data;
+	}
 	
 }
 ?>

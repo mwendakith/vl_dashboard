@@ -616,7 +616,14 @@ class Sites_model extends MY_Model
 			else{
 				$type = 5;
 			}
-		}		
+		}	
+
+		$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
+		$res = $this->db->query($sql)->row();
+
+		$this->db->close();
+
+		
 
 		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
 
@@ -628,8 +635,14 @@ class Sites_model extends MY_Model
 
 		$data['stats'] = "<tr><td>" . $result->total_viralloads . "</td><td>" . $result->one . "</td><td>" . $result->two . "</td><td>" . $result->three . "</td><td>" . $result->three_g . "</td></tr>";
 
+		$unmet = $res->totalartmar - $result->total_patients;
+		$unmet_p = round((($unmet / (int) $result->totalartmar) * 100),2);
+
 		$data['tests'] = $result->total_viralloads;
-		$data['patients'] = $result->total_patients;
+		$data['patients_vl'] = $result->total_patients;
+		$data['patients'] = $res->totalartmar;
+		$data['unmet'] = $unmet;
+		$data['unmet_p'] = $unmet_p;
 
 		return $data;
 	}
