@@ -10,14 +10,14 @@ BEGIN
 
 
     IF (lab != 0 && lab != '') THEN
-      SET @QUERY = CONCAT(@QUERY, " FROM `vl_lab_rejections` `v`");
+      SET @QUERY = CONCAT(@QUERY, " FROM `vl_lab_rejections` `v` ");
     ELSE
-        SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_rejections` `v`");
+        SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_rejections` `v` ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " WHERE 1 ");
-
     SET @QUERY = CONCAT(@QUERY, " LEFT JOIN `viralrejectedreasons` `vr` ON `v`.`rejected_reason` = `vr`.`ID`");
+
+    SET @QUERY = CONCAT(@QUERY, " WHERE 1 ");
 
 
     IF (from_month != 0 && from_month != '') THEN
@@ -31,6 +31,10 @@ BEGIN
     END IF;
     ELSE
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    IF (lab != 0 && lab != '') THEN
+      SET @QUERY = CONCAT(@QUERY, " AND `lab` = '",lab,"' ");
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " GROUP BY `vr`.`ID` ORDER BY `total` DESC ");
