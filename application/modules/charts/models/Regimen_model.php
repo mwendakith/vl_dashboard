@@ -485,7 +485,7 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
-	function regimens_breakdowns($year=null,$month=null,$regimen=null,$to_year=null,$to_month=null,$county=null,$partner=null,$subcounty=null)
+	function regimens_breakdowns($year=null,$month=null,$regimen=null,$to_year=null,$to_month=null,$county=null,$partner=null,$subcounty=null,$site=null)
 	{
 		$default = 0;
 		$li = '';
@@ -524,6 +524,10 @@ class Regimen_model extends MY_Model
 			$sql = "CALL `proc_get_vl_regimens_breakdowns_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$subcounty."')";
 			$div_name = 'subcountyLising';
 			$modal_name = 'subcountyModal';
+		} elseif ($site == 1 || $site == '1') {
+			$sql = "CALL `proc_get_vl_regimens_breakdowns_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$default."','".$site."')";
+			$div_name = 'siteLising';
+			$modal_name = 'siteLising';
 		}
 
 		$result = $this->db->query($sql)->result_array();

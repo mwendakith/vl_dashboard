@@ -83,6 +83,17 @@
 			  
 			</div>
 		</div>
+		<div class="col-md-4 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			  	Facilities <div class="display_date" ></div>
+			  </div>
+			  <div class="panel-body" id="facilitiesAge">
+			  	<center><div class="loader"></div></center>
+			  </div>
+			  
+			</div>
+		</div>
 	</div>
 	<div class="row">
 		<!-- Map of the country -->

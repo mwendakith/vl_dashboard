@@ -402,6 +402,10 @@ class Ages_model extends MY_Model
 			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$subcounty."')";
 			$div_name = 'subcountyLising';
 			$modal_name = 'subcountyModal';
+		} elseif ($site == 1 || $site == '1') {
+			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$default."','".$site."')";
+			$div_name = 'siteLising';
+			$modal_name = 'siteModal';
 		}
 
 		$result = $this->db->query($sql)->result_array();
