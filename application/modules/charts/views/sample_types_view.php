@@ -37,8 +37,7 @@
                         color: '#89A54E'
                     }
                 },
-                opposite: true
-    
+                opposite: true        
             }, { // Secondary yAxis
                 gridLineWidth: 0,
                 title: {

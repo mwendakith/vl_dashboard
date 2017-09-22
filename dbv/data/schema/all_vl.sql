@@ -4933,7 +4933,7 @@ BEGIN
 						SUM(`vns`.`less5000`+`vns`.`above5000`) AS `nonsuppressed`, 
 						SUM(`vns`.`Undetected`+`vns`.`less1000`) AS `suppressed` 
 						FROM `vl_national_sampletype` `vns`
-						LEFT JOIN `viralsampletype` `vs` 
+						LEFT JOIN `viralsampletypedetails` `vs` 
 						ON `vns`.`sampletype` = `vs`.`ID`
 					WHERE 1";
 
