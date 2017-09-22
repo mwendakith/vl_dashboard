@@ -59,7 +59,7 @@
 					$("#county").load("<?php echo base_url('charts/ages/age_county_outcomes'); ?>/"+null+"/"+null+"/"+age);
 					$("#countiesAge").load("<?= @base_url('charts/ages/age_breakdowns'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null+"/"+1);
 					$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null+"/"+null+"/"+1);
-					$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
+					$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
 					$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
 	        	}      	
 	        });
@@ -108,7 +108,7 @@
 						$("#county").load("<?php echo base_url('charts/ages/age_county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
 						$("#countiesAge").load("<?= @base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+1);
 						$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+1);
-						$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+1);
+						$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+null+"/"+1);
 						$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+1);
 					}
 				});
@@ -166,7 +166,7 @@
 					$("#county").load("<?php echo base_url('charts/ages/age_county_outcomes'); ?>/"+year+"/"+month+"/"+data);
 					$("#countiesAge").load("<?= @base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+to[1]+"/"+to[0]+"/"+1);
 					$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+1);
-					$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
+					$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
 					$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
 				}
 			});
