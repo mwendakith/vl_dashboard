@@ -74,7 +74,7 @@ class Summaries extends MY_Controller {
 
 		$data['link'] = base_url('charts/summaries/download_sampletypes/' . $link);
 
-    	$this->load->view('sample_types_view',$data);
+    	$this->load->view('national_sample_types',$data);
 	}
 
 	function download_sampletypes($year=NULL,$county=NULL,$partner=NULL)

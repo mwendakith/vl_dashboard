@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_regimens_breakdowns_outcomes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_regimens_breakdowns_outcomes`
-(IN filter_regimen INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11), IN county INT(11), IN partner INT(11), IN subcounty INT(11))
+(IN filter_regimen INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11), IN county INT(11), IN partner INT(11), IN subcounty INT(11), IN site INT(11))
 BEGIN
   SET @QUERY =    "SELECT
                     `c`.`name`,
@@ -18,6 +18,9 @@ BEGIN
     END IF;
     IF (subcounty != 0 && subcounty != '') THEN
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_subcounty_regimen` `vca` JOIN `districts` `c` ON `vca`.`subcounty` = `c`.`ID` WHERE 1 ");
+    END IF;
+    IF (site != 0 && site != '') THEN
+      SET @QUERY = CONCAT(@QUERY, " FROM `vl_site_regimen` `vca` JOIN `facilitys` `c` ON `vca`.`facility` = `c`.`ID` WHERE 1 ");
     END IF;
 
     IF (from_month != 0 && from_month != '') THEN

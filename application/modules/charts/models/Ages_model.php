@@ -363,7 +363,7 @@ class Ages_model extends MY_Model
 	    fpassthru($f);
 	}
 
-	function ages_breakdowns($year=null,$month=null,$age_cat=null,$to_year=null,$to_month=null,$county=null,$partner=null,$subcounty=null)
+	function ages_breakdowns($year=null,$month=null,$age_cat=null,$to_year=null,$to_month=null,$county=null,$partner=null,$subcounty=null,$site=null)
 	{
 		$default = 0;
 		$li = '';
@@ -391,17 +391,21 @@ class Ages_model extends MY_Model
 		}
 
 		if ($county == 1 || $county == '1') {
-			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$default."','".$default."')";
+			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$default."','".$default."','".$default."')";
 			$div_name = 'countyLising';
 			$modal_name = 'countyModal';
 		} elseif ($partner == 1 || $partner == '1') {
-			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$partner."','".$default."')";
+			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$partner."','".$default."','".$default."')";
 			$div_name = 'partnerLising';
 			$modal_name = 'partnerModal';
 		} elseif ($subcounty == 1 || $subcounty == '1') {
-			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$subcounty."')";
+			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$subcounty."','".$default."')";
 			$div_name = 'subcountyLising';
 			$modal_name = 'subcountyModal';
+		} elseif ($site == 1 || $site == '1') {
+			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$default."','".$site."')";
+			$div_name = 'siteLising';
+			$modal_name = 'siteModal';
 		}
 
 		$result = $this->db->query($sql)->result_array();
