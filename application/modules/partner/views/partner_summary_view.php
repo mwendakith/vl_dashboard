@@ -72,40 +72,42 @@
 		</div>
 	</div>
 
-	
-	<div class="col-md-6 col-sm-12 col-xs-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		    Longitudinal Patient Tracking Statistics <div class="display_date"></div>
-		  </div>
-		  <div class="panel-body" id="pat_stats">
-		    <center><div class="loader"></div></center>
-		  </div>
-		</div>
-	</div>
-	<div class="col-md-6 col-sm-12 col-xs-12">
-		<div class="row">
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="panel panel-default">
-				  <div class="panel-heading">
-				    Patients Outcomes <div class="display_date"></div>
-				  </div>
-				  <div class="panel-body" id="pat_out">
-				    <center><div class="loader"></div></center>
-				  </div>
-				</div>
-			</div>
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="panel panel-default">
-				  <div class="panel-heading">
-				    Patients Graphs <div class="display_date"></div>
-				  </div>
-				  <div class="panel-body" id="pat_graph">
-				    <center><div class="loader"></div></center>
-				  </div>
-				</div>
+
+	<div class="row">	
+		<div class="col-md-6 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    Longitudinal Patient Tracking Statistics <div class="display_date"></div>
+			  </div>
+			  <div class="panel-body" id="pat_stats">
+			    <center><div class="loader"></div></center>
+			  </div>
 			</div>
 		</div>
+		<div class="col-md-6 col-sm-12 col-xs-12">
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="panel panel-default">
+					  <div class="panel-heading">
+					    Patients Outcomes <div class="display_date"></div>
+					  </div>
+					  <div class="panel-body" id="pat_out">
+					    <center><div class="loader"></div></center>
+					  </div>
+					</div>
+				</div>
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="panel panel-default">
+					  <div class="panel-heading">
+					    Patients Graphs <div class="display_date"></div>
+					  </div>
+					  <div class="panel-body" id="pat_graph">
+					    <center><div class="loader"></div></center>
+					  </div>
+					</div>
+				</div>
+			</div>
+		</div>	
 	</div>	
 	
 </div>
