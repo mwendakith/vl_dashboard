@@ -843,7 +843,8 @@ class Summaries_model extends MY_Model
 		$data['stats'] = "<tr><td>" . $result->total_viralloads . "</td><td>" . $result->one . "</td><td>" . $result->two . "</td><td>" . $result->three . "</td><td>" . $result->three_g . "</td></tr>";
 
 		$data['tests'] = $result->total_viralloads;
-		$data['patients'] = $result->total_patients;
+		$data['patients_vl'] = $result->total_patients;
+
 
 		return $data;
 	}
