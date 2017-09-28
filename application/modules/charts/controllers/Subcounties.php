@@ -43,14 +43,14 @@ class Subcounties extends MY_Controller
     	$this->load->view('agegroup_view',$data);
 	}
 
-	function sample_types($year=NULL,$subcounty=NULL)
+	function sample_types($year=NULL,$subcounty=NULL, $all=NULL)
 	{
-		$data['outcomes'] = $this->subcounty_model->subcounty_samples($year,$subcounty);
+		$data['outcomes'] = $this->subcounty_model->subcounty_samples($year,$subcounty, $all);
 		$link = $year . '/' . $subcounty;
 
 		$data['link'] = base_url('charts/subcounties/download_sampletypes/' . $link);
 
-    	$this->load->view('sample_types_view',$data);
+    	$this->load->view('national_sample_types',$data);
 	}
 
 	function download_sampletypes($year=NULL,$subcounty=NULL)

@@ -258,8 +258,14 @@ class Sites_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_sites_vl_outcomes`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		$sql2 = "CALL `proc_get_vl_current_suppression`('4','".$site."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
+
+		$this->db->close();
+		$current = $this->db->query($sql2)->row();
+		$this->db->close();
+		
 		// echo "<pre>";print_r($result);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
 
@@ -287,6 +293,12 @@ class Sites_model extends MY_Model
 	    	// </tr>
 	    	// <tr>
 			$data['ul'] .= '
+			<tr>
+	    		<td>Current Suppressed:</td>
+	    		<td>'.number_format($current->suppressed) . ' (' . round($current->suppression, 2) .'%)</td>
+	    		<td>Current Non Suppressed</td>
+	    		<td>'. number_format($current->nonsuppressed) . '</td>
+	    	</tr>
 			<tr>
 	    		<td>Total VL tests done:</td>
 	    		<td>'.number_format($total_tests ).'</td>
@@ -618,14 +630,17 @@ class Sites_model extends MY_Model
 			}
 		}	
 
-		$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
-		$res = $this->db->query($sql)->row();
-
-		
-
 		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
 
 		$facility = $query->facilitycode;
+
+		$this->db->close();
+
+		$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
+		$res = $this->db->query($sql)->row();
+
+		$this->db->close();
+		
 
 		$params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 

@@ -1,5 +1,6 @@
 <script type="text/javascript">
 	$().ready(function () {
+		localStorage.setItem("my_var", 0);
 		$.get("<?php echo base_url();?>template/dates", function(data){
     		obj = $.parseJSON(data);
 	
@@ -22,6 +23,7 @@
 			// console.log(em);
 			// Send the data using post
 	        var posting = $.post( "<?php echo base_url();?>template/filter_sub_county_data", { subCounty: em } );
+	        var all = localStorage.getItem("my_var");
 	     
 	   //      // Put the results in a div
 	        posting.done(function( subcounty ) {
@@ -60,7 +62,7 @@
 					$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/subcounty_vl_outcomes'); ?>");
 					$("#gender").load("<?php echo base_url('charts/subcounties/subcounty_gender'); ?>/"+null+"/"+null+"/"+subcounty);
 					$("#age").load("<?php echo base_url('charts/subcounties/subcounty_age'); ?>/"+null+"/"+null+"/"+subcounty); 
-					$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+null+"/"+subcounty);
+					$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+null+"/"+subcounty+"/"+all);
 					$("#sub_counties").load("<?php echo base_url('charts/subcounties/subcounty_sites'); ?>/"+null+"/"+null+"/"+subcounty);
 
 	        	}      	
@@ -82,6 +84,7 @@
 		     	[1] => year*/
 		    to 	= format_date(second);
 		    var error_check = check_error_date_range(from, to);
+		    var all = localStorage.getItem("my_var");
 		    
 		    if (!error_check) {
 			    $.get("<?php echo base_url('county/check_subcounty_select');?>", function( data ){
@@ -104,7 +107,7 @@
 						$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/subcounty_vl_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
 						$("#gender").load("<?php echo base_url('charts/subcounties/subcounty_gender'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
 						$("#age").load("<?php echo base_url('charts/subcounties/subcounty_age'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
-						$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+from[1]+"/"+data);
+						$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+from[1]+"/"+data+"/"+all);
 						$("#subcounties").load("<?php echo base_url('charts/subcounties/subcounty_sites'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
 					}
 				});
@@ -124,6 +127,7 @@
  		}
  		// console.log(year+"<___>"+month);
  		var posting = $.post( '<?php echo base_url();?>template/filter_date_data', { 'year': year, 'month': month } );
+ 		var all = localStorage.getItem("my_var");
 
  		// Put the results in a div
 		posting.done(function( data ) {
@@ -155,11 +159,32 @@
 					$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/subcounty_vl_outcomes'); ?>/"+year+"/"+month+"/"+data);
 					$("#gender").load("<?php echo base_url('charts/subcounties/subcounty_gender'); ?>/"+year+"/"+month+"/"+data);
 					$("#age").load("<?php echo base_url('charts/subcounties/subcounty_age'); ?>/"+year+"/"+month+"/"+data); 
-					$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+year+"/"+data);
+					$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+year+"/"+data+"/"+all);
 					$("#subcounties").load("<?php echo base_url('charts/subcounties/subcounty_sites'); ?>/"+year+"/"+month+"/"+data); 
 				}
 			});
 			
 		}); 
+	}
+
+	function switch_source(){
+		var all = localStorage.getItem("my_var");
+
+		if(all == 0){
+			localStorage.setItem("my_var", 1);
+			all=1;
+			$("#samples_heading").html('Testing Trends for All Tests');
+
+		}
+		else{
+			localStorage.setItem("my_var", 0);
+			all=0;
+			$("#samples_heading").html('Testing Trends for Routine VL');
+		}
+		$.get("<?php echo base_url();?>county/check_subcounty_select", function (data) {
+			data = $.parseJSON(data);
+			if(data == 0){data = null;}
+			$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+null+"/"+data+"/"+all);
+		});
 	}
 </script>
