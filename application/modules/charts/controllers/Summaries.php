@@ -73,8 +73,14 @@ class Summaries extends MY_Controller {
 		$link = $year . '/' . $county . '/' . $partner;
 
 		$data['link'] = base_url('charts/summaries/download_sampletypes/' . $link);
-
-    	$this->load->view('national_sample_types',$data);
+		if ($partner == NULL || $partner == 'NULL' || $partner == null || $partner == 'null') {
+			// echo "<pre>";print_r("This is not");die();
+			$view = 'national_sample_types';
+		} else {
+			// echo "<pre>";print_r("This is partner");die();
+			$view = 'sample_types_view';
+		}
+		$this->load->view('national_sample_types',$data);
 	}
 
 	function download_sampletypes($year=NULL,$county=NULL,$partner=NULL)
