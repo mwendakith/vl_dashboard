@@ -3,7 +3,7 @@
 		localStorage.setItem("my_var", 0);
 		$.get("<?php echo base_url();?>template/dates", function(data){
     		obj = $.parseJSON(data);
-			console.log(obj);
+			// console.log(obj);
 			if(obj['month'] == "null" || obj['month'] == null){
 				obj['month'] = "";
 			}
@@ -152,12 +152,14 @@
 			localStorage.setItem("my_var", 1);
 			all=1;
 			$("#samples_heading").html('Testing Trends for All Tests');
+			$("#switchButton").val('Click to Switch to Routine Tests Trend');
 
 		}
 		else{
 			localStorage.setItem("my_var", 0);
 			all=0;
 			$("#samples_heading").html('Testing Trends for Routine VL');
+			$("#switchButton").val('Click to Switch to All Tests');
 		}
 		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+all);
 

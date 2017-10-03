@@ -739,27 +739,6 @@ class Summaries_model extends MY_Model
 		$data['sample_types'][1]['name'] = 'DBS';
 		$data['sample_types'][2]['name'] = 'Plasma';
 		// $data['sample_types'][3]['name'] = 'Suppression';
-		if ($partner == null || $partner == 'null') {
-			$partner = null;
-		}
-
-		if ($partner != null || $partner != 'null' || $partner != NULL || $partner != 'NULL') {
-			$data['sample_types'][3]['name'] = 'Suppression';
-
-			$data['sample_types'][0]['type'] = "column";
-			$data['sample_types'][1]['type'] = "column";
-			$data['sample_types'][2]['type'] = "column";
-			$data['sample_types'][3]['type'] = "spline";
-
-			$data['sample_types'][0]['yAxis'] = 1;
-			$data['sample_types'][1]['yAxis'] = 1;
-			$data['sample_types'][2]['yAxis'] = 1;
-
-			$data['sample_types'][0]['tooltip'] = array("valueSuffix" => ' ');
-			$data['sample_types'][1]['tooltip'] = array("valueSuffix" => ' ');
-			$data['sample_types'][2]['tooltip'] = array("valueSuffix" => ' ');
-			$data['sample_types'][3]['tooltip'] = array("valueSuffix" => ' %');
-		}
  
 		$count = 0;
 		
@@ -771,16 +750,6 @@ class Summaries_model extends MY_Model
  
 		foreach ($result as $key => $value) {
 			
-// <<<<<<< HEAD
-// 			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
-
-// 			$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
-// 			$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
-// 			$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
-// 			if ($partner != null || $partner != 'null' || $partner != NULL || $partner != 'NULL') {
-// 				$data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
-// 			}
-// =======
 				$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
 
 				if($all == 1){
@@ -795,8 +764,9 @@ class Summaries_model extends MY_Model
  				}
 
 				// $data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
+			
 		}
-		// echo "<pre>";print_r($data);die();
+		
 		return $data;
 	}
 
