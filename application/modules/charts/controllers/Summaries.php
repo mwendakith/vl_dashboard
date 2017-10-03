@@ -67,9 +67,9 @@ class Summaries extends MY_Controller {
     	$this->load->view('gender_view',$data);
 	}
 
-	function sample_types($year=NULL,$county=NULL,$partner=NULL)
+	function sample_types($year=NULL,$county=NULL,$partner=NULL, $all=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->sample_types($year,$county,$partner);
+		$data['outcomes'] = $this->summaries_model->sample_types($year,$county,$partner, $all);
 		$link = $year . '/' . $county . '/' . $partner;
 
 		$data['link'] = base_url('charts/summaries/download_sampletypes/' . $link);

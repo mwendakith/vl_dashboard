@@ -1,5 +1,6 @@
 <script type="text/javascript">
 	$().ready(function () {
+		localStorage.setItem("my_var", 0);
 		$.get("<?php echo base_url();?>template/dates", function(data){
     		obj = $.parseJSON(data);
 	
@@ -16,6 +17,7 @@
 		
 		// fetching the data for a specific partner
 		$("select").change(function(){
+			var all = localStorage.getItem("my_var");
 			part = $(this).val();
 			// Send the data using post
 	        var posting = $.post( "<?php echo base_url();?>template/filter_partner_data", { partner: part } );
@@ -57,7 +59,7 @@
 					$("#pat_out").html("<center><div class='loader'></div></center>");
 					$("#pat_graph").html("<center><div class='loader'></div></center>");
 
-					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+data);
+					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+data+"/"+all);
 					$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+data);
 					$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+null+"/"+null+"/"+null+"/"+data);
 					$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+null+"/"+null+"/"+null+"/"+data);
@@ -74,6 +76,7 @@
 		});
 
 		$("button").click(function () {
+			var all = localStorage.getItem("my_var");
 		    var first, second;
 		    first = $(".date-picker[name=startDate]").val();
 		    second = $(".date-picker[name=endDate]").val();
@@ -116,7 +119,7 @@
 						$("#pat_out").html("<center><div class='loader'></div></center>");
 						$("#pat_graph").html("<center><div class='loader'></div></center>");
 
-						$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+from[1]+"/"+from[0]+"/"+partner+"/"+to[1]+"/"+to[0]);
+						$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+from[1]+"/"+null+"/"+partner+"/"+all);
 						$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[1]+"/"+to[0]);
 						$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[1]+"/"+to[0]);
 						$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[1]+"/"+to[0]);
@@ -144,6 +147,7 @@
  			month = null;
  		}
 
+ 		var all = localStorage.getItem("my_var");
  		var posting = $.post( '<?php echo base_url();?>template/filter_date_data', { 'year': year, 'month': month } );
 
  		// Put the results in a div
@@ -182,7 +186,7 @@
 					$("#pat_out").html("<center><div class='loader'></div></center>");
 					$("#pat_graph").html("<center><div class='loader'></div></center>");
 
-					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year+"/"+month+"/"+partner);
+					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year+"/"+month+"/"+partner+"/"+all);
 					$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+year+"/"+month+"/"+null+"/"+partner);
 					$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+year+"/"+month+"/"+null+"/"+partner);
 					$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+year+"/"+month+"/"+null+"/"+partner);
@@ -194,6 +198,26 @@
 					$("#pat_graph").load("<?php echo base_url('charts/summaries/get_patients_graph');?>/"+year+"/"+month+"/"+null+"/"+partner);
 				}
 			});
+		});
+	}
+
+	function switch_source(){
+		var all = localStorage.getItem("my_var");
+
+		if(all == 0){
+			localStorage.setItem("my_var", 1);
+			all=1;
+			$("#samples_heading").html('Testing Trends for All Tests');
+
+		}
+		else{
+			localStorage.setItem("my_var", 0);
+			all=0;
+			$("#samples_heading").html('Testing Trends for Routine VL');
+		}
+		$.get("<?php echo base_url();?>partner/check_partner_select", function (data) {
+			if(data == 0){data = null;}
+			$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+data+"/"+all);
 		});
 	}
 

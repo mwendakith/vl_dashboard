@@ -173,13 +173,16 @@ class Summaries_model extends MY_Model
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+			$sql3 = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
 		} else {
 			if ($county==null || $county=='null') {
 				$sql = "CALL `proc_get_national_vl_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_national_sitessending`('".$year."','".$month."','".$to_year."','".$to_month."')";
+				$sql3 = "CALL `proc_get_vl_current_suppression`('0','0')";
 			} else {
 				$sql = "CALL `proc_get_regional_vl_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_regional_sitessending`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+				$sql3 = "CALL `proc_get_vl_current_suppression`('1','".$county."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);echo "</pre>";
@@ -187,6 +190,9 @@ class Summaries_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		$this->db->close();
 		$sitessending = $this->db->query($sql2)->result_array();
+		$this->db->close();
+		$current = $this->db->query($sql3)->row();
+		$this->db->close();
 		// echo "<pre>";print_r($result);echo "</pre>";
 		// echo "<pre>";print_r($sitessending);echo "</pre>";die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
@@ -215,6 +221,12 @@ class Summaries_model extends MY_Model
 	    	// </tr>
 	    	// <tr>
 			$data['ul'] .= '
+			<tr>
+	    		<td>Current Suppressed:</td>
+	    		<td>'.number_format($current->suppressed) . ' (' . round($current->suppression, 2) .'%)</td>
+	    		<td>Current Non Suppressed</td>
+	    		<td>'. number_format($current->nonsuppressed) . '</td>
+	    	</tr>
 			<tr>
 	    		<td>Total VL tests done:</td>
 	    		<td>'.number_format($total_tests ).'</td>
@@ -696,29 +708,30 @@ class Summaries_model extends MY_Model
 		$from = $to-1;
  
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_sample_types`('".$partner."','".$from."')";
-			$sql2 = "CALL `proc_get_partner_sample_types`('".$partner."','".$to."')";
+			$sql = "CALL `proc_get_partner_sample_types`('".$partner."','".$from."','".$to."')";
+			// $sql2 = "CALL `proc_get_partner_sample_types`('".$partner."','".$to."')";
 		} else {
 			if ($county==null || $county=='null') {
 				$sql = "CALL `proc_get_national_sample_types`('".$from."','".$to."')";
 			} else {
-				$sql = "CALL `proc_get_regional_sample_types`('".$county."','".$from."')";
-				$sql2 = "CALL `proc_get_regional_sample_types`('".$county."','".$to."')";
+				$sql = "CALL `proc_get_regional_sample_types`('".$county."','".$from."','".$to."')";
+				// $sql2 = "CALL `proc_get_regional_sample_types`('".$county."','".$to."')";
 			}
 		}
 		// echo "<pre>";print_r($sql);echo "</pre>";
 		// echo "<pre>";print_r($sql2);die();
 		$array1 = $this->db->query($sql)->result_array();
+		return $array1;
 		
-		if ($sql2) {
-			$this->db->close();
-			$array2 = $this->db->query($sql2)->result_array();
-		}
+		// if ($sql2) {
+		// 	$this->db->close();
+		// 	$array2 = $this->db->query($sql2)->result_array();
+		// }
  
-		return array_merge($array1,$array2);
+		// return array_merge($array1,$array2);
 	}
  
-	function sample_types($year=null,$county=null,$partner=null)
+	function sample_types($year=null,$county=null,$partner=null, $all=null)
 	{
 		$result = $this->get_sampletypesData($year,$county,$partner);
 		// echo "<pre>";print_r($result);die();
@@ -758,16 +771,32 @@ class Summaries_model extends MY_Model
  
 		foreach ($result as $key => $value) {
 			
-			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
+// <<<<<<< HEAD
+// 			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
 
-			$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
-			$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
-			$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
-			if ($partner != null || $partner != 'null' || $partner != NULL || $partner != 'NULL') {
-				$data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
-			}
+// 			$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
+// 			$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
+// 			$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
+// 			if ($partner != null || $partner != 'null' || $partner != NULL || $partner != 'NULL') {
+// 				$data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
+// 			}
+// =======
+				$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
+
+				if($all == 1){
+ 					$data["sample_types"][0]["data"][$key]	= (int) $value['alledta'];
+					$data["sample_types"][1]["data"][$key]	= (int) $value['alldbs'];
+					$data["sample_types"][2]["data"][$key]	= (int) $value['allplasma'];
+				}
+ 				else{
+ 					$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
+					$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
+					$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
+ 				}
+
+				// $data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
 		}
-		echo "<pre>";print_r($data);die();
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
@@ -784,7 +813,7 @@ class Summaries_model extends MY_Model
 	    $f = fopen('php://memory', 'w');
 	    /** loop through array  */
 
-	    $b = array('Month', 'Year', 'EDTA', 'DBS', 'Plasma', 'Suppressed', 'Tests', 'Suppression');
+	    $b = array('Month', 'Year', 'EDTA', 'DBS', 'Plasma', 'ALL EDTA', 'ALL DBS', 'ALL Plasma', 'Suppressed', 'Tests', 'Suppression');
 
 	    fputcsv($f, $b, $delimiter);
 
@@ -845,27 +874,36 @@ class Summaries_model extends MY_Model
 			}
 		}	
 
+		$sql;
+
 		if ($partner) {
 			$params = "patient/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+			$sql = "Select sum(totalartmar) as totalartmar from view_facilitys where partner='{$partner}'";
 		} else {
 			if ($county==null || $county=='null') {
 				$params = "patient/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+				$sql = "Select sum(totalartmar) as totalartmar from view_facilitys'";
 			} else {
 				$query = $this->db->get_where('CountyMFLCode', array('id' => $county), 1)->row();
 				$c = $query->CountyMFLCode;
 
 				$params = "patient/county/{$c}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+				$sql = "Select sum(totalartmar) as totalartmar from view_facilitys where county='{$county}'";
 			}
 		}
+		$this->db->close();
 
 		$result = $this->req($params);
+		$res = $this->db->query($sql)->row();
 
 		// echo "<pre>";print_r($result);die();
 
 		$data['stats'] = "<tr><td>" . $result->total_viralloads . "</td><td>" . $result->one . "</td><td>" . $result->two . "</td><td>" . $result->three . "</td><td>" . $result->three_g . "</td></tr>";
 
 		$data['tests'] = $result->total_viralloads;
-		$data['patients'] = $result->total_patients;
+		$data['patients_vl'] = $result->total_patients;
+		$data['patients'] = $res->totalartmar;
+
 
 		return $data;
 	}

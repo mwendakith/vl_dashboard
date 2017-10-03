@@ -1,5 +1,6 @@
 <script type="text/javascript">
 	$().ready(function(){
+		localStorage.setItem("my_var", 0);
 		$.get("<?php echo base_url();?>template/dates", function(data){
     		obj = $.parseJSON(data);
 			console.log(obj);
@@ -22,6 +23,7 @@
 
 		$("select").change(function(){
 			em = $(this).val();
+			var all = localStorage.getItem("my_var");
 
 			// Send the data using post
 	        var posting = $.post( "<?php echo base_url();?>template/filter_county_data", { county: em } );
@@ -54,7 +56,7 @@
 				$("#gender").html("<center><div class='loader'></div></center>");
 				
 				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
-				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+data);
+				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+data+"/"+null+"/"+all);
 				$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+null+"/"+null+"/"+data); 
 				$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+null+"/"+null+"/"+data); 
 				$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+null+"/"+null+"/"+data); 
@@ -67,6 +69,7 @@
 		    var first, second;
 		    first = $(".date-picker[name=startDate]").val();
 		    second = $(".date-picker[name=endDate]").val();
+		    var all = localStorage.getItem("my_var");
 		    
 		    var new_title = set_multiple_date(first, second);
 
@@ -89,7 +92,7 @@
 		 		$("#county").html("<center><div class='loader'></div></center>");
 
 				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
-				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+from[1]);
+				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+from[1]+"/"+null+"/"+null+"/"+all);
 		 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
 				$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]); 
 				$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]); 
@@ -110,6 +113,7 @@
  			month = null;
  		}
 
+ 		var all = localStorage.getItem("my_var");
  		var posting = $.post( '<?php echo base_url();?>template/filter_date_data', { 'year': year, 'month': month } );
 
  		// Put the results in a div
@@ -133,12 +137,30 @@
  		$("#county").html("<center><div class='loader'></div></center>");
 
 		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+year+"/"+month);
-		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year);
+		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year+"/"+null+"/"+null+"/"+all);
  		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+year+"/"+month);
 		$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+year+"/"+month); 
 		$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+year+"/"+month); 
 		$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>/"+year+"/"+month);
 		$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+year+"/"+month); 
+	}
+
+	function switch_source(){
+		var all = localStorage.getItem("my_var");
+
+		if(all == 0){
+			localStorage.setItem("my_var", 1);
+			all=1;
+			$("#samples_heading").html('Testing Trends for All Tests');
+
+		}
+		else{
+			localStorage.setItem("my_var", 0);
+			all=0;
+			$("#samples_heading").html('Testing Trends for Routine VL');
+		}
+		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+all);
+
 	}
 
 	function ageModal()
@@ -150,9 +172,9 @@
 
 	function justificationModal()
 	{
-		alert('Why are you not working!');
-		// $('#justificationmodal').modal('show');
-		// $('#CatJust').load('<?php echo base_url();?>charts/summaries/justificationbreakdown');
+		// alert('Why are you not working!');
+		$('#justificationmodal').modal('show');
+		$('#CatJust').load('<?php echo base_url();?>charts/summaries/justificationbreakdown');
 	}
 	
 </script>

@@ -91,8 +91,14 @@ class Subcounty_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_vl_subcounty_vl_outcomes`('".$subcounty."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		$sql2 = "CALL `proc_get_vl_current_suppression`('2','".$subcounty."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
+
+		$this->db->close();
+		$current = $this->db->query($sql2)->row();
+		$this->db->close();
+		
 
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
 
@@ -114,6 +120,12 @@ class Subcounty_model extends MY_Model
 			$greater = (int) ($value['less5000']+$value['above5000']);
 
 			$data['ul'] .= '
+			<tr>
+	    		<td>Current Suppressed:</td>
+	    		<td>'.number_format($current->suppressed) . ' (' . round($current->suppression, 2) .'%)</td>
+	    		<td>Current Non Suppressed</td>
+	    		<td>'. number_format($current->nonsuppressed) . '</td>
+	    	</tr>
 			<tr>
 	    		<td>Total VL tests done:</td>
 	    		<td>'.number_format( (int) $value['alltests']).'</td>
@@ -281,41 +293,41 @@ class Subcounty_model extends MY_Model
 		}
 		$from = $to-1;
 
-		$sql = "CALL `proc_get_vl_subcounty_sample_types`('".$subcounty."','".$from."')";
-		$sql2 = "CALL `proc_get_vl_subcounty_sample_types`('".$subcounty."','".$to."')";
+		$sql = "CALL `proc_get_vl_subcounty_sample_types`('".$subcounty."','".$from."','".$to."')";
 		// echo "<pre>";print_r($sql);die();
 		$array1 = $this->db->query($sql)->result_array();
+		return $array1;
 		
-		if ($sql2) {
-			$this->db->close();
-			$array2 = $this->db->query($sql2)->result_array();
-		}
+		// if ($sql2) {
+		// 	$this->db->close();
+		// 	$array2 = $this->db->query($sql2)->result_array();
+		// }
  
-		return array_merge($array1,$array2);
+		// return array_merge($array1,$array2);
 	}
 
-	function subcounty_samples($year=NULL,$subcounty=NULL)
+	function subcounty_samples($year=NULL,$subcounty=NULL, $all=null)
 	{
 		$result = $this->get_sampletypesData($year,$subcounty);
 
 		$data['sample_types'][0]['name'] = 'EDTA';
 		$data['sample_types'][1]['name'] = 'DBS';
 		$data['sample_types'][2]['name'] = 'Plasma';
-		$data['sample_types'][3]['name'] = 'Suppression';
+		// $data['sample_types'][3]['name'] = 'Suppression';
 
-		$data['sample_types'][0]['type'] = "column";
-		$data['sample_types'][1]['type'] = "column";
-		$data['sample_types'][2]['type'] = "column";
-		$data['sample_types'][3]['type'] = "spline";
+		// $data['sample_types'][0]['type'] = "column";
+		// $data['sample_types'][1]['type'] = "column";
+		// $data['sample_types'][2]['type'] = "column";
+		// $data['sample_types'][3]['type'] = "spline";
 
-		$data['sample_types'][0]['yAxis'] = 1;
-		$data['sample_types'][1]['yAxis'] = 1;
-		$data['sample_types'][2]['yAxis'] = 1;
+		// $data['sample_types'][0]['yAxis'] = 1;
+		// $data['sample_types'][1]['yAxis'] = 1;
+		// $data['sample_types'][2]['yAxis'] = 1;
 
 		$data['sample_types'][0]['tooltip'] = array("valueSuffix" => ' ');
 		$data['sample_types'][1]['tooltip'] = array("valueSuffix" => ' ');
 		$data['sample_types'][2]['tooltip'] = array("valueSuffix" => ' ');
-		$data['sample_types'][3]['tooltip'] = array("valueSuffix" => ' %');
+		// $data['sample_types'][3]['tooltip'] = array("valueSuffix" => ' %');
  
 		$count = 0;
 		
@@ -323,16 +335,22 @@ class Subcounty_model extends MY_Model
 		$data["sample_types"][0]["data"][0]	= $count;
 		$data["sample_types"][1]["data"][0]	= $count;
 		$data["sample_types"][2]["data"][0]	= $count;
-		$data["sample_types"][3]["data"][0]	= $count;
+		// $data["sample_types"][3]["data"][0]	= $count;
  
 		foreach ($result as $key => $value) {
 			
-				$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
- 
+			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
+
+			if ($all == 1) {
+				$data["sample_types"][0]["data"][$key]	= (int) $value['alledta'];
+				$data["sample_types"][1]["data"][$key]	= (int) $value['alldbs'];
+				$data["sample_types"][2]["data"][$key]	= (int) $value['allplasma'];
+			}else{
 				$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
 				$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
 				$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
-				$data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
+			}
+				// $data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
 			
 		}
 		
@@ -352,7 +370,7 @@ class Subcounty_model extends MY_Model
 	    $f = fopen('php://memory', 'w');
 	    /** loop through array  */
 
-	    $b = array('Month', 'Year', 'EDTA', 'DBS', 'Plasma', 'Suppressed', 'Tests', 'Suppression');
+	    $b = array('Month', 'Year', 'EDTA', 'DBS', 'Plasma', 'ALL EDTA', 'ALL DBS', 'ALL Plasma', 'Suppressed', 'Tests', 'Suppression');
 
 	    fputcsv($f, $b, $delimiter);
 

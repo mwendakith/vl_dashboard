@@ -9,6 +9,9 @@ BEGIN
 					`edta`,
 					`dbs`,
 					`plasma`,
+					`alledta`,
+					`alldbs`,
+					`allplasma`,
 					(`Undetected`+`less1000`) AS `suppressed`,
 					(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
 					((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression`

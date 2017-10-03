@@ -74,6 +74,14 @@ class Labs extends MY_Controller
 		$this->load->view('lab_results_outcome', $data);
 	}
 
+	function rejections($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['trends'] = $this->labs_model->rejections($lab, $year,$month,$to_year,$to_month);
+		$data['div_name'] = "total_lab_rejections";
+		
+		$this->load->view('trends_outcomes_view', $data);
+	}
+
 	function display_date()
 	{
 		echo "(".$this->session->userdata('filter_year')." ".$this->labs_model->resolve_month($this->session->userdata('filter_month')).")";
