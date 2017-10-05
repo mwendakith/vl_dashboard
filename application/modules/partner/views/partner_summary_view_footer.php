@@ -37,14 +37,15 @@
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 		    	});
 	        	// Condition to dispay the proper divs based on whether a partner is selected or not
-	        	if (data=='null') {
+	        	data = $.parseJSON(data);
+	        	if (data==null) {
 	        		$("#second").hide();
 					$("#third").hide();
 					// fetching the partner outcomes
 					$("#partner_div").html("<center><div class='loader'></div></center>");
 					$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+1);
 	        	} else {
-	        		data = "<?php echo json_decode("+data+")?>";
+	        		
 	        		$("#second").show();
 					$("#third").show();
 
@@ -59,7 +60,8 @@
 					$("#pat_out").html("<center><div class='loader'></div></center>");
 					$("#pat_graph").html("<center><div class='loader'></div></center>");
 
-					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+data+"/"+all);
+					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+all);
+
 					$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+data);
 					$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+null+"/"+null+"/"+null+"/"+data);
 					$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+null+"/"+null+"/"+null+"/"+data);
@@ -216,8 +218,11 @@
 			$("#samples_heading").html('Testing Trends for Routine VL');
 			$("#switchButton").val('Click to Switch to All Tests');
 		}
+
 		$.get("<?php echo base_url();?>partner/check_partner_select", function (data) {
+
 			if(data == 0){data = null;}
+			data = $.parseJSON(data);
 			$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+data+"/"+all);
 		});
 	}
