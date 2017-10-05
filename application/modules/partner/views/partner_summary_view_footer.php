@@ -70,9 +70,9 @@
 					$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+1+"/"+data);
 					
 
-					$("#pat_stats").load("<?php echo base_url('charts/summaries/get_patients');?>/"+null+"/"+null+"/"+null+"/"+data);
-					$("#pat_out").load("<?php echo base_url('charts/summaries/get_patients_outcomes');?>/"+null+"/"+null+"/"+null+"/"+data);
-					$("#pat_graph").load("<?php echo base_url('charts/summaries/get_patients_graph');?>/"+null+"/"+null+"/"+null+"/"+data);
+					//$("#pat_stats").load("<?php //echo base_url('charts/summaries/get_patients');?>/"+null+"/"+null+"/"+null+"/"+data);
+					//$("#pat_out").load("<?php //echo base_url('charts/summaries/get_patients_outcomes');?>/"+null+"/"+null+"/"+null+"/"+data);
+					//$("#pat_graph").load("<?php //echo base_url('charts/summaries/get_patients_graph');?>/"+null+"/"+null+"/"+null+"/"+data);
 	        	}
 	        });
 		});

@@ -74,14 +74,23 @@ class Sites extends MY_Controller
 
 	function site_justification($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL)
 	{
-		$data['outcomes'] = null;
+		$data['outcomes'] = $this->sites_model->justification($year,$month,$site,$to_year,$to_month);
 
-		$this->load->view('',$data);
+    	$this->load->view('justification_view',$data);
+	}
+
+	function justificationbreakdown($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL)
+	{
+		$data['outcomes'] = $this->sites_model->justification_breakdown($year,$month,$site,$to_year,$to_month);
+		
+		$this->load->view('justification_breakdown_view',$data);
 	}
 
 	function get_patients($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL){
-		$data = $this->sites_model->get_patients($site,$year,$month,$to_year,$to_month);
-		$this->load->view('patients_view',$data);
+		$data['trends'] = $this->sites_model->get_patients($site,$year,$month,$to_year,$to_month);
+		$data['div_name'] = "unique_patients";
+
+		$this->load->view('trends_outcomes_view',$data);
 	}
 
 	function get_patients_outcomes($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL){
