@@ -41,12 +41,12 @@
 			responsive: true
 		});
 
-		$("table").tablecloth({
-			theme: "paper",
-			striped: true,
-			sortable: true,
-			condensed: true
-		});
+		// $("table").tablecloth({
+		// 	theme: "paper",
+		// 	striped: true,
+		// 	sortable: true,
+		// 	condensed: true
+		// });
 	});
 	function expandCountyListing()
 	{

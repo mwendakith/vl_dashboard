@@ -30,11 +30,11 @@
   $(document).ready(function() {
   	$('table').DataTable();
 
-    $("table").tablecloth({
-      theme: "paper",
-      striped: true,
-      sortable: true,
-      condensed: true
-    });
+    // $("table").tablecloth({
+    //   theme: "paper",
+    //   striped: true,
+    //   sortable: true,
+    //   condensed: true
+    // });
   });
 </script>

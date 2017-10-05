@@ -208,12 +208,13 @@
 			localStorage.setItem("my_var", 1);
 			all=1;
 			$("#samples_heading").html('Testing Trends for All Tests');
-
+			$("#switchButton").val('Click to Switch to Routine Tests Trend');
 		}
 		else{
 			localStorage.setItem("my_var", 0);
 			all=0;
 			$("#samples_heading").html('Testing Trends for Routine VL');
+			$("#switchButton").val('Click to Switch to All Tests');
 		}
 		$.get("<?php echo base_url();?>partner/check_partner_select", function (data) {
 			if(data == 0){data = null;}
