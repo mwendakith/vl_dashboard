@@ -761,7 +761,7 @@ class Sites_model extends MY_Model
 
 		// echo "<pre>";print_r($result);die();
 
-		$data['outcomes'][0]['name'] = "Tests per Unique Patient";
+		$data['outcomes'][0]['name'] = "Patients grouped by tests received";
 
 		$data['outcomes'][0]['type'] = "column";
 
