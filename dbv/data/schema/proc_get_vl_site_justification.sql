@@ -5,10 +5,10 @@ CREATE PROCEDURE `proc_get_vl_site_justification`
 BEGIN
   SET @QUERY =    "SELECT
                     `vj`.`name`,
-                    SUM((`vnj`.`tests`)) AS `justifications`
+                    SUM((`vsj`.`tests`)) AS `justifications`
                 FROM `vl_site_justification` `vsj`
                 JOIN `viraljustifications` `vj` 
-                    ON `vnj`.`justification` = `vj`.`ID`
+                    ON `vsj`.`justification` = `vj`.`ID`
                 WHERE 1";
 
 
