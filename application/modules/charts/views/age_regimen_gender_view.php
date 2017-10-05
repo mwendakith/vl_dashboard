@@ -57,6 +57,7 @@
                             }
                         }
                     },colors: [
+                        '#F2784B',
                         '#1BA39C'
                     ],
                     series: <?php echo json_encode($outcomes['gender']);?>

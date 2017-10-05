@@ -225,26 +225,30 @@ class Ages_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Test';
+		$data['gender'][0]['name'] = 'Non-Suppressed';
+		$data['gender'][1]['name'] = 'Suppressed';
 
 		$count = 0;
 		
 		$data["gender"][0]["data"][0]	= $count;
-		$data["gender"][0]["data"][1]	= $count;
-		$data['categories'][0]			= 'No Data';
+		$data["gender"][1]["data"][0]	= $count;
+		$data['categories'][0] 			= 'Male';
+		$data['categories'][1] 			= 'Female';
+		$data['categories'][2] 			= 'No Data';
 
 		foreach ($result as $key => $value) {
-			$data['categories'][0] 			= 'Male';
-			$data['categories'][1] 			= 'Female';
-			$data['categories'][2] 			= 'No Data';
-			$data["gender"][0]["data"][0]	=  (int) $value['maletest'];
-			$data["gender"][0]["data"][1]	=  (int) $value['femaletest'];
-			$data["gender"][0]["data"][2]	= (int) $value['nodata'];
+			
+			$data["gender"][0]["data"][0]	=  (int) $value['malenonsuppressed'];
+			$data["gender"][1]["data"][0]	=  (int) $value['malesuppressed'];
+			$data["gender"][0]["data"][1]	=  (int) $value['femalenonsuppressed'];
+			$data["gender"][1]["data"][1]	=  (int) $value['femalesuppressed'];
+			$data["gender"][0]["data"][2]	= (int) $value['nodatanonsuppressed'];
+			$data["gender"][1]["data"][2]	= (int) $value['nodatasuppressed'];
 		}
 
-		// $data['gender'][0]['drilldown']['color'] = '#913D88';
-		// $data['gender'][0]['drilldown']['color'] = '#913D88';
-		
+		// $data['gender'][0]['drilldown']['color'] = ;
+		// $data['gender'][1]['drilldown']['color'] = '#1BA39C';
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
