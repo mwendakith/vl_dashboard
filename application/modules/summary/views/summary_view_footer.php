@@ -11,6 +11,7 @@
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
     	});
 		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
+		$("#coverage").load("<?php echo base_url('charts/summaries/vl_coverage'); ?>");
 		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>");
 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>");
 		$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>"); 
@@ -49,6 +50,7 @@
 	        	// alert(data);
 	        	$('#heading').html('County Sites Outcomes <div class="display_date"></div>');
 	        	$("#nattat").html("<div>Loading...</div>");
+	        	$("#coverage").html("<div>Loading...</div>");
 	        	$("#samples").html("<center><div class='loader'></div></center>");
 		        $("#vlOutcomes").html("<center><div class='loader'></div></center>");
 				$("#justification").html("<center><div class='loader'></div></center>");
@@ -56,6 +58,12 @@
 				$("#gender").html("<center><div class='loader'></div></center>");
 				
 				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
+				if (data!="") {
+					$("#coverage").load("<?php echo base_url('charts/summaries/vl_coverage'); ?>/"+1+"/"+data);
+				} else {
+					$("#coverage").load("<?php echo base_url('charts/summaries/vl_coverage'); ?>");
+				}
+				
 				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+data+"/"+null+"/"+all);
 				$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+null+"/"+null+"/"+data); 
 				$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+null+"/"+null+"/"+data); 

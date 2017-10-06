@@ -15,6 +15,13 @@ class Summaries extends MY_Controller {
 
 		$this->load->view('turnaroundtime_view',$data);
 	}
+
+	function vl_coverage($type=NULL,$ID=NULL)
+	{
+		$data['outcomes'] = $this->summaries_model->vl_coverage($type,$ID);
+
+		$this->load->view('vl_coverage_view',$data);
+	}
 	
 	function county_outcomes($year=NULL,$month=NULL,$pfil=NULL,$partner=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
 	{

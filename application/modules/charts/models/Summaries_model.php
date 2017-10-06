@@ -65,6 +65,28 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
+
+	function vl_coverage($type=null,$ID=null)
+	{
+		$sql = "CALL `proc_get_vl_current_suppression`('".$type."','".$ID."')";
+		$result = $this->db->query($sql)->result_array();
+		$uniquepts = 0;
+		$totalasatmar = 0;
+		$vl_coverage = 0;
+
+		foreach ($result as $key => $value) {
+			$data['coverage'] = @(int) ((($value['suppressed']+$value['nonsuppressed'])/$value['totallstrpt'])*100);
+			if ($data['coverage'] < 51) {
+				$data['color'] = 'rgba(255,0,0,0.5)';
+			} else if ($data['coverage'] > 50 && $data['coverage'] < 71) {
+				$data['color'] = 'rgba(255,255,0,0.5)';
+			} else if ($data['coverage'] > 70) {
+				$data['color'] = 'rgba(0,255,0,0.5)';
+			}
+		}
+		// echo "<pre>";print_r($data);die();
+		return $data;
+	}
  
 	function county_outcomes($year=null,$month=null,$pfil=null,$partner=null,$county=null,$to_year=null,$to_month=null)
 	{
