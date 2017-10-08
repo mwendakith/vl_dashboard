@@ -863,16 +863,27 @@ class Summaries_model extends MY_Model
 		}
 		$this->db->close();
 
-		$result = $this->req($params);
-		$res = $this->db->query($sql)->row();
+		$result = $this->req($params);		
 
 		// echo "<pre>";print_r($result);die();
 
-		$data['stats'] = "<tr><td>" . $result->total_viralloads . "</td><td>" . $result->one . "</td><td>" . $result->two . "</td><td>" . $result->three . "</td><td>" . $result->three_g . "</td></tr>";
+		$data['outcomes'][0]['name'] = "Patients grouped by tests received";
 
-		$data['tests'] = $result->total_viralloads;
-		$data['patients_vl'] = $result->total_patients;
-		$data['patients'] = $res->totalartmar;
+		$data['outcomes'][0]['type'] = "column";
+
+		$data['outcomes'][0]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+
+		$data['title'] = " ";
+
+		foreach ($result as $key => $value) {
+
+			$data['categories'][$key] = $value->tests;
+		
+			$data['outcomes'][0]['data'][$key] = (int) $value->totals;
+
+		}
 
 
 		return $data;

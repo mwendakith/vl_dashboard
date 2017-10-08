@@ -109,6 +109,19 @@
 		<div class="col-md-6">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
+				  Suppression Rate (Last 12 months)
+			  </div>
+			  <div class="panel-body" id="long_tracking" style="height:500px;">
+			    <center><div class="loader"></div></center>
+			  </div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
 				  Tests done by unique patients <div class="display_date"></div>
 			  </div>
 			  <div class="panel-body" id="long_tracking" style="height:500px;">
