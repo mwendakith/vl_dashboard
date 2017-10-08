@@ -77,25 +77,27 @@
 		</div>
 	</div>
 
-	<div class="col-md-6 col-sm-12 col-xs-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		    Tests done by unique patients <div class="display_date"></div>
-		  </div>
-		  <div class="panel-body" id="long_tracking">
-		    <center><div class="loader"></div></center>
-		  </div>
+	<div class="row">
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    Tests done by unique patients <div class="display_date"></div>
+			  </div>
+			  <div class="panel-body" id="long_tracking">
+			    <center><div class="loader"></div></center>
+			  </div>
+			</div>
 		</div>
-	</div>
 
-	<div class="col-md-6 col-sm-12 col-xs-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		    Suppression Rate (Last 12 months) 
-		  </div>
-		  <div class="panel-body" id="current_sup">
-		    <center><div class="loader"></div></center>
-		  </div>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    Suppression Rate (Last 12 months) 
+			  </div>
+			  <div class="panel-body" id="current_sup">
+			    <center><div class="loader"></div></center>
+			  </div>
+			</div>
 		</div>
 	</div>
 
