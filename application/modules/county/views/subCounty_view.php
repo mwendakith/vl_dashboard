@@ -38,7 +38,7 @@
 		<div class="col-md-3 col-sm-3 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			  	Gender <div class="display_date" ></div>
+			  	Routine VLs Outcomes by Gender <div class="display_date" ></div>
 			  </div>
 			  <div class="panel-body" id="gender">
 			  	<center><div class="loader"></div></center>
@@ -49,7 +49,7 @@
 		<div class="col-md-3 col-sm-3 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			  	Age <div class="display_date" ></div>
+			  	Routine VLs Outcomes by Age <div class="display_date" ></div>
 			  </div>
 			  <div class="panel-body" id="age">
 			  	<center><div class="loader"></div></center>

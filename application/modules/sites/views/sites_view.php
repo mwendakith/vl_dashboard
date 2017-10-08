@@ -71,7 +71,7 @@
 		<div class="col-md-3">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    Age <div class="display_date"></div>
+			    Routine VLs Outcomes by Age <div class="display_date"></div>
 			  </div>
 			  <div class="panel-body" id="ageGroups">
 			    <center><div class="loader"></div></center>
@@ -84,7 +84,7 @@
 		<div class="col-md-3">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    Gender <div class="display_date"></div>
+			    Routine VLs Outcomes by Gender <div class="display_date"></div>
 			  </div>
 			  <div class="panel-body" id="gender" style="padding-bottom:0px;">
 			    <center><div class="loader"></div></center>
@@ -100,7 +100,7 @@
 			  <div class="panel-heading">
 				  Justification for tests <div class="display_date"></div>
 			  </div>
-			  <div class="panel-body" id="justification" style="height:500px;">
+			  <div class="panel-body" id="justification" >
 			    <center><div class="loader"></div></center>
 			  </div>
 			</div>
@@ -111,7 +111,7 @@
 			  <div class="panel-heading">
 				  Suppression Rate (Last 12 months)
 			  </div>
-			  <div class="panel-body" id="long_tracking" style="height:500px;">
+			  <div class="panel-body" id="current_sup" >
 			    <center><div class="loader"></div></center>
 			  </div>
 			</div>
@@ -124,7 +124,7 @@
 			  <div class="panel-heading">
 				  Tests done by unique patients <div class="display_date"></div>
 			  </div>
-			  <div class="panel-body" id="long_tracking" style="height:500px;">
+			  <div class="panel-body" id="long_tracking" >
 			    <center><div class="loader"></div></center>
 			  </div>
 			</div>

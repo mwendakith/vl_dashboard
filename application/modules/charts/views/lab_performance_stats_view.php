@@ -4,11 +4,11 @@
 		<tr class="colhead">
 			<th rowspan="2">No</th>
 			<th rowspan="2">Testing Lab</th>
-			<th rowspan="2">Facilities Serviced</th>
-			<th rowspan="2">Total Samples Received</th>
-			<th rowspan="2">Rejected Samples (on receipt at lab)</th>
+			<th rowspan="2">Facilities Sending Samples</th>
+			<th rowspan="2">Received Samples @Lab</th>
+			<th rowspan="2">Rejected Samples (on receipt @Lab)</th>
 			<th rowspan="2">Redraws (after testing)</th>
-			<th rowspan="1">All Samples Run (plus reruns)</th>
+			<th rowspan="1">All Tests (plus reruns) Done @Lab</th>
 			<th rowspan="2">Valid Test Results</th>
 			<th rowspan="2">EQA QA/IQC Tests</th>
 			<th rowspan="2">Confirmatory Repeat Tests</th>

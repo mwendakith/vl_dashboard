@@ -98,6 +98,14 @@ class Summaries extends MY_Controller {
 		$this->load->view('trends_outcomes_view',$data);
 	}
 
+	function current_suppression($county=NULL,$partner=NULL)
+	{
+		$data['outcomes'] = $this->summaries_model->current_suppression($county,$partner);
+		$data['div_name'] = "suppression_pie";
+
+    	$this->load->view('pie_chart_view',$data);
+	}
+
 	function get_patients_outcomes($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data = $this->summaries_model->get_patients_outcomes($year,$month,$county,$partner,$to_year,$to_month);

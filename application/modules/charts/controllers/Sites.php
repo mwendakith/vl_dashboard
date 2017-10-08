@@ -93,6 +93,14 @@ class Sites extends MY_Controller
 		$this->load->view('trends_outcomes_view',$data);
 	}
 
+	function current_suppression($site=NULL)
+	{
+		$data['outcomes'] = $this->sites_model->current_suppression($site);
+		$data['div_name'] = "suppression_pie_chart";
+
+    	$this->load->view('pie_chart_view',$data);
+	}
+
 	function get_patients_outcomes($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL){
 		$data = $this->sites_model->get_patients_outcomes($site,$year,$month,$to_year,$to_month);
 		$this->load->view('patients_outcomes_graph',$data);

@@ -58,7 +58,7 @@
 		<div class="col-md-5 col-sm-12 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    Sample Types Sent to Labs <div class="display_date" ></div>
+			    Routine VLs Tested by Sample Type <div class="display_date" ></div>
 			  </div>
 			  <div class="panel-body" id="samples">
 			    <div>Loading...</div>
@@ -82,7 +82,7 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			  	Results Outcomes <div class="display_date"></div>
+			  	Routine VLs Result Outcomes <div class="display_date"></div>
 			  </div>
 			  <div class="panel-body" id="results">
 			    <div>Loading...</div>

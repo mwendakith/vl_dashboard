@@ -42,7 +42,7 @@
 	<div class="col-md-5">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		    Gender <div class="display_date"></div>
+		    Routine VLs Outcomes by Gender <div class="display_date"></div>
 		  </div>
 		  <div class="panel-body" id="gender">
 		    <center><div class="loader"></div></center>
@@ -53,7 +53,7 @@
 	<div class="col-md-6">
 		<div class="panel panel-default">
 				  <div class="panel-heading">
-				    Age <div class="display_date"></div>
+				    Routine VLs Outcomes by Age <div class="display_date"></div>
 				  </div>
 				  <div class="panel-body" id="ageGroups">
 				    <center><div class="loader"></div></center>
@@ -82,7 +82,7 @@
 		  <div class="panel-heading">
 		    Tests done by unique patients <div class="display_date"></div>
 		  </div>
-		  <div class="panel-body" id="pat_stats">
+		  <div class="panel-body" id="long_tracking">
 		    <center><div class="loader"></div></center>
 		  </div>
 		</div>

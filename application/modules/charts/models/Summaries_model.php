@@ -213,8 +213,6 @@ class Summaries_model extends MY_Model
 		$this->db->close();
 		$sitessending = $this->db->query($sql2)->result_array();
 		$this->db->close();
-		$current = $this->db->query($sql3)->row();
-		$this->db->close();
 		// echo "<pre>";print_r($result);echo "</pre>";
 		// echo "<pre>";print_r($sitessending);echo "</pre>";die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
@@ -243,12 +241,6 @@ class Summaries_model extends MY_Model
 	    	// </tr>
 	    	// <tr>
 			$data['ul'] .= '
-			<tr>
-	    		<td>Current Suppressed:</td>
-	    		<td>'.number_format($current->suppressed) . ' (' . round($current->suppression, 2) .'%)</td>
-	    		<td>Current Non Suppressed</td>
-	    		<td>'. number_format($current->nonsuppressed) . '</td>
-	    	</tr>
 			<tr>
 	    		<td>Total VL tests done:</td>
 	    		<td>'.number_format($total_tests ).'</td>
@@ -910,6 +902,53 @@ class Summaries_model extends MY_Model
 
 		return $data;
 	}
+
+	function current_suppression($county=null, $partner=null){
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
+		}
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_filter');
+		}
+
+		if ($partner) {
+			$sql = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
+		} else {
+			if ($county==null || $county=='null') {
+				$sql = "CALL `proc_get_vl_current_suppression`('0','0')";
+			} else {
+				$sql = "CALL `proc_get_vl_current_suppression`('1','".$county."')";
+			}
+		}
+
+		$result = $this->db->query($sql)->row();
+
+		$this->db->close();
+		
+		// echo "<pre>";print_r($result);die();
+		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
+
+		$data['vl_outcomes']['name'] = 'Tests';
+		$data['vl_outcomes']['colorByPoint'] = true;
+		$data['ul'] = '';
+
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
+
+		$data['vl_outcomes']['data'][0]['y'] = (int) $result->suppressed;
+		$data['vl_outcomes']['data'][1]['y'] = (int) $result->nonsuppressed;
+
+		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
+		$data['vl_outcomes']['data'][1]['color'] = '#F2784B';
+		
+
+		$data['vl_outcomes']['data'][0]['sliced'] = true;
+		$data['vl_outcomes']['data'][0]['selected'] = true;
+		
+		return $data;
+
+	}
+
 
 	function get_patients_outcomes($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{

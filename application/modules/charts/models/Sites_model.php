@@ -263,8 +263,6 @@ class Sites_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 
 		$this->db->close();
-		$current = $this->db->query($sql2)->row();
-		$this->db->close();
 		
 		// echo "<pre>";print_r($result);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
@@ -293,12 +291,6 @@ class Sites_model extends MY_Model
 	    	// </tr>
 	    	// <tr>
 			$data['ul'] .= '
-			<tr>
-	    		<td>Current Suppressed:</td>
-	    		<td>'.number_format($current->suppressed) . ' (' . round($current->suppression, 2) .'%)</td>
-	    		<td>Current Non Suppressed</td>
-	    		<td>'. number_format($current->nonsuppressed) . '</td>
-	    	</tr>
 			<tr>
 	    		<td>Total VL tests done:</td>
 	    		<td>'.number_format($total_tests ).'</td>
@@ -792,6 +784,41 @@ class Sites_model extends MY_Model
 
 		return $data;
 	}
+
+	function current_suppression($site=null){
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
+
+		$sql = "CALL `proc_get_vl_current_suppression`('4','".$site."')";
+		$result = $this->db->query($sql)->row();
+
+		$this->db->close();
+		
+		// echo "<pre>";print_r($result);die();
+		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
+
+		$data['vl_outcomes']['name'] = 'Tests';
+		$data['vl_outcomes']['colorByPoint'] = true;
+		$data['ul'] = '';
+
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
+
+		$data['vl_outcomes']['data'][0]['y'] = (int) $result->suppressed;
+		$data['vl_outcomes']['data'][1]['y'] = (int) $result->nonsuppressed;
+
+		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
+		$data['vl_outcomes']['data'][1]['color'] = '#F2784B';
+		
+
+		$data['vl_outcomes']['data'][0]['sliced'] = true;
+		$data['vl_outcomes']['data'][0]['selected'] = true;
+		
+		return $data;
+
+	}
+
 
 	function get_patients_outcomes($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
 	{
