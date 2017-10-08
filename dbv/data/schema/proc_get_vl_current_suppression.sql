@@ -6,7 +6,8 @@ BEGIN
   SET @QUERY =    "SELECT 
                     SUM(`suppressed`) AS `suppressed`, 
                     SUM(`nonsuppressed`) AS `nonsuppressed`, 
-                    AVG(`suppression`) AS `suppression` 
+                    AVG(`suppression`) AS `suppression`, 
+                    SUM(`totalartmar`) AS `totallstrpt` 
                      FROM `vl_site_suppression` 
                   LEFT JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` 
                   WHERE 1";
@@ -24,7 +25,7 @@ BEGIN
       SET @QUERY = CONCAT(@QUERY, " AND `view_facilitys`.`district` = '",id,"' ");
     END IF;
     IF(type = 3) THEN
-      SET @QUERY = CONCAT(@QUERY, " AND `partner`.`view_facilitys` = '",id,"' ");
+      SET @QUERY = CONCAT(@QUERY, " AND `view_facilitys`.`partner` = '",id,"' ");
     END IF;
     IF(type = 4) THEN
       SET @QUERY = CONCAT(@QUERY, " AND `vl_site_suppression`.`facility` = '",id,"' ");
