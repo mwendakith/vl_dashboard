@@ -3,24 +3,29 @@
 	<thead>
 		<tr class="colhead">
 			<th rowspan="2">No</th>
-			<th rowspan="2">Testing Lab</th>
-			<th rowspan="2">Facilities Serviced</th>
-			<th rowspan="2">Total Samples Received</th>
+			<th rowspan="2">Lab</th>
+			<th rowspan="2">Facilities Sending Samples</th>
+			<th rowspan="2">Received Samples at Lab</th>
 			<th rowspan="2">Rejected Samples (on receipt at lab)</th>
 			<th rowspan="2">Redraws (after testing)</th>
-			<th rowspan="1">All Samples Run (plus reruns)</th>
-			<th rowspan="2">Valid Test Results</th>
+			<th rowspan="2">All Test (plus reruns) Done at Lab</th>
+			<th rowspan="2">Redraw (after testing)</th>
 			<th rowspan="2">EQA QA/IQC Tests</th>
-			<th rowspan="2">Confirmatory Repeat Tests</th>
-			<th rowspan="2">Total Tests Performed</th>
-			<th colspan="4"><center>Test Outcome(Non Suppressed vs Suppressed)</center></th>
+
+			<th colspan="2">Routine VL Tests</th>
+			<th colspan="2">Baseline VL Tests</th>
+			<th colspan="2">Confirmatory Repeat Tests</th>
+			<th colspan="2">Total Tests with Valid Outcomes</th>
 		</tr>
 		<tr>
-			<th>Excludes QA and Repeats</th>
-			<th>&gt; 1000 cp/ml</th>
-			<th>% &gt; 1000 cp</th>
-			<th>&lt; 1000 cp/ml</th>
-			<th>%&lt;1000 cp/ml</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
 		</tr>
 	</thead>
 	<tbody>
