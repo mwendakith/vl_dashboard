@@ -109,7 +109,7 @@
 		<div class="col-md-6">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-				  Suppression Rate (Last 12 months)
+				  Suppression Rate (Oct 2016 - Sep 2017)
 			  </div>
 			  <div class="panel-body" id="current_sup" >
 			    <center><div class="loader"></div></center>

@@ -28,60 +28,61 @@
 </div>
 <div class="row" id="second">
 	<!-- Map of the country -->
-	<div class="col-md-7 col-sm-7 col-xs-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		  	VL Outcomes <div class="display_date" ></div>
-		  </div>
-		  <div id="vlOutcomes">
-		  	<center><div class="loader"></div></center>
-		  </div>
-		  
-		</div>
-	</div>
-	<div class="col-md-5">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		    Routine VLs Outcomes by Gender <div class="display_date"></div>
-		  </div>
-		  <div class="panel-body" id="gender">
-		    <center><div class="loader"></div></center>
-		  </div>
-		</div>
-	</div>
-	<!-- Map of the country -->
-	<div class="col-md-6">
-		<div class="panel panel-default">
-				  <div class="panel-heading">
-				    Routine VLs Outcomes by Age <div class="display_date"></div>
-				  </div>
-				  <div class="panel-body" id="ageGroups">
-				    <center><div class="loader"></div></center>
-				  </div>
-				  <div>
-				  	<center><button class="btn btn-default" onclick="ageModal();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">Click here for breakdown</button></center>
-				  </div>
-				</div>
-	</div>
-	<div class="col-md-6 col-sm-6 col-xs-12">
-		<div class="panel panel-default">
-		  	<div class="panel-heading">
-			  	Justification for tests <div class="display_date"></div>
-		  	</div>
-			<div class="panel-body" id="justification">
-			    <center><div class="loader"></div></center>
+		<div class="col-md-7 col-sm-7 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			  	VL Outcomes <div class="display_date" ></div>
+			  </div>
+			  <div id="vlOutcomes">
+			  	<center><div class="loader"></div></center>
+			  </div>
+			  
 			</div>
-		  	<div>
-		  		<center><button class="btn btn-default" onclick="justificationModal();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">Click here for breakdown</button></center>
-		  	</div>
 		</div>
-	</div>
+		<div class="col-md-5">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    Routine VLs Outcomes by Gender <div class="display_date"></div>
+			  </div>
+			  <div class="panel-body" id="gender">
+			    <center><div class="loader"></div></center>
+			  </div>
+			</div>
+		</div>
+
+	<!-- Map of the country -->
+		<div class="col-md-6">
+			<div class="panel panel-default">
+					  <div class="panel-heading">
+					    Routine VLs Outcomes by Age <div class="display_date"></div>
+					  </div>
+					  <div class="panel-body" id="ageGroups">
+					    <center><div class="loader"></div></center>
+					  </div>
+					  <div>
+					  	<center><button class="btn btn-default" onclick="ageModal();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">Click here for breakdown</button></center>
+					  </div>
+					</div>
+		</div>
+		<div class="col-md-6 col-sm-6 col-xs-12">
+			<div class="panel panel-default">
+			  	<div class="panel-heading">
+				  	Justification for tests <div class="display_date"></div>
+			  	</div>
+				<div class="panel-body" id="justification">
+				    <center><div class="loader"></div></center>
+				</div>
+			  	<div>
+			  		<center><button class="btn btn-default" onclick="justificationModal();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">Click here for breakdown</button></center>
+			  	</div>
+			</div>
+		</div>
 
 	<div class="row">
 		<div class="col-md-6 col-sm-6 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    Tests done by unique patients <div class="display_date"></div>
+			    &nbsp;&nbsp;&nbsp;&nbsp; Tests done by unique patients <div class="display_date"></div>
 			  </div>
 			  <div class="panel-body" id="long_tracking">
 			    <center><div class="loader"></div></center>
@@ -92,18 +93,14 @@
 		<div class="col-md-6 col-sm-6 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    Suppression Rate (Last 12 months) 
+			    Suppression Rate (Oct 2016 - Sep 2017) 
 			  </div>
 			  <div class="panel-body" id="current_sup">
 			    <center><div class="loader"></div></center>
 			  </div>
 			</div>
 		</div>
-	</div>
-
-
-	
-	
+	</div>	
 </div>
 
 <div class="row" id="first">

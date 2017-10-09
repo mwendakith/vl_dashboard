@@ -95,7 +95,7 @@ class Summaries extends MY_Controller {
 		$data['trends'] = $this->summaries_model->get_patients($year,$month,$county,$partner,$to_year,$to_month);
 		$data['div_name'] = "unique_patients";
 
-		$this->load->view('trends_outcomes_view',$data);
+		$this->load->view('longitudinal_view',$data);
 	}
 
 	function current_suppression($county=NULL,$partner=NULL)
