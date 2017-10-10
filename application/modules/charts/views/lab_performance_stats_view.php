@@ -7,7 +7,6 @@
 			<th rowspan="2">Facilities Sending Samples</th>
 			<th rowspan="2">Received Samples at Lab</th>
 			<th rowspan="2">Rejected Samples (on receipt at lab)</th>
-			<th rowspan="2">Redraws (after testing)</th>
 			<th rowspan="2">All Test (plus reruns) Done at Lab</th>
 			<th rowspan="2">Redraw (after testing)</th>
 			<th rowspan="2">EQA QA/IQC Tests</th>
