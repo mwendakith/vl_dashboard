@@ -263,8 +263,6 @@ class Sites_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 
 		$this->db->close();
-		$current = $this->db->query($sql2)->row();
-		$this->db->close();
 		
 		// echo "<pre>";print_r($result);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
@@ -286,19 +284,13 @@ class Sites_model extends MY_Model
 			$less = (int) ($value['undetected']+$value['less1000']);
 			$greater = (int) ($value['less5000']+$value['above5000']);
 			$non_suppressed = $greater + (int) $value['confirm2vl'];
-			$total_tests = (int) $value['confirmtx'] + $total;
+			$total_tests = (int) $value['confirmtx'] + $total + (int) $value['baseline'];
 			
 			// 	<td colspan="2">Cumulative Tests (All Samples Run):</td>
 	    	// 	<td colspan="2">'.number_format($value['alltests']).'</td>
 	    	// </tr>
 	    	// <tr>
 			$data['ul'] .= '
-			<tr>
-	    		<td>Current Suppressed:</td>
-	    		<td>'.number_format($current->suppressed) . ' (' . round($current->suppression, 2) .'%)</td>
-	    		<td>Current Non Suppressed</td>
-	    		<td>'. number_format($current->nonsuppressed) . '</td>
-	    	</tr>
 			<tr>
 	    		<td>Total VL tests done:</td>
 	    		<td>'.number_format($total_tests ).'</td>
@@ -593,6 +585,118 @@ class Sites_model extends MY_Model
 		
 	}
 
+
+	function justification($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
+	{
+		
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+ 
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+			}else {
+				$month = 0;
+			}
+		}
+ 
+		$sql = "CALL `proc_get_vl_site_justification`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		
+		$data['justification']['name'] = 'Tests';
+		$data['justification']['colorByPoint'] = true;
+ 
+		$count = 0;
+ 
+		$data['justification']['data'][0]['name'] = 'No Data';
+ 
+		foreach ($result as $key => $value) {
+			if($value['name'] == 'Routine VL'){
+				$data['justification']['data'][$key]['color'] = '#5C97BF';
+			}
+			$data['justification']['data'][$key]['y'] = $count;
+			
+			$data['justification']['data'][$key]['name'] = $value['name'];
+			$data['justification']['data'][$key]['y'] = (int) $value['justifications'];
+		}
+ 
+		$data['justification']['data'][0]['sliced'] = true;
+		$data['justification']['data'][0]['selected'] = true;
+		// echo "<pre>";print_r($data);die();
+		return $data;
+	}
+ 
+	function justification_breakdown($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
+	{
+		
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+ 
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			$month = $this->session->userdata('filter_month');
+		}
+ 
+		$sql = "CALL `proc_get_vl_site_justification_breakdown`('6','".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		$sql2 = "CALL `proc_get_vl_site_justification_breakdown`('9','".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
+
+		// echo "<pre>";print_r($sql);
+		// echo "<pre>";print_r($sql2);die();
+		
+		$preg_mo = $this->db->query($sql)->result_array();
+		$this->db->close();
+		$lac_mo = $this->db->query($sql2)->result_array();
+		// echo "<pre>";print_r($preg_mo);echo "</pre>";
+		// echo "<pre>";print_r($lac_mo);die();
+		$data['just_breakdown'][0]['name'] = 'Not Suppresed';
+		$data['just_breakdown'][1]['name'] = 'Suppresed';
+ 
+		$count = 0;
+		
+		$data["just_breakdown"][0]["data"][0]	= $count;
+		$data["just_breakdown"][1]["data"][0]	= $count;
+		$data['categories'][0]			= 'No Data';
+ 
+		foreach ($preg_mo as $key => $value) {
+			$data['categories'][0] 			= 'Pregnant Mothers';
+			$data["just_breakdown"][0]["data"][0]	=  (int) $value['less5000'] + (int) $value['above5000'];
+			$data["just_breakdown"][1]["data"][0]	=  (int) $value['Undetected'] + (int) $value['less1000'];
+		}
+ 
+		foreach ($lac_mo as $key => $value) {
+			$data['categories'][1] 			= 'Lactating Mothers';
+			$data["just_breakdown"][0]["data"][1]	=  (int) $value['less5000'] + (int) $value['above5000'];
+			$data["just_breakdown"][1]["data"][1]	=  (int) $value['Undetected'] + (int) $value['less1000'];
+		}
+ 
+		$data['just_breakdown'][0]['drilldown']['color'] = '#913D88';
+		$data['just_breakdown'][1]['drilldown']['color'] = '#96281B';
+				
+		return $data;
+	}
+
+
+
 	function get_patients($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
 	{
 		$type = 0;
@@ -643,22 +747,88 @@ class Sites_model extends MY_Model
 		
 
 		$params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+		// $params = "patient/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 
 		$result = $this->req($params);
 
-		$data['stats'] = "<tr><td>" . $result->total_viralloads . "</td><td>" . $result->one . "</td><td>" . $result->two . "</td><td>" . $result->three . "</td><td>" . $result->three_g . "</td></tr>";
+		// echo "<pre>";print_r($result);die();
 
-		$unmet = $res->totalartmar - $result->total_patients;
-		$unmet_p = round((($unmet / (int) $res->totalartmar) * 100),2);
+		$data['outcomes'][0]['name'] = "Patients grouped by tests received";
 
-		$data['tests'] = $result->total_viralloads;
-		$data['patients_vl'] = $result->total_patients;
-		$data['patients'] = $res->totalartmar;
-		$data['unmet'] = $unmet;
-		$data['unmet_p'] = $unmet_p;
+		$data['title'] = " ";
+
+		$data['unique_patients'] = 0;
+		$data['size'] = 0;
+		$data['total_patients'] = $query->totalartmar;
+		$data['total_tests'] = 0;
+
+		foreach ($result as $key => $value) {
+
+			$data['categories'][$key] = $value->tests;
+		
+			$data['outcomes'][0]['data'][$key] = (int) $value->totals;
+		
+			$data['outcomes'][0]['data'][$key] = (int) $value->totals;
+			$data['unique_patients'] += (int) $value->totals;
+			$data['total_tests'] += ($data['categories'][$key] * $data['outcomes'][0]['data'][$key]);
+			$data['size']++;
+
+
+		}
+
+		$data['coverage'] = round(($data['unique_patients'] / $data['total_patients'] * 100), 2);
+
+		// $data['stats'] = "<tr><td>" . $result->total_tests . "</td><td>" . $result->one . "</td><td>" . $result->two . "</td><td>" . $result->three . "</td><td>" . $result->three_g . "</td></tr>";
+
+		// $unmet = $res->totalartmar - $result->total_patients;
+		// $unmet_p = round((($unmet / (int) $res->totalartmar) * 100),2);
+
+		// $data['tests'] = $result->total_tests;
+		// $data['patients_vl'] = $result->total_patients;
+		// $data['patients'] = $res->totalartmar;
+		// $data['unmet'] = $unmet;
+		// $data['unmet_p'] = $unmet_p;
 
 		return $data;
 	}
+
+	function current_suppression($site=null){
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
+
+		$sql = "CALL `proc_get_vl_current_suppression`('4','".$site."')";
+		$result = $this->db->query($sql)->row();
+
+		$this->db->close();
+		
+		// echo "<pre>";print_r($result);die();
+		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
+
+		$data['vl_outcomes']['name'] = 'Tests';
+		$data['vl_outcomes']['colorByPoint'] = true;
+		$data['ul'] = '';
+
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
+
+		$data['vl_outcomes']['data'][0]['y'] = (int) $result->suppressed;
+		$data['vl_outcomes']['data'][1]['y'] = (int) $result->nonsuppressed;
+
+		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
+		$data['vl_outcomes']['data'][1]['color'] = '#F2784B';
+		
+
+		$data['vl_outcomes']['data'][0]['sliced'] = true;
+		$data['vl_outcomes']['data'][0]['selected'] = true;
+
+		$data['total'][0] = (int) $result->suppressed;
+		$data['total'][1] = (int) $result->nonsuppressed;
+		
+		return $data;
+
+	}
+
 
 	function get_patients_outcomes($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
 	{
@@ -708,7 +878,7 @@ class Sites_model extends MY_Model
 		$data['categories'] = array('Total Patients', "VL's Done");
 		$data['outcomes']['name'] = 'Tests';
 		$data['outcomes']['data'][0] = (int) $result->total_patients;
-		$data['outcomes']['data'][1] = (int) $result->total_viralloads;
+		$data['outcomes']['data'][1] = (int) $result->total_tests;
 		$data["outcomes"]["color"] =  '#1BA39C';
 
 		return $data;

@@ -106,7 +106,7 @@
 	<div class="col-md-5">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		    Gender <div class="display_date"></div>
+		    Routine VLs Outcomes by Gender <div class="display_date"></div>
 		  </div>
 		  <div class="panel-body" id="gender" style="height:650px;padding-bottom:0px;">
 		    <center><div class="loader"></div></center>
@@ -117,7 +117,7 @@
 	<div class="col-md-6">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		    Age <div class="display_date"></div>
+		    Routine VLs Outcomes by Age <div class="display_date"></div>
 		  </div>
 		  <div class="panel-body" id="ageGroups">
 		    <center><div class="loader"></div></center>
