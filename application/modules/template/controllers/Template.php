@@ -246,7 +246,7 @@ class Template extends MY_Controller
     		echo "(Jan - Dec {$prev_year})";
     	}
     	else{
-    		echo "(" . $this->template_model->resolve_month($prev_month) ", {$prev_year} - " . $this->template_model->resolve_month($month) ", {$year})";
+    		echo "(" . $this->template_model->resolve_month($prev_month) . ", {$prev_year} - " . $this->template_model->resolve_month($month) . ", {$year})";
     	}
 	}
 }

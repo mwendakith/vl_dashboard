@@ -102,7 +102,7 @@
  		
  		$("#long_tracking").html("<center><div class='loader'></div></center>");
 
-		$("#long_tracking").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+year+"/"+month);
+		$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+year+"/"+month);
 	}
 	
 </script>

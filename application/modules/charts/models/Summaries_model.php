@@ -857,7 +857,7 @@ class Summaries_model extends MY_Model
 				$params = "patient/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 				$sql = "Select sum(totalartmar) as totalartmar from view_facilitys'";
 			} else {
-				$query = $this->db->get_where('CountyMFLCode', array('id' => $county), 1)->row();
+				$query = $this->db->get_where('countys', array('id' => $county), 1)->row();
 				$c = $query->CountyMFLCode;
 
 				$params = "patient/county/{$c}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
