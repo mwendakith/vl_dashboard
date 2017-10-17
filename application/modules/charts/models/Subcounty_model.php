@@ -118,19 +118,15 @@ class Subcounty_model extends MY_Model
 			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
 			$less = (int) ($value['undetected']+$value['less1000']);
 			$greater = (int) ($value['less5000']+$value['above5000']);
+			$non_suppressed = $greater + (int) $value['confirm2vl'];
+			$total_tests = (int) $value['confirmtx'] + $total + (int) $value['baseline'];
 
 			$data['ul'] .= '
 			<tr>
-	    		<td>Current Suppressed:</td>
-	    		<td>'.number_format($current->suppressed) . ' (' . round($current->suppression, 2) .'%)</td>
-	    		<td>Current Non Suppressed</td>
-	    		<td>'. number_format($current->nonsuppressed) . '</td>
-	    	</tr>
-			<tr>
 	    		<td>Total VL tests done:</td>
-	    		<td>'.number_format( (int) $value['alltests']).'</td>
+	    		<td>'.number_format($total_tests ).'</td>
 	    		<td>Non Suppression</td>
-	    		<td>'.round((($greater/ ( (int) $value['alltests'])  )*100),1).'%</td>
+	    		<td>'. number_format($non_suppressed) . ' (' . round((($non_suppressed / $total_tests  )*100),1).'%</td>
 	    	</tr>
 
 			<tr>

@@ -234,7 +234,7 @@ class Summaries_model extends MY_Model
 			$less = (int) ($value['undetected']+$value['less1000']);
 			$greater = (int) ($value['less5000']+$value['above5000']);
 			$non_suppressed = $greater + (int) $value['confirm2vl'];
-			$total_tests = (int) $value['confirmtx'] + $total;
+			$total_tests = (int) $value['confirmtx'] + $total + (int) $value['baseline'];
 			
 			// 	<td colspan="2">Cumulative Tests (All Samples Run):</td>
 	    	// 	<td colspan="2">'.number_format($value['alltests']).'</td>
@@ -877,28 +877,41 @@ class Summaries_model extends MY_Model
 		}
 		$this->db->close();
 
-		$result = $this->req($params);		
+		$result = $this->req($params);	
+
+		$res = $this->db->query($sql)->row();
+
+		$this->db->close();	
 
 		// echo "<pre>";print_r($result);die();
 
 		$data['outcomes'][0]['name'] = "Patients grouped by tests received";
 
-		$data['outcomes'][0]['type'] = "column";
+		// $data['outcomes'][0]['type'] = "column";
 
-		$data['outcomes'][0]['yAxis'] = 1;
+		// $data['outcomes'][0]['yAxis'] = 1;
 
-		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		// $data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
 
 		$data['title'] = " ";
 
+		$data['unique_patients'] = 0;
+		$data['size'] = 0;
+		$data['total_patients'] = $res->totalartmar;
+		$data['total_tests'] = 0;
+
 		foreach ($result as $key => $value) {
 
-			$data['categories'][$key] = $value->tests;
+			$data['categories'][$key] = (int) $value->tests;
 		
 			$data['outcomes'][0]['data'][$key] = (int) $value->totals;
+			$data['unique_patients'] += (int) $value->totals;
+			$data['total_tests'] += ($data['categories'][$key] * $data['outcomes'][0]['data'][$key]);
+			$data['size']++;
 
 		}
 
+		$data['coverage'] = round(($data['unique_patients'] / $data['total_patients'] * 100), 2);
 
 		return $data;
 	}
@@ -944,8 +957,12 @@ class Summaries_model extends MY_Model
 
 		$data['vl_outcomes']['data'][0]['sliced'] = true;
 		$data['vl_outcomes']['data'][0]['selected'] = true;
+
+		$data['total'][0] = (int) $result->suppressed;
+		$data['total'][1] = (int) $result->nonsuppressed;
 		
 		return $data;
+
 
 	}
 

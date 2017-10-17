@@ -1,6 +1,9 @@
-<div class="panel-body">
-	<div id="<?php echo $div_name; ?>"></div>
-</div>
+<p>
+	Suppressed Patients - <?php echo number_format($outcomes['total'][0]) ; ?> <br />
+	Non Suppressed Patients - <?php echo number_format($outcomes['total'][1]) ; ?> <br />
+	<b>N.B.</b> These values exclude baseline tests.
+</p>
+<div id="<?php echo $div_name; ?>"></div>
 
 <script type="text/javascript">
 

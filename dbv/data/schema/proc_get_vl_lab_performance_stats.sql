@@ -15,7 +15,10 @@ BEGIN
                     SUM(`ls`.`less5000`) AS `less5000`,  
                     SUM(`ls`.`above5000`) AS `above5000`,  
                     SUM(`ls`.`eqa`) AS `eqa`,   
-                    SUM(`ls`.`confirmtx`) AS `confirmtx`
+                    SUM(`ls`.`confirmtx`) AS `confirmtx`,
+                    SUM(`ls`.`confirm2vl`) AS `confirm2vl`,
+                    SUM(`ls`.`baseline`) AS `baseline`,
+                    SUM(`ls`.`baselinesustxfail`) AS `baselinesustxfail`
                   FROM `vl_lab_summary` `ls` JOIN `labs` `l` ON `ls`.`lab` = `l`.`ID` 
                 WHERE 1 ";
 
