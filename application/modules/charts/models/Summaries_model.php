@@ -723,26 +723,15 @@ class Summaries_model extends MY_Model
  
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_sample_types`('".$partner."','".$from."','".$to."')";
-			// $sql2 = "CALL `proc_get_partner_sample_types`('".$partner."','".$to."')";
 		} else {
 			if ($county==null || $county=='null') {
 				$sql = "CALL `proc_get_national_sample_types`('".$from."','".$to."')";
 			} else {
 				$sql = "CALL `proc_get_regional_sample_types`('".$county."','".$from."','".$to."')";
-				// $sql2 = "CALL `proc_get_regional_sample_types`('".$county."','".$to."')";
 			}
 		}
-		// echo "<pre>";print_r($sql);echo "</pre>";
-		// echo "<pre>";print_r($sql2);die();
 		$array1 = $this->db->query($sql)->result_array();
 		return $array1;
-		
-		// if ($sql2) {
-		// 	$this->db->close();
-		// 	$array2 = $this->db->query($sql2)->result_array();
-		// }
- 
-		// return array_merge($array1,$array2);
 	}
  
 	function sample_types($year=null,$county=null,$partner=null, $all=null)
