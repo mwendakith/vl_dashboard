@@ -6,15 +6,19 @@ BEGIN
   SET @QUERY =    "SELECT  
                     `countys`.`name` AS `county`,
                     `districts`.`name` AS `subcounty`,
-                    SUM(`vcs`.`alltests`) AS `tests`, 
-                    SUM(`vcs`.`sustxfail`) AS `sustxfail`,
-                    SUM(`vcs`.`confirmtx`) AS `confirmtx`, 
-                    SUM(`vcs`.`rejected`) AS `rejected`, 
-                    SUM(`vcs`.`adults`) AS `adults`, 
-                    SUM(`vcs`.`paeds`) AS `paeds`, 
-                    SUM(`vcs`.`maletest`) AS `maletest`, 
-                    SUM(`vcs`.`femaletest`) AS `femaletest`,
-                    AVG(`vcs`.`sitessending`) AS `sitessending` FROM `vl_subcounty_summary` `vcs`
+                    AVG(`vcs`.`sitessending`) AS `sitesending`, 
+                    SUM(`vcs`.`received`) AS `received`, 
+                    SUM(`vcs`.`rejected`) AS `rejected`,  
+                    SUM(`vcs`.`invalids`) AS `invalids`,
+                    SUM(`vcs`.`alltests`) AS `alltests`,  
+                    SUM(`vcs`.`Undetected`) AS `undetected`,  
+                    SUM(`vcs`.`less1000`) AS `less1000`,  
+                    SUM(`vcs`.`less5000`) AS `less5000`,  
+                    SUM(`vcs`.`above5000`) AS `above5000`,
+                    SUM(`vcs`.`baseline`) AS `baseline`,
+                    SUM(`vcs`.`baselinesustxfail`) AS `baselinesustxfail`,
+                    SUM(`vcs`.`confirmtx`) AS `confirmtx`,
+                    SUM(`vcs`.`confirm2vl`) AS `confirm2vl` FROM `vl_subcounty_summary` `vcs`
                    JOIN `districts` ON `vcs`.`subcounty` = `districts`.`ID`
                   JOIN `countys` ON `countys`.`ID` = `districts`.`county`
                      WHERE 1 ";
@@ -33,7 +37,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `districts`.`county` = '",filter_county,"' GROUP BY `districts`.`ID` ORDER BY `tests` DESC ");
+    SET @QUERY = CONCAT(@QUERY, " AND `districts`.`county` = '",filter_county,"' GROUP BY `districts`.`ID` ORDER BY `alltests` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

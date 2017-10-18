@@ -1,17 +1,27 @@
 <table cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="background:#CCC;">
 	<thead>
 		<tr class="colhead">
-			<th>#</th>
-			<th>Name</th>
-			<?php if($sites){?><th>Sites</th><?php } ?>
+			<th rowspan="2">No</th>
+			<th rowspan="2">Name</th>
+			<?php if($sites){?><th rowspan="2">Facilities Sending Samples</th><?php } ?>
+			<th rowspan="2">Received Samples at Lab</th>
+			<th rowspan="2">Rejected Samples (on receipt at lab)</th>
+			<th rowspan="2">All Test (plus reruns) Done at Lab</th>
+			<th rowspan="2">Redraw (after testing)</th>
+			<th colspan="2">Routine VL Tests</th>
+			<th colspan="2">Baseline VL Tests</th>
+			<th colspan="2">Confirmatory Repeat Tests</th>
+			<th colspan="2">Total Tests with Valid Outcomes</th>
+		</tr>
+		<tr>
 			<th>Tests</th>
-			<th>&gt; 1000 cp/ml</th>
-			<th>Confirm Repeat Tests</th>
-			<th>Rejected</th>
-			<th>Adult Tests</th>
-			<th>Paeds Tests</th>
-			<th>Male</th>
-			<th>Female</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -28,7 +38,7 @@
 </div>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
-  	$('table').DataTable();
+  	// $('table').DataTable();
 
     // $("table").tablecloth({
     //   theme: "paper",

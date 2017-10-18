@@ -6,14 +6,19 @@ BEGIN
   SET @QUERY =    "SELECT 
                     `c`.`name` AS `county`,
                     `p`.`name` AS `partner`,
-                    SUM(`vss`.`alltests`) AS `tests`, 
-                    SUM(`vss`.`sustxfail`) AS `sustxfail`,
-                    SUM(`vss`.`confirmtx`) AS `confirmtx`, 
-                    SUM(`vss`.`rejected`) AS `rejected`, 
-                    SUM(`vss`.`adults`) AS `adults`, 
-                    SUM(`vss`.`paeds`) AS `paeds`, 
-                    SUM(`vss`.`maletest`) AS `maletest`, 
-                    SUM(`vss`.`femaletest`) AS `femaletest` 
+                    AVG(`vss`.`sitessending`) AS `sitesending`, 
+                    SUM(`vss`.`received`) AS `received`, 
+                    SUM(`vss`.`rejected`) AS `rejected`,  
+                    SUM(`vss`.`invalids`) AS `invalids`,
+                    SUM(`vss`.`alltests`) AS `alltests`,  
+                    SUM(`vss`.`Undetected`) AS `undetected`,  
+                    SUM(`vss`.`less1000`) AS `less1000`,  
+                    SUM(`vss`.`less5000`) AS `less5000`,  
+                    SUM(`vss`.`above5000`) AS `above5000`,
+                    SUM(`vss`.`confirmtx`) AS `confirmtx`,
+                    SUM(`vss`.`confirm2vl`) AS `confirm2vl`,
+                    SUM(`vss`.`baseline`) AS `baseline`,
+                    SUM(`vss`.`baselinesustxfail`) AS `baselinesustxfail` 
                     FROM `vl_site_summary` `vss`
                   LEFT JOIN `view_facilitys` `vf` ON `vf`.`ID` = `vss`.`facility`
                   LEFT JOIN `partners` `p` ON `p`.`ID` = `vf`.`partner`
@@ -34,7 +39,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",filter_county,"' GROUP BY `p`.`name` ORDER BY `tests` DESC ");
+    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",filter_county,"' GROUP BY `p`.`name` ORDER BY `alltests` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

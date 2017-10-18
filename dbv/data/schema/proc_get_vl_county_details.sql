@@ -5,16 +5,21 @@ CREATE PROCEDURE `proc_get_vl_county_details`
 BEGIN
   SET @QUERY =    "SELECT  
                     `countys`.`name` AS `county`,
-                    SUM(`vcs`.`alltests`) AS `tests`, 
-                    SUM(`vcs`.`sustxfail`) AS `sustxfail`,
-                    SUM(`vcs`.`confirmtx`) AS `confirmtx`, 
-                    SUM(`vcs`.`rejected`) AS `rejected`, 
-                    SUM(`vcs`.`adults`) AS `adults`, 
-                    SUM(`vcs`.`paeds`) AS `paeds`, 
-                    SUM(`vcs`.`maletest`) AS `maletest`, 
-                    SUM(`vcs`.`femaletest`) AS `femaletest`,
-                    AVG(`vcs`.`sitessending`) AS `sitessending` FROM `vl_county_summary` `vcs`
-                   JOIN `countys` ON `vcs`.`county` = `countys`.`ID`  WHERE 1";
+                    AVG(`vcs`.`sitessending`) AS `sitesending`, 
+                    SUM(`vcs`.`received`) AS `received`, 
+                    SUM(`vcs`.`rejected`) AS `rejected`,  
+                    SUM(`vcs`.`invalids`) AS `invalids`,
+                    SUM(`vcs`.`alltests`) AS `alltests`,  
+                    SUM(`vcs`.`Undetected`) AS `undetected`,  
+                    SUM(`vcs`.`less1000`) AS `less1000`,  
+                    SUM(`vcs`.`less5000`) AS `less5000`,  
+                    SUM(`vcs`.`above5000`) AS `above5000`,
+                    SUM(`vcs`.`confirmtx`) AS `confirmtx`,
+                    SUM(`vcs`.`confirm2vl`) AS `confirm2vl`,
+                    SUM(`vcs`.`baseline`) AS `baseline`,
+                    SUM(`vcs`.`baselinesustxfail`) AS `baselinesustxfail`
+                  FROM `vl_county_summary` `vcs`
+                  JOIN `countys` ON `vcs`.`county` = `countys`.`ID`  WHERE 1";
 
   
     IF (from_month != 0 && from_month != '') THEN
@@ -30,7 +35,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `countys`.`name` ORDER BY `tests` DESC ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `countys`.`name` ORDER BY `alltests` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
