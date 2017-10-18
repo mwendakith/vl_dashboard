@@ -103,20 +103,27 @@ class Sites_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($sql);die();
 		foreach ($result as $key => $value) {
-			$table .= '<tr>';
-			$table .= '<td>'.$count.'</td>';
-			$table .= '<td>'.$value['MFLCode'].'</td>';
-			$table .= '<td>'.$value['name'].'</td>';
-			$table .= '<td>'.$value['county'].'</td>';
-			$table .= '<td>'.$value['tests'].'</td>';
-			$table .= '<td>'.$value['sustxfail'].'</td>';
-			$table .= '<td>'.$value['confirmtx'].'</td>';
-			$table .= '<td>'.$value['rejected'].'</td>';
-			$table .= '<td>'.$value['adults'].'</td>';
-			$table .= '<td>'.$value['paeds'].'</td>';
-			$table .= '<td>'.$value['maletest'].'</td>';
-			$table .= '<td>'.$value['femaletest'].'</td>';
-			$table .= '</tr>';
+			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
+			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
+			$table .= "<tr>
+				<td>".$count."</td>
+				<td>".$value['MFLCode']."</td>
+				<td>".$value['name']."</td>
+				<td>".$value['county']."</td>
+				<td>".number_format((int) $value['received'])."</td>
+				<td>".number_format((int) $value['rejected']) . " (" . 
+					round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+				<td>".number_format((int) $value['alltests'])."</td>
+				<td>".number_format((int) $value['invalids'])."</td>
+
+				<td>".number_format($routine)."</td>
+				<td>".number_format($routinesus)."</td>
+				<td>".number_format((int) $value['baseline'])."</td>
+				<td>".number_format((int) $value['baselinesustxfail'])."</td>
+				<td>".number_format((int) $value['confirmtx'])."</td>
+				<td>".number_format((int) $value['confirm2vl'])."</td>
+				<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
+				<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
 			$count++;
 		}
 		

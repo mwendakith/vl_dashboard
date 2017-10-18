@@ -16,10 +16,10 @@ BEGIN
                     SUM(`vl_site_summary`.`less1000`) AS `less1000`,  
                     SUM(`vl_site_summary`.`less5000`) AS `less5000`,  
                     SUM(`vl_site_summary`.`above5000`) AS `above5000`,
-                    SUM(`vl_site_summary`.`confirmtx`) AS `confirmtx`,
-                    SUM(`vl_site_summary`.`confirm2vl`) AS `confirm2vl`,
                     SUM(`vl_site_summary`.`baseline`) AS `baseline`,
-                    SUM(`vl_site_summary`.`baselinesustxfail`) AS `baselinesustxfail` FROM `vl_site_summary` 
+                    SUM(`vl_site_summary`.`baselinesustxfail`) AS `baselinesustxfail`,
+                    SUM(`vl_site_summary`.`confirmtx`) AS `confirmtx`,
+                    SUM(`vl_site_summary`.`confirm2vl`) AS `confirm2vl` FROM `vl_site_summary` 
                   LEFT JOIN `view_facilitys` ON `vl_site_summary`.`facility` = `view_facilitys`.`ID` 
                   LEFT JOIN `districts` ON `view_facilitys`.`district` = `districts`.`ID` 
                   LEFT JOIN `countys` ON `view_facilitys`.`county` = `countys`.`ID`  

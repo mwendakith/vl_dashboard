@@ -7,14 +7,18 @@ BEGIN
                     `view_facilitys`.`facilitycode` AS `MFLCode`, 
                     `view_facilitys`.`name`, 
                     `countys`.`name` AS `county`,
-                    SUM(`vl_site_summary`.`alltests`) AS `tests`, 
-                    SUM(`vl_site_summary`.`sustxfail`) AS `sustxfail`,
-                    SUM(`vl_site_summary`.`confirmtx`) AS `confirmtx`, 
-                    SUM(`vl_site_summary`.`rejected`) AS `rejected`, 
-                    SUM(`vl_site_summary`.`adults`) AS `adults`, 
-                    SUM(`vl_site_summary`.`paeds`) AS `paeds`, 
-                    SUM(`vl_site_summary`.`maletest`) AS `maletest`, 
-                    SUM(`vl_site_summary`.`femaletest`) AS `femaletest` FROM `vl_site_summary` 
+                    SUM(`vl_site_summary`.`received`) AS `received`, 
+                    SUM(`vl_site_summary`.`rejected`) AS `rejected`,  
+                    SUM(`vl_site_summary`.`invalids`) AS `invalids`,
+                    SUM(`vl_site_summary`.`alltests`) AS `alltests`,  
+                    SUM(`vl_site_summary`.`Undetected`) AS `undetected`,  
+                    SUM(`vl_site_summary`.`less1000`) AS `less1000`,  
+                    SUM(`vl_site_summary`.`less5000`) AS `less5000`,  
+                    SUM(`vl_site_summary`.`above5000`) AS `above5000`,
+                    SUM(`vl_site_summary`.`baseline`) AS `baseline`,
+                    SUM(`vl_site_summary`.`baselinesustxfail`) AS `baselinesustxfail`,
+                    SUM(`vl_site_summary`.`confirmtx`) AS `confirmtx`,
+                    SUM(`vl_site_summary`.`confirm2vl`) AS `confirm2vl` FROM `vl_site_summary` 
                   LEFT JOIN `view_facilitys` ON `vl_site_summary`.`facility` = `view_facilitys`.`ID` 
                   LEFT JOIN `countys` ON `view_facilitys`.`county` = `countys`.`ID`  WHERE 1";
 
@@ -32,7 +36,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `view_facilitys`.`partner` = '",P_id,"' GROUP BY `view_facilitys`.`ID` ORDER BY `tests` DESC ");
+    SET @QUERY = CONCAT(@QUERY, " AND `view_facilitys`.`partner` = '",P_id,"' GROUP BY `view_facilitys`.`ID` ORDER BY `alltests` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
