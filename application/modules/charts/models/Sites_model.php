@@ -574,7 +574,7 @@ class Sites_model extends MY_Model
 	    $f = fopen('php://memory', 'w');
 	    /** loop through array  */
 
-	    $b = array('MFL Code', 'Name', 'County', 'Tests', '>1000cp/ml', 'Confirm Repeat Tests', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female');
+	    $b = array('MFL Code', 'Name', 'County', 'Received', 'Rejected', 'All Tests', 'Redraws', 'Undetected', 'less1000', 'above1000 - less5000', 'above5000', 'Baseline Tests', 'Baseline >1000', 'Confirmatory Tests', 'Confirmatory >1000');
 
 	    fputcsv($f, $b, $delimiter);
 

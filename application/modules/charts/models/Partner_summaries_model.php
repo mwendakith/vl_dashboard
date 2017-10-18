@@ -58,10 +58,12 @@ class Partner_summaries_model extends MY_Model
 		$data['title'] = "";
  
 		foreach ($result as $key => $value) {
+			$suppressed = (int)$value['undetected']+(int)$value['less1000'];
+			$nonsuppressed = (int)$value['less5000']+(int)$value['above5000'];
 			$data['categories'][$key] 					= $value['county'];
-			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
-			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
-			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
+			$data['outcomes'][0]['data'][$key] = (int) $nonsuppressed;
+			$data['outcomes'][1]['data'][$key] = (int) $suppressed;
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $suppressed*100)/((int) $suppressed+(int) $nonsuppressed)),1);
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
@@ -94,20 +96,26 @@ class Partner_summaries_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($sql);die();
 		foreach ($result as $key => $value) {
-			$table .= '<tr>';
-			$table .= '<td>'.$count.'</td>';
+			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
+			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
+			$table .= "<tr>
+				<td>".$count."</td>
+				<td>".$value['county']."</td>
+				<td>".number_format((int) $value['facilities'])."</td>
+				<td>".number_format((int) $value['received'])."</td>
+				<td>".number_format((int) $value['rejected']) . " (" . 
+					round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+				<td>".number_format((int) $value['alltests'])."</td>
+				<td>".number_format((int) $value['invalids'])."</td>
 
-			$table .= '<td>'.$value['county'].'</td>';
-			$table .= '<td>'.number_format($value['facilities']).'</td>';
-			$table .= '<td>'.number_format($value['tests']).'</td>';
-			$table .= '<td>'.number_format($value['sustxfail']).'</td>';
-			$table .= '<td>'.number_format($value['confirmtx']).'</td>';
-			$table .= '<td>'.number_format($value['rejected']).'</td>';
-			$table .= '<td>'.number_format($value['adults']).'</td>';
-			$table .= '<td>'.number_format($value['paeds']).'</td>';
-			$table .= '<td>'.number_format($value['maletest']).'</td>';
-			$table .= '<td>'.number_format($value['femaletest']).'</td>';
-			$table .= '</tr>';
+				<td>".number_format($routine)."</td>
+				<td>".number_format($routinesus)."</td>
+				<td>".number_format((int) $value['baseline'])."</td>
+				<td>".number_format((int) $value['baselinesustxfail'])."</td>
+				<td>".number_format((int) $value['confirmtx'])."</td>
+				<td>".number_format((int) $value['confirm2vl'])."</td>
+				<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
+				<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
 			$count++;
 		}
 		
@@ -148,7 +156,7 @@ class Partner_summaries_model extends MY_Model
 	    /** loop through array  */
 
 
-	    $b = array('County', 'Facilities', 'Tests', '>1000cp/ml', 'Confirm Repeat Tests', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female', 'Suppresed', 'Non Suppressed');
+	    $b = array('County', 'Facilities', 'Tests', 'Received', 'Rejected', 'All Tests', 'Redraws', 'Undetected', 'less1000', 'above1000 - less5000', 'above5000', 'Baseline Tests', 'Baseline >1000', 'Confirmatory Tests', 'Confirmatory >1000');
 
 	    fputcsv($f, $b, $delimiter);
 
