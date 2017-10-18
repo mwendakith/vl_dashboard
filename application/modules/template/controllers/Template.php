@@ -232,5 +232,22 @@ class Template extends MY_Controller
 					'month' => $this->template_model->resolve_month($this->session->userdata('filter_month')));
 		echo json_encode($data);
 	}
+
+	public function get_current_header(){
+
+		$this->load->model('template_model');
+		
+    	$year = ((int) Date('Y'));
+    	$prev_year = ((int) Date('Y')) - 1;
+    	$month = ((int) Date('m'));
+    	$prev_month = ((int) Date('m')) - 1;
+
+    	if($month == 1){
+    		echo "(Jan - Dec {$prev_year})";
+    	}
+    	else{
+    		echo "(" . $this->template_model->resolve_month($prev_month) . ", {$prev_year} - " . $this->template_model->resolve_month($month) . ", {$year})";
+    	}
+	}
 }
 ?>
