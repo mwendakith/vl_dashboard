@@ -413,20 +413,27 @@ class Subcounty_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 
 		foreach ($result as $key => $value) {
-			$table .= '<tr>';
-			$table .= '<td>'.$count.'</td>';
-			$table .= '<td>'.$value['MFLCode'].'</td>';
-			$table .= '<td>'.$value['name'].'</td>';
-			$table .= '<td>'.$value['county'].'</td>';
-			$table .= '<td>'.number_format($value['tests']).'</td>';
-			$table .= '<td>'.number_format($value['sustxfail']).'</td>';
-			$table .= '<td>'.number_format($value['confirmtx']).'</td>';
-			$table .= '<td>'.number_format($value['rejected']).'</td>';
-			$table .= '<td>'.number_format($value['adults']).'</td>';
-			$table .= '<td>'.number_format($value['paeds']).'</td>';
-			$table .= '<td>'.number_format($value['maletest']).'</td>';
-			$table .= '<td>'.number_format($value['femaletest']).'</td>';
-			$table .= '</tr>';
+			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
+			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
+			$table .= "<tr>
+				<td>".$count."</td>
+				<td>".$value['MFLCode']."</td>
+				<td>".$value['name']."</td>
+				<td>".$value['county']."</td>
+				<td>".number_format((int) $value['received'])."</td>
+				<td>".number_format((int) $value['rejected']) . " (" . 
+					round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+				<td>".number_format((int) $value['alltests'])."</td>
+				<td>".number_format((int) $value['invalids'])."</td>
+
+				<td>".number_format($routine)."</td>
+				<td>".number_format($routinesus)."</td>
+				<td>".number_format((int) $value['baseline'])."</td>
+				<td>".number_format((int) $value['baselinesustxfail'])."</td>
+				<td>".number_format((int) $value['confirmtx'])."</td>
+				<td>".number_format((int) $value['confirm2vl'])."</td>
+				<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
+				<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
 			$count++;
 		}
 		
@@ -472,7 +479,7 @@ class Subcounty_model extends MY_Model
 	    $f = fopen('php://memory', 'w');
 	    /** loop through array  */
 
-	    $b = array('MFLCode', 'Facility',  'County', 'Sub-County', 'Tests', '>1000cp/ml', 'Confirm Repeat Tests', 'Rejected', 'Adult Tests', 'Peads Tests', 'Male', 'Female');
+	    $b = array('MFLCode', 'Facility',  'County', 'Sub-County', 'Received', 'Rejected', 'All Tests', 'Redraws', 'Undetected', 'less1000', 'above1000 - less5000', 'above5000', 'Baseline Tests', 'Baseline >1000', 'Confirmatory Tests', 'Confirmatory >1000');
 
 	    fputcsv($f, $b, $delimiter);
 
@@ -484,7 +491,7 @@ class Subcounty_model extends MY_Model
 	    fseek($f, 0);
 	    /** modify header to be downloadable csv file **/
 	    header('Content-Type: application/csv');
-	    header('Content-Disposition: attachement; filename="vl_subcounty_sites.csv";');
+	    header('Content-Disposition: attachement; filename="'.Date('Ymd H:i:s').'vl_subcounty_sites.csv";');
 	    /** Send file to browser for download */
 	    fpassthru($f);
 	}
