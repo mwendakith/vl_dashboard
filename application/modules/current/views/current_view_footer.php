@@ -14,8 +14,19 @@
 			$(".display_current_range").html(data);
     	});
 
-		$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>");
+		$("#countys").html("<div>Loading...</div>");
+		$("#partners").html("<div>Loading...</div>");
+		$("#subcounty").html("<div>Loading...</div>");
+		$("#facilities").html("<div>Loading...</div>");
+
 		$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression'); ?>");
+
+		$("#countys").load("<?php echo base_url('charts/summaries/county_listing');?>");
+		$("#partners").load("<?php echo base_url('charts/summaries/partner_listing');?>");
+		$("#subcounty").load("<?php echo base_url('charts/summaries/subcounty_listing');?>");
+		$("#facilities").load("<?php echo base_url('charts/summaries/site_listing');?>");
+
+		$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>");
 
 		$("select").change(function(){
 			em = $(this).val();
@@ -28,6 +39,7 @@
 	        	if(data!=""){
 	        		data = JSON.parse(data);
 	        	}
+	        	// data = $.parseJSON(data);
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
@@ -43,10 +55,18 @@
 
 	        	// alert(data);
 	        	$("#long_tracking").html("<center><div class='loader'></div></center>");
-	        	$("#current_sup").html("<center><div class='loader'></div></center>");				
+	        	$("#current_sup").html("<center><div class='loader'></div></center>");
+
+				$("#partners").html("<div>Loading...</div>");
+				$("#subcounty").html("<div>Loading...</div>");
+				$("#facilities").html("<div>Loading...</div>");				
 			
 				$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+null+"/"+null+"/"+data);
 				$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression'); ?>/"+data);
+
+				$("#partners").load("<?php echo base_url('charts/summaries/partner_listing');?>/"+data);
+				$("#subcounty").load("<?php echo base_url('charts/summaries/subcounty_listing');?>/"+data);
+				$("#facilities").load("<?php echo base_url('charts/summaries/site_listing');?>/"+data);
 	        });
 		});
 
@@ -103,6 +123,10 @@
  		$("#long_tracking").html("<center><div class='loader'></div></center>");
 
 		$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+year+"/"+month);
+	}
+
+	function expand_modal(div_name){
+		$(div_name).modal('show');
 	}
 	
 </script>

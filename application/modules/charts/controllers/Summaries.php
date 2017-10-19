@@ -106,18 +106,40 @@ class Summaries extends MY_Controller {
     	$this->load->view('pie_chart_view',$data);
 	}
 
-	function get_patients_outcomes($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
-	{
-		$data = $this->summaries_model->get_patients_outcomes($year,$month,$county,$partner,$to_year,$to_month);
+	function county_listing(){
+		$data['cont'] = $this->summaries_model->county_listings();
+		$data['cont']['div'] = 'county_sup_listings';
+		$data['cont']['title'] = 'County Listing';
+		$data['cont']['table_div'] = 'county_sup_listings_table';
 
-    	$this->load->view('patients_outcomes_graph',$data);
+		$this->load->view('current_suppression_listing',$data);
 	}
 
-	function get_patients_graph($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
-	{
-		$data = $this->summaries_model->get_patients_graph($year,$month,$county,$partner,$to_year,$to_month);
+	function subcounty_listing($county=NULL){
+		$data['cont'] = $this->summaries_model->subcounty_listings($county);
+		$data['cont']['div'] = 'subcounty_sup_listings';
+		$data['cont']['title'] = 'Sub-County Listing';
+		$data['cont']['table_div'] = 'subcounty_sup_listings_table';
 
-    	$this->load->view('patients_graph',$data);
+		$this->load->view('current_suppression_listing',$data);
+	}
+
+	function partner_listing($county=NULL){
+		$data['cont'] = $this->summaries_model->partner_listings($county);
+		$data['cont']['div'] = 'partner_sup_listings';
+		$data['cont']['title'] = 'Partner Listing';
+		$data['cont']['table_div'] = 'partner_sup_listings_table';
+
+		$this->load->view('current_suppression_listing',$data);
+	}
+
+	function site_listing($county=NULL){
+		$data['cont'] = $this->summaries_model->site_listings($county);
+		$data['cont']['div'] = 'site_sup_listings';
+		$data['cont']['title'] = 'Facility Listing';
+		$data['cont']['table_div'] = 'site_sup_listings_table';
+
+		$this->load->view('current_suppression_listing',$data);
 	}
 
 	function display_date()
