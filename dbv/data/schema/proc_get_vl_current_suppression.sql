@@ -10,7 +10,7 @@ BEGIN
                     AVG(`coverage`) AS `coverage`, 
                     SUM(`totalartmar`) AS `totallstrpt` 
                      FROM `vl_site_suppression` 
-                  LEFT JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` 
+                  JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` 
                   WHERE 1";
     
     

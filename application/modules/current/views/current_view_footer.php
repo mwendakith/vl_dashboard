@@ -59,14 +59,14 @@
 
 				$("#partners").html("<div>Loading...</div>");
 				$("#subcounty").html("<div>Loading...</div>");
-				$("#facilities").html("<div>Loading...</div>");				
-			
-				$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+null+"/"+null+"/"+data);
-				$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression'); ?>/"+data);
+				$("#facilities").html("<div>Loading...</div>");		
 
 				$("#partners").load("<?php echo base_url('charts/summaries/partner_listing');?>/"+data);
 				$("#subcounty").load("<?php echo base_url('charts/summaries/subcounty_listing');?>/"+data);
-				$("#facilities").load("<?php echo base_url('charts/summaries/site_listing');?>/"+data);
+				$("#facilities").load("<?php echo base_url('charts/summaries/site_listing');?>/"+data);		
+			
+				$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+null+"/"+null+"/"+data);
+				$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression'); ?>/"+data);
 	        });
 		});
 

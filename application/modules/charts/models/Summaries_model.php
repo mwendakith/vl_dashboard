@@ -993,39 +993,44 @@ class Summaries_model extends MY_Model
 		{
 			foreach ($result as $key => $value)
 			{
-			$name;
+				$name;
 
-			switch ($type) {
-				case 1:
-					$name = $value['countyname'];
-					break;
-				case 2:
-					$name = $value['subcounty'];
-					break;
-				case 3:
-					$name = $value['partnername'];
-					break;
-				case 4:
-					$name = $value['name'];
-					break;
-				default:
-					break;
-			}
-
+				switch ($type) {
+					case 1:
+						$name = $value['countyname'];
+						break;
+					case 2:
+						$name = $value['subcounty'];
+						break;
+					case 3:
+						$name = $value['partnername'];
+						break;
+					case 4:
+						$name = $value['name'];
+						break;
+					default:
+						break;
+				}
+				$patients = ($value['suppressed']+$value['nonsuppressed']);
+				$suppression = round(($value['suppressed']*100/$patients),1);
+				$coverage = round(($patients*100/$value['totallstrpt']),1);
 
 				if ($count<16) {
-					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$name.':&nbsp;'.round($value['suppression'],1).'%</a>';
+					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$name.':&nbsp;'.$suppression.'%</a>';
 				}
-					$table .= '<tr>';
-					$table .= '<td>'.$count.'</td>';
 
-					$table .= '<td>'.$name.'</td>';
-					$table .= '<td>'.round($value['suppression'],1).'%</td>';
-					$table .= '<td>'.round($value['coverage'],1).'%</td>';
-					$table .= '</tr>';
-					$count++;
+				$table .= '<tr>';
+				$table .= '<td>'.$count.'</td>';
+				$table .= '<td>'.$name.'</td>';
+				$table .= '<td>'.$suppression.'%</td>';
+				$table .= '<td>'.$patients.'</td>';
+				$table .= '<td>'.($value['totallstrpt']).'</td>';
+				$table .= '<td>'.$coverage.'%</td>';
+				$table .= '</tr>';
+				$count++;
 			}
-		}else{
+		}
+		else{
 			$li = 'No Data';
 		}
 

@@ -1,7 +1,7 @@
 <div class="list-group" style="height: 362px;">
 	<?php echo $cont['ul'];?>
 </div>
-<button class="btn btn-primary"  onclick="call_expander();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">View Full Listing</button>
+<button class="btn btn-primary"  onclick="expand_modal(&quot;#<?= @$cont['div']; ?>&quot;);" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">View Full Listing</button>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="<?= @$cont['div']; ?>">
   <div class="modal-dialog modal-lg">
@@ -17,6 +17,8 @@
         			<th>#</th>
               <th>Name</th>
               <th>Current Suppression</th>
+              <th>Patients Tested</th>
+              <th>Patients on Art as at March 21, 2017</th>
         			<th>Coverage</th>
         		</tr>
         	</thead>
