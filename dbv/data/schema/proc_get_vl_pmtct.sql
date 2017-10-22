@@ -37,6 +37,10 @@ BEGIN
                   JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID` JOIN `view_facilitys` `ac` ON `ac`.`ID` = `vcs`.`facility`  WHERE `vcs`.`facility` = '",site,"' ");
     END IF;
 
+    IF (Pm_ID != 0 && Pm_ID != '') THEN
+      SET @QUERY = CONCAT(@QUERY, " AND `pmtcttype` = '",Pm_ID,"' ");
+    END IF;
+
     IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
             SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' AND `month` BETWEEN '",from_month,"' AND '",to_month,"' ");
