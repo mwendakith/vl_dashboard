@@ -25,6 +25,7 @@ class Template extends MY_Controller
 		$data['subCounty'] = $this->template_model->get_sub_county_dropdown();
 		$data['laborotories'] = $this->template_model->get_lab_dropdown();
 		$data['samples'] = $this->template_model->get_sample_dropdown();
+		$data['pmtcts'] = $this->template_model->pmtct_dropdown();
 		// $data['breadcrum'] = $this->breadcrum();
 		// echo "<pre>";print_r($data);die();
 		$this->load->view('template_view',$data);

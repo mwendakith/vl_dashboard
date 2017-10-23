@@ -1,9 +1,9 @@
-<div id="pmtctOutcomes" style="height:450px;">
+<div id="<?= @$div_name; ?>" style="height:450px;">
 	
 </div>
 <script type="text/javascript">
 	$(function () {
-                $('#pmtctOutcomes').highcharts({
+                $("#<?= @$div_name;?>").highcharts({
                     chart: {
                         type: 'column'
                     },
