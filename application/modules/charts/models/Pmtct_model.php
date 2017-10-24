@@ -111,7 +111,12 @@ class Pmtct_model extends MY_Model
 		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
 
 		$data['title'] = "";
- 
+ 		
+ 		$data['categories'][0] 		= 'No Data';
+		$data['outcomes'][0]['data'][0] = 0;
+		$data['outcomes'][1]['data'][0] = 0;
+		$data['outcomes'][2]['data'][0] = 0;
+		
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 		   = $this->resolve_month($value->month)." - ".$value->year;
 			$data['outcomes'][0]['data'][$key] = (int) $value->nonsuppressed;
@@ -226,9 +231,78 @@ class Pmtct_model extends MY_Model
 
 		return $data;
 	}
-	public function counties_outcomes($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$partner=null)
-	{
 
+	public function pmtct($year=null,$month=null,$type=null,$to_year=null,$to_month=null,$county=null,$sub_county=null,$partner=null,$site=null)
+	{
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		//Assigning the value of the month or setting it to the selected value
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+		if ($county==null || $county=='null') {
+			$county = 0;
+		}
+		if ($sub_county==null || $sub_county=='null') {
+			$sub_county = 0;
+		}
+		if ($partner==null || $partner=='null') {
+			$partner = 0;
+		}
+		if ($site==null || $site=='null') {
+			$site = 0;
+		}
+						
+		$default = 0;	
+		$sql = "CALL `proc_get_vl_pmtct_breakdown`('".$type."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$sub_county."','".$partner."','".$site."')";
+		// echo "<pre>";print_r($sql);echo "</pre>";die();
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
+		
+
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+
+		$data['categories'][0] 		= 'No Data';
+		$data['outcomes'][0]['data'][0] = 0;
+		$data['outcomes'][1]['data'][0] = 0;
+		$data['outcomes'][2]['data'][0] = 0;
+ 
+		foreach ($result as $key => $value) {
+			$suppressed = (int) $value['undetected']+(int) $value['less1000'];
+            $nonsuppressed = (int) $value['less5000']+(int) $value['above5000'];
+			$data['categories'][$key] 		  = $value['name'];
+			$data['outcomes'][0]['data'][$key] = (int) $nonsuppressed;
+			$data['outcomes'][1]['data'][$key] = (int) $suppressed;
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $suppressed*100)/((int) $suppressed+(int) $nonsuppressed)),1);
+		}
+		// echo "<pre>";print_r($data);die();
+		return $data;
 	}
 }
 ?>

@@ -27,7 +27,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		  	Partner Outcomes <div class="display_date"></div>
+		  	Partners Outcomes (Routine VL) <div class="display_date"></div>
 		  </div>
 		  <div class="panel-body" id="partner_div">
 		    <center><div class="loader"></div></center>
@@ -61,7 +61,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		  	Supperssion  (Routine VL) <div class="display_date"></div>
+		  	PMTCT Supperssion  (Routine VL) <div class="display_date"></div>
 		  </div>
 		  <div class="panel-body" id="pmtct_suppression_div">
 		    <center><div class="loader"></div></center>
@@ -111,7 +111,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		  	Counties Outcomes (Routine VL) <div class="display_date"></div>
+		  	Partners PMTCT Outcomes (Routine VL) <div class="display_date"></div>
 		  </div>
 		  <div class="panel-body" id="pmtct_counties_outcomes_div">
 		    <center><div class="loader"></div></center>

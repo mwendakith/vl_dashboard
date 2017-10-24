@@ -43,9 +43,12 @@ class Pmtct extends MY_Controller
 	{
 		$data['outcomes'] = $this->pmtct_model->breakdown($year,$month,$pmtcttype,$to_year,$to_month,$partner);
 	}
-	public function pmtct_counties_outcomes($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$partner=null)
+	public function pmtct($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$county=null,$sub_county=null,$partner=null,$site=null)
 	{
-		$data['outcomes'] = $this->pmtct_model->counties_outcomes($year,$month,$pmtcttype,$to_year,$to_month,$partner);
+		$data['trends'] = $this->pmtct_model->pmtct($year,$month,$pmtcttype,$to_year,$to_month,$county,$sub_county,$partner,$site);
+		$data['div_name'] = "pmtct_outcomes";		
+
+		$this->load->view('trends_outcomes_view', $data);
 	}
 }
 ?>
