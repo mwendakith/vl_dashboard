@@ -114,6 +114,19 @@ class Template_model extends MY_Model
 		return $dropdown;
 	}
 
+	function pmtct_dropdown()
+	{
+		$dropdown = '';
+		// $this->db->order_by("name","asc");
+		$lab_data = $this->db->get('viralpmtcttype')->result_array();
+
+		foreach ($lab_data as $key => $value) {
+			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
+		}
+		
+		return $dropdown;
+	}
+
 	function get_county_name($county_id)
 	{
 		$this->db->where('ID', $county_id);
