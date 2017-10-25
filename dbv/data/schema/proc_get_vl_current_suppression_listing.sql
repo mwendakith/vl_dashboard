@@ -8,6 +8,7 @@ BEGIN
                      `view_facilitys`.`partnername`, `view_facilitys`.`name`,
                     SUM(`suppressed`) AS `suppressed`, 
                     SUM(`nonsuppressed`) AS `nonsuppressed`, 
+                    AVG(`suppression`) AS `suppression`, 
                     SUM(`totalartmar`) AS `totallstrpt`
                      FROM `vl_site_suppression` 
                   JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` 

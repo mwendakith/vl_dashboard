@@ -82,7 +82,7 @@
 	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-			  Counties <div class="display_date"></div>
+			  Counties
 			</div>
 		  	<div class="panel-body">
 		  	<div id="countys">
@@ -95,7 +95,7 @@
 	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-			  Sub counties <div class="display_date"></div>
+			  Sub counties 
 			</div>
 		  	<div class="panel-body">
 		  	<div id="subcounty">
@@ -107,7 +107,7 @@
 	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-			  Facilities <div class="display_date"></div>
+			  Facilities 
 			</div>
 		  	<div class="panel-body">
 		  	<div id="facilities">
@@ -119,7 +119,7 @@
 	<div class="col-md-3">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-			  Partners <div class="display_date"></div>
+			  Partners
 			</div>
 		  	<div class="panel-body">
 		  	<div id="partners">

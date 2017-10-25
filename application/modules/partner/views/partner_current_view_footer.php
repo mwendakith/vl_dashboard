@@ -35,7 +35,7 @@
 	        var posting = $.post( "<?php echo base_url();?>template/filter_partner_data", { partner: em } );
 	     
 	        // Put the results in a div
-	        posting.done(function( partner ) {
+	        posting.done(function( data ) {
 
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+1, function(data){
 	        		$("#breadcrum").html(data);
@@ -50,7 +50,7 @@
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 	        	});
 
-	        	data = JSON.parse(partner);
+	        	data = JSON.parse(data);
 
 	        	// alert(data);
 	        	$("#long_tracking").html("<center><div class='loader'></div></center>");
