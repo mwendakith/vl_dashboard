@@ -142,6 +142,42 @@ class Summaries extends MY_Controller {
 		$this->load->view('current_suppression_listing',$data);
 	}
 
+	function county_listing_partner($partner=NULL){
+		$data['cont'] = $this->summaries_model->county_listings_partner($partner);
+		$data['cont']['div'] = 'county_sup_listings';
+		$data['cont']['title'] = 'County Listing';
+		$data['cont']['table_div'] = 'county_sup_listings_table';
+
+		$this->load->view('current_suppression_listing',$data);
+	}
+
+	function subcounty_listing_partner($partner=NULL){
+		$data['cont'] = $this->summaries_model->subcounty_listings_partner($partner);
+		$data['cont']['div'] = 'subcounty_sup_listings';
+		$data['cont']['title'] = 'Sub-County Listing';
+		$data['cont']['table_div'] = 'subcounty_sup_listings_table';
+
+		$this->load->view('current_suppression_listing',$data);
+	}
+
+	function partner_listing_partner(){
+		$data['cont'] = $this->summaries_model->partner_listings_partner();
+		$data['cont']['div'] = 'partner_sup_listings';
+		$data['cont']['title'] = 'Partner Listing';
+		$data['cont']['table_div'] = 'partner_sup_listings_table';
+
+		$this->load->view('current_suppression_listing',$data);
+	}
+
+	function site_listing_partner($partner=NULL){
+		$data['cont'] = $this->summaries_model->site_listings_partner($partner);
+		$data['cont']['div'] = 'site_sup_listings';
+		$data['cont']['title'] = 'Facility Listing';
+		$data['cont']['table_div'] = 'site_sup_listings_table';
+
+		$this->load->view('current_suppression_listing',$data);
+	}
+
 	function display_date()
 	{
 		echo "(".$this->session->userdata('filter_year')." ".$this->summaries_model->resolve_month($this->session->userdata('filter_month')).")";

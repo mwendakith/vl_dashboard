@@ -57,7 +57,7 @@ class Partner extends MY_Controller
 		$this -> template($this->data);
 	}
 
-	function counties()
+	public function counties()
 	{
 		$this->clear_all_session_data();
 		$this->session->unset_userdata('partner_filter');
@@ -74,6 +74,14 @@ class Partner extends MY_Controller
 		$this->clear_all_session_data();
 		$this->data['content_view'] = 'partner/partner_sites_view';
 		// echo "<pre>";print_r($this->data);die();
+		$this -> template($this->data);
+	}
+
+	public function current()
+	{
+		$this->load->module('charts/summaries');
+		$this->clear_all_session_data();
+		$this->data['content_view'] = 'partner/partner_current_view';
 		$this -> template($this->data);
 	}
 

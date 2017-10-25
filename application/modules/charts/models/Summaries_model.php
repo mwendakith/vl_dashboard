@@ -913,6 +913,16 @@ class Summaries_model extends MY_Model
 			$partner = $this->session->userdata('partner_filter');
 		}
 
+		// echo "<pre>";print_r($result);die();
+		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
+
+		$data['vl_outcomes']['name'] = 'Tests';
+		$data['vl_outcomes']['colorByPoint'] = true;
+		$data['ul'] = '';
+
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
+
 		if ($partner) {
 			$sql = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
 		} else {
@@ -927,15 +937,6 @@ class Summaries_model extends MY_Model
 
 		$this->db->close();
 		
-		// echo "<pre>";print_r($result);die();
-		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
-
-		$data['vl_outcomes']['name'] = 'Tests';
-		$data['vl_outcomes']['colorByPoint'] = true;
-		$data['ul'] = '';
-
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
 
 		$data['vl_outcomes']['data'][0]['y'] = (int) $result->suppressed;
 		$data['vl_outcomes']['data'][1]['y'] = (int) $result->nonsuppressed;
@@ -954,34 +955,68 @@ class Summaries_model extends MY_Model
 	}
 
 	function county_listings(){
-		return $this->suppression_listings(1);
+		return $this->suppression_listings(1, 1, 0);
 	}
 
 	function subcounty_listings($county=NULL){
-		return $this->suppression_listings(2, $county);
+		return $this->suppression_listings(2, 1, $county);
 	}
 
 	function partner_listings($county=NULL){
-		return $this->suppression_listings(3, $county);
+		return $this->suppression_listings(3, 1, $county);
 	}
 
 	function site_listings($county=NULL){
-		return $this->suppression_listings(4, $county);
+		return $this->suppression_listings(4, 1, $county);
 	}
 
-	function suppression_listings($type, $county=NULL)
+	function county_listings_partner($partner=NULL){
+		return $this->suppression_listings(1, 3, $partner);
+	}
+
+	function subcounty_listings_partner($partner=NULL){
+		return $this->suppression_listings(2, 3, $partner);
+	}
+
+	function partner_listings_partner(){
+		return $this->suppression_listings(3, 3, 1000);
+	}
+
+	function site_listings_partner($partner=NULL){
+		return $this->suppression_listings(4, 3, $partner);
+	}
+
+	function suppression_listings($type, $param_type=1, $param=NULL)
 	{
 		$li = '';
 		$table = '';
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
+		$sql = '';
+
+		if($param_type == 1){
+
+			if ($param==null || $param=='null') {
+				$param = $this->session->userdata('county_filter');
+			}
+
+			if ($param==null || $param=='null') {
+				$param = 0;
+			}
+			$sql = "CALL `proc_get_vl_current_suppression_listing`({$type}, {$param})";
 		}
 
-		if ($county==null || $county=='null' || $type==1) {
-			$county = 0;
+		else{			
+
+			if ($param==null || $param=='null') {
+				$param = $this->session->userdata('partner_filter');
+			}
+
+			if ($param==null || $param=='null') {
+				$param = 1000;
+			}
+			$sql = "CALL `proc_get_vl_current_suppression_listing_partners`({$type}, {$param})";
 		}
 
-		$sql = "CALL `proc_get_vl_current_suppression_listing`({$type}, {$county})";
+		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
