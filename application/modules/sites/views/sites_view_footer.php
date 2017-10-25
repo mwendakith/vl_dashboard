@@ -9,6 +9,9 @@
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['year']+" )");
     	});
+    	$.get("<?php echo base_url();?>template/get_current_header", function(data){
+			$(".display_current_range").html(data);
+    	});
 		var site = <?php echo json_encode($this->session->userdata("site_filter")); ?>;
 		console.log(site);
 		if (!site) {

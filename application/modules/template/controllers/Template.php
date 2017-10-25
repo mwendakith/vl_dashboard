@@ -240,10 +240,10 @@ class Template extends MY_Controller
 		
     	$year = ((int) Date('Y'));
     	$prev_year = ((int) Date('Y')) - 1;
-    	$month = ((int) Date('m'));
-    	$prev_month = ((int) Date('m')) - 1;
+    	$month = ((int) Date('m')) - 1;
+    	$prev_month = ((int) Date('m'));
 
-    	if($month == 1){
+    	if($month == 0){
     		echo "(Jan - Dec {$prev_year})";
     	}
     	else{

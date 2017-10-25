@@ -75,7 +75,7 @@
 </div>
 
 <div class="row">
-	<center><h3>Current suppression rates</h3></center>
+	<center><h3>Current suppression rates <div class="display_current_range"></div></h3></center>
 </div>
 
 <div class="row">
