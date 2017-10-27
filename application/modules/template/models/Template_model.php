@@ -118,6 +118,7 @@ class Template_model extends MY_Model
 	{
 		$dropdown = '';
 		// $this->db->order_by("name","asc");
+		$this->db->where('subID', 1);
 		$lab_data = $this->db->get('viralpmtcttype')->result_array();
 
 		foreach ($lab_data as $key => $value) {
