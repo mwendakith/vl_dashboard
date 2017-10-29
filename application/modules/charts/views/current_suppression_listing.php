@@ -31,10 +31,18 @@
   </div>
 </div>
 
+
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#<?= @$cont['table_div']; ?>").DataTable({
-			responsive: true
+      dom: 'Bfrtip',
+			responsive: true,
+      buttons : [
+        {
+          extend: 'csvHtml5',
+          title: 'Suppression Export'
+        }
+      ]
 		});
 
 		// $("table").tablecloth({
