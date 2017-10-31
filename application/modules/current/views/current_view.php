@@ -131,4 +131,175 @@
 	</div>
 </div>
 
+<div class="row">
+	<center><h3>Current suppression suppressed age data <div class="display_current_range"></div></h3></center>
+</div>
+
+<div class="row">
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Counties
+			</div>
+		  	<div class="panel-body">
+		  	<div id="countys_a">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Sub counties 
+			</div>
+		  	<div class="panel-body">
+		  	<div id="subcounty_a">
+		  		<div>Loading...</div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Facilities 
+			</div>
+		  	<div class="panel-body">
+		  	<div id="facilities_a">
+		  		<div>Loading...</div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Partners
+			</div>
+		  	<div class="panel-body">
+		  	<div id="partners_a">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<center><h3>Current suppression non suppressed age data <div class="display_current_range"></div></h3></center>
+</div>
+
+<div class="row">
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Counties
+			</div>
+		  	<div class="panel-body">
+		  	<div id="countys_na">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Sub counties 
+			</div>
+		  	<div class="panel-body">
+		  	<div id="subcounty_na">
+		  		<div>Loading...</div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Facilities 
+			</div>
+		  	<div class="panel-body">
+		  	<div id="facilities_na">
+		  		<div>Loading...</div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Partners
+			</div>
+		  	<div class="panel-body">
+		  	<div id="partners_na">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+</div>
+
+<div class="row">
+	<center><h3>Current suppression gender data <div class="display_current_range"></div></h3></center>
+</div>
+
+<div class="row">
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Counties
+			</div>
+		  	<div class="panel-body">
+		  	<div id="countys_g">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Sub counties 
+			</div>
+		  	<div class="panel-body">
+		  	<div id="subcounty_g">
+		  		<div>Loading...</div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Facilities 
+			</div>
+		  	<div class="panel-body">
+		  	<div id="facilities_g">
+		  		<div>Loading...</div>
+		  	</div>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-3">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Partners
+			</div>
+		  	<div class="panel-body">
+		  	<div id="partners_g">
+		  		<div>Loading...</div>
+		  	</div>
+		  	<!-- -->
+		  </div>
+		</div>
+	</div>
+</div>
+
 <?php $this->load->view('current_view_footer'); ?>

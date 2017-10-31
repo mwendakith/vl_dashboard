@@ -16,10 +16,12 @@
         		<tr>
         			<th>#</th>
               <th>Name</th>
-              <th>Current Suppression</th>
-              <th>Patients Tested</th>
-              <th>Patients on Art as at March 21, 2017</th>
-        			<th>Coverage</th>
+              <th>Male Suppressed</th>
+              <th>Male Non suppressed</th>
+              <th>Female Suppressed</th>
+              <th>Female Non suppressed</th>
+              <th>No Gender Suppressed</th>
+              <th>No Gender Non suppressed</th>
         		</tr>
         	</thead>
         	<tbody>

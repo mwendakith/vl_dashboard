@@ -19,12 +19,42 @@
 		$("#subcounty").html("<div>Loading...</div>");
 		$("#facilities").html("<div>Loading...</div>");
 
+		$("#countys_g").html("<div>Loading...</div>");
+		$("#partners_g").html("<div>Loading...</div>");
+		$("#subcounty_g").html("<div>Loading...</div>");
+		$("#facilities_g").html("<div>Loading...</div>");
+
+		$("#countys_a").html("<div>Loading...</div>");
+		$("#partners_a").html("<div>Loading...</div>");
+		$("#subcounty_a").html("<div>Loading...</div>");
+		$("#facilities_a").html("<div>Loading...</div>");
+
+		$("#countys_na").html("<div>Loading...</div>");
+		$("#partners_na").html("<div>Loading...</div>");
+		$("#subcounty_na").html("<div>Loading...</div>");
+		$("#facilities_na").html("<div>Loading...</div>");
+
 		$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression'); ?>");
 
 		$("#countys").load("<?php echo base_url('charts/summaries/county_listing_partner');?>");
 		$("#partners").load("<?php echo base_url('charts/summaries/partner_listing_partner');?>");
 		$("#subcounty").load("<?php echo base_url('charts/summaries/subcounty_listing_partner');?>");
 		$("#facilities").load("<?php echo base_url('charts/summaries/site_listing_partner');?>");
+
+		$("#countys_g").load("<?php echo base_url('charts/summaries/county_listing_partner_gender');?>");
+		$("#partners_g").load("<?php echo base_url('charts/summaries/partner_listing_partner_gender');?>");
+		$("#subcounty_g").load("<?php echo base_url('charts/summaries/subcounty_listing_partner_gender');?>");
+		$("#facilities_g").load("<?php echo base_url('charts/summaries/site_listing_partner_gender');?>");
+
+		$("#countys_a").load("<?php echo base_url('charts/summaries/county_listing_partner_age');?>");
+		$("#partners_a").load("<?php echo base_url('charts/summaries/partner_listing_partner_age');?>");
+		$("#subcounty_a").load("<?php echo base_url('charts/summaries/subcounty_listing_partner_age');?>");
+		$("#facilities_a").load("<?php echo base_url('charts/summaries/site_listing_partner_age');?>");
+
+		$("#countys_na").load("<?php echo base_url('charts/summaries/county_listing_partner_age_n');?>");
+		$("#partners_na").load("<?php echo base_url('charts/summaries/partner_listing_partner_age_n');?>");
+		$("#subcounty_na").load("<?php echo base_url('charts/summaries/subcounty_listing_partner_age_n');?>");
+		$("#facilities_na").load("<?php echo base_url('charts/summaries/site_listing_partner_age_n');?>");
 
 		$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>");
 
@@ -58,11 +88,37 @@
 
 				$("#countys").html("<div>Loading...</div>");
 				$("#subcounty").html("<div>Loading...</div>");
-				$("#facilities").html("<div>Loading...</div>");		
+				$("#facilities").html("<div>Loading...</div>");	
+
+				$("#countys_g").html("<div>Loading...</div>");
+				$("#subcounty_g").html("<div>Loading...</div>");
+				$("#facilities_g").html("<div>Loading...</div>");
+
+				$("#countys_a").html("<div>Loading...</div>");
+				$("#subcounty_a").html("<div>Loading...</div>");
+				$("#facilities_a").html("<div>Loading...</div>");
+
+				$("#countys_na").html("<div>Loading...</div>");
+				$("#subcounty_na").html("<div>Loading...</div>");
+				$("#facilities_na").html("<div>Loading...</div>");	
 
 				$("#countys").load("<?php echo base_url('charts/summaries/county_listing_partner');?>/"+data);
 				$("#subcounty").load("<?php echo base_url('charts/summaries/subcounty_listing_partner');?>/"+data);
-				$("#facilities").load("<?php echo base_url('charts/summaries/site_listing_partner');?>/"+data);		
+				$("#facilities").load("<?php echo base_url('charts/summaries/site_listing_partner');?>/"+data);
+
+				$("#countys_g").load("<?php echo base_url('charts/summaries/county_listing_partner_gender');?>/"+data);
+				$("#subcounty_g").load("<?php echo base_url('charts/summaries/subcounty_listing_partner_gender');?>/"+data);
+				$("#facilities_g").load("<?php echo base_url('charts/summaries/site_listing_partner_gender');?>/"+data);
+
+				$("#countys_a").load("<?php echo base_url('charts/summaries/county_listing_partner_age');?>/"+data);
+				$("#subcounty_a").load("<?php echo base_url('charts/summaries/subcounty_listing_partner_age');?>/"+data);
+				$("#facilities_a").load("<?php echo base_url('charts/summaries/site_listing_partner_age');?>/"+data);
+
+				$("#countys_na").load("<?php echo base_url('charts/summaries/county_listing_partner_age_n');?>/"+data);
+				$("#subcounty_na").load("<?php echo base_url('charts/summaries/subcounty_listing_partner_age_n');?>/"+data);
+				$("#facilities_na").load("<?php echo base_url('charts/summaries/site_listing_partner_age_n');?>/"+data);
+
+
 			
 				$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+null+"/"+null+"/"+null+"/"+data);
 				$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression'); ?>/"+data);

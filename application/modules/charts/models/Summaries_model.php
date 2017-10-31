@@ -954,38 +954,6 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function county_listings(){
-		return $this->suppression_listings(1, 1, 0);
-	}
-
-	function subcounty_listings($county=NULL){
-		return $this->suppression_listings(2, 1, $county);
-	}
-
-	function partner_listings($county=NULL){
-		return $this->suppression_listings(3, 1, $county);
-	}
-
-	function site_listings($county=NULL){
-		return $this->suppression_listings(4, 1, $county);
-	}
-
-	function county_listings_partner($partner=NULL){
-		return $this->suppression_listings(1, 3, $partner);
-	}
-
-	function subcounty_listings_partner($partner=NULL){
-		return $this->suppression_listings(2, 3, $partner);
-	}
-
-	function partner_listings_partner(){
-		return $this->suppression_listings(3, 3, 1000);
-	}
-
-	function site_listings_partner($partner=NULL){
-		return $this->suppression_listings(4, 3, $partner);
-	}
-
 	function suppression_listings($type, $param_type=1, $param=NULL)
 	{
 		$li = '';
@@ -1061,6 +1029,197 @@ class Summaries_model extends MY_Model
 				$table .= '<td>'.$patients.'</td>';
 				$table .= '<td>'.($value['totallstrpt']).'</td>';
 				$table .= '<td>'.$coverage.'%</td>';
+				$table .= '</tr>';
+				$count++;
+			}
+		}
+		else{
+			$li = 'No Data';
+		}
+
+		$data = array(
+						'ul' => $li,
+						'table' => $table);
+		return $data;
+	}
+
+	function suppression_age_listings($suppressed, $type, $param_type=1, $param=NULL)
+	{
+		$li = '';
+		$table = '';
+		$sql = '';
+
+		if($param_type == 1){
+
+			if ($param==null || $param=='null') {
+				$param = $this->session->userdata('county_filter');
+			}
+
+			if ($param==null || $param=='null') {
+				$param = 0;
+			}
+			$sql = "CALL `proc_get_vl_current_age_suppression_listing`({$type}, {$param})";
+		}
+
+		else{			
+
+			if ($param==null || $param=='null') {
+				$param = $this->session->userdata('partner_filter');
+			}
+
+			if ($param==null || $param=='null') {
+				$param = 1000;
+			}
+			$sql = "CALL `proc_get_vl_current_age_suppression_listing_partner`({$type}, {$param})";
+		}
+
+		
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+
+		// echo "<pre>";print_r($result);die();
+		$count = 1;
+		$listed = FALSE;
+
+		if($result)
+		{
+			foreach ($result as $key => $value)
+			{
+				$name;
+
+				switch ($type) {
+					case 1:
+						$name = $value['countyname'];
+						break;
+					case 2:
+						$name = $value['subcounty'];
+						break;
+					case 3:
+						$name = $value['partnername'];
+						break;
+					case 4:
+						$name = $value['name'];
+						break;
+					default:
+						break;
+				}
+
+				if ($count<16) {
+					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$name.'</a>';
+				}
+
+				$table .= '<tr>';
+				$table .= '<td>'.$count.'</td>';
+				$table .= '<td>'.$name.'</td>';
+
+				if($suppressed == 1){
+					$table .= '<td>'.$value['noage_suppressed'].'</td>';
+					$table .= '<td>'.$value['less2_suppressed'].'</td>';
+					$table .= '<td>'.$value['less9_suppressed'].'</td>';
+					$table .= '<td>'.$value['less14_suppressed'].'</td>';
+					$table .= '<td>'.$value['less19_suppressed'].'</td>';
+					$table .= '<td>'.$value['less24_suppressed'].'</td>';
+					$table .= '<td>'.$value['over25_suppressed'].'</td>';
+				}
+				else{
+					$table .= '<td>'.$value['noage_nonsuppressed'].'</td>';
+					$table .= '<td>'.$value['less2_nonsuppressed'].'</td>';				
+					$table .= '<td>'.$value['less9_nonsuppressed'].'</td>';				
+					$table .= '<td>'.$value['less14_nonsuppressed'].'</td>';				
+					$table .= '<td>'.$value['less19_nonsuppressed'].'</td>';				
+					$table .= '<td>'.$value['less24_nonsuppressed'].'</td>';				
+					$table .= '<td>'.$value['over25_nonsuppressed'].'</td>';
+				}
+
+				$table .= '</tr>';
+				$count++;
+			}
+		}
+		else{
+			$li = 'No Data';
+		}
+
+		$data = array(
+						'ul' => $li,
+						'table' => $table);
+		return $data;
+	}
+
+
+	function suppression_gender_listings($type, $param_type=1, $param=NULL)
+	{
+		$li = '';
+		$table = '';
+		$sql = '';
+
+		if($param_type == 1){
+
+			if ($param==null || $param=='null') {
+				$param = $this->session->userdata('county_filter');
+			}
+
+			if ($param==null || $param=='null') {
+				$param = 0;
+			}
+			$sql = "CALL `proc_get_vl_current_gender_suppression_listing`({$type}, {$param})";
+		}
+
+		else{			
+
+			if ($param==null || $param=='null') {
+				$param = $this->session->userdata('partner_filter');
+			}
+
+			if ($param==null || $param=='null') {
+				$param = 1000;
+			}
+			$sql = "CALL `proc_get_vl_current_gender_suppression_listing_partner`({$type}, {$param})";
+		}
+
+		
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+
+		// echo "<pre>";print_r($result);die();
+		$count = 1;
+		$listed = FALSE;
+
+		if($result)
+		{
+			foreach ($result as $key => $value)
+			{
+				$name;
+
+				switch ($type) {
+					case 1:
+						$name = $value['countyname'];
+						break;
+					case 2:
+						$name = $value['subcounty'];
+						break;
+					case 3:
+						$name = $value['partnername'];
+						break;
+					case 4:
+						$name = $value['name'];
+						break;
+					default:
+						break;
+				}
+
+				if ($count<16) {
+					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$name.'</a>';
+				}
+
+				$table .= '<tr>';
+				$table .= '<td>'.$count.'</td>';
+				$table .= '<td>'.$name.'</td>';
+				$table .= '<td>'.$value['male_suppressed'].'</td>';
+				$table .= '<td>'.$value['male_nonsuppressed'].'</td>';
+				$table .= '<td>'.$value['female_suppressed'].'</td>';
+				$table .= '<td>'.$value['female_nonsuppressed'].'</td>';
+				$table .= '<td>'.$value['nogender_suppressed'].'</td>';
+				$table .= '<td>'.$value['nogender_nonsuppressed'].'</td>';
 				$table .= '</tr>';
 				$count++;
 			}

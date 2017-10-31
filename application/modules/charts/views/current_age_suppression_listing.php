@@ -16,10 +16,13 @@
         		<tr>
         			<th>#</th>
               <th>Name</th>
-              <th>Current Suppression</th>
-              <th>Patients Tested</th>
-              <th>Patients on Art as at March 21, 2017</th>
-        			<th>Coverage</th>
+              <th>No Age Non suppressed</th>
+              <th>&lt;2 Non Suppressed</th>
+              <th>2-9 Non Suppressed</th>
+              <th>10-14 Non Suppressed</th>
+              <th>15-19 Non Suppressed</th>
+              <th>20-24 Non Suppressed</th>
+              <th>25+ Non Suppressed</th>
         		</tr>
         	</thead>
         	<tbody>
