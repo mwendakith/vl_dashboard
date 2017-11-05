@@ -106,6 +106,15 @@ class Summaries extends MY_Controller {
     	$this->load->view('pie_chart_view',$data);
 	}
 
+	function current_age($type, $param_type=1, $param=NULL){
+		$data['outcomes'] = $this->summaries_model->current_age_chart($type,$param_type,$param);		
+    	$this->load->view('agegroup_view',$data);
+	}
+
+	function current_gender($type, $param_type=1, $param=NULL){
+		$data['outcomes'] = $this->summaries_model->current_gender_chart($type,$param_type,$param);
+    	$this->load->view('gender_view',$data);
+	}
 
 	/** 
 	**Current listings sorted by county

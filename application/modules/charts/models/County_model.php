@@ -347,7 +347,6 @@ class County_model extends MY_Model
 			$table .= "<tr>
 						<td>".($key+1)."</td>
 						<td>".$value['partner']."</td>
-						<td>".number_format((int) $value['sitesending'])."</td>
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
 							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>

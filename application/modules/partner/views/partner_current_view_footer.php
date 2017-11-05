@@ -35,6 +35,8 @@
 		$("#facilities_na").html("<div>Loading...</div>");
 
 		$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression'); ?>");
+		$("#current_sup_gender").load("<?php echo base_url('charts/summaries/current_gender/0/3/1000'); ?>");
+		$("#current_sup_age").load("<?php echo base_url('charts/summaries/current_age/0/3/1000'); ?>");
 
 		$("#countys").load("<?php echo base_url('charts/summaries/county_listing_partner');?>");
 		$("#partners").load("<?php echo base_url('charts/summaries/partner_listing_partner');?>");
@@ -55,8 +57,6 @@
 		$("#partners_na").load("<?php echo base_url('charts/summaries/partner_listing_partner_age_n');?>");
 		$("#subcounty_na").load("<?php echo base_url('charts/summaries/subcounty_listing_partner_age_n');?>");
 		$("#facilities_na").load("<?php echo base_url('charts/summaries/site_listing_partner_age_n');?>");
-
-		$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>");
 
 		$("select").change(function(){
 			em = $(this).val();
@@ -83,8 +83,9 @@
 	        	data = JSON.parse(data);
 
 	        	// alert(data);
-	        	$("#long_tracking").html("<center><div class='loader'></div></center>");
 	        	$("#current_sup").html("<center><div class='loader'></div></center>");
+	        	$("#current_sup_gender").html("<center><div class='loader'></div></center>");
+	        	$("#current_sup_age").html("<center><div class='loader'></div></center>");
 
 				$("#countys").html("<div>Loading...</div>");
 				$("#subcounty").html("<div>Loading...</div>");
@@ -120,8 +121,9 @@
 
 
 			
-				$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+null+"/"+null+"/"+null+"/"+data);
 				$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression'); ?>/"+data);
+				$("#current_sup_gender").load("<?php echo base_url('charts/summaries/current_gender/0/3'); ?>/"+data);
+				$("#current_sup_age").load("<?php echo base_url('charts/summaries/current_age/0/3'); ?>/"+data);
 	        });
 		});
 

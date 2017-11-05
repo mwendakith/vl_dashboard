@@ -20,6 +20,7 @@ class County extends MY_Controller
 		$link = $year . '/' . $month . '/' . $to_year . '/' . $to_month;
 
 		$data['link'] =  base_url('charts/county/download_county_table/' . $link);
+		$data['table_div'] = "first_table";
 
     	$this->load->view('counties_table_view',$data);
 	}
@@ -38,6 +39,7 @@ class County extends MY_Controller
 		$link = $year . '/' . $month . '/' . $county . '/' . $to_year . '/' . $to_month;
 
 		$data['link'] =  base_url('charts/county/download_subcounty_table/' . $link);
+		$data['table_div'] = "second_table";
 
     	$this->load->view('counties_table_view',$data);
 	}
@@ -56,6 +58,7 @@ class County extends MY_Controller
 		$link = $year . '/' . $month . '/' . $county . '/' . $to_year . '/' . $to_month;
 
 		$data['link'] =  base_url('charts/county/download_partner_county_table/' . $link);
+		$data['table_div'] = "third_table";
 
     	$this->load->view('counties_table_view',$data);
 	}

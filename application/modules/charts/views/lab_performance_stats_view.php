@@ -30,15 +30,28 @@
 		<?php echo $stats;?>
 	</tbody>
 </table>
-<div class="row">
+<div class="row" style="display: none;">
 	<div class="col-md-12">
-		<center><a href="<?php  echo $link; ?>"><button id="download_link" class="btn btn-primary" style="background-color: #009688;color: white;">Export To Excel</button></a></center>
+		<center><a href="<?php echo $link; ?>"><button id="download_link" class="btn btn-primary" style="background-color: #009688;color: white;">Export To Excel</button></a></center>
 	</div>
 </div>
 <script type="text/javascript" charset="utf-8">
   $(document).ready(function() {
   	$('#example').DataTable({
-  		responsive: true
+  		dom: '<"btn btn-primary"B>lTfgtip',
+		responsive: true,
+	    buttons : [
+	        {
+	          text:  'Export to CSV',
+	          extend: 'csvHtml5',
+	          title: 'Lab Performance'
+	        },
+	        {
+	          text:  'Export to Excel',
+	          extend: 'excelHtml5',
+	          title: 'Lab Performance'
+	        }
+	      ]
   	});
 
     // $("table").tablecloth({

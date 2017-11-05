@@ -39,10 +39,11 @@
 	$(document).ready(function() {
 		$("#<?= @$cont['table_div']; ?>").DataTable({
       // dom: 'Bfrtip',
-      dom: '<"html5buttons"B>lTfgtip',
+      dom: '<"btn btn-primary"B>lTfgtip',
 			responsive: true,
       buttons : [
         {
+          text:  'Export to Excel',
           extend: 'csvHtml5',
           title: 'Suppression Export'
         }

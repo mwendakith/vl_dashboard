@@ -954,6 +954,126 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
+	function current_gender_chart($type, $param_type=1, $param=NULL)
+	{
+		
+
+		if($param_type == 1){
+
+			if ($param==null || $param=='null') {
+				$param = $this->session->userdata('county_filter');
+			}
+
+			if ($param==null || $param=='null') {
+				$param = 0;
+			}
+			$sql = "CALL `proc_get_vl_current_gender_suppression_listing`({$type}, {$param})";
+		}
+
+		else{			
+
+			if ($param==null || $param=='null') {
+				$param = $this->session->userdata('partner_filter');
+			}
+
+			if ($param==null || $param=='null') {
+				$param = 1000;
+			}
+			$sql = "CALL `proc_get_vl_current_gender_suppression_listing_partner`({$type}, {$param})";
+		}
+
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->row();
+		// echo "<pre>";print_r($result);die();
+		$data['gender'][0]['name'] = 'Not Suppresed';
+		$data['gender'][1]['name'] = 'Suppresed';
+
+		$data['categories'][0] = 'No data';
+		$data["gender"][0]["data"][0] = (int) $result->nogender_nonsuppressed;
+		$data["gender"][1]["data"][0] = (int) $result->nogender_suppressed;
+
+		$data['categories'][1] = 'Male';
+		$data["gender"][0]["data"][1] = (int) $result->male_nonsuppressed;
+		$data["gender"][1]["data"][1] = (int) $result->male_suppressed;
+
+		$data['categories'][2] = 'Female';
+		$data["gender"][0]["data"][2] = (int) $result->female_nonsuppressed;
+		$data["gender"][1]["data"][2] = (int) $result->female_suppressed;
+ 
+		$data['gender'][0]['drilldown']['color'] = '#913D88';
+		$data['gender'][1]['drilldown']['color'] = '#96281B';
+		// echo "<pre>";print_r($data);die();
+		return $data;
+	}
+
+	function current_age_chart($type, $param_type=1, $param=NULL)
+	{
+		
+
+		if($param_type == 1){
+
+			if ($param==null || $param=='null') {
+				$param = $this->session->userdata('county_filter');
+			}
+
+			if ($param==null || $param=='null') {
+				$param = 0;
+			}
+			$sql = "CALL `proc_get_vl_current_age_suppression_listing`({$type}, {$param})";
+		}
+
+		else{			
+
+			if ($param==null || $param=='null') {
+				$param = $this->session->userdata('partner_filter');
+			}
+
+			if ($param==null || $param=='null') {
+				$param = 1000;
+			}
+			$sql = "CALL `proc_get_vl_current_age_suppression_listing_partner`({$type}, {$param})";
+		}
+
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->row();
+		// echo "<pre>";print_r($result);die();
+		$data['ageGnd'][0]['name'] = 'Not Suppresed';
+		$data['ageGnd'][1]['name'] = 'Suppresed';
+
+		$data['categories'][0] = 'No data';
+		$data["ageGnd"][0]["data"][0] = (int) $result->noage_nonsuppressed;
+		$data["ageGnd"][1]["data"][0] = (int) $result->noage_suppressed;
+
+		$data['categories'][1] = 'Less 2';
+		$data["ageGnd"][0]["data"][1] = (int) $result->less2_nonsuppressed;
+		$data["ageGnd"][1]["data"][1] = (int) $result->less2_suppressed;
+
+		$data['categories'][2] = '2-9';
+		$data["ageGnd"][0]["data"][2] = (int) $result->less9_nonsuppressed;
+		$data["ageGnd"][1]["data"][2] = (int) $result->less9_suppressed;
+
+		$data['categories'][3] = '10-14';
+		$data["ageGnd"][0]["data"][3] = (int) $result->less14_nonsuppressed;
+		$data["ageGnd"][1]["data"][3] = (int) $result->less14_suppressed;
+
+		$data['categories'][4] = '15-19';
+		$data["ageGnd"][0]["data"][4] = (int) $result->less19_nonsuppressed;
+		$data["ageGnd"][1]["data"][4] = (int) $result->less19_suppressed;
+
+		$data['categories'][5] = '20-24';
+		$data["ageGnd"][0]["data"][5] = (int) $result->less24_nonsuppressed;
+		$data["ageGnd"][1]["data"][5] = (int) $result->less24_suppressed;
+
+		$data['categories'][6] = '25+';
+		$data["ageGnd"][0]["data"][6] = (int) $result->over25_nonsuppressed;
+		$data["ageGnd"][1]["data"][6] = (int) $result->over25_suppressed;
+ 
+		$data['ageGnd'][0]['drilldown']['color'] = '#913D88';
+		$data['ageGnd'][1]['drilldown']['color'] = '#96281B';
+		// echo "<pre>";print_r($data);die();
+		return $data;
+	}
+
 	function suppression_listings($type, $param_type=1, $param=NULL)
 	{
 		$li = '';

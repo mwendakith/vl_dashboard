@@ -64,6 +64,8 @@
 	        		$("#second").show();
 					$("#first").hide();
 
+					// $("#county_sites").empty();
+
 					$('#heading').html('Sub-Counties Outcomes <div class="display_date"></div>');
 
 					$("#subcounty").html("<center><div class='loader'></div></center>");
