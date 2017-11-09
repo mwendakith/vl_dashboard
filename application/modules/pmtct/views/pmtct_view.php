@@ -29,39 +29,17 @@
 			  <div class="panel-heading">
 			    Testing Trends <div class="display_range"></div>
 			  </div>
-			  <div class="panel-body" id="samples">
+			  <div class="panel-body" id="pmtct_testing_trends">
 			    <center><div class="loader"></div></center>
 			  </div>
 			</div>
 		</div>
-		<div class="col-md-6 col-sm-3 col-xs-12">
+		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
 			  	VL Outcomes <div class="display_date" ></div>
 			  </div>
-			  <div class="panel-body" id="vlOutcomes">
-			  	<center><div class="loader"></div></center>
-			  </div>
-			  
-			</div>
-		</div>
-		<div class="col-md-3 col-sm-3 col-xs-12">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			  	Gender <div class="display_date" ></div>
-			  </div>
-			  <div class="panel-body" id="gender">
-			  	<center><div class="loader"></div></center>
-			  </div>
-			  
-			</div>
-		</div>
-		<div class="col-md-3 col-sm-3 col-xs-12">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			  	Age <div class="display_date" ></div>
-			  </div>
-			  <div class="panel-body" id="age">
+			  <div class="panel-body" id="pmtct_vlOutcomes">
 			  	<center><div class="loader"></div></center>
 			  </div>
 			  
@@ -74,7 +52,7 @@
 			  <div class="panel-heading">
 			  	Counties <div class="display_date" ></div>
 			  </div>
-			  <div class="panel-body" id="countiesRegimen">
+			  <div class="panel-body" id="countiespmtct">
 			  	<center><div class="loader"></div></center>
 			  </div>
 			  
@@ -85,7 +63,7 @@
 			  <div class="panel-heading">
 			  	Partners <div class="display_date" ></div>
 			  </div>
-			  <div class="panel-body" id="partnersRegimen">
+			  <div class="panel-body" id="partnerspmtct">
 			  	<center><div class="loader"></div></center>
 			  </div>
 			  
@@ -96,7 +74,7 @@
 			  <div class="panel-heading">
 			  	Sub-counties <div class="display_date" ></div>
 			  </div>
-			  <div class="panel-body" id="subcountiesRegimen">
+			  <div class="panel-body" id="subcountiespmtct">
 			  	<center><div class="loader"></div></center>
 			  </div>
 			  
@@ -107,7 +85,7 @@
 			  <div class="panel-heading">
 			  	Facilities <div class="display_date" ></div>
 			  </div>
-			  <div class="panel-body" id="FacilitiesRegimen">
+			  <div class="panel-body" id="Facilitiespmtct">
 			  	<center><div class="loader"></div></center>
 			  </div>
 			  
@@ -121,7 +99,7 @@
 			  <div class="panel-heading" id="heading">
 			  	County Outcomes <div class="display_date"></div>
 			  </div>
-			  <div class="panel-body" id="county">
+			  <div class="panel-body" id="countypmtct">
 			    <center><div class="loader"></div></center>
 			  </div>
 			</div>

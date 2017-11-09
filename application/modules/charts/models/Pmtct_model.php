@@ -78,8 +78,9 @@ class Pmtct_model extends MY_Model
 		return $data;
 	}
 
-	public function suppression($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$partner=null)
+	public function suppression($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$partner=null,$national=null,$county=null,$subcounty=null,$site=null)
 	{
+		$default = 0;
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -97,12 +98,26 @@ class Pmtct_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($pmtcttype==null || $pmtcttype=='null') {
+			$pmtcttype = $this->session->userdata('pmtct_filter');
+		}
 
 		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_filter');
 		}
-		$default = 0;
-		$sql = "CALL `proc_get_vl_pmtct_suppression`('".$pmtcttype."','".$year."','".$default."','".$to_year."','".$default."','".$default."','".$default."','".$partner."','".$default."')";
+		if ($national==null || $national=='null') {
+			$national = $default;
+		}
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
+		}
+		if ($subcounty==null || $subcounty=='null') {
+			$subcounty = $this->session->userdata('sub_county_filter');
+		}
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
+		$sql = "CALL `proc_get_vl_pmtct_suppression`('".$pmtcttype."','".$year."','".$default."','".$to_year."','".$default."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
 
 		$result = $this->db->query($sql)->result();
 		// echo "<pre>";print_r($result);die();
@@ -138,8 +153,9 @@ class Pmtct_model extends MY_Model
 		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
-	public function vl_outcomes($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$partner=null)
+	public function vl_outcomes($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$partner=null,$national=null,$county=null,$subcounty=null,$site=null)
 	{
+		$default = 0;
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -156,12 +172,26 @@ class Pmtct_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
+		if ($pmtcttype==null || $pmtcttype=='null') {
+			$pmtcttype = $this->session->userdata('pmtct_filter');
+		}
 
 		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_filter');
 		}
-		$default = 0;
-		$sql = "CALL `proc_get_vl_pmtct`('".$pmtcttype."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$partner."','".$default."')";
+		if ($national==null || $national=='null') {
+			$national = $default;
+		}
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
+		}
+		if ($subcounty==null || $subcounty=='null') {
+			$subcounty = $this->session->userdata('sub_county_filter');
+		}
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
+		$sql = "CALL `proc_get_vl_pmtct`('".$pmtcttype."','".$year."','".$month."','".$to_year."','".$to_month."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
 
 		$result = $this->db->query($sql)->result();
 
@@ -244,7 +274,88 @@ class Pmtct_model extends MY_Model
 		return $data;
 	}
 
-	public function pmtct($year=null,$month=null,$type=null,$to_year=null,$to_month=null,$county=null,$sub_county=null,$partner=null,$site=null)
+	public function breakdown($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$county=null,$sub_county=null,$partner=null,$site=null)
+	{
+		$default = 0;
+		$li = '';
+		$table = '';
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		//Assigning the value of the month or setting it to the selected value
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		if ($pmtcttype==null || $pmtcttype=='null') {
+			$pmtcttype = $this->session->userdata('pmtct_filter');
+		}
+
+		if ($county == 1 || $county == '1') {
+			$sql = "CALL `proc_get_vl_pmtct_breakdown`('".$pmtcttype."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$default."','".$default."','".$default."')";
+			$div_name = 'countyLising';
+			$modal_name = 'countyModal';
+		} elseif ($partner == 1 || $partner == '1') {
+			$sql = "CALL `proc_get_vl_pmtct_breakdown`('".$pmtcttype."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$partner."','".$default."')";
+			$div_name = 'partnerLising';
+			$modal_name = 'partnerModal';
+		} elseif ($sub_county == 1 || $sub_county == '1') {
+			$sql = "CALL `proc_get_vl_pmtct_breakdown`('".$pmtcttype."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$sub_county."','".$default."','".$default."')";
+			$div_name = 'subcountyLising';
+			$modal_name = 'subcountyModal';
+		} elseif ($site == 1 || $site == '1') {
+			$sql = "CALL `proc_get_vl_pmtct_breakdown`('".$pmtcttype."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$default."','".$site."')";
+			$div_name = 'siteLising';
+			$modal_name = 'siteModal';
+
+		}
+		
+
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$count = 1;
+
+		if($result)
+		{
+			foreach ($result as $key => $value)
+			{
+				$suppressed = $value['undetected']+$value['less1000'];
+				$nonsuppressed = $value['less5000']+$value['above5000'];
+				if ($count<16) {
+					$li .= '<a href="javascript:void(0);" class="list-group-item" ><strong>'.$count.'.</strong>&nbsp;'.$value['name'].':&nbsp;&nbsp;&nbsp;'.round(@($suppressed/$value['routine']),1).'%&nbsp;&nbsp;&nbsp;('.number_format($value['routine']).')</a>';
+				}
+					$table .= '<tr>';
+					$table .= '<td>'.$count.'</td>';
+					$table .= '<td>'.$value['name'].'</td>';
+					$table .= '<td>'.number_format((int) $value['routine']).'</td>';
+					$table .= '<td>'.number_format((int) $suppressed).'</td>';
+					$table .= '<td>'.number_format((int) $nonsuppressed).'</td>';
+					$table .= '<td>'.round(@($suppressed/$value['routine']),1).'%</td>';
+					$table .= '</tr>';
+					$count++;
+			}
+		}else{
+			$li = 'No Data';
+		}
+		
+		$data = array(
+						'ul' => $li,
+						'table' => $table,
+						'div_name' => $div_name,
+						'modal_name' => $modal_name);
+		return $data;
+	}
+	public function pmtct($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$county=null,$sub_county=null,$partner=null,$site=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -275,9 +386,13 @@ class Pmtct_model extends MY_Model
 		if ($site==null || $site=='null') {
 			$site = 0;
 		}
+
+		if ($pmtcttype==null || $pmtcttype=='null') {
+			$pmtcttype = $this->session->userdata('pmtct_filter');
+		}
 						
 		$default = 0;	
-		$sql = "CALL `proc_get_vl_pmtct_breakdown`('".$type."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$sub_county."','".$partner."','".$site."')";
+		$sql = "CALL `proc_get_vl_pmtct_breakdown`('".$pmtcttype."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$sub_county."','".$partner."','".$site."')";
 		// echo "<pre>";print_r($sql);echo "</pre>";die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();

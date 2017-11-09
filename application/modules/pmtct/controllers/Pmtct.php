@@ -22,5 +22,15 @@ class Pmtct extends MY_Controller
 		// echo "<pre>";print_r($this->data);die();
 		$this -> template($this->data);
 	}
+
+	public function check_pmtct_select()
+	{
+		if ($this->session->userdata('pmtct_filter')) {
+			$pmtct = $this->session->userdata('pmtct_filter');
+		} else {
+			$pmtct = 0;
+		}
+		echo json_encode($pmtct);
+	}
 }
 ?>

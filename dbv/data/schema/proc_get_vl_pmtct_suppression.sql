@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_pmtct_suppression`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_pmtct_suppression`
-(IN Pm_id INT(11), IN filter_year INT(11), IN filter_month INT(11), IN to_year INT(11), IN to_month INT(11), IN national INT(11), IN county INT(11), IN partner INT(11), IN site INT(11))
+(IN Pm_id INT(11), IN filter_year INT(11), IN filter_month INT(11), IN to_year INT(11), IN to_month INT(11), IN national INT(11), IN county INT(11), IN partner INT(11), IN subcounty INT(11), IN site INT(11))
 BEGIN
   SET @QUERY =    "SELECT
 					`vcs`.`month`,
@@ -25,6 +25,11 @@ BEGIN
       SET @QUERY = CONCAT(@QUERY, " ,
                   `ac`.`name` FROM `vl_partner_pmtct` `vcs`
                   JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID` JOIN `partners` `ac` ON `ac`.`ID` = `vcs`.`partner`  WHERE `vcs`.`partner` = '",partner,"' ");
+    END IF;
+    IF (subcounty != 0 && subcounty != '') THEN
+      SET @QUERY = CONCAT(@QUERY, " ,
+                  `ac`.`name` FROM `vl_subcounty_pmtct` `vcs`
+                  JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID` JOIN `districts` `ac` ON `ac`.`ID` = `vcs`.`subcounty`  WHERE `vcs`.`subcounty` = '",subcounty,"' ");
     END IF;
     IF (site != 0 && site != '') THEN
       SET @QUERY = CONCAT(@QUERY, " ,

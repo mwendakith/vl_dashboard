@@ -147,6 +147,16 @@ class Template extends MY_Controller
 		echo $this->set_filter_date($data);
 	}
 
+	function filter_pmtct_data()
+	{
+		$data = array(
+				'pmtct' => $this->input->post('pmtct')
+		);
+
+		$this->filter_pmtct($data);
+		echo $this->session->userdata('pmtct_filter');
+	}
+
 	function breadcrum($data=null,$partner=NULL,$site=NULL,$sub_county=NULL)
 	{
 		$this->load->model('template_model');

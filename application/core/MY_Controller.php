@@ -89,6 +89,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 								'age_category_filter',
 								'sample_filter',
 								'sub_county_filter',
+								'pmtct_filter',
 								'filter_year',
 								'filter_month'
 								);
@@ -349,6 +350,36 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('patner_regimen_filter');
 				}else{
 					$this->session->set_userdata('patner_regimen_filter', $data['patReg']);
+					$this->session->unset_userdata('patner_age_category_filter');
+					$this->session->unset_userdata('sub_county_filter');
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+				}
+			}
+			
+			return TRUE;
+		}
+
+		function filter_pmtct($data=NULL)
+		{
+			if (!$data) {
+				
+			} else {
+				if ($data['pmtct']=='NA') {
+					$this->session->unset_userdata('pmtct_filter');
+					$this->session->unset_userdata('age_category_filter');
+					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('site_filter');
+					$this->session->unset_userdata('filter_month');
+					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('sub_county_filter');
+					$this->session->unset_userdata('patner_age_category_filter');
+					$this->session->unset_userdata('patner_regimen_filter');
+				}else{
+					$this->session->set_userdata('pmtct_filter', $data['pmtct']);
+					$this->session->unset_userdata('patner_regimen_filter');
 					$this->session->unset_userdata('patner_age_category_filter');
 					$this->session->unset_userdata('sub_county_filter');
 					$this->session->unset_userdata('regimen_filter');

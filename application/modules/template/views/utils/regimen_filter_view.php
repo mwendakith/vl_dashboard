@@ -29,6 +29,15 @@
     <form action="<?php echo base_url();?>template/filter_partner_data" method="post" id="filter_form">
       <div class="row">
         <div class="col-md-12">
+          <?php if ($pmtct) { ?>
+          <select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;" name="pmtct">
+            <option value="0" disabled="true" selected="true">Select PMTCT:</option>
+            <option value="NA">All PMTCT</option>
+            <!-- <optgroup value="Counties"> -->
+            <?php echo $pmtcts; ?>
+            <!-- </optgroup> -->
+          </select>
+          <?php } else {?>
           <select class="btn js-example-basic-single" style="width:220px;background-color: #C5EFF7;" name="partner">
             <option value="0" disabled="true" selected="true">Select Regimen:</option>
             <option value="NA">All Regimen</option>
@@ -36,6 +45,7 @@
             <?php echo $regimen; ?>
             <!-- </optgroup> -->
           </select>
+          <?php } ?>
         </div>
        
       </div>
