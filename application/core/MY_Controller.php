@@ -21,6 +21,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			$this->data['live'] = FALSE;
 			$this->data['codes'] = FALSE;
 			$this->data['sample'] = FALSE;
+			$this->data['pmtct'] = FALSE;
 		}
 
 		public function load_libraries($arr){

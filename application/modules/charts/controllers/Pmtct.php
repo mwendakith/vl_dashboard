@@ -13,9 +13,9 @@ class Pmtct extends MY_Controller
 		$this->load->model('pmtct_model');
 	}
 
-	public function pmtct_outcomes ($year=null,$month=null,$type=1,$to_year=null,$to_month=null,$partner=null)
+	public function pmtct_outcomes ($year=null,$month=null,$type=1,$to_year=null,$to_month=null,$partner=null,$national=null,$county=null,$subcounty=null,$site=null)
 	{
-		$data['outcomes'] = $this->pmtct_model->pmtct_outcomes($year,$month,$to_year,$to_month,$partner);
+		$data['outcomes'] = $this->pmtct_model->pmtct_outcomes($year,$month,$to_year,$to_month,$partner,$national,$county,$subcounty,$site);
 		if ($type == 1) {
 			$data['type'] = 'normal';
 			$data['div_name'] = 'pmtct_outcomes_normal';

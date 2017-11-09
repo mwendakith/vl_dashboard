@@ -11,8 +11,9 @@ class Pmtct_model extends MY_Model
 		parent:: __construct();
 	}
 
-	public function pmtct_outcomes($year=null,$month=null,$to_year=null,$to_month=null,$partner=null)
+	public function pmtct_outcomes($year=null,$month=null,$to_year=null,$to_month=null,$partner=null,$national=null,$county=null,$subcounty=null,$site=null)
 	{
+		$default = 0;
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -33,8 +34,19 @@ class Pmtct_model extends MY_Model
 		if ($partner==null || $partner=='null') {
 			$partner = $this->session->userdata('partner_filter');
 		}
-		$default = 0;
-		$sql = "CALL `proc_get_vl_pmtct`('".$default."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$partner."','".$default."')";
+		if ($national==null || $national=='null') {
+			$national = $default;
+		}
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
+		}
+		if ($subcounty==null || $subcounty=='null') {
+			$subcounty = $this->session->userdata('sub_county_filter');
+		}
+		if ($site==null || $site=='null') {
+			$site = $this->session->userdata('site_filter');
+		}
+		$sql = "CALL `proc_get_vl_pmtct`('".$default."','".$year."','".$month."','".$to_year."','".$to_month."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
 
 		$result = $this->db->query($sql)->result();
 
