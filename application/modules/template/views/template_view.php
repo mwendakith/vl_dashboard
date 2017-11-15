@@ -24,6 +24,8 @@
 		$this->load->view('utils/sample_filter_view');
 	}else if ($codes){
 		$this->load->view('utils/filter_view');
+	}else if ($pmtct){
+		$this->load->view('utils/regimen_filter_view');
 	}else {
 		$this->load->view('utils/filter_view');
 	}

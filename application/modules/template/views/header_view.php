@@ -157,6 +157,7 @@
 								<li><a href="<?php echo base_url();?>age">Age Analysis</a></li>
 								<li><a href="<?php echo base_url();?>sample">Sample Analysis</a></li>
 								<li><a href="<?php echo base_url();?>current">Current Suppression</a></li>
+								<li><a href="<?php echo base_url();?>pmtct">PMTCT Analysis</a></li>
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>live">Live Data</a></li>
