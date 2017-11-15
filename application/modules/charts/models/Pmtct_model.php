@@ -355,7 +355,7 @@ class Pmtct_model extends MY_Model
 						'modal_name' => $modal_name);
 		return $data;
 	}
-	public function pmtct($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$county=null,$sub_county=null,$partner=null,$site=null)
+	public function pmtct($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$county=null,$sub_county=null,$partner=null)
 	{
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
@@ -383,19 +383,16 @@ class Pmtct_model extends MY_Model
 		if ($partner==null || $partner=='null') {
 			$partner = 0;
 		}
-		if ($site==null || $site=='null') {
-			$site = 0;
-		}
 
 		if ($pmtcttype==null || $pmtcttype=='null') {
 			$pmtcttype = $this->session->userdata('pmtct_filter');
 		}
 						
 		$default = 0;	
-		$sql = "CALL `proc_get_vl_pmtct_breakdown`('".$pmtcttype."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$sub_county."','".$partner."','".$site."')";
+		$sql = "CALL `proc_get_vl_pmtct_grouped`('".$pmtcttype."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$sub_county."','".$partner."')";
 		// echo "<pre>";print_r($sql);echo "</pre>";die();
 		$result = $this->db->query($sql)->result_array();
-		// echo "<pre>";print_r($result);die();
+		// echo "<pre>";print_r(sizeof($result));die();
 
 		$data['outcomes'][0]['name'] = "Not Suppressed";
 		$data['outcomes'][1]['name'] = "Suppressed";
@@ -419,14 +416,19 @@ class Pmtct_model extends MY_Model
 		$data['outcomes'][0]['data'][0] = 0;
 		$data['outcomes'][1]['data'][0] = 0;
 		$data['outcomes'][2]['data'][0] = 0;
- 
+ 		
+ 		$looop = 0;
+
 		foreach ($result as $key => $value) {
-			$suppressed = (int) $value['undetected']+(int) $value['less1000'];
-            $nonsuppressed = (int) $value['less5000']+(int) $value['above5000'];
-			$data['categories'][$key] 		  = $value['name'];
-			$data['outcomes'][0]['data'][$key] = (int) $nonsuppressed;
-			$data['outcomes'][1]['data'][$key] = (int) $suppressed;
-			$data['outcomes'][2]['data'][$key] = round(@(((int) $suppressed*100)/((int) $suppressed+(int) $nonsuppressed)),1);
+			if ($looop < 100){
+	 			$suppressed = (int) $value['undetected']+(int) $value['less1000'];
+	            $nonsuppressed = (int) $value['less5000']+(int) $value['above5000'];
+				$data['categories'][$key] 		  = $value['name'];
+				$data['outcomes'][0]['data'][$key] = (int) $nonsuppressed;
+				$data['outcomes'][1]['data'][$key] = (int) $suppressed;
+				$data['outcomes'][2]['data'][$key] = round(@(((int) $suppressed*100)/((int) $suppressed+(int) $nonsuppressed)),1);
+	 		}
+	 		$looop ++;
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
