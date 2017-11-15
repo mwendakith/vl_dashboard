@@ -37,7 +37,11 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `districts`.`county` = '",filter_county,"' GROUP BY `districts`.`ID` ORDER BY `alltests` DESC ");
+     IF (filter_county != 0 && filter_county != '') THEN
+        SET @QUERY = CONCAT(@QUERY, " AND `districts`.`county` = '",filter_county,"' ");
+     END IF;
+
+    SET @QUERY = CONCAT(@QUERY, "  GROUP BY `districts`.`ID` ORDER BY `alltests` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

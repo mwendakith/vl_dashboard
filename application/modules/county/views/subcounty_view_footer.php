@@ -16,6 +16,7 @@
 	        	$("#breadcrum").html(data);
 	       });
 		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>");
+		$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>");
 
 
 		$("select").change(function(){
@@ -48,6 +49,7 @@
 	        		$("#first").show();
 
 	        		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>");
+					$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>");
 	        	} else {
 	        		subcounty = JSON.parse(subcounty);
 	        		$("#first").hide();
@@ -94,6 +96,7 @@
 		        		$("#first").show();
 
 		        		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+						$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 					} else {
 						$("#first").hide();
 		        		$("#second").show();
@@ -146,6 +149,7 @@
 	        		$("#first").show();
 
 	        		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>/"+year+"/"+month);
+					$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>/"+year+"/"+month);
 				} else {
 					$("#first").hide();
 	        		$("#second").show();

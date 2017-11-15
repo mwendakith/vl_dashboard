@@ -19,7 +19,23 @@
   $(document).ready(function() {
   	$('#example').DataTable({
         "order": [[ 2, "desc" ]]
-    } );
+
+  		dom: '<"btn btn-primary"B>lTfgtip',
+		responsive: true,
+	    buttons : [
+	        {
+	          text:  'Export to CSV',
+	          extend: 'csvHtml5',
+	          title: 'Download'
+	        },
+	        {
+	          text:  'Export to Excel',
+	          extend: 'excelHtml5',
+	          title: 'Download'
+	        }
+	      ]
+
+    });
 
     // $("table").tablecloth({
     //   theme: "paper",
