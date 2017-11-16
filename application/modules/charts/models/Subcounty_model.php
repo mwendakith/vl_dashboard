@@ -552,6 +552,65 @@ class Subcounty_model extends MY_Model
 	    fpassthru($f);
 	}
 
+	function justification_breakdown($year=null,$month=null,$subcounty=null,$to_year=null,$to_month=null)
+	{
+		
+		if ($subcounty==null || $subcounty=='null') {
+			$subcounty = $this->session->userdata('sub_county_filter');
+		}
+
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+ 
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			$month = $this->session->userdata('filter_month');
+		}
+ 
+
+		$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','','','','".$subcounty."','')";
+		$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','','','".$subcounty."','')";
+
+		
+		
+		$preg_mo = $this->db->query($sql)->result_array();
+		$this->db->close();
+		$lac_mo = $this->db->query($sql2)->result_array();
+		// echo "<pre>";print_r($preg_mo);echo "</pre>";
+		// echo "<pre>";print_r($lac_mo);die();
+		$data['just_breakdown'][0]['name'] = 'Not Suppresed';
+		$data['just_breakdown'][1]['name'] = 'Suppresed';
+ 
+		$count = 0;
+		
+		$data["just_breakdown"][0]["data"][0]	= $count;
+		$data["just_breakdown"][1]["data"][0]	= $count;
+		$data['categories'][0]			= 'No Data';
+ 
+		foreach ($preg_mo as $key => $value) {
+			$data['categories'][0] 			= 'Pregnant Mothers';
+			$data["just_breakdown"][0]["data"][0]	=  (int) $value['less5000'] + (int) $value['above5000'];
+			$data["just_breakdown"][1]["data"][0]	=  (int) $value['undetected'] + (int) $value['less1000'];
+		}
+ 
+		foreach ($lac_mo as $key => $value) {
+			$data['categories'][1] 			= 'Lactating Mothers';
+			$data["just_breakdown"][0]["data"][1]	=  (int) $value['less5000'] + (int) $value['above5000'];
+			$data["just_breakdown"][1]["data"][1]	=  (int) $value['undetected'] + (int) $value['less1000'];
+		}
+ 
+		$data['just_breakdown'][0]['drilldown']['color'] = '#913D88';
+		$data['just_breakdown'][1]['drilldown']['color'] = '#96281B';
+				
+		return $data;
+	}
+
 	
 }
 ?>
