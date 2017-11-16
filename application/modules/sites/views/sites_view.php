@@ -28,6 +28,16 @@
 			  	</div>
 			</div>
 		</div>
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				  Facilities PMTCT Outcomes <div class="display_date"></div>
+				</div>
+			  	<div class="panel-body" id="sitePmtctOutcomes">
+			  		<center><div class="loader"></div></center>
+			  	</div>
+			</div>
+		</div>
 	</div>
 </div>
 

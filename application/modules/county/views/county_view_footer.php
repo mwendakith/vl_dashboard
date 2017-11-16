@@ -79,6 +79,9 @@
 
 					$("#partners").html("<center><div class='loader'></div></center>");
 					$("#partners").load("<?php echo base_url('charts/county/county_partners'); ?>/"+null+"/"+null+"/"+county);
+
+					$("#facilities_pmtct").html("<center><div class='loader'></div></center>");
+					$("#facilities_pmtct").load("<?php echo base_url('charts/pmtct/pmtct'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+county);
 	        	}
 
 		         
@@ -134,6 +137,9 @@
 
 						$("#partners").html("<center><div class='loader'></div></center>");
 						$("#partners").load("<?php echo base_url('charts/county/county_partners'); ?>/"+from[1]+"/"+from[0]+"/"+county+"/"+to[1]+"/"+to[0]);
+
+						$("#facilities_pmtct").html("<center><div class='loader'></div></center>");
+						$("#facilities_pmtct").load("<?php echo base_url('charts/pmtct/pmtct'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]+"/"+county);
 						$(".display_date").html(new_title);
 					}
 				});
@@ -200,6 +206,9 @@
 
 				$("#partners").html("<center><div class='loader'></div></center>");
 				$("#partners").load("<?php echo base_url('charts/county/county_partners'); ?>/"+year+"/"+month);
+
+				$("#facilities_pmtct").html("<center><div class='loader'></div></center>");
+				$("#facilities_pmtct").load("<?php echo base_url('charts/pmtct/pmtct'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+county);
 			}
 		});
  		

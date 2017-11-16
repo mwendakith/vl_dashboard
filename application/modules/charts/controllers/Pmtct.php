@@ -45,9 +45,9 @@ class Pmtct extends MY_Controller
 		
 		$this->load->view('age_breakdown_listing',$data);
 	}
-	public function pmtct($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$county=null,$sub_county=null,$partner=null,$site=null)
+	public function pmtct($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$county=null,$sub_county=null,$partner=null)
 	{
-		$data['trends'] = $this->pmtct_model->pmtct($year,$month,$pmtcttype,$to_year,$to_month,$county,$sub_county,$partner,$site);
+		$data['trends'] = $this->pmtct_model->pmtct($year,$month,$pmtcttype,$to_year,$to_month,$county,$sub_county,$partner);
 		$data['div_name'] = "pmtct_outcomes_pmtct";		
 
 		$this->load->view('trends_outcomes_view', $data);
