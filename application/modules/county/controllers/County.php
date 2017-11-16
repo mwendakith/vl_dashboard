@@ -10,6 +10,7 @@ class County extends MY_Controller {
 		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom', 'Kenya', 'tablecloth', 'select2')));
 		$this->session->set_userdata('partner_filter', NULL);
 		$this->load->module('charts/county');
+		$this->load->module('charts/pmtct');
 	}
 
 	public function index()

@@ -16,6 +16,7 @@
 		console.log(site);
 		if (!site) {
     		$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>");
+    		$("#sitePmtctOutcomes").load("<?php echo base_url('charts/pmtct/pmtct'); ?>");
 			$("#first").show();
 			$("#second").hide();
 		} else {
@@ -68,7 +69,11 @@
 	        	});
 
 	        	if (em=="NA") {
+					$("#siteOutcomes").html("<center><div class='loader'></div></center>");
+					$("#sitePmtctOutcomes").html("<center><div class='loader'></div></center>");
 	        		$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>");
+    				$("#sitePmtctOutcomes").load("<?php echo base_url('charts/pmtct/pmtct'); ?>");
+
 					$("#first").show();
 					$("#second").hide();
 				} else {
@@ -120,7 +125,9 @@
 					console.log(site);
 					if (site=="NA") {
 						$("#siteOutcomes").html("<center><div class='loader'></div></center>");
+						$("#sitePmtctOutcomes").html("<center><div class='loader'></div></center>");
 						$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
+						$("#sitePmtctOutcomes").load("<?php echo base_url('charts/pmtct/pmtct'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
 					} else {
 						$("#tsttrends").html("<center><div class='loader'></div></center>");
 						$("#stoutcomes").html("<center><div class='loader'></div></center>");
@@ -186,7 +193,9 @@
 
 			if (site=="NA") {
 				$("#siteOutcomes").html("<center><div class='loader'></div></center>");
+				$("#sitePmtctOutcomes").html("<center><div class='loader'></div></center>");
 				$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>/"+year+"/"+month);
+				$("#sitePmtctOutcomes").load("<?php echo base_url('charts/pmtct/pmtct'); ?>/"+year+"/"+month);
 			} else {
 				$("#tsttrends").html("<center><div class='loader'></div></center>");
 				$("#stoutcomes").html("<center><div class='loader'></div></center>");

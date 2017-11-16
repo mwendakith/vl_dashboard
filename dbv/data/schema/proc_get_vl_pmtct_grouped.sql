@@ -27,8 +27,9 @@ BEGIN
     IF (partner != 0 || partner != '') THEN
         SET @QUERY = CONCAT(@QUERY, " AND `com`.`partner` = '",partner,"' ");
     END IF;
-
-    SET @QUERY = CONCAT(@QUERY, " AND `vcs`.`pmtcttype` = '",Pm_ID,"' ");
+    IF (Pm_ID != 0 || Pm_ID != '') THEN
+        SET @QUERY = CONCAT(@QUERY, " AND `vcs`.`pmtcttype` = '",Pm_ID,"' ");
+    END IF;
 
     IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN

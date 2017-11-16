@@ -14,6 +14,7 @@ class Sites extends MY_Controller
 		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','highstock','highmaps','highcharts','custom','select2','tablecloth')));
 		$this->data['sit'] = TRUE;
 		$this->load->module('charts/sites');
+		$this->load->module('charts/pmtct');
 	}
 
 	function index()
