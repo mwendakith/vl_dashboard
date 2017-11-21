@@ -386,6 +386,9 @@ class Pmtct_model extends MY_Model
 
 		if ($pmtcttype==null || $pmtcttype=='null') {
 			$pmtcttype = $this->session->userdata('pmtct_filter');
+			if ($pmtcttype == null) {
+				$pmtcttype = 0;
+			}
 		}
 						
 		$default = 0;	
