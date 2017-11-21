@@ -147,8 +147,14 @@
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
-						<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
-
+						<li class="dropdown">
+							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Facilities
+							<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
+								<li><a href="<?php echo base_url();?>sites/pmtct">Facilities PMTCT</a></li>
+							</ul>
+						</li>
 						<li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Non-Suppression
 							<b class="caret"></b></a>

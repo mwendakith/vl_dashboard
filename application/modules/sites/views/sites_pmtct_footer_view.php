@@ -13,11 +13,11 @@
 		$("#second").hide();
 		$("#third").hide();
 		// fetching the partner outcomes
-		$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>");
+		$("#partner_div").load("<?php echo base_url('charts/sites/site_outcomes');?>");
 
-		$("#county").change(function(){
+		$("#site").change(function(){
 			em = $(this).val();
-			var posting = $.post( "<?php echo base_url();?>template/filter_county_data", { county: em } );
+			var posting = $.post("<?php echo base_url();?>template/filter_site_data", { site: em } );
 			posting.done(function( data ) {
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
 	        		$("#breadcrum").html(data);
@@ -39,7 +39,7 @@
 					$("#third").hide();
 					// fetching the partner outcomes
 					$("#partner_div").html("<center><div class='loader'></div></center>");
-					$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+1);
+					$("#partner_div").load("<?php echo base_url('charts/sites/site_outcomes');?>");
 	        	} else {
 	        		$("#first").hide();
 	        		$("#second").show();
@@ -47,20 +47,20 @@
 					$("#pmtct_outcomes_div").html("<center><div class='loader'></div></center>");
 					$("#pmtct_sup_outcomes_div").html("<center><div class='loader'></div></center>");
 
-					$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+1+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
-					$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+2+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
+					$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+1+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
+					$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+2+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
 	        	}
 	        });
 		});
 
-		$("#county_pmtct").change(function(){
+		$("#site_pmtct").change(function(){
 			em = $(this).val();
-			console.log(em);
+			
 			localStorage.setItem("par_pmtct", em);
-			$.get("<?= @base_url('county/check_county_select');?>", function(data){
-				county = JSON.parse(data);
-				if (county == 0) {
-					alert("Select a county first");
+			$.get("<?= @base_url('sites/check_site_select');?>", function(data){
+				site = JSON.parse(data);
+				if (site == 0) {
+					alert("Select a facility first");
 				}else {
 					if (em == "NA") {
 						$("#first").hide();
@@ -69,8 +69,8 @@
 						$("#pmtct_outcomes_div").html("<center><div class='loader'></div></center>");
 						$("#pmtct_sup_outcomes_div").html("<center><div class='loader'></div></center>");
 
-						$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+1+"/"+null+"/"+null+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+2+"/"+null+"/"+null+"/"+null+"/"+null+"/"+county);
+						$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+1+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+2+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
 					} else {
 						$("#first").hide();
 						$("#second").hide();
@@ -83,12 +83,12 @@
 						$("#pmtct_sites_listing_div").html("<center><div class='loader'></div></center>");
 						$("#pmtct_counties_outcomes_div").html("<center><div class='loader'></div></center>");
 
-						$("#pmtct_suppression_div").load("<?= @base_url('charts/pmtct/pmtct_suppression');?>/"+null+"/"+null+"/"+em+"/"+null+"/"+null+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_vl_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_vl_outcomes');?>/"+null+"/"+null+"/"+em+"/"+null+"/"+null+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_counties_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+null+"/"+null+"/"+em+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_partners_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+null+"/"+null+"/"+em+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_sites_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+null+"/"+null+"/"+em+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_counties_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct');?>/"+null+"/"+null+"/"+em+"/"+null+"/"+null+"/"+county);
+						$("#pmtct_suppression_div").load("<?= @base_url('charts/pmtct/pmtct_suppression');?>/"+null+"/"+null+"/"+em+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_vl_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_vl_outcomes');?>/"+null+"/"+null+"/"+em+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_counties_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+null+"/"+null+"/"+em+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_partners_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+null+"/"+null+"/"+em+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_sites_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+null+"/"+null+"/"+em+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_counties_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct');?>/"+null+"/"+null+"/"+em);
 					}
 				}
 			});
@@ -112,17 +112,17 @@
 		    var error_check = check_error_date_range(from, to);
 		    
 		    if (!error_check) {
-			    $.get("<?php echo base_url();?>county/check_county_select", function (data) {
-					county = data;
+			    $.get("<?php echo base_url();?>sites/check_site_select", function (data) {
+					site = data;
 					
-					if (county==0) {
+					if (site==0) {
 						$("#second").hide();
 						$("#third").hide();
 						// fetching the partner outcomes
 						$("#partner_div").html("<center><div class='loader'></div></center>");
-						$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+1+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
+						$("#partner_div").load("<?php echo base_url('charts/sites/site_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
 					} else {
-						county = $.parseJSON(county);
+						site = $.parseJSON(site);
 						var all = localStorage.getItem("par_pmtct");
 						if (all == 0 || all == '0') {
 							$("#first").hide();
@@ -132,8 +132,8 @@
 							$("#pmtct_outcomes_div").html("<center><div class='loader'></div></center>");
 							$("#pmtct_sup_outcomes_div").html("<center><div class='loader'></div></center>");
 
-							$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+1+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+county);
-							$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+2+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+county);
+							$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+1+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+							$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+2+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
 						} else {
 							$("#first").hide();
 			        		$("#second").hide();
@@ -146,12 +146,12 @@
 							$("#pmtct_sites_listing_div").html("<center><div class='loader'></div></center>");
 							$("#pmtct_counties_outcomes_div").html("<center><div class='loader'></div></center>");
 
-							$("#pmtct_suppression_div").load("<?= @base_url('charts/pmtct/pmtct_suppression');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+county);
-							$("#pmtct_vl_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_vl_outcomes');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+county);
-							$("#pmtct_counties_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]+"/"+county);
-							$("#pmtct_partners_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]+"/"+county);
-							$("#pmtct_sites_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]+"/"+county);
-							$("#pmtct_counties_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]+"/"+county);
+							$("#pmtct_suppression_div").load("<?= @base_url('charts/pmtct/pmtct_suppression');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+							$("#pmtct_vl_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_vl_outcomes');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+							$("#pmtct_counties_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+null+"/"+site);
+							$("#pmtct_partners_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+null+"/"+site);
+							$("#pmtct_sites_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+null+"/"+site);
+							$("#pmtct_counties_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct');?>/"+from[1]+"/"+from[0]+"/"+all+"/"+to[1]+"/"+to[0]);
 						}
 					}
 				});
@@ -182,16 +182,16 @@
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
-			$.get("<?php echo base_url();?>county/check_county_select", function (data) {
-				county = JSON.parse(data);
+			$.get("<?php echo base_url();?>sites/check_site_select", function (data) {
+				site = JSON.parse(data);
 				
-				if (county==0) {
+				if (site==0) {
 					$("#first").show();
 					$("#second").hide();
 					$("#third").hide();
 					// fetching the partner outcomes
 					$("#partner_div").html("<center><div class='loader'></div></center>");
-					$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+year+"/"+month+"/"+1);
+					$("#partner_div").load("<?php echo base_url('charts/sites/site_outcomes'); ?>/"+year+"/"+month);
 				} else {
 					var all = localStorage.getItem("par_pmtct");
 					if (all == 0 || all == '0') {
@@ -202,8 +202,8 @@
 						$("#pmtct_outcomes_div").html("<center><div class='loader'></div></center>");
 						$("#pmtct_sup_outcomes_div").html("<center><div class='loader'></div></center>");
 
-						$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+year+"/"+month+"/"+1+"/"+null+"/"+null+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+year+"/"+month+"/"+2+"/"+null+"/"+null+"/"+null+"/"+null+"/"+county);
+						$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+year+"/"+month+"/"+1+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+year+"/"+month+"/"+2+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
 					} else {
 						$("#first").hide();
 		        		$("#second").hide();
@@ -216,12 +216,12 @@
 						$("#pmtct_sites_listing_div").html("<center><div class='loader'></div></center>");
 						$("#pmtct_counties_outcomes_div").html("<center><div class='loader'></div></center>");
 
-						$("#pmtct_suppression_div").load("<?= @base_url('charts/pmtct/pmtct_suppression');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_vl_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_vl_outcomes');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_counties_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_partners_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_sites_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_counties_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+"/"+county);
+						$("#pmtct_suppression_div").load("<?= @base_url('charts/pmtct/pmtct_suppression');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_vl_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_vl_outcomes');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_counties_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_partners_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_sites_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+site);
+						$("#pmtct_counties_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct');?>/"+year+"/"+month+"/"+all);
 					}
 				}
 			});
