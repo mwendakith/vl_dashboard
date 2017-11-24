@@ -22,16 +22,17 @@ class Baseline_model extends MY_Model
 		$data['year'] = $year;
 		$data['month'] = '';
 
+
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-				$data['month'] = ' as of '.$this->resolve_month($month);
-			}else {
 				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
 			}
 		}else{
 			$data['month'] = ' as of '.$this->resolve_month($month);
 		}
+
 
 		if ($to_year==null || $to_year=='null') {
 			$to_year = 0;
@@ -75,8 +76,9 @@ class Baseline_model extends MY_Model
 			$suppressed = (int) $value['undetected'] + (int) $value['less1000'];
 			$nonsuppressed = (int) $value['above5000'] + (int) $value['less5000'];
 			$total = $suppressed + $nonsuppressed;
+			$suppression = $suppressed / $total * 100;
 
-			$data['rate'] = $suppressed / $total * 100;
+			$data['rate'] = round($suppression, 2);
 			$data['sustxfail'] = $suppressed;
 
 		}

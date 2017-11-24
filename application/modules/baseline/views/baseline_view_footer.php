@@ -57,7 +57,7 @@
 				$("#partner").html("<center><div class='loader'></div></center>");
 				$("#facility").html("<center><div class='loader'></div></center>");
 
-				$("#notification").load("<?php echo base_url('charts/baseline/notification');?>/0/0"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+				$("#notification").load("<?php echo base_url('charts/baseline/notification');?>/0/0/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 				$("#samples").load("<?php echo base_url('charts/baseline/samples');?>/0/0/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 				$("#age").load("<?php echo base_url('charts/baseline/age');?>/0/0/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 				$("#gender").load("<?php echo base_url('charts/baseline/gender');?>/0/0/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
@@ -111,7 +111,7 @@
 		$("#partner").html("<center><div class='loader'></div></center>");
 		$("#facility").html("<center><div class='loader'></div></center>");
 
-		$("#notification").load("<?php echo base_url('charts/baseline/notification');?>/0/0"+year+"/"+month);
+		$("#notification").load("<?php echo base_url('charts/baseline/notification');?>/0/0/"+year+"/"+month);
 		$("#samples").load("<?php echo base_url('charts/baseline/samples');?>/0/0/"+year+"/"+month);
 		$("#age").load("<?php echo base_url('charts/baseline/age');?>/0/0/"+year+"/"+month);
 		$("#gender").load("<?php echo base_url('charts/baseline/gender');?>/0/0/"+year+"/"+month);
