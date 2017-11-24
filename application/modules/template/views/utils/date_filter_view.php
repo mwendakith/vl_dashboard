@@ -32,8 +32,8 @@
       <div class="row">
         <div class="col-md-12">
           <select id="my_list" class="btn js-example-basic-single" style="width:220px;background-color: #C5EFF7;" name="partner">
-            <option disabled="true" selected="true">Select Laborotory:</option>
-            <option value="0" >All Laborotories</option>
+            <option disabled="true" selected="true">Select Laboratory:</option>
+            <option value="0" >All Laboratories</option>
             <!-- <optgroup value="Counties"> -->
             <?php echo $laborotories; ?>
             <!-- </optgroup> -->

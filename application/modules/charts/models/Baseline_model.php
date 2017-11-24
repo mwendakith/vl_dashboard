@@ -12,6 +12,77 @@ class Baseline_model extends MY_Model
 		parent::__construct();
 	}
 
+	function notification($param_type=NULL,$param=NULL,$year=null,$month=null,$to_year=null,$to_month=null)
+	{
+ 
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+
+		$data['year'] = $year;
+		$data['month'] = '';
+
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+				$data['month'] = ' as of '.$this->resolve_month($month);
+			}else {
+				$month = 0;
+			}
+		}else{
+			$data['month'] = ' as of '.$this->resolve_month($month);
+		}
+
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}else {
+			$data['month'] .= ' to '.$this->resolve_month($to_month).' of '.$to_year;
+		}
+
+		if ($param==null || $param=='null') {
+			if($param_type == 1){
+				$param = $this->session->userdata('county_filter');
+			}
+			else if ($param_type == 2) {
+				$param = $this->session->userdata('sub_county_filter');
+			}
+			else if ($param_type == 3) {
+				$param =  $this->session->userdata('partner_filter');
+			}
+			else if ($param_type == 4) {
+				$param =  $this->session->userdata('site_filter');
+			}
+			else{
+				$param_type=0;
+			}
+		}
+ 
+		$sql = "CALL `proc_get_vl_baseline`('".$param_type."','".$param."','".$year."','".$month."','".$to_year."','".$to_month."')";
+
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		
+		// echo "<pre>";print_r($result);die();
+		$data['color'] = '#E4F1FE';
+
+		
+		foreach ($result as $key => $value) {
+
+			$suppressed = (int) $value['undetected'] + (int) $value['less1000'];
+			$nonsuppressed = (int) $value['above5000'] + (int) $value['less5000'];
+			$total = $suppressed + $nonsuppressed;
+
+			$data['rate'] = $suppressed / $total * 100;
+			$data['sustxfail'] = $suppressed;
+
+		}
+		return $data;
+	}
+
 	
 	function baseline_list($param_type=NULL,$year=null,$month=null,$to_year=null,$to_month=null)
 	{

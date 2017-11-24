@@ -12,6 +12,12 @@ class Baseline extends MY_Controller
 		$this->load->model('baseline_model');
 	}
 
+	function notification($param_type=NULL,$param=NULL,$year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['suppressions']= $this->baseline_model->notification($param_type,$param,$year,$month,$to_year,$to_month);
+		$this->load->view('sup_notification_view', $data);
+	}
+
 	function age($param_type=NULL,$param=NULL,$year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes']= $this->baseline_model->age($param_type,$param,$year,$month,$to_year,$to_month);

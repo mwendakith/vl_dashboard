@@ -1,4 +1,7 @@
 
+<div id="notification" style="margin-bottom: 1em;background-color:#E4F1FE;">
+  	Not Suppressed: XXXX
+</div>
 <div class="row">
 	<div class="col-md-4 col-sm-12 col-xs-12">
 		<div class="panel panel-default">

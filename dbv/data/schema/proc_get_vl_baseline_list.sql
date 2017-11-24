@@ -15,6 +15,7 @@ BEGIN
                     SUM(`ba`.`maletest`) AS `maletest`,
                     SUM(`ba`.`femaletest`) AS `femaletest`,
                     SUM(`ba`.`nogendertest`) AS `nogendertest`,
+                    SUM(`ba`.`noage`) AS `noage`,
                     SUM(`ba`.`less2`) AS `less2`,
                     SUM(`ba`.`less9`) AS `less9`,
                     SUM(`ba`.`less14`) AS `less14`,
