@@ -12,6 +12,7 @@
     	});
 		$("#second").hide();
 		$("#third").hide();
+		$("#fourth").hide();
 		// fetching the partner outcomes
 		$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+1);
 
@@ -37,6 +38,7 @@
 	        		$("#first").show();
 	        		$("#second").hide();
 					$("#third").hide();
+					$("#fourth").hide();
 					// fetching the partner outcomes
 					$("#partner_div").html("<center><div class='loader'></div></center>");
 					$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+1);
@@ -66,15 +68,22 @@
 						$("#first").hide();
 						$("#second").show();
 						$("#third").hide();
+						$("#fourth").show();
+
 						$("#pmtct_outcomes_div").html("<center><div class='loader'></div></center>");
 						$("#pmtct_sup_outcomes_div").html("<center><div class='loader'></div></center>");
+						$("pmtct_suppression_all_div").html("<center><div class='loader'></div></center>");
+						$("pmtct_vl_outcomes_all_div").html("<center><div class='loader'></div></center>");
 
 						$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+1+"/"+null+"/"+null+"/"+partner);
 						$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+2+"/"+null+"/"+null+"/"+partner);
+						$("#pmtct_suppression_all_div").load("<?= @base_url('charts/pmtct/pmtct_suppression');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+partner);
+						$("#pmtct_vl_outcomes_all_div").load("<?= @base_url('charts/pmtct/pmtct_vl_outcomes');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+partner);
 					} else {
 						$("#first").hide();
 						$("#second").hide();
 						$("#third").show();
+						$("#fourth").hide();
 
 						$("#pmtct_suppression_div").html("<center><div class='loader'></div></center>");
 						$("#pmtct_vl_outcomes_div").html("<center><div class='loader'></div></center>");
@@ -118,26 +127,33 @@
 					if (partner==0) {
 						$("#second").hide();
 						$("#third").hide();
+						$("#fourth").hide();
 						// fetching the partner outcomes
 						$("#partner_div").html("<center><div class='loader'></div></center>");
 						$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+1+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
 					} else {
 						partner = $.parseJSON(partner);
 						var all = localStorage.getItem("par_pmtct");
-						if (all == 0 || all == '0') {
+						if (all == 'NA') {
 							$("#first").hide();
 			        		$("#second").show();
 							$("#third").hide();
+							$("#fourth").show();
 
 							$("#pmtct_outcomes_div").html("<center><div class='loader'></div></center>");
 							$("#pmtct_sup_outcomes_div").html("<center><div class='loader'></div></center>");
+							$("pmtct_suppression_all_div").html("<center><div class='loader'></div></center>");
+							$("pmtct_vl_outcomes_all_div").html("<center><div class='loader'></div></center>");
 
 							$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+1+"/"+to[1]+"/"+to[0]+"/"+partner);
 							$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+2+"/"+to[1]+"/"+to[0]+"/"+partner);
+							$("#pmtct_suppression_all_div").load("<?= @base_url('charts/pmtct/pmtct_suppression');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]+"/"+partner);
+							$("#pmtct_vl_outcomes_all_div").load("<?= @base_url('charts/pmtct/pmtct_vl_outcomes');?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]+"/"+partner);
 						} else {
 							$("#first").hide();
 			        		$("#second").hide();
 							$("#third").show();
+							$("#fourth").hide();
 
 							$("#pmtct_suppression_div").html("<center><div class='loader'></div></center>");
 							$("#pmtct_vl_outcomes_div").html("<center><div class='loader'></div></center>");
@@ -189,6 +205,7 @@
 					$("#first").show();
 					$("#second").hide();
 					$("#third").hide();
+					$("#fourth").hide();
 					// fetching the partner outcomes
 					$("#partner_div").html("<center><div class='loader'></div></center>");
 					$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+year+"/"+month+"/"+1);
@@ -198,16 +215,22 @@
 						$("#first").hide();
 		        		$("#second").show();
 						$("#third").hide();
+						$("#fourth").show();
 
 						$("#pmtct_outcomes_div").html("<center><div class='loader'></div></center>");
 						$("#pmtct_sup_outcomes_div").html("<center><div class='loader'></div></center>");
+						$("pmtct_suppression_all_div").html("<center><div class='loader'></div></center>");
+						$("pmtct_vl_outcomes_all_div").html("<center><div class='loader'></div></center>");
 
 						$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+year+"/"+month+"/"+1+"/"+null+"/"+null+"/"+partner);
 						$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+year+"/"+month+"/"+2+"/"+null+"/"+null+"/"+partner);
+						$("#pmtct_suppression_all_div").load("<?= @base_url('charts/pmtct/pmtct_suppression');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+partner);
+						$("#pmtct_vl_outcomes_all_div").load("<?= @base_url('charts/pmtct/pmtct_vl_outcomes');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+partner);
 					} else {
 						$("#first").hide();
 		        		$("#second").hide();
 						$("#third").show();
+						$("#fourth").hide();
 
 						$("#pmtct_suppression_div").html("<center><div class='loader'></div></center>");
 						$("#pmtct_vl_outcomes_div").html("<center><div class='loader'></div></center>");
