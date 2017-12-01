@@ -28,7 +28,9 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`ID`  AND `subcounty` = '",filter_subcounty,"' ");
+    SET @QUERY = CONCAT(@QUERY, " AND `subcounty` = '",filter_subcounty,"' ");
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`ID` ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

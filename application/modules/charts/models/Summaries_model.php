@@ -397,15 +397,27 @@ class Summaries_model extends MY_Model
 		}
  
 		if ($partner) {
-			$sql = "CALL `proc_get_partner_justification_breakdown`('6','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
-			$sql2 = "CALL `proc_get_partner_justification_breakdown`('9','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+			// $sql = "CALL `proc_get_partner_justification_breakdown`('6','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+			// $sql2 = "CALL `proc_get_partner_justification_breakdown`('9','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+
+			$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','','','".$partner."','','')";
+			$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','','".$partner."','','')";
+
 		} else {
 			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_justification_breakdown`('6','".$year."','".$month."','".$to_year."','".$to_month."')";
-				$sql2 = "CALL `proc_get_national_justification_breakdown`('9','".$year."','".$month."','".$to_year."','".$to_month."')";
+				// $sql = "CALL `proc_get_national_justification_breakdown`('6','".$year."','".$month."','".$to_year."','".$to_month."')";
+				// $sql2 = "CALL `proc_get_national_justification_breakdown`('9','".$year."','".$month."','".$to_year."','".$to_month."')";
+
+				$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','1','','','','')";
+				$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','1','','','','')";
+
+
 			} else {
-				$sql = "CALL `proc_get_regional_justification_breakdown`('6','".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
-				$sql2 = "CALL `proc_get_regional_justification_breakdown`('9','".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+				// $sql = "CALL `proc_get_regional_justification_breakdown`('6','".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+				// $sql2 = "CALL `proc_get_regional_justification_breakdown`('9','".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+
+				$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','','".$county."','','','')";
+				$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','".$county."','','','')";
 			}
 		}
 		// echo "<pre>";print_r($sql);
@@ -428,13 +440,13 @@ class Summaries_model extends MY_Model
 		foreach ($preg_mo as $key => $value) {
 			$data['categories'][0] 			= 'Pregnant Mothers';
 			$data["just_breakdown"][0]["data"][0]	=  (int) $value['less5000'] + (int) $value['above5000'];
-			$data["just_breakdown"][1]["data"][0]	=  (int) $value['Undetected'] + (int) $value['less1000'];
+			$data["just_breakdown"][1]["data"][0]	=  (int) $value['undetected'] + (int) $value['less1000'];
 		}
  
 		foreach ($lac_mo as $key => $value) {
 			$data['categories'][1] 			= 'Lactating Mothers';
 			$data["just_breakdown"][0]["data"][1]	=  (int) $value['less5000'] + (int) $value['above5000'];
-			$data["just_breakdown"][1]["data"][1]	=  (int) $value['Undetected'] + (int) $value['less1000'];
+			$data["just_breakdown"][1]["data"][1]	=  (int) $value['undetected'] + (int) $value['less1000'];
 		}
  
 		$data['just_breakdown'][0]['drilldown']['color'] = '#913D88';
@@ -920,8 +932,8 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
 
 		if ($partner) {
 			$sql = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";

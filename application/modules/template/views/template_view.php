@@ -20,6 +20,8 @@
 
 	}else if ($live){
 
+	}else if (isset($no_filter)){
+		$this->load->view('utils/no_filter_view');
 	}else if ($sample) {
 		$this->load->view('utils/sample_filter_view');
 	}else if ($codes){

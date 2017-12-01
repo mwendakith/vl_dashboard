@@ -650,6 +650,7 @@ class Sites_model extends MY_Model
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
 		}
+
 		if ($to_month==null || $to_month=='null') {
 			$to_month = 0;
 		}
@@ -664,11 +665,11 @@ class Sites_model extends MY_Model
 			$month = $this->session->userdata('filter_month');
 		}
  
-		$sql = "CALL `proc_get_vl_site_justification_breakdown`('6','".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		$sql2 = "CALL `proc_get_vl_site_justification_breakdown`('9','".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
 
-		// echo "<pre>";print_r($sql);
-		// echo "<pre>";print_r($sql2);die();
+		$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','','','','','".$site."')";
+		$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','','','','".$site."')";
+
+		
 		
 		$preg_mo = $this->db->query($sql)->result_array();
 		$this->db->close();
@@ -687,13 +688,13 @@ class Sites_model extends MY_Model
 		foreach ($preg_mo as $key => $value) {
 			$data['categories'][0] 			= 'Pregnant Mothers';
 			$data["just_breakdown"][0]["data"][0]	=  (int) $value['less5000'] + (int) $value['above5000'];
-			$data["just_breakdown"][1]["data"][0]	=  (int) $value['Undetected'] + (int) $value['less1000'];
+			$data["just_breakdown"][1]["data"][0]	=  (int) $value['undetected'] + (int) $value['less1000'];
 		}
  
 		foreach ($lac_mo as $key => $value) {
 			$data['categories'][1] 			= 'Lactating Mothers';
 			$data["just_breakdown"][0]["data"][1]	=  (int) $value['less5000'] + (int) $value['above5000'];
-			$data["just_breakdown"][1]["data"][1]	=  (int) $value['Undetected'] + (int) $value['less1000'];
+			$data["just_breakdown"][1]["data"][1]	=  (int) $value['undetected'] + (int) $value['less1000'];
 		}
  
 		$data['just_breakdown'][0]['drilldown']['color'] = '#913D88';
