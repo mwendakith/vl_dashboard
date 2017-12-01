@@ -917,7 +917,7 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function current_suppression($county=null, $partner=null){
+	function current_suppression($county=null, $partner=null, $annual=NULL){
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
@@ -937,6 +937,9 @@ class Summaries_model extends MY_Model
 
 		if ($partner) {
 			$sql = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
+			if ($annual==1) {
+				$sql = "CALL `proc_get_vl_current_suppression_year`('3','".$partner."')";
+			}
 		} else {
 			if ($county==null || $county=='null') {
 				$sql = "CALL `proc_get_vl_current_suppression`('0','0')";
@@ -966,7 +969,7 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function current_gender_chart($type, $param_type=1, $param=NULL)
+	function current_gender_chart($type, $param_type=1, $param=NULL, $annual=NULL)
 	{
 		
 
@@ -992,6 +995,10 @@ class Summaries_model extends MY_Model
 				$param = 1000;
 			}
 			$sql = "CALL `proc_get_vl_current_gender_suppression_listing_partner`({$type}, {$param})";
+
+			if ($annual==1) {
+				$sql = "CALL `proc_get_vl_current_gender_suppression_listing_partner_year`({$type}, {$param})";
+			}
 		}
 
 		// echo "<pre>";print_r($sql);die();
@@ -1018,7 +1025,7 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function current_age_chart($type, $param_type=1, $param=NULL)
+	function current_age_chart($type, $param_type=1, $param=NULL, $annual=NULL)
 	{
 		
 
@@ -1044,6 +1051,10 @@ class Summaries_model extends MY_Model
 				$param = 1000;
 			}
 			$sql = "CALL `proc_get_vl_current_age_suppression_listing_partner`({$type}, {$param})";
+
+			if ($annual==1) {
+				$sql = "CALL `proc_get_vl_current_age_suppression_listing_partner_year`({$type}, {$param})";
+			}
 		}
 
 		// echo "<pre>";print_r($sql);die();
@@ -1086,7 +1097,7 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function suppression_listings($type, $param_type=1, $param=NULL)
+	function suppression_listings($type, $param_type=1, $param=NULL, $annual=NULL)
 	{
 		$li = '';
 		$table = '';
@@ -1114,6 +1125,10 @@ class Summaries_model extends MY_Model
 				$param = 1000;
 			}
 			$sql = "CALL `proc_get_vl_current_suppression_listing_partners`({$type}, {$param})";
+
+			if ($annual==1) {
+				$sql = "CALL `proc_get_vl_current_suppression_listing_partners_year`({$type}, {$param})";
+			}
 		}
 
 		
@@ -1175,7 +1190,7 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function suppression_age_listings($suppressed, $type, $param_type=1, $param=NULL)
+	function suppression_age_listings($suppressed, $type, $param_type=1, $param=NULL, $annual=NULL)
 	{
 		$li = '';
 		$table = '';
@@ -1203,6 +1218,10 @@ class Summaries_model extends MY_Model
 				$param = 1000;
 			}
 			$sql = "CALL `proc_get_vl_current_age_suppression_listing_partner`({$type}, {$param})";
+
+			if ($annual==1) {
+				$sql = "CALL `proc_get_vl_current_age_suppression_listing_partner_year`({$type}, {$param})";
+			}
 		}
 
 		
@@ -1278,7 +1297,7 @@ class Summaries_model extends MY_Model
 	}
 
 
-	function suppression_gender_listings($type, $param_type=1, $param=NULL)
+	function suppression_gender_listings($type, $param_type=1, $param=NULL, $annual=NULL)
 	{
 		$li = '';
 		$table = '';
@@ -1306,6 +1325,10 @@ class Summaries_model extends MY_Model
 				$param = 1000;
 			}
 			$sql = "CALL `proc_get_vl_current_gender_suppression_listing_partner`({$type}, {$param})";
+
+			if($annual==1){
+				$sql = "CALL `proc_get_vl_current_gender_suppression_listing_partner_year`({$type}, {$param})";
+			}
 		}
 
 		

@@ -85,6 +85,14 @@ class Partner extends MY_Controller
 		$this -> template($this->data);
 	}
 
+	public function annual()
+	{
+		$this->load->module('charts/summaries');
+		$this->clear_all_session_data();
+		$this->data['content_view'] = 'partner/partner_annual_view';
+		$this -> template($this->data);
+	}
+
 	public function pmtct()
 	{
 		$this->load->module('charts/summaries');
