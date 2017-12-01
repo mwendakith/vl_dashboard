@@ -25,6 +25,7 @@ class Summaries extends MY_Controller {
 	
 	function county_outcomes($year=NULL,$month=NULL,$pfil=NULL,$partner=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
 	{
+		// echo "die";die();
 		$data['trends'] = $this->summaries_model->county_outcomes($year,$month,$pfil,$partner,$county,$to_year,$to_month);
 		$data['div_name'] = "summary_county_outcomes";		
 		

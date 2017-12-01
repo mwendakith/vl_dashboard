@@ -17,6 +17,7 @@
 		$("#partner_div").load("<?php echo base_url('charts/sites/site_outcomes');?>");
 
 		$("#site").change(function(){
+			$('#site_pmtct').prop('selectedIndex',0);
 			em = $(this).val();
 			var posting = $.post("<?php echo base_url();?>template/filter_site_data", { site: em } );
 			posting.done(function( data ) {

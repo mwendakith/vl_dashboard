@@ -16,7 +16,8 @@
 		// fetching the partner outcomes
 		$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>");
 
-		$("#county").change(function(){
+		$("#countydrp").change(function(){
+			$("#county_pmtct").prop('selectedIndex', 0);
 			em = $(this).val();
 			var posting = $.post( "<?php echo base_url();?>template/filter_county_data", { county: em } );
 			posting.done(function( data ) {

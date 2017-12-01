@@ -17,6 +17,7 @@
 		$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+1);
 
 		$("#partner").change(function(){
+			$("#partner_pmtct").prop('selectedIndex', 0);
 			part = $(this).val();
 			var posting = $.post( "<?php echo base_url();?>template/filter_partner_data", { partner: part } );
 			posting.done(function( data ) {
