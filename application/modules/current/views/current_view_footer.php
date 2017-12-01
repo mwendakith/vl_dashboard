@@ -35,27 +35,28 @@
 		$("#subcounty_na").html("<div>Loading...</div>");
 		$("#facilities_na").html("<div>Loading...</div>");
 
+
 		$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression'); ?>");
 
-		$("#countys").load("<?php echo base_url('charts/summaries/county_listing');?>");
-		$("#partners").load("<?php echo base_url('charts/summaries/partner_listing');?>");
-		$("#subcounty").load("<?php echo base_url('charts/summaries/subcounty_listing');?>");
-		$("#facilities").load("<?php echo base_url('charts/summaries/site_listing');?>");
+		$("#countys").load("<?php echo base_url('charts/summaries/county_listing/1/1/0');?>");
+		$("#subcounty").load("<?php echo base_url('charts/summaries/subcounty_listing/2/1');?>");
+		$("#partners").load("<?php echo base_url('charts/summaries/partner_listing/3/1');?>");
+		$("#facilities").load("<?php echo base_url('charts/summaries/site_listing/4/1');?>");
 
-		$("#countys_g").load("<?php echo base_url('charts/summaries/county_listing_gender');?>");
-		$("#partners_g").load("<?php echo base_url('charts/summaries/partner_listing_gender');?>");
-		$("#subcounty_g").load("<?php echo base_url('charts/summaries/subcounty_listing_gender');?>");
-		$("#facilities_g").load("<?php echo base_url('charts/summaries/site_listing_gender');?>");
+		$("#countys_g").load("<?php echo base_url('charts/summaries/county_listing_gender/1/1/0');?>");
+		$("#partners_g").load("<?php echo base_url('charts/summaries/partner_listing_gender/3/1');?>");
+		$("#subcounty_g").load("<?php echo base_url('charts/summaries/subcounty_listing_gender/2/1');?>");
+		$("#facilities_g").load("<?php echo base_url('charts/summaries/site_listing_gender/4/1');?>");
 
-		$("#countys_a").load("<?php echo base_url('charts/summaries/county_listing_age');?>");
-		$("#partners_a").load("<?php echo base_url('charts/summaries/partner_listing_age');?>");
-		$("#subcounty_a").load("<?php echo base_url('charts/summaries/subcounty_listing_age');?>");
-		$("#facilities_a").load("<?php echo base_url('charts/summaries/site_listing_age');?>");
+		$("#countys_a").load("<?php echo base_url('charts/summaries/county_listing_age/1/1/0');?>");
+		$("#partners_a").load("<?php echo base_url('charts/summaries/partner_listing_age/3/1');?>");
+		$("#subcounty_a").load("<?php echo base_url('charts/summaries/subcounty_listing_age/2/1');?>");
+		$("#facilities_a").load("<?php echo base_url('charts/summaries/site_listing_age/4/1');?>");
 
-		$("#countys_na").load("<?php echo base_url('charts/summaries/county_listing_age_n');?>");
-		$("#partners_na").load("<?php echo base_url('charts/summaries/partner_listing_age_n');?>");
-		$("#subcounty_na").load("<?php echo base_url('charts/summaries/subcounty_listing_age_n');?>");
-		$("#facilities_na").load("<?php echo base_url('charts/summaries/site_listing_age_n');?>");
+		$("#countys_na").load("<?php echo base_url('charts/summaries/county_listing_age_n/1/1/0');?>");
+		$("#partners_na").load("<?php echo base_url('charts/summaries/partner_listing_age_n/3/1');?>");
+		$("#subcounty_na").load("<?php echo base_url('charts/summaries/subcounty_listing_age_n/2/1');?>");
+		$("#facilities_na").load("<?php echo base_url('charts/summaries/site_listing_age_n/4/1');?>");
 
 		$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>");
 
@@ -104,21 +105,24 @@
 				$("#subcounty_na").html("<div>Loading...</div>");
 				$("#facilities_na").html("<div>Loading...</div>");
 
-				$("#partners").load("<?php echo base_url('charts/summaries/partner_listing');?>/"+data);
-				$("#subcounty").load("<?php echo base_url('charts/summaries/subcounty_listing');?>/"+data);
-				$("#facilities").load("<?php echo base_url('charts/summaries/site_listing');?>/"+data);
+				$("#subcounty").load("<?php echo base_url('charts/summaries/subcounty_listing/2/1');?>/"+data);
+				$("#partners").load("<?php echo base_url('charts/summaries/partner_listing/3/1');?>/"+data);
+				$("#facilities").load("<?php echo base_url('charts/summaries/site_listing/4/1');?>/"+data);
 
-				$("#partners_g").load("<?php echo base_url('charts/summaries/partner_listing_gender');?>/"+data);
-				$("#subcounty_g").load("<?php echo base_url('charts/summaries/subcounty_listing_gender');?>/"+data);
-				$("#facilities_g").load("<?php echo base_url('charts/summaries/site_listing_gender');?>/"+data);
+				$("#partners_g").load("<?php echo base_url('charts/summaries/partner_listing_gender/3/1');?>/"+data);
+				$("#subcounty_g").load("<?php echo base_url('charts/summaries/subcounty_listing_gender/2/1');?>/"+data);
+				$("#facilities_g").load("<?php echo base_url('charts/summaries/site_listing_gender/4/1');?>/"+data);
 
-				$("#partners_a").load("<?php echo base_url('charts/summaries/partner_listing_age');?>/"+data);
-				$("#subcounty_a").load("<?php echo base_url('charts/summaries/subcounty_listing_age');?>/"+data);
-				$("#facilities_a").load("<?php echo base_url('charts/summaries/site_listing_age');?>/"+data);
 
-				$("#partners_na").load("<?php echo base_url('charts/summaries/partner_listing_age_n');?>/"+data);
-				$("#subcounty_na").load("<?php echo base_url('charts/summaries/subcounty_listing_age_n');?>/"+data);
-				$("#facilities_na").load("<?php echo base_url('charts/summaries/site_listing_age_n');?>/"+data);		
+				$("#partners_a").load("<?php echo base_url('charts/summaries/partner_listing_age/3/1');?>/"+data);
+				$("#subcounty_a").load("<?php echo base_url('charts/summaries/subcounty_listing_age/2/1');?>/"+data);
+				$("#facilities_a").load("<?php echo base_url('charts/summaries/site_listing_age/4/1');?>/"+data);
+
+
+				$("#partners_na").load("<?php echo base_url('charts/summaries/partner_listing_age_n/3/1');?>/"+data);
+				$("#subcounty_na").load("<?php echo base_url('charts/summaries/subcounty_listing_age_n/2/1');?>/"+data);
+				$("#facilities_na").load("<?php echo base_url('charts/summaries/site_listing_age_n/4/1');?>/"+data);
+
 			
 				$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+null+"/"+null+"/"+data);
 				$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression'); ?>/"+data);
