@@ -27,7 +27,7 @@ class Summaries extends MY_Controller {
 	{
 		$data['trends'] = $this->summaries_model->county_outcomes($year,$month,$pfil,$partner,$county,$to_year,$to_month);
 		$data['div_name'] = "summary_county_outcomes";		
-
+		
 		$this->load->view('trends_outcomes_view', $data);
 	}
 
