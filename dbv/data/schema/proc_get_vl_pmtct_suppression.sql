@@ -4,12 +4,12 @@ CREATE PROCEDURE `proc_get_vl_pmtct_suppression`
 (IN Pm_id INT(11), IN filter_year INT(11), IN filter_month INT(11), IN to_year INT(11), IN to_month INT(11), IN national INT(11), IN county INT(11), IN partner INT(11), IN subcounty INT(11), IN site INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-					`vcs`.`month`,
-					`vcs`.`year`,
-					SUM(`vcs`.`undetected`+`vcs`.`less1000`) AS `suppressed`,
-					SUM(`vcs`.`less5000`+`vcs`.`above5000`) AS `nonsuppressed`,
-					SUM(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`) AS `tests`,
-					SUM((`vcs`.`undetected`+`vcs`.`less1000`)*100/(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`)) AS `suppression`
+          `vcs`.`month`,
+          `vcs`.`year`,
+          SUM(`vcs`.`undetected`+`vcs`.`less1000`) AS `suppressed`,
+          SUM(`vcs`.`less5000`+`vcs`.`above5000`) AS `nonsuppressed`,
+          SUM(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`) AS `tests`,
+          SUM(`vcs`.`undetected`+`vcs`.`less1000`)*100/SUM(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`) AS `suppression`
                   ";
 
     IF (national != 0 && national != '') THEN
@@ -38,13 +38,13 @@ BEGIN
     END IF;
 
     IF (Pm_id != 0 && Pm_id != '') THEN
-    	SET @QUERY = CONCAT(@QUERY, " AND `pmtcttype` = '",Pm_id,"' ");
+      SET @QUERY = CONCAT(@QUERY, " AND `pmtcttype` = '",Pm_id,"' ");
     END IF;
 
     IF (filter_month !=0 && filter_month != '') THEN
-    	SET @QUERY = CONCAT(@QUERY, " AND `year` BETWEEN '",filter_year,"' AND '",to_year,"' AND `month` BETWEEN '",filter_month,"' AND '",to_month,"' ");
+      SET @QUERY = CONCAT(@QUERY, " AND `year` BETWEEN '",filter_year,"' AND '",to_year,"' AND `month` BETWEEN '",filter_month,"' AND '",to_month,"' ");
     ELSE 
-    	SET @QUERY = CONCAT(@QUERY, " AND `year` BETWEEN '",filter_year,"' AND '",to_year,"' ");
+      SET @QUERY = CONCAT(@QUERY, " AND `year` BETWEEN '",filter_year,"' AND '",to_year,"' ");
     END IF;
     
     SET @QUERY = CONCAT(@QUERY, " GROUP BY `year`, `month` ORDER BY `year` ASC, `month` ");

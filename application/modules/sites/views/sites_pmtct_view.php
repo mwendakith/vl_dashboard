@@ -119,4 +119,26 @@
 		</div>
 	</div>
 </div>
+<div class="row" id="fourth">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		  	PMTCT Supperssion  (Routine VL) <div class="display_date"></div>
+		  </div>
+		  <div class="panel-body" id="pmtct_suppression_all_div">
+		    <center><div class="loader"></div></center>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading">
+		  	VL Outcomes <div class="display_date"></div>
+		  </div>
+		  <div class="panel-body" id="pmtct_vl_outcomes_all_div">
+		    <center><div class="loader"></div></center>
+		  </div>
+		</div>
+	</div>
+</div>
 <?= @$this->load->view('sites/sites_pmtct_footer_view');?>

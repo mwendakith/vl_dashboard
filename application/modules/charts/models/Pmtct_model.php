@@ -118,7 +118,7 @@ class Pmtct_model extends MY_Model
 			$site = $this->session->userdata('site_filter');
 		}
 		$sql = "CALL `proc_get_vl_pmtct_suppression`('".$pmtcttype."','".$year."','".$default."','".$to_year."','".$default."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
-
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result();
 		// echo "<pre>";print_r($result);die();
 		$data['outcomes'][0]['name'] = "Not Suppressed";
@@ -192,9 +192,49 @@ class Pmtct_model extends MY_Model
 			$site = $this->session->userdata('site_filter');
 		}
 		$sql = "CALL `proc_get_vl_pmtct`('".$pmtcttype."','".$year."','".$month."','".$to_year."','".$to_month."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		
+		$rejected = 0;
+        $invalids = 0;
+        $undetected = 0;
+        $less1000 = 0;
+        $less5000 = 0;
+        $above5000 = 0;
+        $confirmtx = 0;
+        $confirm2vl = 0;
+        $baseline = 0;
+        $baselinesustxfail = 0;
+		if ($pmtcttype == null || $pmtcttype == 'null' || $pmtcttype == '') {
+			foreach ($result as $key => $value) {
+				$rejected += $value['rejected'];
+	            $invalids += $value['invalids'];
+	            $undetected += $value['undetected'];
+	            $less1000 += $value['less1000'];
+	            $less5000 += $value['less5000'];
+	            $above5000 += $value['above5000'];
+	            $confirmtx += $value['confirmtx'];
+	            $confirm2vl += $value['confirm2vl'];
+	            $baseline += $value['baseline'];
+	            $baselinesustxfail += $value['baselinesustxfail'];
+			}
+			$results[] = array(
+							'rejected' => $rejected,
+							'invalids' => $invalids,
+							'undetected' => $undetected,
+							'less1000' => $less1000,
+							'less5000' => $less5000,
+							'above5000' => $above5000,
+							'confirmtx' => $confirmtx,
+							'confirm2vl' => $confirm2vl,
+							'baseline' => $baseline,
+							'baselinesustxfail' => $baselinesustxfail
+						);
+			$result = $results;
+		}
 
-		$result = $this->db->query($sql)->result();
-
+		// echo "<pre>";print_r($pmtcttype);echo "</pre>";
+		// echo "<pre>";print_r($result);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
  
 		$data['vl_outcomes']['name'] = 'Tests';
@@ -210,11 +250,11 @@ class Pmtct_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['y'] = $count;
  
 		foreach ($result as $key => $value) {
-			$total = (int) ($value->undetected+$value->less1000+$value->less5000+$value->above5000);
-			$less = (int) ($value->undetected+$value->less1000);
-			$greater = (int) ($value->less5000+$value->above5000);
-			$non_suppressed = $greater + (int) $value->confirm2vl;
-			$total_tests = (int) $value->confirmtx + $total + (int) $value->baseline;
+			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
+			$less = (int) ($value['undetected']+$value['less1000']);
+			$greater = (int) ($value['less5000']+$value['above5000']);
+			$non_suppressed = $greater + (int) $value['confirm2vl'];
+			$total_tests = (int) $value['confirmtx'] + $total + (int) $value['baseline'];
 			
 			$data['ul'] .= '
 			<tr>
@@ -246,26 +286,26 @@ class Pmtct_model extends MY_Model
  
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
-	    		<td>'.number_format($value->baseline).'</td>
+	    		<td>'.number_format($value['baseline']).'</td>
 	    		<td>Non Suppression ( &gt; 1000cpml)</td>
-	    		<td>'.number_format($value->baselinesustxfail). ' (' .round(@($value->baselinesustxfail * 100 / $value->baseline), 1). '%)' .'</td>
+	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(@($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
-	    		<td>'.number_format($value->confirmtx).'</td>
+	    		<td>'.number_format($value['confirmtx']).'</td>
 	    		<td>Non Suppression ( &gt; 1000cpml)</td>
-	    		<td>'.number_format($value->confirm2vl). ' (' .round(@($value->confirm2vl * 100 / $value->confirmtx), 1). '%)' .'</td>
+	    		<td>'.number_format($value['confirm2vl']). ' (' .round(@($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
 	    	</tr>
  
 	    	<tr>
 	    		<td>Rejected Samples:</td>
-	    		<td>'.number_format($value->rejected).'</td>
+	    		<td>'.number_format($value['rejected']).'</td>
 	    		<td>Percentage Rejection Rate</td>
-	    		<td>'. round(@(($value->rejected*100)/$total_tests), 1, PHP_ROUND_HALF_UP).'%</td>
+	    		<td>'. round(@(($value['rejected']*100)/$total_tests), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
-			$data['vl_outcomes']['data'][0]['y'] = (int) $value->undetected+(int) $value->less1000;
-			$data['vl_outcomes']['data'][1]['y'] = (int) $value->less5000+(int) $value->above5000;
+			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
+			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less5000']+(int) $value['above5000'];
  
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
 			$data['vl_outcomes']['data'][1]['color'] = '#F2784B';

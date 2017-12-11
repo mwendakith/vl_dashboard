@@ -47,6 +47,7 @@
 						<div class="col-sm-10 col-sm-offset-2">
 						</div>
 					</div>
+					<div class="g-recaptcha" data-sitekey="6LcQyDkUAAAAAB6Qx3q3aT1768kpNQ7EGkok-pUj"></div>
 				</form>
 			</div>
 		</div>
