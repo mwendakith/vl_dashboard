@@ -168,6 +168,7 @@
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>live">Live Data</a></li>
+						<li><a href="https://api.nascop.org/">API Documentation</a></li>
 						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
 						<!-- <li><a href="<?php echo base_url();?>county">County View</a></li> -->
 						<li><a href="http://eid.nascop.org/login.php">Login</a></li>
