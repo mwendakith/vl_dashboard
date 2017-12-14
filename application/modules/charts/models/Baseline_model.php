@@ -76,10 +76,10 @@ class Baseline_model extends MY_Model
 			$suppressed = (int) $value['undetected'] + (int) $value['less1000'];
 			$nonsuppressed = (int) $value['above5000'] + (int) $value['less5000'];
 			$total = $suppressed + $nonsuppressed;
-			$suppression = $suppressed / $total * 100;
+			$nonsuppression = $nonsuppressed / $total * 100;
 
-			$data['rate'] = round($suppression, 2);
-			$data['sustxfail'] = $suppressed;
+			$data['rate'] = round($nonsuppression, 2);
+			$data['sustxfail'] = $nonsuppressed;
 
 		}
 		return $data;

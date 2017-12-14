@@ -60,12 +60,13 @@
 			posting.done(function( adata ) {
 				$.get("<?php echo base_url();?>partner/check_partner_select", function (data) {
 					partner = JSON.parse(data);
-					if (adata==null||adata==""||adata==undefined) {
+					if (partner==null||partner==""||partner==undefined) {
 						$("#second").hide();
 						$("#first").show();
 						
 						$("#age_outcomes").html("<center><div class='loader'></div></center>");
-						$("#age_outcomes").load("<?php echo base_url('charts/ages/age_outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+partner);
+						$("#age_outcomes").load("<?php echo base_url('charts/ages/partner_ages_outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+age);
+						// $("#age_outcomes").load("<?php // echo base_url('charts/ages/age_outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+partner);
 					} else {
 						$("#first").hide();
 						$("#second").show();
@@ -113,9 +114,19 @@
 						$("#first").show();
 						
 						$("#age_outcomes").html("<center><div class='loader'></div></center>");
-						$("#age_outcomes").load("<?php echo base_url('charts/ages/age_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null);
+
+						$.get("<?php echo base_url();?>partner/check_partner_age_select", function (data) {
+							adata = JSON.parse(data);
+							if (adata==0) {
+								$("#age_outcomes").load("<?php echo base_url('charts/ages/age_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null);
+							} else {
+								$("#age_outcomes").load("<?php echo base_url('charts/ages/partner_ages_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+adata);
+							}
+						});
+
+						
 					} else {
-						partner = $.parseJSON(partner);
+						// partner = $.parseJSON(partner);
 						$.get("<?php echo base_url();?>partner/check_partner_age_select", function (data) {
 							adata = JSON.parse(data);
 							if (adata==0) {
@@ -130,10 +141,9 @@
 
 								$("#samples").html("<center><div class='loader'></div></center>");
 								$("#vlOutcomes").html("<center><div class='loader'></div></center>");
-								$("#justification").html("<center><div class='loader'></div></center>");
 								$("#ageGroups").html("<center><div class='loader'></div></center>");
 								$("#gender").html("<center><div class='loader'></div></center>");
-								$("#partner").html("<center><div class='loader'></div></center>");
+								$("#county").html("<center><div class='loader'></div></center>");
 
 								$("#samples").load("<?php echo base_url('charts/ages/sample_types'); ?>/"+to[1]+"/"+adata+"/"+partner);
 								$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>/"+from[1]+"/"+from[0]+"/"+adata+"/"+to[1]+"/"+to[0]+"/"+partner);
@@ -178,9 +188,20 @@ function date_filter(criteria, id)
 						$("#first").show();
 						
 						$("#age_outcomes").html("<center><div class='loader'></div></center>");
+
+						$.get("<?php echo base_url();?>partner/check_partner_age_select", function (data) {
+							adata = JSON.parse(data);
+							if (adata==0) {
+								$("#age_outcomes").load("<?php echo base_url('charts/ages/age_outcomes'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null);
+							} else {
+								$("#age_outcomes").load("<?php echo base_url('charts/ages/partner_ages_outcomes'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+adata);
+							}
+						});
+						
+						$("#age_outcomes").html("<center><div class='loader'></div></center>");
 						$("#age_outcomes").load("<?php echo base_url('charts/ages/age_outcomes'); ?>/"+year+"/"+month+"/"+null+"/"+null);
 					} else {
-						partner = $.parseJSON(partner);
+						// partner = $.parseJSON(partner);
 						$.get("<?php echo base_url();?>partner/check_partner_age_select", function (data) {
 							adata = JSON.parse(data);
 							if (adata==0) {
@@ -195,10 +216,9 @@ function date_filter(criteria, id)
 
 								$("#samples").html("<center><div class='loader'></div></center>");
 								$("#vlOutcomes").html("<center><div class='loader'></div></center>");
-								$("#justification").html("<center><div class='loader'></div></center>");
 								$("#ageGroups").html("<center><div class='loader'></div></center>");
 								$("#gender").html("<center><div class='loader'></div></center>");
-								$("#partner").html("<center><div class='loader'></div></center>");
+								$("#county").html("<center><div class='loader'></div></center>");
 
 								$("#samples").load("<?php echo base_url('charts/ages/sample_types'); ?>/"+year+"/"+adata+"/"+partner);
 								$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>/"+year+"/"+month+"/"+adata+"/"+null+"/"+null+"/"+partner);
