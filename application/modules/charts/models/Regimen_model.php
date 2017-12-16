@@ -527,7 +527,7 @@ class Regimen_model extends MY_Model
 		} elseif ($site == 1 || $site == '1') {
 			$sql = "CALL `proc_get_vl_regimens_breakdowns_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."','".$default."','".$default."','".$default."','".$site."')";
 			$div_name = 'siteLising';
-			$modal_name = 'siteLising';
+			$modal_name = 'siteModal';
 		}
 
 		$result = $this->db->query($sql)->result_array();
