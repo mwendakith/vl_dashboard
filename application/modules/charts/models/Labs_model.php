@@ -52,8 +52,8 @@ class Labs_model extends MY_Model
 						<td>".number_format((int) $value['baselinesustxfail'])."</td>
 						<td>".number_format((int) $value['confirmtx'])."</td>
 						<td>".number_format((int) $value['confirm2vl'])."</td>
-						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirm2vl'])."</td>
-						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirmtx'])."</td>
+						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
+						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>
 						
 					</tr>";
 		}

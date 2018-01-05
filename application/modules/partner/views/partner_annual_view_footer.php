@@ -111,9 +111,9 @@
 
 
 			
-				$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression/null'); ?>/"+data);
-				$("#current_sup_gender").load("<?php echo base_url('charts/summaries/current_gender/0/3'); ?>/"+data);
-				$("#current_sup_age").load("<?php echo base_url('charts/summaries/current_age/0/3'); ?>/"+data);
+				$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression/null'); ?>/"+data+"/1");
+				$("#current_sup_gender").load("<?php echo base_url('charts/summaries/current_gender/0/3'); ?>/"+data+"/1");
+				$("#current_sup_age").load("<?php echo base_url('charts/summaries/current_age/0/3'); ?>/"+data+"/1");
 	        });
 		});
 	});
