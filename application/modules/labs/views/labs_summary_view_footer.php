@@ -2,6 +2,11 @@
 	$().ready(function() {
 
 		localStorage.setItem("my_lab", 0);
+			
+		$("#first").show();
+    	$("#second").hide();
+    	$("#breadcrum").hide();
+
 
 		$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats");
 		$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends");
@@ -120,8 +125,9 @@
 		});
 
 
-		$("#lab_summary").html("<div>Loading...</div>");
+		
 		$("#lab_rejections").html("<div>Loading...</div>");
+		$("#lab_summary").html("<div>Loading...</div>");
  		
  		
  		$("#lab_perfomance_stats").html("<div>Loading...</div>"); 
@@ -132,8 +138,9 @@
 		$("#results").html("<div>Loading...</div>");
 
 		var em = localStorage.getItem("my_lab");
-		$("#lab_summary").load("<?php echo base_url();?>charts/labs/summary/"+em+"/"+year);
+
 		$("#lab_rejections").load("<?php echo base_url();?>charts/labs/rejections/"+em+"/"+year+"/"+month);
+		$("#lab_summary").load("<?php echo base_url();?>charts/labs/summary/"+em+"/"+year);
 
 		$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends/"+year);
 		$("#test_trends").load("<?php echo base_url('charts/labs/testing_trends');?>/"+year);
@@ -141,7 +148,6 @@
 		$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats/"+year+"/"+month);
 		$("#samples").load("<?php echo base_url();?>charts/labs/sample_types/"+year+"/"+month);
 		$("#results").load("<?php echo base_url();?>charts/labs/results_outcome/"+year+"/"+month);
-
 		
 	}
 </script>
