@@ -17,6 +17,7 @@ BEGIN
                     SUM(`ls`.`eqa`) AS `eqa`,   
                     SUM(`ls`.`confirmtx`) AS `confirmtx`,
                     SUM(`ls`.`confirm2vl`) AS `confirm2vl`,
+                    SUM(`ls`.`fake_confirmatory`) AS `fake_confirmatory`,
                     SUM(`ls`.`baseline`) AS `baseline`,
                     SUM(`ls`.`baselinesustxfail`) AS `baselinesustxfail`
                   FROM `vl_lab_summary` `ls` JOIN `labs` `l` ON `ls`.`lab` = `l`.`ID` 

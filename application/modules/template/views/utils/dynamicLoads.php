@@ -44,6 +44,7 @@
 	echo "<".$jsTag." src='https://code.highcharts.com/highcharts-more.js'".$jsTagType."></".$jsTag.">\n";
 	echo "<".$jsTag." src='https://code.highcharts.com/modules/exporting.js'".$jsTagType."></".$jsTag.">\n";
 	echo "<".$jsTag." src='https://code.highcharts.com/modules/export-data.js'".$jsTagType."></".$jsTag.">\n";
+	echo "<".$jsTag." src='https://code.highcharts.com/maps/modules/map.js'".$jsTagType."></".$jsTag.">\n";
 
 	echo "<".$jsTag." src='//cdn.datatables.net/1.10.12/js/jquery.dataTables.js'".$jsTagType."></".$jsTag.">\n";
 	echo "<".$jsTag." src='//cdn.datatables.net/responsive/2.1.1/js/dataTables.responsive.js'".$jsTagType."></".$jsTag.">\n";
