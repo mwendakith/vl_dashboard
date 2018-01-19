@@ -150,7 +150,7 @@ class Labs_model extends MY_Model
 
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-		//echo "<pre>";print_r($result);die();
+		// echo "<pre>";print_r($result);die();
 		if ($result) {
 			$categories = array();
 			foreach ($result as $key => $value) {
@@ -166,7 +166,8 @@ class Labs_model extends MY_Model
 					foreach ($result as $key2 => $value2) {
 						if ((int) $value1 == (int) $value2['month'] && $value == $value2['labname']) {
 							$data['test_trends'][$key]['name'] = $value;
-							$data['test_trends'][$key]['data'][$count] = (int) $value2['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx'];
+							// $data['test_trends'][$key]['data'][$count] = (int) $value2['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx'];
+							$data['test_trends'][$key]['data'][$count] = (int) $value2['alltests'];
 						}
 					}
 					$count++;
@@ -276,7 +277,7 @@ class Labs_model extends MY_Model
 		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-
+		// echo "<pre>";print_r($result);die();
 		$data['sample_types'][0]['name'] = 'EDTA';
 		$data['sample_types'][1]['name'] = 'DBS';
 		$data['sample_types'][2]['name'] = 'Plasma';

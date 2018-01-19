@@ -58,7 +58,7 @@
 		<div class="col-md-5 col-sm-12 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    Routine VLs Tested by Sample Type <div class="display_date" ></div>
+			    VLs Tested by Sample Type <div class="display_date" ></div>
 			  </div>
 			  <div class="panel-body" id="samples">
 			    <div>Loading...</div>
