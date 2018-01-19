@@ -12,7 +12,7 @@
 			<th rowspan="2">EQA Tests</th>
 			<th colspan="2">Routine VL Tests</th>
 			<th colspan="2">Baseline VL Tests</th>
-			<th colspan="2">Confirmatory Repeat Tests</th>
+			<th colspan="3">Confirmatory Repeat Tests</th>
 			<th colspan="2">Total Tests with Valid Outcomes</th>
 		</tr>
 		<tr>
@@ -22,6 +22,7 @@
 			<th>&gt; 1000</th>
 			<th>Tests</th>
 			<th>&gt; 1000</th>
+			<th>Without Previous Nonsuppressed</th>
 			<th>Tests</th>
 			<th>&gt; 1000</th>
 		</tr>

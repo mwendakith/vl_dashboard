@@ -82,6 +82,14 @@ class Labs extends MY_Controller
 		$this->load->view('trends_outcomes_view', $data);
 	}
 
+	function lab_mapping($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data = $this->labs_model->lab_mapping($lab, $year,$month,$to_year,$to_month);
+		$data['div_name'] = "lab_map_div";
+		
+		$this->load->view('map_view', $data);
+	}
+
 	function display_date()
 	{
 		echo "(".$this->session->userdata('filter_year')." ".$this->labs_model->resolve_month($this->session->userdata('filter_month')).")";

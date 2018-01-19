@@ -17,8 +17,7 @@
 
     <div id="Table_Title"></div>
 
-    <div id="table" ></div>
-    
+    <div id="table" ></div>    
 
 </div>
 
