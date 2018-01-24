@@ -5,9 +5,9 @@ CREATE PROCEDURE `proc_get_labs_sampletypes`
 BEGIN
   SET @QUERY =    "SELECT 
                     `lb`.`labname`, 
-                    SUM(`vls`.`dbs`) AS `dbs`, 
-                    SUM(`vls`.`plasma`) AS `plasma`, 
-                    SUM(`vls`.`edta`) AS `edta`, 
+                    SUM(`vls`.`alldbs`) AS `dbs`, 
+                    SUM(`vls`.`allplasma`) AS `plasma`, 
+                    SUM(`vls`.`alledta`) AS `edta`, 
                     `vls`.`year` 
                 FROM `vl_lab_summary` `vls` 
                 JOIN `labs` `lb` 

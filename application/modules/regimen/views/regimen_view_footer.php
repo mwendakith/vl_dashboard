@@ -138,7 +138,7 @@
  		// Put the results in a div
 		posting.done(function( data ) {
 			obj = $.parseJSON(data);
-			
+			console.log(obj);
 			if(obj['month'] == "null" || obj['month'] == null){
 				obj['month'] = "";
 			}
@@ -170,7 +170,7 @@
 					$("#vlOutcomes").load("<?php echo base_url('charts/regimen/regimen_vl_outcome'); ?>/"+year+"/"+month+"/"+data);
 					$("#gender").load("<?php echo base_url('charts/regimen/regimen_gender'); ?>/"+year+"/"+month+"/"+data);
 					$("#age").load("<?php echo base_url('charts/regimen/regimen_age'); ?>/"+year+"/"+month+"/"+data);
-					$("#countiesRegimen").load("<?= @base_url('charts/regimen/regimen_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+to[1]+"/"+to[0]+"/"+1);
+					$("#countiesRegimen").load("<?= @base_url('charts/regimen/regimen_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+1);
 					$("#partnersRegimen").load("<?php echo base_url('charts/regimen/regimen_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+1);
 					$("#subcountiesRegimen").load("<?php echo base_url('charts/regimen/regimen_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
 					$("#FacilitiesRegimen").load("<?php echo base_url('charts/regimen/regimen_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1); 
