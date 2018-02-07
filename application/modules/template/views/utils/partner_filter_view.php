@@ -37,42 +37,8 @@
             <!-- </optgroup> -->
           </select>
         </div>
-        <!-- <div class="col-md-6">
-          <button class="btn" type="submit" style="background-color: #81CFE0; margin-left: 0.5em;">Filter</button> -->
-          <!-- <select class="btn" style="background-color: #C5EFF7;">
-            <option value="0" disabled="true" selected="true">Sub County:</option>
-            <option>Nairobi</option>
-            <option>Nakuru</option>
-            <option>Mombasa</option>
-            <option>Kisumu</option>
-            <option>Marsabit</option>
-            <option>Embu</option>
-          </select> -->
-        <!-- </div> -->
       </div>
       
-      <!-- <div class="row">
-        <div class="col-md-6">
-          <select class="btn btn-primary">
-          <option>Nairobi</option>
-          <option>Nakuru</option>
-          <option>Mombasa</option>
-          <option>Kisumu</option>
-          <option>Marsabit</option>
-          <option>Embu</option>
-        </select>
-        </div>
-        <div class="col-md-6">
-          <select class="btn btn-primary">
-          <option>Nairobi</option>
-          <option>Nakuru</option>
-          <option>Mombasa</option>
-          <option>Kisumu</option>
-          <option>Marsabit</option>
-          <option>Embu</option>
-        </select>
-        </div>
-      </div> -->
     </form>
   </div>
   <div class="col-md-2">
@@ -83,15 +49,13 @@
   <div class="col-md-5" id="year-month-filter">
     <div class="filter">
       Year: 
-      <a href="javascript:void(0)" onclick="date_filter('yearly', 2010 )" class="alert-link"> 2010 </a>|
-      <a href="javascript:void(0)" onclick="date_filter('yearly', 2011 )" class="alert-link"> 2011 </a>|
-      <a href="javascript:void(0)" onclick="date_filter('yearly', 2012 )" class="alert-link"> 2012 </a>|
-      <a href="javascript:void(0)" onclick="date_filter('yearly', 2013 )" class="alert-link"> 2013 </a>|
-      <a href="javascript:void(0)" onclick="date_filter('yearly', 2014 )" class="alert-link"> 2014 </a>|
-      <a href="javascript:void(0)" onclick="date_filter('yearly', 2015 )" class="alert-link"> 2015 </a>|
-      <a href="javascript:void(0)" onclick="date_filter('yearly', 2016 )" class="alert-link"> 2016 </a>|
-      <a href="javascript:void(0)" onclick="date_filter('yearly', 2017 )" class="alert-link"> 2017 </a>|
-      <a href="javascript:void(0)" onclick="date_filter('yearly', 2018 )" class="alert-link"> 2018 </a>
+      <?php
+        for ($i=9; $i > -1; $i--) { 
+          $year = Date('Y');
+          $year -= $i;
+      ?>
+      <a href="javascript:void(0)" onclick="date_filter('yearly', <?= @$year; ?> )" class="alert-link"> <?= @$year; ?> </a>|
+      <?php } ?>
     </div>
     <div class="filter">
       Month: 
