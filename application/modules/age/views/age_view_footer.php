@@ -52,6 +52,7 @@
 					$("#partnersAge").html("<center><div class='loader'></div></center>");
 					$("#facilitiesAge").html("<center><div class='loader'></div></center>");
 					$("#subcountiesAge").html("<center><div class='loader'></div></center>");
+					$("#regimen_age").html("<center><div class='loader'></div></center>");
 					
 					$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>");
 					$("#gender").load("<?php echo base_url('charts/ages/age_gender'); ?>/"+null+"/"+null+"/"+age); 
@@ -61,6 +62,7 @@
 					$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null+"/"+null+"/"+1);
 					$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
 					$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
+					$("#regimen_age").load("<?= @base_url('charts/ages/age_regimen'); ?>/"+null+"/"+null+"/"+age+"/"+null+"/"+null);
 	        	}      	
 	        });
 	    });
@@ -101,6 +103,7 @@
 						$("#partnersAge").html("<center><div class='loader'></div></center>");
 						$("#facilitiesAge").html("<center><div class='loader'></div></center>");
 						$("#subcountiesAge").html("<center><div class='loader'></div></center>");
+						$("#regimen_age").html("<center><div class='loader'></div></center>");
 						
 						$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
 						$("#gender").load("<?php echo base_url('charts/ages/age_gender'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
@@ -110,6 +113,7 @@
 						$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+1);
 						$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+null+"/"+1);
 						$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+1);
+						$("#regimen_age").load("<?= @base_url('charts/ages/age_regimen'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
 					}
 				});
 			}
@@ -159,6 +163,7 @@
 					$("#partnersAge").html("<center><div class='loader'></div></center>");
 					$("#facilitiesAge").html("<center><div class='loader'></div></center>");
 					$("#subcountiesAge").html("<center><div class='loader'></div></center>");
+					$("#regimen_age").html("<center><div class='loader'></div></center>");
 					
 					$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>/"+year+"/"+month+"/"+data);
 					$("#gender").load("<?php echo base_url('charts/ages/age_gender'); ?>/"+year+"/"+month+"/"+data); 
@@ -168,6 +173,7 @@
 					$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+1);
 					$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
 					$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
+					$("#regimen_age").load("<?= @base_url('charts/ages/age_regimen'); ?>/"+year+"/"+month+"/"+data);
 				}
 			});
 			

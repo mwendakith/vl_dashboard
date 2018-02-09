@@ -67,6 +67,15 @@ class Ages extends MY_Controller
     	$this->load->view('sample_types_view',$data);
 	}
 
+	function age_regimen($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['trends'] = $this->ages_model->age_regimens($year,$month,$age,$to_year,$to_month);
+		$data['div_name'] = 'ages_regimen_outcomes';
+		
+		
+		$this->load->view('trends_outcomes_view', $data);
+	}
+
 
 	function download_sampletypes($year=NULL,$age=NULL,$partner=NULL)
 	{

@@ -28,7 +28,7 @@ class Labs_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_vl_lab_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."');";
-
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);echo "</pre>";die();
 		$ul = '';
@@ -45,7 +45,7 @@ class Labs_model extends MY_Model
 						<td>".number_format((int) $value['alltests'])."</td>
 						<td>".number_format((int) $value['invalids'])."</td>
 						<td>".number_format((int) $value['eqa'])."</td>
-
+						<td>".number_format((int) $value['controls'])."</td>
 						<td>".number_format($routine)."</td>
 						<td>".number_format($routinesus)."</td>
 						<td>".number_format((int) $value['baseline'])."</td>

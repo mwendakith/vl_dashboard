@@ -569,4 +569,68 @@ class Ages_model extends MY_Model
 		return $data;
 	}
 
+	function age_regimens($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		//Assigning the value of the month or setting it to the selected value
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		if ($age==null || $age=='null') {
+			$age = $this->session->userdata('age_category_filter');
+		}
+
+		$sql = "CALL `proc_get_vl_age_regimen`('".$age."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		
+		$result = $this->db->query($sql)->result_array();
+		
+		$data['outcomes'][0]['name'] = 'Non-Suppressed';
+		$data['outcomes'][1]['name'] = 'Suppressed';
+		$data['outcomes'][2]['name'] = 'Suppression';
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
+
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+ 
+		$count = 0;
+		
+		$data['categories'][0] = 'No Data';
+		$data["outcomes"][0]["data"][0]	= $count;
+		$data["outcomes"][1]["data"][0]	= $count;
+		$data["outcomes"][2]["data"][0]	= $count;
+ 
+		foreach ($result as $key => $value) {
+				$total = $value['suppressed']+$value['nonsuppressed'];
+				$data['categories'][$key] = $value['name'];
+ 
+				$data["outcomes"][0]["data"][$key]	= (int) $value['nonsuppressed'];
+				$data["outcomes"][1]["data"][$key]	= (int) $value['suppressed'];
+				$data["outcomes"][2]["data"][$key]	= round(@($value['suppressed']/$total)*100,1);
+			
+		}
+		$data['title'] = '';
+
+		return $data;
+	}
+
 }

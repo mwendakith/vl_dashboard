@@ -221,7 +221,21 @@ class Regimen_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Test';
+		$data['gender'][0]['name'] = "Not Suppressed";
+		$data['gender'][1]['name'] = "Suppressed";
+		$data['gender'][2]['name'] = "Suppression";
+
+		$data['gender'][0]['type'] = "column";
+		$data['gender'][1]['type'] = "column";
+		$data['gender'][2]['type'] = "spline";
+		
+
+		$data['gender'][0]['yAxis'] = 1;
+		$data['gender'][1]['yAxis'] = 1;
+
+		$data['gender'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['gender'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['gender'][2]['tooltip'] = array("valueSuffix" => ' %');
 
 		$count = 0;
 		
@@ -233,9 +247,17 @@ class Regimen_model extends MY_Model
 			$data['categories'][0] 			= 'Male';
 			$data['categories'][1] 			= 'Female';
 			$data['categories'][2] 			= 'No Data';
-			$data["gender"][0]["data"][0]	=  (int) $value['maletest'];
-			$data["gender"][0]["data"][1]	=  (int) $value['femaletest'];
-			$data["gender"][0]["data"][2]	= (int) $value['nodata'];
+			$data["gender"][0]["data"][0]	=  (int) $value['malenonsuppressed'];
+			$data["gender"][0]["data"][1]	=  (int) $value['femalenonsuppressed'];
+			$data["gender"][0]["data"][2]	= (int) $value['nogendernonsuppressed'];
+
+			$data["gender"][1]["data"][0]	=  (int) $value['maletest'] - (int) $value['malenonsuppressed'];
+			$data["gender"][1]["data"][1]	=  (int) $value['femaletest'] - (int) $value['femalenonsuppressed'];
+			$data["gender"][1]["data"][2]	= (int) $value['nodata'] - (int) $value['nogendernonsuppressed'];
+
+			$data["gender"][2]["data"][0]	=  round((((int) $value['maletest'] - (int) $value['malenonsuppressed'])/(int) $value['maletest'])*100, 1);
+			$data["gender"][2]["data"][1]	=  round((((int) $value['femaletest'] - (int) $value['femalenonsuppressed'])/(int) $value['femaletest'])*100, 1);
+			$data["gender"][2]["data"][2]	= round((((int) $value['nodata'] - (int) $value['nogendernonsuppressed'])/(int) $value['nodata'])*100, 1);
 		}
 
 		// $data['gender'][0]['drilldown']['color'] = '#913D88';
@@ -277,7 +299,21 @@ class Regimen_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['ageGnd'][0]['name'] = 'Test';
+		$data['ageGnd'][0]['name'] = "Not Suppressed";
+		$data['ageGnd'][1]['name'] = "Suppressed";
+		$data['ageGnd'][2]['name'] = "Suppression";
+
+		$data['ageGnd'][0]['type'] = "column";
+		$data['ageGnd'][1]['type'] = "column";
+		$data['ageGnd'][2]['type'] = "spline";
+		
+
+		$data['ageGnd'][0]['yAxis'] = 1;
+		$data['ageGnd'][1]['yAxis'] = 1;
+
+		$data['ageGnd'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['ageGnd'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['ageGnd'][2]['tooltip'] = array("valueSuffix" => ' %');
 
 		$count = 0;
 		
@@ -293,17 +329,33 @@ class Regimen_model extends MY_Model
 			$data['categories'][4] 			= 'Less 19';
 			$data['categories'][5] 			= 'Less 24';
 			$data['categories'][6] 			= 'over 25';
-			$data["ageGnd"][0]["data"][0]	=  (int) $value['noage'];
-			$data["ageGnd"][0]["data"][1]	=  (int) $value['less2'];
-			$data["ageGnd"][0]["data"][2]	=  (int) $value['less9'];
-			$data["ageGnd"][0]["data"][3]	=  (int) $value['less14'];
-			$data["ageGnd"][0]["data"][4]	=  (int) $value['less19'];
-			$data["ageGnd"][0]["data"][5]	=  (int) $value['less24'];
-			$data["ageGnd"][0]["data"][6]	=  (int) $value['over25'];
+			$data["ageGnd"][0]["data"][0]	=  (int) $value['noage_nonsuppressed'];
+			$data["ageGnd"][0]["data"][1]	=  (int) $value['less2_nonsuppressed'];
+			$data["ageGnd"][0]["data"][2]	=  (int) $value['less9_nonsuppressed'];
+			$data["ageGnd"][0]["data"][3]	=  (int) $value['less14_nonsuppressed'];
+			$data["ageGnd"][0]["data"][4]	=  (int) $value['less19_nonsuppressed'];
+			$data["ageGnd"][0]["data"][5]	=  (int) $value['less24_nonsuppressed'];
+			$data["ageGnd"][0]["data"][6]	=  (int) $value['over25_nonsuppressed'];
+
+			$data["ageGnd"][1]["data"][0]	=  (int) $value['noage']  - (int) $value['noage_nonsuppressed'];
+			$data["ageGnd"][1]["data"][1]	=  (int) $value['less2']  - (int) $value['less2_nonsuppressed'];
+			$data["ageGnd"][1]["data"][2]	=  (int) $value['less9']  - (int) $value['less9_nonsuppressed'];
+			$data["ageGnd"][1]["data"][3]	=  (int) $value['less14'] - (int) $value['less14_nonsuppressed'];
+			$data["ageGnd"][1]["data"][4]	=  (int) $value['less19'] - (int) $value['less19_nonsuppressed'];
+			$data["ageGnd"][1]["data"][5]	=  (int) $value['less24'] - (int) $value['less24_nonsuppressed'];
+			$data["ageGnd"][1]["data"][6]	=  (int) $value['over25'] - (int) $value['over25_nonsuppressed'];
+
+			$data["ageGnd"][2]["data"][0]	=  round((((int) $value['noage']  - (int) $value['noage_nonsuppressed'])/(int) $value['noage'])*100, 1);
+			$data["ageGnd"][2]["data"][1]	=  round((((int) $value['less2']  - (int) $value['less2_nonsuppressed'])/(int) $value['less2'])*100, 1);
+			$data["ageGnd"][2]["data"][2]	=  round((((int) $value['less9']  - (int) $value['less9_nonsuppressed'])/(int) $value['less9'])*100, 1);
+			$data["ageGnd"][2]["data"][3]	=  round((((int) $value['less14'] - (int) $value['less14_nonsuppressed'])/(int) $value['less14'])*100, 1);
+			$data["ageGnd"][2]["data"][4]	=  round((((int) $value['less19'] - (int) $value['less19_nonsuppressed'])/(int) $value['less19'])*100, 1);
+			$data["ageGnd"][2]["data"][5]	=  round((((int) $value['less24'] - (int) $value['less24_nonsuppressed'])/(int) $value['less24'])*100, 1);
+			$data["ageGnd"][2]["data"][6]	=  round((((int) $value['over25'] - (int) $value['over25_nonsuppressed'])/(int) $value['over25'])*100, 1);
 		}
 		// $data['gender'][0]['drilldown']['color'] = '#913D88';
 		// $data['gender'][0]['drilldown']['color'] = '#913D88';
-		
+		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 

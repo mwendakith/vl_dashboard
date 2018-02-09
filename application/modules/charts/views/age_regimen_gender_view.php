@@ -8,27 +8,52 @@
                     chart: {
                         type: 'column'
                     },
+                    chart: {
+                        zoomType: 'xy'
+                    },
                     title: {
                         text: ''
                     },
                     xAxis: {
                         categories: <?php echo json_encode($outcomes['categories']);?>
                     },
-                    yAxis: {
-                        min: 0,
-                        title: {
-                            text: 'Tests'
-                        },
-                        stackLabels: {
-                            rotation: 0,
-                            enabled: true,
-                            style: {
-                                fontWeight: 'bold',
-                                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                    yAxis: [{ // Primary yAxis
+                        labels: {
+                            formatter: function() {
+                                return this.value +'%';
                             },
-                            y:-20
+                            style: {
+                                color: '#89A54E'
+                            }
+                        },
+                        title: {
+                            text: 'Percentage',
+                            style: {
+                                color: '#89A54E'
+                            }
+                        },
+                       opposite: true
+            
+                    }, { // Secondary yAxis
+                        gridLineWidth: 0,
+                        title: {
+                            text: 'Tests',
+                            style: {
+                                color: '#4572A7'
+                            }
+                        },
+                        labels: {
+                            formatter: function() {
+                                return this.value +'';
+                            },
+                            style: {
+                                color: '#4572A7'
+                            }
                         }
-                    },
+                        // min: 0, 
+                        // max: 70000,
+                        // tickInterval: 1
+                    }],
 
                     legend: {
                         align: 'right',
@@ -42,23 +67,13 @@
                         shadow: true
                     },
                     tooltip: {
+                        shared: true,
                         headerFormat: '<b>{point.x}</b><br/>',
                         pointFormat: '{series.name}: {point.y}<br/>% contribution: {point.percentage:.1f}%'
-                    },
-                    plotOptions: {
-                        column: {
-                            stacking: 'normal',
-                            dataLabels: {
-                                enabled: false,
-                                color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
-                                style: {
-                                    textShadow: '0 0 3px black'
-                                }
-                            }
-                        }
                     },colors: [
                         '#F2784B',
-                        '#1BA39C'
+                        '#1BA39C',
+                        '#257766'
                     ],
                     series: <?php echo json_encode($outcomes['gender']);?>
                 });

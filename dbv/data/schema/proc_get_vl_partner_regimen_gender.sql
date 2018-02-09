@@ -6,7 +6,10 @@ BEGIN
   SET @QUERY =    "SELECT
         SUM(`maletest`) AS `maletest`,
         SUM(`femaletest`) AS `femaletest`,
-        SUM(`nogendertest`) AS `nodata`
+        SUM(`nogendertest`) AS `nodata`,
+        SUM(`malenonsuppressed`) AS `malenonsuppressed`,
+        SUM(`femalenonsuppressed`) AS `femalenonsuppressed`,
+        SUM(`nogendernonsuppressed`) AS `nogendernonsuppressed`
     FROM `vl_partner_regimen`
     WHERE 1 ";
 
