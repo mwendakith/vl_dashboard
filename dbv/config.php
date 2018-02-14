@@ -6,9 +6,9 @@
  */
 define('DB_HOST', 'localhost');
 define('DB_PORT', 3306);
-define('DB_USERNAME', 'vl_user');
-define('DB_PASSWORD', 'vl_password');
-define('DB_NAME', 'vl_kemri2');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');
+define('DB_NAME', 'apidb');
 
 /**
  * Authentication data for access to DBV itself

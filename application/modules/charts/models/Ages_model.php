@@ -283,26 +283,44 @@ class Ages_model extends MY_Model
 		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Non-Suppressed';
-		$data['gender'][1]['name'] = 'Suppressed';
-
-		$count = 0;
 		
-		$data["gender"][0]["data"][0]	= $count;
-		$data["gender"][1]["data"][0]	= $count;
+		// echo "<pre>";print_r($result);die();
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
+		
+
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+
 		$data['categories'][0] 			= 'Male';
 		$data['categories'][1] 			= 'Female';
 		$data['categories'][2] 			= 'No Data';
 
 		foreach ($result as $key => $value) {
-			
-			$data["gender"][0]["data"][0]	=  (int) $value['malenonsuppressed'];
-			$data["gender"][1]["data"][0]	=  (int) $value['malesuppressed'];
-			$data["gender"][0]["data"][1]	=  (int) $value['femalenonsuppressed'];
-			$data["gender"][1]["data"][1]	=  (int) $value['femalesuppressed'];
-			$data["gender"][0]["data"][2]	= (int) $value['nodatanonsuppressed'];
-			$data["gender"][1]["data"][2]	= (int) $value['nodatasuppressed'];
+			$nodata = (int) $value['nodatanonsuppressed'] + (int) $value['nodatasuppressed'];
+			$male = (int) $value['malenonsuppressed'] + (int) $value['malesuppressed'];
+			$female = (int) $value['femalenonsuppressed'] + (int) $value['femalesuppressed'];
+
+			$data["outcomes"][0]["data"][0]	=  (int) $value['malenonsuppressed'];
+			$data["outcomes"][1]["data"][0]	=  (int) $value['malesuppressed'];
+			$data["outcomes"][2]["data"][0]	=  round(((int) $value['malesuppressed']/$male)*100,1);
+			$data["outcomes"][0]["data"][1]	=  (int) $value['femalenonsuppressed'];
+			$data["outcomes"][1]["data"][1]	=  (int) $value['femalesuppressed'];
+			$data["outcomes"][2]["data"][1]	=  round(((int) $value['femalesuppressed']/$female)*100,1);
+			$data["outcomes"][0]["data"][2]	=  (int) $value['nodatanonsuppressed'];
+			$data["outcomes"][1]["data"][2]	=  (int) $value['nodatasuppressed'];
+			$data["outcomes"][2]["data"][2]	=  round(((int) $value['nodatasuppressed']/$nodata)*100,1);
 		}
 
 		// $data['gender'][0]['drilldown']['color'] = ;

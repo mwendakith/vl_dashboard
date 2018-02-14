@@ -45,9 +45,10 @@ class Ages extends MY_Controller
 
 	function age_gender($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)
 	{
-		$data['outcomes'] = $this->ages_model->ages_gender($year,$month,$age,$to_year,$to_month,$partner);
+		$data['trends'] = $this->ages_model->ages_gender($year,$month,$age,$to_year,$to_month,$partner);
+		$data['div_name'] = 'age_gender_outcomes';
 		
-    	$this->load->view('age_regimen_gender_view',$data);
+    	$this->load->view('trends_outcomes_view',$data);
 	}
 
 	function age_breakdowns($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL,$county=null,$partner=null,$subcounty=null,$site=null)
