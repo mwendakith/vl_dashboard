@@ -13,18 +13,17 @@
 
 		$("#age_outcomes").load("<?php echo base_url('charts/ages/age_outcomes');?>");
 
-		$("select").change(function(){
+		$("#age").change(function(){
 			em = $(this).val();
-			// console.log(em);
 			// Send the data using post
 	        var posting = $.post( "<?php echo base_url();?>template/filter_age_category_data", { age_cat: em } );
 	     
-	   //      // Put the results in a div
-	        posting.done(function( age ) {
-	        	// console.log(age);
-	   //      	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
-	   //      		$("#breadcrum").html(data);
-	   //      	});
+	   // //      // Put the results in a div
+	        posting.done(function( response ) {
+	      	console.log(response);
+	   // //      	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
+	   // //      		$("#breadcrum").html(data);
+	   // //      	});
 	        	$.get("<?php echo base_url();?>template/dates", function(data2){
 	        		obj = $.parseJSON(data2);
 			
@@ -34,13 +33,20 @@
 					$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 	        	});
-	        	if (age==48||age=="48") {
+
+	        	if (response == null || response == 'null') {
 	        		$("#second").hide();
 	        		$("#first").show();
 
 	        		$("#age_outcomes").html("<center><div class='loader'></div></center>");
 	        		$("#age_outcomes").load("<?php echo base_url('charts/ages/age_outcomes');?>");
 	        	} else {
+	        		response = JSON.parse(response);
+	        		var age = "";
+	        		for (i = 0; i < response.length; i++) { 
+					    age += "." + response[i];
+					}
+	        		
 	        		$("#first").hide();
 	        		$("#second").show();
 
@@ -92,6 +98,10 @@
 		        		$("#age_outcomes").html("<center><div class='loader'></div></center>");
 		        		$("#age_outcomes").load("<?php echo base_url('charts/ages/age_outcomes');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 					} else {
+						var age = "";
+		        		for (i = 0; i < data.length; i++) { 
+						    age += "." + data[i];
+						}
 						$("#first").hide();
 		        		$("#second").show();
 
@@ -105,15 +115,15 @@
 						$("#subcountiesAge").html("<center><div class='loader'></div></center>");
 						$("#regimen_age").html("<center><div class='loader'></div></center>");
 						
-						$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
-						$("#gender").load("<?php echo base_url('charts/ages/age_gender'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
-						$("#samples").load("<?php echo base_url('charts/ages/sample_types'); ?>/"+from[1]+"/"+data);
-						$("#county").load("<?php echo base_url('charts/ages/age_county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
-						$("#countiesAge").load("<?= @base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+1);
-						$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+1);
-						$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+null+"/"+1);
-						$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+1);
-						$("#regimen_age").load("<?= @base_url('charts/ages/age_regimen'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
+						$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>/"+from[1]+"/"+from[0]+"/"+age+"/"+to[1]+"/"+to[0]);
+						$("#gender").load("<?php echo base_url('charts/ages/age_gender'); ?>/"+from[1]+"/"+from[0]+"/"+age+"/"+to[1]+"/"+to[0]); 
+						$("#samples").load("<?php echo base_url('charts/ages/sample_types'); ?>/"+from[1]+"/"+age);
+						$("#county").load("<?php echo base_url('charts/ages/age_county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+age+"/"+to[1]+"/"+to[0]);
+						$("#countiesAge").load("<?= @base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+age+"/"+to[1]+"/"+to[0]+"/"+1);
+						$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+age+"/"+to[1]+"/"+to[0]+"/"+null+"/"+1);
+						$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+age+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+null+"/"+1);
+						$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+from[1]+"/"+from[0]+"/"+age+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+1);
+						$("#regimen_age").load("<?= @base_url('charts/ages/age_regimen'); ?>/"+from[1]+"/"+from[0]+"/"+age+"/"+to[1]+"/"+to[0]);
 					}
 				});
 			}
@@ -152,6 +162,11 @@
 	        		$("#age_outcomes").html("<center><div class='loader'></div></center>");
 	        		$("#age_outcomes").load("<?php echo base_url('charts/ages/age_outcomes');?>/"+year+"/"+month);
 				} else {
+					var age = "";
+	        		for (i = 0; i < data.length; i++) { 
+					    age += "." + data[i];
+					}
+					console.log(age);
 					$("#first").hide();
 	        		$("#second").show();
 
@@ -165,15 +180,15 @@
 					$("#subcountiesAge").html("<center><div class='loader'></div></center>");
 					$("#regimen_age").html("<center><div class='loader'></div></center>");
 					
-					$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>/"+year+"/"+month+"/"+data);
-					$("#gender").load("<?php echo base_url('charts/ages/age_gender'); ?>/"+year+"/"+month+"/"+data); 
-					$("#samples").load("<?php echo base_url('charts/ages/sample_types'); ?>/"+year+"/"+data);
-					$("#county").load("<?php echo base_url('charts/ages/age_county_outcomes'); ?>/"+year+"/"+month+"/"+data);
-					$("#countiesAge").load("<?= @base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+1);
-					$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+1);
-					$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
-					$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+data+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
-					$("#regimen_age").load("<?= @base_url('charts/ages/age_regimen'); ?>/"+year+"/"+month+"/"+data);
+					$("#vlOutcomes").load("<?php echo base_url('charts/ages/age_vl_outcome'); ?>/"+year+"/"+month+"/"+age);
+					$("#gender").load("<?php echo base_url('charts/ages/age_gender'); ?>/"+year+"/"+month+"/"+age); 
+					$("#samples").load("<?php echo base_url('charts/ages/sample_types'); ?>/"+year+"/"+age);
+					$("#county").load("<?php echo base_url('charts/ages/age_county_outcomes'); ?>/"+year+"/"+month+"/"+age);
+					$("#countiesAge").load("<?= @base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+age+"/"+null+"/"+null+"/"+1);
+					$("#partnersAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+age+"/"+null+"/"+null+"/"+null+"/"+1);
+					$("#facilitiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+age+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
+					$("#subcountiesAge").load("<?php echo base_url('charts/ages/age_breakdowns'); ?>/"+year+"/"+month+"/"+age+"/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
+					$("#regimen_age").load("<?= @base_url('charts/ages/age_regimen'); ?>/"+year+"/"+month+"/"+age);
 				}
 			});
 			

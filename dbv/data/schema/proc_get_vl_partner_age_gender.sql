@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_gender`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_partner_age_gender`
-(IN P_Id INT(11), IN A_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+(IN P_Id INT(11), IN A_id VARCHAR(100), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
         SUM(`maletest`) AS `maletest`,
@@ -24,7 +24,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `age` = '",A_id,"' AND `partner` = '",P_Id,"' ");
+    SET @QUERY = CONCAT(@QUERY, " AND `age` ",A_id," AND `partner` = '",P_Id,"' ");
 
 
      PREPARE stmt FROM @QUERY;

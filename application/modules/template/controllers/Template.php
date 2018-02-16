@@ -101,7 +101,7 @@ class Template extends MY_Controller
 
 		$this->filter_ages($data);
 
-		echo $this->session->userdata('age_category_filter');
+		echo json_encode($this->session->userdata('age_category_filter'));
 	}
 
 	function filter_sample_data()

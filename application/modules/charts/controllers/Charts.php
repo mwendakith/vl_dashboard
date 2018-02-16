@@ -22,6 +22,8 @@ class Charts extends MY_Controller {
 
 	function art()
 	{
+		$this->db->where('status', 1);
+		$this->db->update('artregister', ['status' => 0]);
 		// echo "Starting import! <br /><br />";
 		$file = base_url('assets/files/recovered.csv');
 		$file = fopen($file, "r");
@@ -134,6 +136,56 @@ class Charts extends MY_Controller {
 	    /** Send file to browser for download */
 	    fpassthru($f);
 	    fclose($f);
+	}
+
+	function missing_ones()
+	{
+		echo "Starting..<br />";
+		$file = base_url('assets/files/IncompleteFacilities.csv');
+		$file = fopen($file, "r");
+		$data = array();
+		$newdata = array();
+		if ($file) {
+		    while (($row = fgetcsv($file, 0, ";")) !== false) {
+		        if (empty($header))
+		        {
+		        	$header = explode(",", $row[0]);
+		        	continue;
+		        }
+		        $data[] = explode(",", $row[0]);
+		    }
+		    foreach ($data as $key => $value) {
+		    	$newdata[] = array(
+		    					$header[0] => $value[0],
+		    					$header[1] => $value[1],
+		    					$header[2] => $value[2],
+		    					$header[3] => $value[3]
+		    					);
+		    }
+		}
+
+		$insertData = array();	
+		// echo "<pre>";print_r($existsing);die();
+		foreach ($newdata as $key => $value) {
+			if ($value['IPSL/MFL'] == '' || is_null($value['IPSL/MFL'])) $value['IPSL/MFL'] = 0;
+			$insertData[] = array(
+								'facility_id' => 0,
+								'MFL_Code' => $value['IPSL/MFL'],
+								'current_on_treatment' => $value['TX CURR'],
+								'starting_date' => '2017-09-01',
+								'ending_date' => '2018-03-31'
+							);
+		}
+
+		$this->db->insert_batch('artregister', $insertData);
+		echo "Completed";
+		// echo "<pre>";print_r($insertData);die();
+	}
+
+	function inactivate()
+	{
+		$this->db->where('status', 0);
+		$this->db->update('artregister', ['status' => 1]);
 	}
 
 	function number_format()

@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_partner_age_vl_outcomes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_partner_age_vl_outcomes`
-(IN P_id INT(11),IN A_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+(IN P_id INT(11),IN A_id VARCHAR(100), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
         SUM(`baseline`) AS `baseline`, 
@@ -34,7 +34,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `age` = '",A_id,"' ");
+    SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `age` ",A_id," ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

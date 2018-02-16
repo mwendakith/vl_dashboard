@@ -12,6 +12,18 @@ class Ages_model extends MY_Model
 		parent::__construct();
 	}
 
+	function build_Inarray($array = null)
+	{
+		if (is_null($array)) return null;
+		$query = "IN (";
+		$elements = sizeof($array);
+		foreach ($array as $key => $value) {
+			($key+1 == $elements) ? $query .= $value : $query .= $value . ",";
+		}
+		$query .= ")";
+		return $query;
+	}
+
 	function ages_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
 		if ($year==null || $year=='null') {
@@ -62,7 +74,10 @@ class Ages_model extends MY_Model
 		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
 
 		$data['title'] = "";
- 
+	 	$data['categories'][0] 			= "No Data";
+		$data['outcomes'][0]['data'][0] = 0;
+		$data['outcomes'][1]['data'][0] = 0;
+		$data['outcomes'][2]['data'][0] = 0;
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
@@ -95,8 +110,8 @@ class Ages_model extends MY_Model
 		if ($age_cat==null || $age_cat=='null') {
 			$age_cat = $this->session->userdata('age_category_filter');
 		}
-
-		
+		$age_cat = $this->build_Inarray($age_cat);
+				
 		$sql = "CALL `proc_get_vl_partner_age_suppression`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";	
 		
 		
@@ -156,7 +171,8 @@ class Ages_model extends MY_Model
 		if ($partner==null || $partner=='null') {
 			$partner = null;
 		}
-
+		$age_cat = $this->build_Inarray($age_cat);
+		
 		if ($partner==null) {
 			$sql = "CALL `proc_get_vl_age_vl_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
@@ -252,6 +268,7 @@ class Ages_model extends MY_Model
 
 	function ages_gender($year=NULL,$month=NULL,$age_cat=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
+		$age_cat = $this->build_Inarray($age_cat);
 		if ($age_cat==null || $age_cat=='null') {
 			$age_cat = $this->session->userdata('age_category_filter');
 		}
@@ -284,45 +301,62 @@ class Ages_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		
-		// echo "<pre>";print_r($result);die();
-		$data['outcomes'][0]['name'] = "Not Suppressed";
-		$data['outcomes'][1]['name'] = "Suppressed";
-		$data['outcomes'][2]['name'] = "Suppression";
+		if ($partner==null) {
+			// echo "<pre>";print_r($result);die();
+			$data['outcomes'][0]['name'] = "Not Suppressed";
+			$data['outcomes'][1]['name'] = "Suppressed";
+			$data['outcomes'][2]['name'] = "Suppression";
 
-		$data['outcomes'][0]['type'] = "column";
-		$data['outcomes'][1]['type'] = "column";
-		$data['outcomes'][2]['type'] = "spline";
-		
+			$data['outcomes'][0]['type'] = "column";
+			$data['outcomes'][1]['type'] = "column";
+			$data['outcomes'][2]['type'] = "spline";
+			
 
-		$data['outcomes'][0]['yAxis'] = 1;
-		$data['outcomes'][1]['yAxis'] = 1;
+			$data['outcomes'][0]['yAxis'] = 1;
+			$data['outcomes'][1]['yAxis'] = 1;
 
-		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
-		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
-		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+			$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+			$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+			$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
 
-		$data['title'] = "";
+			$data['title'] = "";
 
-		$data['categories'][0] 			= 'Male';
-		$data['categories'][1] 			= 'Female';
-		$data['categories'][2] 			= 'No Data';
+			$data['categories'][0] 			= 'Male';
+			$data['categories'][1] 			= 'Female';
+			$data['categories'][2] 			= 'No Data';
 
-		foreach ($result as $key => $value) {
-			$nodata = (int) $value['nodatanonsuppressed'] + (int) $value['nodatasuppressed'];
-			$male = (int) $value['malenonsuppressed'] + (int) $value['malesuppressed'];
-			$female = (int) $value['femalenonsuppressed'] + (int) $value['femalesuppressed'];
+			foreach ($result as $key => $value) {
+				$nodata = (int) $value['nodatanonsuppressed'] + (int) $value['nodatasuppressed'];
+				$male = (int) $value['malenonsuppressed'] + (int) $value['malesuppressed'];
+				$female = (int) $value['femalenonsuppressed'] + (int) $value['femalesuppressed'];
 
-			$data["outcomes"][0]["data"][0]	=  (int) $value['malenonsuppressed'];
-			$data["outcomes"][1]["data"][0]	=  (int) $value['malesuppressed'];
-			$data["outcomes"][2]["data"][0]	=  round(((int) $value['malesuppressed']/$male)*100,1);
-			$data["outcomes"][0]["data"][1]	=  (int) $value['femalenonsuppressed'];
-			$data["outcomes"][1]["data"][1]	=  (int) $value['femalesuppressed'];
-			$data["outcomes"][2]["data"][1]	=  round(((int) $value['femalesuppressed']/$female)*100,1);
-			$data["outcomes"][0]["data"][2]	=  (int) $value['nodatanonsuppressed'];
-			$data["outcomes"][1]["data"][2]	=  (int) $value['nodatasuppressed'];
-			$data["outcomes"][2]["data"][2]	=  round(((int) $value['nodatasuppressed']/$nodata)*100,1);
+				$data["outcomes"][0]["data"][0]	=  (int) $value['malenonsuppressed'];
+				$data["outcomes"][1]["data"][0]	=  (int) $value['malesuppressed'];
+				$data["outcomes"][2]["data"][0]	=  round(((int) $value['malesuppressed']/$male)*100,1);
+				$data["outcomes"][0]["data"][1]	=  (int) $value['femalenonsuppressed'];
+				$data["outcomes"][1]["data"][1]	=  (int) $value['femalesuppressed'];
+				$data["outcomes"][2]["data"][1]	=  round(((int) $value['femalesuppressed']/$female)*100,1);
+				$data["outcomes"][0]["data"][2]	=  (int) $value['nodatanonsuppressed'];
+				$data["outcomes"][1]["data"][2]	=  (int) $value['nodatasuppressed'];
+				$data["outcomes"][2]["data"][2]	=  round(((int) $value['nodatasuppressed']/$nodata)*100,1);
+			}
+		} else {
+			// echo "<pre>";print_r($result);die();
+			$data['outcomes'][0]['name'] = "Tests";
+
+			$data['title'] = "";
+
+			$data['categories'][0] 			= 'Male';
+			$data['categories'][1] 			= 'Female';
+			$data['categories'][2] 			= 'No Data';
+
+			foreach ($result as $key => $value) {
+				$data["outcomes"][0]["data"][0]	=  (int) $value['maletest'];
+				$data["outcomes"][0]["data"][1]	=  (int) $value['femaletest'];
+				$data["outcomes"][0]["data"][2]	=  (int) $value['nodata'];
+			}
 		}
-
+		
 		// $data['gender'][0]['drilldown']['color'] = ;
 		// $data['gender'][1]['drilldown']['color'] = '#1BA39C';
 		// echo "<pre>";print_r($data);die();
@@ -331,6 +365,9 @@ class Ages_model extends MY_Model
 
 	function get_sampletypesData($year=NULL,$age_cat=NULL,$partner=null)
 	{
+
+		$age_cat = $this->build_Inarray($age_cat);
+
 		$array1 = array();
 		$array2 = array();
 		$sql2 = NULL;
@@ -358,7 +395,6 @@ class Ages_model extends MY_Model
 			$sql2 = "CALL `proc_get_vl_partner_age_sample_types`('".$partner."','".$age_cat."','".$to."')";
 		}
 		
-		// echo "<pre>";print_r($sql);die();
 		$array1 = $this->db->query($sql)->result_array();
 		
 		if ($sql2) {
@@ -372,7 +408,7 @@ class Ages_model extends MY_Model
 	function ages_samples($year=NULL,$age_cat=NULL,$partner=null)
 	{
 		$result = $this->get_sampletypesData($year,$age_cat,$partner);
-
+		
 		$data['sample_types'][0]['name'] = 'EDTA';
 		$data['sample_types'][1]['name'] = 'DBS';
 		$data['sample_types'][2]['name'] = 'Plasma';
@@ -407,7 +443,7 @@ class Ages_model extends MY_Model
 				$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
 				$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
 				$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
-				$data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
+				$data["sample_types"][3]["data"][$key]	= round(@($value['suppressed']/$value['tests'])*100,1);
 			
 		}
 		
@@ -446,6 +482,7 @@ class Ages_model extends MY_Model
 
 	function ages_breakdowns($year=null,$month=null,$age_cat=null,$to_year=null,$to_month=null,$county=null,$partner=null,$subcounty=null,$site=null)
 	{
+		$age_cat = $this->build_Inarray($age_cat);
 		$default = 0;
 		$li = '';
 		$table = '';
@@ -525,6 +562,7 @@ class Ages_model extends MY_Model
 	function county_outcomes($year=null,$month=null,$age_cat=null,$to_year=null,$to_month=null,$partner=null)
 	{
 		
+		$age_cat = $this->build_Inarray($age_cat);
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
@@ -589,6 +627,8 @@ class Ages_model extends MY_Model
 
 	function age_regimens($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL)
 	{
+		$age = $age[0];
+		// $age = $this->build_Inarray($age);
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
