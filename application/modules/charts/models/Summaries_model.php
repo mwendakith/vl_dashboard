@@ -69,6 +69,7 @@ class Summaries_model extends MY_Model
 	function vl_coverage($type=null,$ID=null)
 	{
 		$sql = "CALL `proc_get_vl_current_suppression`('".$type."','".$ID."')";
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		$uniquepts = 0;
 		$totalasatmar = 0;

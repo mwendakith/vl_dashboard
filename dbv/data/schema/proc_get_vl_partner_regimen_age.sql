@@ -10,7 +10,14 @@ BEGIN
         SUM(`less14`) AS `less14`,
         SUM(`less19`) AS `less19`,
         SUM(`less24`) AS `less24`,
-        SUM(`over25`) AS `over25`
+        SUM(`over25`) AS `over25`,
+        SUM(`noage_nonsuppressed`) AS `noage_nonsuppressed`,
+        SUM(`less2_nonsuppressed`) AS `less2_nonsuppressed`,
+        SUM(`less9_nonsuppressed`) AS `less9_nonsuppressed`,
+        SUM(`less14_nonsuppressed`) AS `less14_nonsuppressed`,
+        SUM(`less19_nonsuppressed`) AS `less19_nonsuppressed`,
+        SUM(`less24_nonsuppressed`) AS `less24_nonsuppressed`,
+        SUM(`over25_nonsuppressed`) AS `over25_nonsuppressed`
     FROM `vl_partner_regimen`
     WHERE 1 ";
 

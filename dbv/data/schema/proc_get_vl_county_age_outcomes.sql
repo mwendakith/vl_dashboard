@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_county_age_outcomes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_county_age_outcomes`
-(IN filter_age INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+(IN filter_age VARCHAR(100), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
                     `c`.`name`,
@@ -25,7 +25,7 @@ BEGIN
     END IF;
 
 
-    SET @QUERY = CONCAT(@QUERY, " AND `age` = '",filter_age,"' GROUP BY `vca`.`county` ORDER BY `suppressed` DESC ");
+    SET @QUERY = CONCAT(@QUERY, " AND `age` ",filter_age," GROUP BY `vca`.`county` ORDER BY `suppressed` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

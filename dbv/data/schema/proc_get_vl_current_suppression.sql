@@ -9,27 +9,25 @@ BEGIN
                     AVG(`suppression`) AS `suppression`, 
                     AVG(`coverage`) AS `coverage`, 
                     SUM(`totalartmar`) AS `totallstrpt` 
-                     FROM `vl_site_suppression` 
-                  JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` 
-                  WHERE 1";
+                     FROM `vl_site_suppression`";
     
     
 
-    IF(type != 4) THEN 
-      SET @QUERY = CONCAT(@QUERY, " AND (`vl_site_suppression`.`suppressed` > 0 || `vl_site_suppression`.`nonsuppressed` > 0) ");
+    IF(type = '' || type = 0) THEN 
+      SET @QUERY = CONCAT(@QUERY, " WHERE (`vl_site_suppression`.`suppressed` > 0 || `vl_site_suppression`.`nonsuppressed` > 0) ");
     END IF; 
     
     IF(type = 1) THEN
-      SET @QUERY = CONCAT(@QUERY, " AND `view_facilitys`.`county` = '",id,"' ");
+      SET @QUERY = CONCAT(@QUERY, " JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` WHERE `view_facilitys`.`county` = '",id,"' ");
     END IF;
     IF(type = 2) THEN
-      SET @QUERY = CONCAT(@QUERY, " AND `view_facilitys`.`district` = '",id,"' ");
+      SET @QUERY = CONCAT(@QUERY, " JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` WHERE `view_facilitys`.`district` = '",id,"' ");
     END IF;
     IF(type = 3) THEN
-      SET @QUERY = CONCAT(@QUERY, " AND `view_facilitys`.`partner` = '",id,"' ");
+      SET @QUERY = CONCAT(@QUERY, " JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` WHERE `view_facilitys`.`partner` = '",id,"' ");
     END IF;
     IF(type = 4) THEN
-      SET @QUERY = CONCAT(@QUERY, " AND `vl_site_suppression`.`facility` = '",id,"' ");
+      SET @QUERY = CONCAT(@QUERY, " JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` WHERE `vl_site_suppression`.`facility` = '",id,"' ");
     END IF;
 
      PREPARE stmt FROM @QUERY;

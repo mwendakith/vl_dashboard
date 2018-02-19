@@ -39,18 +39,19 @@ class Regimen extends MY_Controller
 
 	function regimen_gender($year=NULL,$month=NULL,$regimen=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)
 	{
-		$data['outcomes'] = $this->regimen_model->regimen_gender($year,$month,$regimen,$to_year,$to_month,$partner);
-		
+		$data['trends'] = $this->regimen_model->regimen_gender($year,$month,$regimen,$to_year,$to_month,$partner);
+		$data['div_name'] = "regimen_gender_outcomes";
     	// $this->load->view('gender_view',$data);
-    	$this->load->view('age_regimen_gender_view',$data);
+    	$this->load->view('trends_outcomes_view',$data);
 	}
 
 	function regimen_age($year=NULL,$month=NULL,$regimen=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)
 	{
-		$data['outcomes'] = $this->regimen_model->regimen_age($year,$month,$regimen,$to_year,$to_month,$partner);
+		$data['trends'] = $this->regimen_model->regimen_age($year,$month,$regimen,$to_year,$to_month,$partner);
+		$data['div_name'] = "regimen_age_outcomes";
 		
     	// $this->load->view('agegroup_view',$data);
-    	$this->load->view('regimen_agegroup_view',$data);
+    	$this->load->view('trends_outcomes_view',$data);
 	}
 
 	function sample_types($year=NULL,$regimen=NULL,$partner=NULL)

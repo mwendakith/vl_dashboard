@@ -10,6 +10,7 @@
 			<th rowspan="2">All Test (plus reruns) Done at Lab</th>
 			<th rowspan="2">Redraw (after testing)</th>
 			<th rowspan="2">EQA Tests</th>
+			<th rowspan="2">Controls Run</th>
 			<th colspan="2">Routine VL Tests</th>
 			<th colspan="2">Baseline VL Tests</th>
 			<th colspan="3">Confirmatory Repeat Tests</th>

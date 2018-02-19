@@ -29,8 +29,7 @@
     <form action="<?php echo base_url();?>template/filter_county_data" method="post" id="filter_form">
       <div class="row">
         <div class="col-md-6">
-          <select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;" name="county">
-            <option value="0" disabled="true" selected="true">Select Age Category:</option>
+          <select class="btn btn-primary js-example-basic-multiple" style="background-color: #C5EFF7;" id="age" name="age[]" multiple="multiple" data-placeholder="Select Age Category:">
             <option value="48">All Age Categories</option>
             <!-- <optgroup value="Counties"> -->
             <?php echo $age_filter; ?>
@@ -122,7 +121,7 @@
   
   $().ready(function(){
     $('#errorAlertDateRange').hide();
-    $(".js-example-basic-single").select2();
+    $(".js-example-basic-multiple").select2();
     //Getting the URL dynamically
     // var url = $(location).attr('href');
     // // Getting the file name i.e last segment of URL (i.e. example.html)
