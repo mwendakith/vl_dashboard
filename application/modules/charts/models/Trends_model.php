@@ -120,6 +120,120 @@ class Trends_model extends MY_Model
 		return $data;
 	}
 
+	function yearly_age_summary($county=NULL){
+
+		if($county == NULL || $county == 48){
+			$county = 0;
+		}
+		
+		if($county==0){
+			$sql = "CALL `proc_get_vl_national_yearly_tests_age`();";
+		} else {
+			$sql = "CALL `proc_get_vl_yearly_summary`(" . $county . ");";
+		}
+		// echo "<pre>";print_r($sql);die();
+		
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		// $year = date("Y");
+		$year;
+		$i = 0;
+		$b = true;
+
+		$data['outcomes'][0]['name'] = "No Data";
+		$data['outcomes'][1]['name'] = "25+";
+		$data['outcomes'][2]['name'] = "20-24";
+		$data['outcomes'][3]['name'] = "15-19";
+		$data['outcomes'][4]['name'] = "10-14";
+		$data['outcomes'][5]['name'] = "2-9";
+		$data['outcomes'][6]['name'] = "less 2";
+		$data['outcomes'][7]['name'] = "Less 19 Contribution";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "column";
+		$data['outcomes'][3]['type'] = "column";
+		$data['outcomes'][4]['type'] = "column";
+		$data['outcomes'][5]['type'] = "column";
+		$data['outcomes'][6]['type'] = "column";
+		$data['outcomes'][7]['type'] = "spline";
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][3]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][4]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][5]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][6]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][7]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+		$data['outcomes'][2]['yAxis'] = 1;
+		$data['outcomes'][3]['yAxis'] = 1;
+		$data['outcomes'][4]['yAxis'] = 1;
+		$data['outcomes'][5]['yAxis'] = 1;
+		$data['outcomes'][6]['yAxis'] = 1;
+
+		$data['title'] = "Tests Grouped By Age";
+
+		foreach ($result as $key => $value) {
+
+			if($b){
+				$b = false;
+				$year = (int) $value['year'];				
+			}
+
+			if($year != $value['year']){
+				$total = $data['outcomes'][0]['data'][$i] + $data['outcomes'][1]['data'][$i] + $data['outcomes'][2]['data'][$i] + $data['outcomes'][3]['data'][$i] + $data['outcomes'][4]['data'][$i] + $data['outcomes'][5]['data'][$i] + $data['outcomes'][6]['data'][$i];
+
+				$numerator = $data['outcomes'][3]['data'][$i] + $data['outcomes'][4]['data'][$i] + $data['outcomes'][5]['data'][$i] + $data['outcomes'][6]['data'][$i];
+
+				$data['outcomes'][7]['data'][$i] = round(@( $numerator*100 / $total ),1);
+
+				$year++;
+				$i++;
+			}
+
+			$data['categories'][$i] = $value['year'];
+			$age = (int) $value['age'];
+
+			switch ($age) {
+				case 0:
+					$data['outcomes'][0]['data'][$i] = (int) $value['tests'];
+					break;
+				case 6:
+					$data['outcomes'][6]['data'][$i] = (int) $value['tests'];
+					break;
+				case 7:
+					$data['outcomes'][5]['data'][$i] = (int) $value['tests'];
+					break;
+				case 8:
+					$data['outcomes'][4]['data'][$i] = (int) $value['tests'];
+					break;
+				case 9:
+					$data['outcomes'][3]['data'][$i] = (int) $value['tests'];
+					break;
+				case 10:
+					$data['outcomes'][2]['data'][$i] = (int) $value['tests'];
+					break;
+				case 11:
+					$data['outcomes'][1]['data'][$i] = (int) $value['tests'];
+					break;
+				default:
+					break;
+			}
+
+		}
+		$total = $data['outcomes'][0]['data'][$i] + $data['outcomes'][1]['data'][$i] + $data['outcomes'][2]['data'][$i] + $data['outcomes'][3]['data'][$i] + $data['outcomes'][4]['data'][$i] + $data['outcomes'][5]['data'][$i] + $data['outcomes'][6]['data'][$i];
+
+		$numerator = $data['outcomes'][3]['data'][$i] + $data['outcomes'][4]['data'][$i] + $data['outcomes'][5]['data'][$i] + $data['outcomes'][6]['data'][$i];
+
+		$data['outcomes'][7]['data'][$i] = round(@( $numerator*100 / $total ),1);
+
+		return $data;
+	}
+
 	function quarterly_trends($county=NULL){
 
 		if($county == NULL || $county == 48){

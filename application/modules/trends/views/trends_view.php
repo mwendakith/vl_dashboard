@@ -16,6 +16,10 @@
     <div id="stacked_graph" class="col-md-12">
 
     </div>
+
+    <div id="stacked_ages" class="col-md-12">
+
+    </div>
     
     <div id="graphs">
     
@@ -47,6 +51,7 @@
     $("#range").hide();
     $("#graphs").load("<?php echo base_url();?>charts/trends/positive_trends");
     $("#stacked_graph").load("<?php echo base_url();?>charts/trends/summary");
+    $("#stacked_ages").load("<?php echo base_url();?>charts/trends/age_summary");
     localStorage.setItem("my_var", 0);
 
 

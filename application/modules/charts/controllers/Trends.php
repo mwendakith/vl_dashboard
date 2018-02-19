@@ -64,6 +64,12 @@ class Trends extends MY_Controller
 		$this->load->view('trends_outcomes_view', $data);
 	}
 
+	function age_summary($county=NULL){
+		$data['trends'] = $this->trends_model->yearly_age_summary($county);
+		$data['div_name'] = "national_age_trends";
+		$this->load->view('trends_view_two', $data);
+	}
+
 	function quarterly($county=NULL){
 		$obj = $this->trends_model->quarterly_trends($county);
 		// echo "<pre>";print_r($obj);echo "</pre>";die();
