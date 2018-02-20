@@ -75,10 +75,11 @@
                 // }
             },
             legend: {
+                enabled:true,
                 layout: 'vertical',
                 align: 'right',
-                x: -100,
-                verticalAlign: 'top',
+                // x: -100,
+                verticalAlign: 'bottom',
                 y: 40,
                 floating: true,
                 backgroundColor: '#FFFFFF'
