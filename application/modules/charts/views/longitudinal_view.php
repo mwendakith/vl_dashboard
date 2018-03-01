@@ -1,6 +1,6 @@
 <div  style="margin-left:2em;">
     <p>
-     Patients on Art as at March, 31 2017 - <?php echo number_format($trends['total_patients']) ; ?> <br />
+     Patients on Art as at September, 30 2017 - <?php echo number_format($trends['total_patients']) ; ?> <br />
      Total Unique Patients Tested - <?php echo number_format($trends['unique_patients']) ; ?> <br />
 
         <?php  

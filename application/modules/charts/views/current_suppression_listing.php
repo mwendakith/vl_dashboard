@@ -18,7 +18,7 @@
               <th>Name</th>
               <th>Current Suppression</th>
               <th>Patients Tested</th>
-              <th>Patients on Art as at March 21, 2017</th>
+              <th>Patients on Art as at September 30, 2017</th>
         			<th>Coverage</th>
         		</tr>
         	</thead>
