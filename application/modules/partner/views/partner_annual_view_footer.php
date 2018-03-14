@@ -56,7 +56,7 @@
 	     
 	        // Put the results in a div
 	        posting.done(function( data ) {
-
+	        	data = JSON.parse(data);
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+1, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
@@ -69,8 +69,6 @@
 					$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 	        	});
-
-	        	data = JSON.parse(data);
 
 	        	// alert(data);
 	        	$("#current_sup").html("<center><div class='loader'></div></center>");

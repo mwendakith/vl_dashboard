@@ -25,6 +25,7 @@
 	        
 	        // Put the results in a div
 	        posting.done(function( data ) {
+	        	data = JSON.parse(data);
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+1, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
@@ -45,8 +46,6 @@
 				$("#sampleType").html("<center><div class='loader'></div></center>");
 				$("#sites_listing").html("<center><div class='loader'></div></center>");
 				
-				data = "<?php echo json_decode("+data+")?>";
-
 				$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+null+"/"+null+"/"+null+"/"+data);
 		 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+null+"/"+null+"/"+null+"/"+data);
 				$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+null+"/"+null+"/"+null+"/"+data);

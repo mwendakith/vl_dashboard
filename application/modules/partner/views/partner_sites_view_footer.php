@@ -30,7 +30,7 @@
 				$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 	    	});
 			posting.done(function( data ) {
-	        	
+	        	data = JSON.parse(data);
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+1, function(data){
 	        		
 	        		$("#breadcrum").html(data);

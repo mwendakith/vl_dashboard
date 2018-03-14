@@ -160,8 +160,8 @@ class Template extends MY_Controller
 	function breadcrum($data=null,$partner=NULL,$site=NULL,$sub_county=NULL)
 	{
 		$this->load->model('template_model');
-		$data = trim($data,"%22");
-		// echo $data;
+		// $data = trim($data,"%22");
+		// echo $data;die();
 		if ($partner=='null'||$partner==null) {
 			$partner = NULL;
 		}

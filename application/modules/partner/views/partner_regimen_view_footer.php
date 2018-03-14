@@ -21,6 +21,7 @@
 	        
 	        // Put the results in a div
 	        posting.done(function( data ) {
+	        	data = JSON.parse(data);
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+1, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
@@ -34,14 +35,13 @@
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 		    	});
 	        	// Condition to dispay the proper divs based on whether a partner is selected or not
-	        	if (data=='null') {
+	        	if (data=='null'||data==null) {
 	        		$("#second").hide();
 					$("#first").show();
 					// fetching the partner outcomes
 					$("#regimen_outcomes").html("<center><div class='loader'></div></center>");
 					$("#regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes'); ?>");
 	        	} else {
-	        		data = JSON.parse(data);
 	        		// alert(data);
 	        		$("#second").hide();
 					$("#first").show();
