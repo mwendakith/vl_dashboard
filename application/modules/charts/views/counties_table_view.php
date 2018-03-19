@@ -4,7 +4,7 @@
 			<th rowspan="2">No</th>
 			<th rowspan="2">Name</th>
 			<?php if(isset($sub_county)){?><th rowspan="2">County</th><?php } ?>
-			<?php if($sites){?><th rowspan="2">Facilities Sending Samples</th><?php } ?>
+			<?php if(isset($sites)){?><th rowspan="2">Facilities Sending Samples</th><?php } ?>
 			<th rowspan="2">Received Samples at Lab</th>
 			<th rowspan="2">Rejected Samples (on receipt at lab)</th>
 			<th rowspan="2">All Test (plus reruns) Done at Lab</th>
