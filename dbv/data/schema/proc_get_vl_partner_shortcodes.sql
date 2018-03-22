@@ -12,7 +12,7 @@ BEGIN
                     ON shortcodequeries.mflcode = view_facilitys.facilitycode 
                   LEFT JOIN partners 
                     ON partners.ID = view_facilitys.partner
-                  WHERE 1";
+                  WHERE `partners`.`flag` = '1' ";
 
 
     IF (from_month != 0 && from_month != '') THEN
