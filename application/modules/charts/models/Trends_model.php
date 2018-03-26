@@ -267,6 +267,9 @@ class Trends_model extends MY_Model
 			$name = $y . ' Q' . $quarter;
 			if($value['year'] != $year){
 				$year--;
+				if($month != 2){
+					$i++;
+				}
 			}
 
 			$month = (int) $value['month'];
@@ -276,8 +279,7 @@ class Trends_model extends MY_Model
 
 			if($modulo == 0){
 				$month = 2;
-			}
-			
+			}			
 
 			$tests = (int) $value['suppressed'] + (int) $value['nonsuppressed'];
 
@@ -330,10 +332,25 @@ class Trends_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		
 		$year;
-		$i = 4;
+		// $i = 4;
 		$b = true;
 		$limit = 0;
 		$quarter = 1;
+
+		$prev_year = date('Y') - 1;
+		$cur_month = date('m');
+
+		$extra =  ceil($cur_month / 3);
+
+		if($extra == 4){
+			$i = 4;
+			$columns = 8;
+		}
+		else{
+			$i = 8;
+			$columns = 8 + $extra;
+		}
+
 
 		$data;
 
@@ -376,6 +393,14 @@ class Trends_model extends MY_Model
 			$name = $y . ' Q' . $quarter;
 			if($value['year'] != $year){
 				$year--;
+
+				if($year == $prev_year && $extra != 4){
+					$data['outcomes'][2]['data'][$i] = round(@(( $data['outcomes'][1]['data'][$i]*100)/
+					($data['outcomes'][0]['data'][$i]+$data['outcomes'][1]['data'][$i])),1);
+					$i = 4;
+					$quarter=1;
+					$limit++;
+				}
 			}
 
 			$month = (int) $value['month'];
@@ -384,24 +409,23 @@ class Trends_model extends MY_Model
 			$data['categories'][$i] = $name;
 
 			$data['outcomes'][0]['data'][$i] += (int) $value['nonsuppressed'];
-			$data['outcomes'][1]['data'][$i] += (int) $value['suppressed'];
-			$data['outcomes'][2]['data'][$i] += round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
-			
+			$data['outcomes'][1]['data'][$i] += (int) $value['suppressed'];			
 
 			if($modulo == 0){
-				$data['outcomes'][2]['data'][$i] /= 3;
+				$data['outcomes'][2]['data'][$i] = round(@(( $data['outcomes'][1]['data'][$i]*100)/
+				($data['outcomes'][0]['data'][$i]+$data['outcomes'][1]['data'][$i])),1);
+
 				$i++;
 				$quarter++;
-				$limit++;	
-
-				if ($limit == 8) {
-					break;
-				}
-
+				$limit++;
 			}
 			if($quarter == 5){
 				$quarter = 1;
 				$i = 0;
+			}	
+
+			if ($limit == $columns) {
+				break;
 			}
 
 
