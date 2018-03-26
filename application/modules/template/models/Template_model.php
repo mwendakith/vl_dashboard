@@ -40,6 +40,7 @@ class Template_model extends MY_Model
 	function get_partners_dropdown()
 	{
 		$dropdown = '';
+		$this->db->where('flag', 1);
 		$this->db->order_by("name","asc");
 		$partner_data = $this->db->get('partners')->result_array();
 		// $partner_data = $this->db->query('SELECT `ID`, `name` FROM `partners` ORDER BY `name` ASC')->result_array();

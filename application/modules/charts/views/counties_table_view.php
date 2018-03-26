@@ -4,7 +4,7 @@
 			<th rowspan="2">No</th>
 			<th rowspan="2">Name</th>
 			<?php if(isset($sub_county)){?><th rowspan="2">County</th><?php } ?>
-			<?php if($sites){?><th rowspan="2">Facilities Sending Samples</th><?php } ?>
+			<?php if(isset($sites)){?><th rowspan="2">Facilities Sending Samples</th><?php } ?>
 			<th rowspan="2">Received Samples at Lab</th>
 			<th rowspan="2">Rejected Samples (on receipt at lab)</th>
 			<th rowspan="2">All Test (plus reruns) Done at Lab</th>
@@ -13,8 +13,17 @@
 			<th colspan="2">Baseline VL Tests</th>
 			<th colspan="2">Confirmatory Repeat Tests</th>
 			<th colspan="2">Total Tests with Valid Outcomes</th>
+			<th colspan="2">0 - 9 Yrs</th>
+			<th colspan="2">10 - 14 yrs</th>
+			<th colspan="2">15 - 19 yrs</th>
 		</tr>
 		<tr>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
 			<th>Tests</th>
 			<th>&gt; 1000</th>
 			<th>Tests</th>

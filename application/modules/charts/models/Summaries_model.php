@@ -57,10 +57,10 @@ class Summaries_model extends MY_Model
 					);
 		// echo "<pre>";print_r($tat);die();
 		foreach ($tat as $key => $value) {
-			$data['tat1'] = round(@$value['tat1']/@$value['count']);
-			$data['tat2'] = round((@$value['tat2']/@$value['count']) + @$data['tat1']);
-			$data['tat3'] = round((@$value['tat3']/@$value['count']) + @$data['tat2']);
-			$data['tat4'] = round(@$value['tat4']/@$value['count']);
+			$data['tat1'] = round(@($value['tat1']/$value['count']));
+			$data['tat2'] = round(@($value['tat2']/$value['count']) + $data['tat1']);
+			$data['tat3'] = round(@($value['tat3']/$value['count']) + $data['tat2']);
+			$data['tat4'] = round(@($value['tat4']/$value['count']));
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
@@ -142,10 +142,12 @@ class Summaries_model extends MY_Model
 		$data['outcomes'][0]['name'] = "Not Suppressed";
 		$data['outcomes'][1]['name'] = "Suppressed";
 		$data['outcomes'][2]['name'] = "Suppression";
+		$data['outcomes'][3]['name'] = "90% Target";
 
 		$data['outcomes'][0]['type'] = "column";
 		$data['outcomes'][1]['type'] = "column";
 		$data['outcomes'][2]['type'] = "spline";
+		$data['outcomes'][3]['type'] = "spline";
 		
 
 		$data['outcomes'][0]['yAxis'] = 1;
@@ -154,14 +156,22 @@ class Summaries_model extends MY_Model
 		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+		$data['outcomes'][3]['tooltip'] = array("valueSuffix" => ' %');
 
 		$data['title'] = "";
- 
+ 		
+ 		$data['categories'][0] 			= "No Data";
+		$data['outcomes'][0]['data'][0] = 0;
+		$data['outcomes'][1]['data'][0] = 0;
+		$data['outcomes'][2]['data'][0] = 0;
+		$data['outcomes'][3]['data'][0] = 0;
+
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
 			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
+			$data['outcomes'][3]['data'][$key] = 90;
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
@@ -246,7 +256,7 @@ class Summaries_model extends MY_Model
 	    		<td>Total VL tests done:</td>
 	    		<td>'.number_format($total_tests ).'</td>
 	    		<td>Non Suppression</td>
-	    		<td>'. number_format($non_suppressed) . ' (' . round((($non_suppressed / $total_tests  )*100),1).'%)</td>
+	    		<td>'. number_format($non_suppressed) . ' (' . round((@($non_suppressed / $total_tests  )*100),1).'%)</td>
 	    	</tr>
  
 			<tr>
@@ -258,34 +268,34 @@ class Summaries_model extends MY_Model
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
-	    		<td>'.round((($greater/$total)*100),1).'%</td>
+	    		<td>'.round((@($greater/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
 	    		<td>'.number_format($less).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((($less/$total)*100),1).'%</td>
+	    		<td>'.round((@($less/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
 	    		<td>'.number_format($value['baseline']).'</td>
 	    		<td>Non Suppression ( &gt; 1000cpml)</td>
-	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
+	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(@($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
 	    		<td>'.number_format($value['confirmtx']).'</td>
 	    		<td>Non Suppression ( &gt; 1000cpml)</td>
-	    		<td>'.number_format($value['confirm2vl']). ' (' .round(($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
+	    		<td>'.number_format($value['confirm2vl']). ' (' .round(@($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
 	    	</tr>
  
 	    	<tr>
 	    		<td>Rejected Samples:</td>
 	    		<td>'.number_format($value['rejected']).'</td>
 	    		<td>Percentage Rejection Rate</td>
-	    		<td>'. round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP).'%</td>
+	    		<td>'. round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
@@ -304,7 +314,7 @@ class Summaries_model extends MY_Model
 			}
 		}
 		// echo "<pre>";print_r($sites);echo "<pre>";print_r($count);echo "<pre>";print_r(round(@$sites / $count));die();
-		$data['ul'] .= "<tr> <td colspan=2>Average Sites Sending:</td><td colspan=2>".number_format(round(@$sites / $count))."</td></tr>";
+		$data['ul'] .= "<tr> <td colspan=2>Average Sites Sending:</td><td colspan=2>".number_format(round(@($sites / $count)))."</td></tr>";
 		$count = 1;
 		$sites = 0;
  

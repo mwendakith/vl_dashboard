@@ -105,11 +105,44 @@ class County_model extends MY_Model
 				$month = $this->session->userdata('filter_month');
 			}
 		}
-
+		$type = 1;
+		$default = 0;
 		$sql = "CALL `proc_get_vl_county_details`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		$sqlAge = "CALL `proc_get_vl_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$default."');";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-		// echo "<pre>";print_r($sql);die();
+		$this->db->close();
+		$resultage = $this->db->query($sqlAge)->result();
+		$counties = [];
+		$ageData = [];
+		foreach ($resultage as $key => $value) {
+			if (!in_array($value->selection, $counties))
+				$counties[] = $value->selection;
+		}
+		foreach ($counties as $key => $value) {
+			foreach ($resultage as $k => $v) {
+				if ($value == $v->selection) {
+					$ageData[$key]['selection'] = $v->selection;
+					if ($v->name == '15-19') {
+						$ageData[$key]['less19tests'] = $v->tests;
+						$ageData[$key]['less19sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '10-14') {
+						$ageData[$key]['less14tests'] = $v->tests;
+						$ageData[$key]['less14sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == 'Less 2') {
+						$ageData[$key]['less2tests'] = $v->tests;
+						$ageData[$key]['less2sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '2-9') {
+						$ageData[$key]['less9tests'] = $v->tests;
+						$ageData[$key]['less9sustx'] = ($v->less5000+$v->above5000);	
+					}
+				}
+			}
+		}
+		// echo "<pre>";print_r($result);die();
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
@@ -122,7 +155,6 @@ class County_model extends MY_Model
 							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
 						<td>".number_format((int) $value['alltests'])."</td>
 						<td>".number_format((int) $value['invalids'])."</td>
-
 						<td>".number_format($routine)."</td>
 						<td>".number_format($routinesus)."</td>
 						<td>".number_format((int) $value['baseline'])."</td>
@@ -130,9 +162,19 @@ class County_model extends MY_Model
 						<td>".number_format((int) $value['confirmtx'])."</td>
 						<td>".number_format((int) $value['confirm2vl'])."</td>
 						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
-						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>
-						
-					</tr>";
+						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
+			foreach ($ageData as $k => $v) {
+				if ($value['county'] == $v['selection']) {
+					$table .= "
+							<td>".number_format((int) ($v['less2tests']+$v['less9tests']))."</td>
+							<td>".number_format((int) ($v['less2sustx']+$v['less9sustx']))."</td>
+							<td>".number_format((int) $v['less14tests'])."</td>
+							<td>".number_format((int) $v['less14sustx'])."</td>
+							<td>".number_format((int) $v['less19tests'])."</td>
+							<td>".number_format((int) $v['less19sustx'])."</td>";
+				}
+			}
+			$table .= "</tr>";
 			$count++;
 		}
 		
@@ -231,7 +273,7 @@ class County_model extends MY_Model
 						<td>".number_format((int) $value['sitesending'])."</td>
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
-							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+							round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
 						<td>".number_format((int) $value['alltests'])."</td>
 						<td>".number_format((int) $value['invalids'])."</td>
 
@@ -349,7 +391,66 @@ class County_model extends MY_Model
 						<td>".$value['partner']."</td>
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
-							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+							round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+						<td>".number_format((int) $value['alltests'])."</td>
+						<td>".number_format((int) $value['invalids'])."</td>
+
+						<td>".number_format($routine)."</td>
+						<td>".number_format($routinesus)."</td>
+						<td>".number_format((int) $value['baseline'])."</td>
+						<td>".number_format((int) $value['baselinesustxfail'])."</td>
+						<td>".number_format((int) $value['confirmtx'])."</td>
+						<td>".number_format((int) $value['confirm2vl'])."</td>
+						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
+						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>
+						
+					</tr>";
+			$count++;
+		}
+		
+		return $table;
+	}
+
+	function county_facilities($year=NULL,$month=NULL,$county=NULL,$to_year=null,$to_month=null)
+	{
+		$table = '';
+		$count = 1;
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		if ($county==null || $county=='null') {
+			$county = $this->session->userdata('county_filter');
+		}
+
+		$type = 1;
+
+		$sql = "CALL `proc_get_vl_sites_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$county."')";
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($sql);die();
+		foreach ($result as $key => $value) {
+			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
+			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
+			$table .= "<tr>
+						<td>".($key+1)."</td>
+						<td>".$value['facility']."</td>
+						<td>".number_format((int) $value['received'])."</td>
+						<td>".number_format((int) $value['rejected']) . " (" . 
+							round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
 						<td>".number_format((int) $value['alltests'])."</td>
 						<td>".number_format((int) $value['invalids'])."</td>
 

@@ -34,7 +34,7 @@
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 	        	});
 
-	        	if (response == null || response == 'null') {
+	        	if (response == null || response == 'null' || response == '') {
 	        		$("#second").hide();
 	        		$("#first").show();
 

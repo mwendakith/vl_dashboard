@@ -171,6 +171,7 @@ class Ages_model extends MY_Model
 		if ($partner==null || $partner=='null') {
 			$partner = null;
 		}
+		
 		$age_cat = $this->build_Inarray($age_cat);
 		
 		if ($partner==null) {
@@ -482,7 +483,6 @@ class Ages_model extends MY_Model
 
 	function ages_breakdowns($year=null,$month=null,$age_cat=null,$to_year=null,$to_month=null,$county=null,$partner=null,$subcounty=null,$site=null)
 	{
-		$age_cat = $this->build_Inarray($age_cat);
 		$default = 0;
 		$li = '';
 		$table = '';
@@ -507,7 +507,8 @@ class Ages_model extends MY_Model
 		if ($age_cat==null || $age_cat=='null') {
 			$age_cat = $this->session->userdata('age_category_filter');
 		}
-
+		$age_cat = $this->build_Inarray($age_cat);
+		
 		if ($county == 1 || $county == '1') {
 			$sql = "CALL `proc_get_vl_age_breakdowns_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."','".$county."','".$default."','".$default."','".$default."')";
 			$div_name = 'countyLising';
