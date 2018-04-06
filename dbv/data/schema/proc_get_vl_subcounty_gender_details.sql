@@ -1,18 +1,20 @@
-DROP PROCEDURE IF EXISTS `proc_get_vl_county_agecategories_details`;
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_gender_details`;
 DELIMITER //
-CREATE PROCEDURE `proc_get_vl_county_agecategories_details`
+CREATE PROCEDURE `proc_get_vl_subcounty_gender_details`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11), IN type INT(11), IN ID INT(11))
 BEGIN
   SET @QUERY =    "SELECT  
-                    SUM(`va`.`tests`) AS `tests`,
-                    SUM(`va`.`Undetected`) AS `Undetected`, 
-                    SUM(`va`.`less1000`) AS `less1000`, 
-                    SUM(`va`.`less5000`) AS `less5000`, 
-                    SUM(`va`.`above5000`) AS `above5000`,
-                    `ac`.`name`, 
-                    `jt`.`name` as `selection` ";
+                    SUM(`vg`.`tests`) AS `tests`,
+                    SUM(`vg`.`Undetected`) AS `Undetected`, 
+                    SUM(`vg`.`less1000`) AS `less1000`, 
+                    SUM(`vg`.`less5000`) AS `less5000`, 
+                    SUM(`vg`.`above5000`) AS `above5000`,
+                    `g`.`name`, ";
+   IF (type=0 OR type='0') THEN 
+      SET @QUERY = CONCAT(@QUERY, " `jt`.`name` as `selection` FROM `vl_subcounty_gender` `vg` JOIN `gender` `g` ON `g`.`ID` = `vg`.`gender` JOIN `districts` `jt` ON `jt`.`id` = `vg`.`subcounty` WHERE 1 ");
+   END IF;
    IF (type=1 OR type='1') THEN 
-      SET @QUERY = CONCAT(@QUERY, " FROM `vl_county_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `countys` `jt` ON `jt`.`ID` = `va`.`county`  WHERE `ac`.`subID` = '1' ");
+      SET @QUERY = CONCAT(@QUERY, " `jt`.`name` as `selection` FROM `vl_site_gender` `vg` JOIN `gender` `g` ON `g`.`ID` = `vg`.`gender` JOIN `view_facilitys` `jt` ON `jt`.`id` = `vg`.`facility` WHERE `jt`.`district` = '",ID,"' ");
    END IF;
                         
    IF (from_month != 0 && from_month != '') THEN
@@ -28,7 +30,7 @@ BEGIN
       SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
    END IF;
 
-   SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`name`, `selection` ");
+   SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name`, `selection` ");
 
    PREPARE stmt FROM @QUERY;
    EXECUTE stmt;

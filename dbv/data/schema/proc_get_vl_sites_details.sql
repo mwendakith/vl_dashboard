@@ -16,7 +16,8 @@ BEGIN
                     SUM(`vss`.`baselinesustxfail`) AS `baselinesustxfail`,
                     SUM(`vss`.`confirmtx`) AS `confirmtx`,
                     SUM(`vss`.`confirm2vl`) AS `confirm2vl`,  
-                    `vf`.`name` as `facility` 
+                    `vf`.`name` as `facility` ,
+                    `vf`.`subcounty` 
                   FROM `vl_site_summary` `vss` 
                   JOIN `view_facilitys` `vf` ON `vf`.`ID` = `vss`.`facility`
                   WHERE 1 ";

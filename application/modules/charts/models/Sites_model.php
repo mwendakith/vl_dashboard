@@ -118,9 +118,10 @@ class Sites_model extends MY_Model
 				<td>".$value['MFLCode']."</td>
 				<td>".$value['name']."</td>
 				<td>".$value['county']."</td>
+				<td>".$value['subcounty']."</td>
 				<td>".number_format((int) $value['received'])."</td>
 				<td>".number_format((int) $value['rejected']) . " (" . 
-					round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+					round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
 				<td>".number_format((int) $value['alltests'])."</td>
 				<td>".number_format((int) $value['invalids'])."</td>
 
