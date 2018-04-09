@@ -99,7 +99,7 @@ class Subcounty_model extends MY_Model
 
 		$type = 0;
 		$default = 0;
-		$sql = "CALL `proc_get_vl_subcounty_details`(0,'".$year."','".$month."','".$to_year."','".$to_month."')";
+		$sql = "CALL `proc_get_vl_subcounty_details`('0','".$year."','".$month."','".$to_year."','".$to_month."')";
 		$sqlAge = "CALL `proc_get_vl_subcounty_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$default."');";
 		$sqlGender = "CALL `proc_get_vl_subcounty_gender_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$default."');";
 		// echo "<pre>";print_r($sql);die();
@@ -108,7 +108,7 @@ class Subcounty_model extends MY_Model
 		$resultage = $this->db->query($sqlAge)->result();
 		$this->db->close();
 		$resultGender = $this->db->query($sqlGender)->result();
-		// echo "<pre>";print_r($resultage);die();
+		// echo "<pre>";print_r($result);die();
 		$counties = [];
 		$ageData = [];
 		$genderData = [];
@@ -177,7 +177,7 @@ class Subcounty_model extends MY_Model
 						<td>".number_format((int) $value['sitesending'])."</td>
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
-							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+							round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
 						<td>".number_format((int) $value['alltests'])."</td>
 						<td>".number_format((int) $value['invalids'])."</td>
 
@@ -570,12 +570,13 @@ class Subcounty_model extends MY_Model
 		$sqlAge = "CALL `proc_get_vl_subcounty_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$subcounty."');";
 		$sqlGender = "CALL `proc_get_vl_subcounty_gender_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$subcounty."');";
 		// echo "<pre>";print_r($sql);die();
+		$this->db->close();
 		$result = $this->db->query($sql)->result_array();
 		$this->db->close();
 		$resultage = $this->db->query($sqlAge)->result();
 		$this->db->close();
 		$resultGender = $this->db->query($sqlGender)->result();
-		// echo "<pre>";print_r($resultage);die();
+		// echo "<pre>";print_r($sqlAge);die();
 		$counties = [];
 		$ageData = [];
 		$genderData = [];
@@ -633,8 +634,7 @@ class Subcounty_model extends MY_Model
 				}
 			}
 		}
-		// echo "<pre>";print_r($sql);die();
-		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
 
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
@@ -646,7 +646,7 @@ class Subcounty_model extends MY_Model
 				<td>".$value['county']."</td>
 				<td>".number_format((int) $value['received'])."</td>
 				<td>".number_format((int) $value['rejected']) . " (" . 
-					round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+					round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
 				<td>".number_format((int) $value['alltests'])."</td>
 				<td>".number_format((int) $value['invalids'])."</td>
 
@@ -659,7 +659,7 @@ class Subcounty_model extends MY_Model
 				<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
 				<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
 					foreach ($genderData as $k => $v) {
-						if ($value['subcounty'] == $v['selection']) {
+						if ($value['name'] == $v['selection']) {
 							$table .= "
 									<td>".number_format((int) $v['femaletests'])."</td>
 									<td>".number_format((int) $v['femalesustx'])."</td>
@@ -670,7 +670,7 @@ class Subcounty_model extends MY_Model
 						}
 					}
 					foreach ($ageData as $k => $v) {
-						if ($value['subcounty'] == $v['selection']) {
+						if ($value['name'] == $v['selection']) {
 							$table .= "
 									<td>".number_format((int) $v['less2tests'])."</td>
 									<td>".number_format((int) $v['less2sustx'])."</td>

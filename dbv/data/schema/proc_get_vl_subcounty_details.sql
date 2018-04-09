@@ -18,7 +18,8 @@ BEGIN
                     SUM(`vcs`.`baseline`) AS `baseline`,
                     SUM(`vcs`.`baselinesustxfail`) AS `baselinesustxfail`,
                     SUM(`vcs`.`confirmtx`) AS `confirmtx`,
-                    SUM(`vcs`.`confirm2vl`) AS `confirm2vl` FROM `vl_subcounty_summary` `vcs`
+                    SUM(`vcs`.`confirm2vl`) AS `confirm2vl` 
+                    FROM `vl_subcounty_summary` `vcs`
                    JOIN `districts` ON `vcs`.`subcounty` = `districts`.`ID`
                   JOIN `countys` ON `countys`.`ID` = `districts`.`county`
                      WHERE 1 ";
@@ -37,11 +38,11 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-     IF (filter_county != 0 && filter_county != '') THEN
+     IF (filter_county != 0 && filter_county != '0' && filter_county != '') THEN
         SET @QUERY = CONCAT(@QUERY, " AND `districts`.`county` = '",filter_county,"' ");
      END IF;
 
-    SET @QUERY = CONCAT(@QUERY, "  GROUP BY `districts`.`ID` ORDER BY `alltests` DESC ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `districts`.`ID` ORDER BY `alltests` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
