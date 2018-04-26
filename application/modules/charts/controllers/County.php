@@ -91,7 +91,7 @@ class County extends MY_Controller
 		$data['outcomes'] = $this->county_model->county_facilities($year,$month,$county,$to_year,$to_month);
 
 		$link = $year . '/' . $month . '/' . $county . '/' . $to_year . '/' . $to_month;
-
+		$data['subcountyListing'] = true;
 		$data['link'] =  '';
 		$data['table_div'] = "county_facilities_table";
 

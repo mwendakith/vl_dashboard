@@ -41,7 +41,7 @@
   $(document).ready(function() {
   	$('#example').DataTable({
   		dom: '<"btn btn-primary"B>lTfgtip',
-		responsive: true,
+		responsive: false,
 	    buttons : [
 	        {
 	          text:  'Export to CSV',

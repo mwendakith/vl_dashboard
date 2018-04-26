@@ -97,11 +97,76 @@ class Subcounty_model extends MY_Model
 			}
 		}
 
-
-		$sql = "CALL `proc_get_vl_subcounty_details`(0,'".$year."','".$month."','".$to_year."','".$to_month."')";
+		$type = 0;
+		$default = 0;
+		$sql = "CALL `proc_get_vl_subcounty_details`('0','".$year."','".$month."','".$to_year."','".$to_month."')";
+		$sqlAge = "CALL `proc_get_vl_subcounty_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$default."');";
+		$sqlGender = "CALL `proc_get_vl_subcounty_gender_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$default."');";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-		// echo "<pre>";print_r($sql);die();
+		$this->db->close();
+		$resultage = $this->db->query($sqlAge)->result();
+		$this->db->close();
+		$resultGender = $this->db->query($sqlGender)->result();
+		// echo "<pre>";print_r($result);die();
+		$counties = [];
+		$ageData = [];
+		$genderData = [];
+		foreach ($resultage as $key => $value) {
+			if (!in_array($value->selection, $counties))
+				$counties[] = $value->selection;
+		}
+		foreach ($counties as $key => $value) {
+			foreach ($resultGender as $k => $v) {
+				if ($value == $v->selection) {
+					$genderData[$key]['selection'] = $v->selection;
+					if ($v->name == 'F'){
+						$genderData[$key]['femaletests'] = $v->tests;
+						$genderData[$key]['femalesustx'] = ($v->less5000+$v->above5000);
+					}
+					if ($v->name == 'M'){
+						$genderData[$key]['maletests'] = $v->tests;
+						$genderData[$key]['malesustx'] = ($v->less5000+$v->above5000);
+					}
+					if ($v->name == 'No Data'){
+						$genderData[$key]['Nodatatests'] = $v->tests;
+						$genderData[$key]['Nodatasustx'] = ($v->less5000+$v->above5000);
+					}
+				}
+			}
+		}
+		foreach ($counties as $key => $value) {
+			foreach ($resultage as $k => $v) {
+				if ($value == $v->selection) {
+					$ageData[$key]['selection'] = $v->selection;
+					if ($v->name == '15-19') {
+						$ageData[$key]['less19tests'] = $v->tests;
+						$ageData[$key]['less19sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '10-14') {
+						$ageData[$key]['less14tests'] = $v->tests;
+						$ageData[$key]['less14sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == 'Less 2') {
+						$ageData[$key]['less2tests'] = $v->tests;
+						$ageData[$key]['less2sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '2-9') {
+						$ageData[$key]['less9tests'] = $v->tests;
+						$ageData[$key]['less9sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '20-24') {
+						$ageData[$key]['less25tests'] = $v->tests;
+						$ageData[$key]['less25sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '25+') {
+						$ageData[$key]['above25tests'] = $v->tests;
+						$ageData[$key]['above25sustx'] = ($v->less5000+$v->above5000);	
+					}
+				}
+			}
+		}
+
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
@@ -112,7 +177,7 @@ class Subcounty_model extends MY_Model
 						<td>".number_format((int) $value['sitesending'])."</td>
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
-							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+							round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
 						<td>".number_format((int) $value['alltests'])."</td>
 						<td>".number_format((int) $value['invalids'])."</td>
 
@@ -123,9 +188,37 @@ class Subcounty_model extends MY_Model
 						<td>".number_format((int) $value['confirmtx'])."</td>
 						<td>".number_format((int) $value['confirm2vl'])."</td>
 						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
-						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>
+						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
+					foreach ($genderData as $k => $v) {
+						if ($value['subcounty'] == $v['selection']) {
+							$table .= "
+									<td>".number_format((int) $v['femaletests'])."</td>
+									<td>".number_format((int) $v['femalesustx'])."</td>
+									<td>".number_format((int) $v['maletests'])."</td>
+									<td>".number_format((int) $v['malesustx'])."</td>
+									<td>".number_format((int) $v['Nodatatests'])."</td>
+									<td>".number_format((int) $v['Nodatasustx'])."</td>";
+						}
+					}
+					foreach ($ageData as $k => $v) {
+						if ($value['subcounty'] == $v['selection']) {
+							$table .= "
+									<td>".number_format((int) $v['less2tests'])."</td>
+									<td>".number_format((int) $v['less2sustx'])."</td>
+									<td>".number_format((int) $v['less9tests'])."</td>
+									<td>".number_format((int) $v['less9sustx'])."</td>
+									<td>".number_format((int) $v['less14tests'])."</td>
+									<td>".number_format((int) $v['less14sustx'])."</td>
+									<td>".number_format((int) $v['less19tests'])."</td>
+									<td>".number_format((int) $v['less19sustx'])."</td>
+									<td>".number_format((int) $v['less25tests'])."</td>
+									<td>".number_format((int) $v['less25sustx'])."</td>
+									<td>".number_format((int) $v['above25tests'])."</td>
+									<td>".number_format((int) $v['above25sustx'])."</td>";
+						}
+					}
 						
-					</tr>";
+					$table .= "</tr>";
 			$count++;
 		}
 		
@@ -471,10 +564,77 @@ class Subcounty_model extends MY_Model
 
 		$table = '';
 		$count = 1;
+		$type = 1;
 
 		$sql = "CALL `proc_get_vl_subcounty_sites_details`('".$subcounty."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		$sqlAge = "CALL `proc_get_vl_subcounty_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$subcounty."');";
+		$sqlGender = "CALL `proc_get_vl_subcounty_gender_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$subcounty."');";
 		// echo "<pre>";print_r($sql);die();
+		$this->db->close();
 		$result = $this->db->query($sql)->result_array();
+		$this->db->close();
+		$resultage = $this->db->query($sqlAge)->result();
+		$this->db->close();
+		$resultGender = $this->db->query($sqlGender)->result();
+		// echo "<pre>";print_r($sqlAge);die();
+		$counties = [];
+		$ageData = [];
+		$genderData = [];
+		foreach ($resultage as $key => $value) {
+			if (!in_array($value->selection, $counties))
+				$counties[] = $value->selection;
+		}
+		foreach ($counties as $key => $value) {
+			foreach ($resultGender as $k => $v) {
+				if ($value == $v->selection) {
+					$genderData[$key]['selection'] = $v->selection;
+					if ($v->name == 'F'){
+						$genderData[$key]['femaletests'] = $v->tests;
+						$genderData[$key]['femalesustx'] = ($v->less5000+$v->above5000);
+					}
+					if ($v->name == 'M'){
+						$genderData[$key]['maletests'] = $v->tests;
+						$genderData[$key]['malesustx'] = ($v->less5000+$v->above5000);
+					}
+					if ($v->name == 'No Data'){
+						$genderData[$key]['Nodatatests'] = $v->tests;
+						$genderData[$key]['Nodatasustx'] = ($v->less5000+$v->above5000);
+					}
+				}
+			}
+		}
+		foreach ($counties as $key => $value) {
+			foreach ($resultage as $k => $v) {
+				if ($value == $v->selection) {
+					$ageData[$key]['selection'] = $v->selection;
+					if ($v->name == '15-19') {
+						$ageData[$key]['less19tests'] = $v->tests;
+						$ageData[$key]['less19sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '10-14') {
+						$ageData[$key]['less14tests'] = $v->tests;
+						$ageData[$key]['less14sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == 'Less 2') {
+						$ageData[$key]['less2tests'] = $v->tests;
+						$ageData[$key]['less2sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '2-9') {
+						$ageData[$key]['less9tests'] = $v->tests;
+						$ageData[$key]['less9sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '20-24') {
+						$ageData[$key]['less25tests'] = $v->tests;
+						$ageData[$key]['less25sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '25+') {
+						$ageData[$key]['above25tests'] = $v->tests;
+						$ageData[$key]['above25sustx'] = ($v->less5000+$v->above5000);	
+					}
+				}
+			}
+		}
+		// echo "<pre>";print_r($result);die();
 
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
@@ -486,7 +646,7 @@ class Subcounty_model extends MY_Model
 				<td>".$value['county']."</td>
 				<td>".number_format((int) $value['received'])."</td>
 				<td>".number_format((int) $value['rejected']) . " (" . 
-					round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+					round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
 				<td>".number_format((int) $value['alltests'])."</td>
 				<td>".number_format((int) $value['invalids'])."</td>
 
@@ -498,6 +658,36 @@ class Subcounty_model extends MY_Model
 				<td>".number_format((int) $value['confirm2vl'])."</td>
 				<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
 				<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
+					foreach ($genderData as $k => $v) {
+						if ($value['name'] == $v['selection']) {
+							$table .= "
+									<td>".number_format((int) $v['femaletests'])."</td>
+									<td>".number_format((int) $v['femalesustx'])."</td>
+									<td>".number_format((int) $v['maletests'])."</td>
+									<td>".number_format((int) $v['malesustx'])."</td>
+									<td>".number_format((int) $v['Nodatatests'])."</td>
+									<td>".number_format((int) $v['Nodatasustx'])."</td>";
+						}
+					}
+					foreach ($ageData as $k => $v) {
+						if ($value['name'] == $v['selection']) {
+							$table .= "
+									<td>".number_format((int) $v['less2tests'])."</td>
+									<td>".number_format((int) $v['less2sustx'])."</td>
+									<td>".number_format((int) $v['less9tests'])."</td>
+									<td>".number_format((int) $v['less9sustx'])."</td>
+									<td>".number_format((int) $v['less14tests'])."</td>
+									<td>".number_format((int) $v['less14sustx'])."</td>
+									<td>".number_format((int) $v['less19tests'])."</td>
+									<td>".number_format((int) $v['less19sustx'])."</td>
+									<td>".number_format((int) $v['less25tests'])."</td>
+									<td>".number_format((int) $v['less25sustx'])."</td>
+									<td>".number_format((int) $v['above25tests'])."</td>
+									<td>".number_format((int) $v['above25sustx'])."</td>";
+						}
+					}
+						
+			$table .= "</tr>";
 			$count++;
 		}
 		

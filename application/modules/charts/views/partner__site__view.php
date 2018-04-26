@@ -12,8 +12,35 @@
 			<th colspan="2">Baseline VL Tests</th>
 			<th colspan="2">Confirmatory Repeat Tests</th>
 			<th colspan="2">Total Tests with Valid Outcomes</th>
+			<th colspan="2">Female</th>
+			<th colspan="2">Male</th>
+			<th colspan="2">No Data</th>
+			<th colspan="2">Less 2 Yrs</th>
+			<th colspan="2">2 - 9 Yrs</th>
+			<th colspan="2">10 - 14 yrs</th>
+			<th colspan="2">15 - 19 yrs</th>
+			<th colspan="2">20- 24 yrs</th>
+			<th colspan="2">Above 25 yrs</th>
 		</tr>
 		<tr>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
 			<th>Tests</th>
 			<th>&gt; 1000</th>
 			<th>Tests</th>
