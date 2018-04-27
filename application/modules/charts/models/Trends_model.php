@@ -332,27 +332,17 @@ class Trends_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		
 		$year;
-		// $i = 4;
-		$b = true;
-		$limit = 0;
-		$quarter = 1;
-
+		$years = 1;
 		$prev_year = date('Y') - 1;
 		$cur_month = date('m');
 
-		$extra =  ceil($cur_month / 3);
+		$extra = ceil($cur_month / 3);
+		$columns = 8 + $extra;
 
-		if($extra == 4){
-			$i = 4;
-			$columns = 8;
-		}
-		else{
-			$i = 8;
-			$columns = 8 + $extra;
-		}
+		$b = true;
+		$quarter = 1;
 
-
-		$data;
+		$i = 8;
 
 		$data['outcomes'][0]['name'] = "Nonsuppressed";
 		$data['outcomes'][1]['name'] = "Suppressed";
@@ -376,10 +366,10 @@ class Trends_model extends MY_Model
 
 		$data['title'] = "Outcomes";
 
-		$data['categories'] = array_fill(0, 8, "Null");
-		$data['outcomes'][0]['data'] = array_fill(0, 8, 0);
-		$data['outcomes'][1]['data'] = array_fill(0, 8, 0);
-		$data['outcomes'][2]['data'] = array_fill(0, 8, 0);
+		$data['categories'] = array_fill(0, $columns, "Null");
+		$data['outcomes'][0]['data'] = array_fill(0, $columns, 0);
+		$data['outcomes'][1]['data'] = array_fill(0, $columns, 0);
+		$data['outcomes'][2]['data'] = array_fill(0, $columns, 0);
 
 
 		foreach ($result as $key => $value) {
@@ -393,13 +383,13 @@ class Trends_model extends MY_Model
 			$name = $y . ' Q' . $quarter;
 			if($value['year'] != $year){
 				$year--;
+				$years++;
 
-				if($year == $prev_year && $extra != 4){
-					$data['outcomes'][2]['data'][$i] = round(@(( $data['outcomes'][1]['data'][$i]*100)/
-					($data['outcomes'][0]['data'][$i]+$data['outcomes'][1]['data'][$i])),1);
+				if($years > 3) break;
+
+				if($year == $prev_year){
 					$i = 4;
 					$quarter=1;
-					$limit++;
 				}
 			}
 
@@ -409,26 +399,18 @@ class Trends_model extends MY_Model
 			$data['categories'][$i] = $name;
 
 			$data['outcomes'][0]['data'][$i] += (int) $value['nonsuppressed'];
-			$data['outcomes'][1]['data'][$i] += (int) $value['suppressed'];			
+			$data['outcomes'][1]['data'][$i] += (int) $value['suppressed'];	
+			$data['outcomes'][2]['data'][$i] = round(@(( $data['outcomes'][1]['data'][$i]*100)/
+				($data['outcomes'][0]['data'][$i]+$data['outcomes'][1]['data'][$i])),1);		
 
 			if($modulo == 0){
-				$data['outcomes'][2]['data'][$i] = round(@(( $data['outcomes'][1]['data'][$i]*100)/
-				($data['outcomes'][0]['data'][$i]+$data['outcomes'][1]['data'][$i])),1);
-
 				$i++;
 				$quarter++;
-				$limit++;
 			}
 			if($quarter == 5){
 				$quarter = 1;
 				$i = 0;
 			}	
-
-			if ($limit == $columns) {
-				break;
-			}
-
-
 		}
 
 		return $data;

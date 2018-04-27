@@ -114,8 +114,8 @@ class Labs_model extends MY_Model
 
 		// echo "<pre>";print_r($sheet);die();
 
-  //       $data = $this->dbutil->csv_from_result($sheet, $delimiter, $newline);
-  //       force_download($filename, $data);
+        // $data = $this->dbutil->csv_from_result($sheet, $delimiter, $newline);
+        // force_download($filename, $data);
 
 		 /** open raw memory as file, no need for temp files, be careful not to run out of memory thought */
 	    $f = fopen('php://memory', 'w');
@@ -297,6 +297,110 @@ class Labs_model extends MY_Model
 				$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
 				$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
 				$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
+			
+			}
+		}
+
+		// echo "<pre>";print_r($data);die();
+		return $data;
+	}
+
+	function ages($year=NULL,$month=NULL,$to_year=null,$to_month=null)
+	{
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+			}else {
+				$month = 0;
+			}
+		}
+		
+		$sql = "CALL `proc_get_vl_labs_ages`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$data['pmtct'][0]['name'] = 'No Age';
+		$data['pmtct'][1]['name'] = 'Children';
+		$data['pmtct'][2]['name'] = 'Adults';
+
+		$data['title'] = "";
+
+		$count = 0;
+		
+		$data['categories'][0] = 'No Data';
+		$data["pmtct"][0]["data"][0]	= $count;
+		$data["pmtct"][1]["data"][0]	= $count;
+		$data["pmtct"][2]["data"][0]	= $count;
+		if ($result) {
+			foreach ($result as $key => $value) {
+			
+				$data['categories'][$key] = $value['labname'];
+
+				$data["pmtct"][0]["data"][$key]	= (int) $value['noage'];
+				$data["pmtct"][1]["data"][$key]	= (int) $value['paeds'];
+				$data["pmtct"][2]["data"][$key]	= (int) $value['adults'];
+			
+			}
+		}
+
+		// echo "<pre>";print_r($data);die();
+		return $data;
+	}
+
+	function gender($year=NULL,$month=NULL,$to_year=null,$to_month=null)
+	{
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+			}else {
+				$month = 0;
+			}
+		}
+		
+		$sql = "CALL `proc_get_vl_labs_gender`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$data['pmtct'][0]['name'] = 'No Gender';
+		$data['pmtct'][1]['name'] = 'Male';
+		$data['pmtct'][2]['name'] = 'Female';
+
+		$data['title'] = "";
+
+		$count = 0;
+		
+		$data['categories'][0] = 'No Data';
+		$data["pmtct"][0]["data"][0]	= $count;
+		$data["pmtct"][1]["data"][0]	= $count;
+		$data["pmtct"][2]["data"][0]	= $count;
+		if ($result) {
+			foreach ($result as $key => $value) {
+			
+				$data['categories'][$key] = $value['labname'];
+
+				$data["pmtct"][0]["data"][$key]	= (int) $value['nogendertest'];
+				$data["pmtct"][1]["data"][$key]	= (int) $value['maletest'];
+				$data["pmtct"][2]["data"][$key]	= (int) $value['femaletest'];
 			
 			}
 		}
@@ -625,6 +729,50 @@ class Labs_model extends MY_Model
 
 
 		return $data;
+	}
+
+
+
+	function lab_site_rejections($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL){	
+
+		if($lab == NULL || $lab == 'null'){
+			$lab = 0;
+		}
+
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+			}else {
+				$month = 0;
+			}
+		}
+		
+		$sql = "CALL `proc_get_vl_lab_site_rejections`({$lab}, '{$year}', '{$month}', '{$to_year}', '{$to_month}' );";
+
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);echo "</pre>";die();
+		$ul = '';
+		foreach ($result as $key => $value) {
+
+			$ul .= "<tr>
+						<td>".($key+1)."</td>
+						<td>".$value['facility']."</td>
+						<td>".$value['rejection_reason']."</td>
+						<td>".number_format((int) $value['total_rejections'])."</td>						
+					</tr>";
+		}
+
+		return $ul;
 	}
 	
 }

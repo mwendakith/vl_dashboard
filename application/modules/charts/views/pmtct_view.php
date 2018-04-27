@@ -55,7 +55,8 @@
                         }
                     },colors: [
                         '#F2784B',
-                        '#1BA39C'
+                        '#1BA39C',
+                        '#913D88'
                     ],
                     series: <?php echo json_encode($outcomes['pmtct']);?>
                 });
