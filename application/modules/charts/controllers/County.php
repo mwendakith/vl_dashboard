@@ -97,13 +97,5 @@ class County extends MY_Controller
 
     	$this->load->view('counties_table_view',$data);
 	}
-
-	function county_tat_outcomes($year=NULL, $month=NULL, $to_year=NULL, $to_month=NULL,$county=NULL)
-	{
-		$data['trends'] = $this->county_model->county_tat_outcomes($year,$month,$to_year,$to_month,$county);
-		$data['div_name'] = "summary_counties_tat_summary";
-		$data['tat'] = true;
-		$this->load->view('trends_outcomes_view', $data);
-	}	
 }
 ?>
