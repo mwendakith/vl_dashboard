@@ -97,7 +97,5 @@ class County extends MY_Controller
 
     	$this->load->view('counties_table_view',$data);
 	}
-
-	
 }
 ?>

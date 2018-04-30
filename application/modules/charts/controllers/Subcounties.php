@@ -86,6 +86,5 @@ class Subcounties extends MY_Controller
 	{
 		$this->subcounty_model->download_subcounty_sites($year,$month,$subcounty,$to_year,$to_month);
 	}
-
 }
 ?>

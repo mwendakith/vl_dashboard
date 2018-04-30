@@ -129,7 +129,9 @@
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url();?>county">County</a></li>
 								<li><a href="<?php echo base_url();?>county/pmtct">County PMTCT</a></li>
+								<li><a href="<?php echo base_url();?>county/tat">County TAT</a></li>
 								<li><a href="<?php echo base_url();?>county/subCounty">Sub-County</a></li>
+								<li><a href="<?php echo base_url();?>county/subCountytat">Sub-County TAT</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
@@ -144,6 +146,7 @@
 								<li><a href="<?php echo base_url();?>partner/counties">Partner Counties</a></li>
 								<li><a href="<?php echo base_url();?>partner/pmtct">Partner PMTCT</a></li>
 								<li><a href="<?php echo base_url();?>partner/current">Partner Current Suppression</a></li>
+								<li><a href="<?php echo base_url();?>partner/tat">Partner TAT</a></li>
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>

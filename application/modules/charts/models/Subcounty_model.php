@@ -808,7 +808,5 @@ class Subcounty_model extends MY_Model
 				
 		return $data;
 	}
-
-	
 }
 ?>

@@ -271,6 +271,5 @@ class Partner_summaries_model extends MY_Model
 
 
 	}
-	
 }
 ?>
