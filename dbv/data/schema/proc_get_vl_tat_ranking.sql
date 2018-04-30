@@ -20,7 +20,7 @@ BEGIN
       IF (ID != 0 && ID != '') THEN 
             SET @QUERY = CONCAT(@QUERY, " FROM `vl_site_summary` `mt` JOIN `view_facilitys` `jt` ON `jt`.`id` = `mt`.`facility` WHERE `jt`.`partner` = '",ID,"' ");
         ELSE 
-            SET @QUERY = CONCAT(@QUERY, " FROM `vl_partner_summary` `mt` JOIN `partners` `jt` ON `jt`.`ID` = `mt`.`partner` WHERE 1 ");
+            SET @QUERY = CONCAT(@QUERY, " FROM `vl_partner_summary` `mt` JOIN `partners` `jt` ON `jt`.`ID` = `mt`.`partner` WHERE `jt`.`flag` = '1'  ");
         END IF;
     END IF;
     IF (type = 2) THEN
