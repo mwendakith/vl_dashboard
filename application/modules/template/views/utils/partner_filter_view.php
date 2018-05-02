@@ -30,7 +30,7 @@
       <div class="row">
         <div class="col-md-12">
           <select class="btn js-example-basic-single" style="width:220px;background-color: #C5EFF7;" id="partner" name="partner">
-            <option value="0" disabled="true" selected="true">Select Partner:</option>
+            <option disabled="true" selected="true">Select Partner:</option>
             <option value="NA">All Partners</option>
             <!-- <optgroup value="Counties"> -->
             <?php echo $partner; ?>

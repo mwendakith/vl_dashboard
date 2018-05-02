@@ -14,11 +14,12 @@ class Partner_trends_model extends MY_Model
 
 	function yearly_trends($partner=NULL){
 
-		if($partner == NULL || $partner == 'NA'){
-			$partner = 0;
+		
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_filter');
 		}
 
-		if ($partner == 0) {
+		if (is_null($partner)) {
 			$sql = "CALL `proc_get_vl_national_yearly_trends`();";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_yearly_trends`(" . $partner . ");";
@@ -71,11 +72,11 @@ class Partner_trends_model extends MY_Model
 
 	function yearly_summary($partner=NULL){
 
-		if($partner == NULL || $partner == 'NA'){
-			$partner = 0;
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_filter');
 		}
 		
-		if($partner==0){
+		if(is_null($partner)){
 			$sql = "CALL `proc_get_vl_national_yearly_summary`();";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_yearly_summary`(" . $partner . ");";
@@ -117,11 +118,11 @@ class Partner_trends_model extends MY_Model
 
 	function yearly_age_summary($partner=NULL){
 
-		if($partner == NULL || $partner == 'NA'){
-			$partner = 0;
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_filter');
 		}
 		
-		if($partner==0){
+		if(is_null($partner)){
 			$sql = "CALL `proc_get_vl_national_yearly_tests_age`();";
 		} else {
 			$sql = "CALL `proc_get_vl_yearly_summary`(" . $partner . ");";
@@ -231,11 +232,11 @@ class Partner_trends_model extends MY_Model
 
 	function quarterly_trends($partner=NULL){
 
-		if($partner == NULL || $partner == 'NA'){
-			$partner = 0;
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_filter');
 		}
 
-		if ($partner == 0) {
+		if (is_null($partner)) {
 			$sql = "CALL `proc_get_vl_national_yearly_trends`();";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_yearly_trends`(" . $partner . ");";
@@ -311,11 +312,11 @@ class Partner_trends_model extends MY_Model
 	function quarterly_outcomes($partner=NULL)
 	{
 
-		if($partner == NULL || $partner == 'NA'){
-			$partner = 0;
+		if ($partner==null || $partner=='null') {
+			$partner = $this->session->userdata('partner_filter');
 		}
 
-		if ($partner == 0) {
+		if (is_null($partner)) {
 			$sql = "CALL `proc_get_vl_national_yearly_trends`();";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_yearly_trends`(" . $partner . ");";
