@@ -39,7 +39,7 @@
             }, { // Secondary yAxis
                 gridLineWidth: 0,
                 title: {
-                    text: 'Tests',
+                    text: "<?= ($tat) ? 'Days' : 'Tests'; ?>",
                     style: {
                         color: '#4572A7'
                     }

@@ -367,8 +367,6 @@ class Ages_model extends MY_Model
 	function get_sampletypesData($year=NULL,$age_cat=NULL,$partner=null)
 	{
 
-		$age_cat = $this->build_Inarray($age_cat);
-
 		$array1 = array();
 		$array2 = array();
 		$sql2 = NULL;
@@ -376,7 +374,7 @@ class Ages_model extends MY_Model
 		if ($age_cat==null || $age_cat=='null') {
 			$age_cat = $this->session->userdata('age_category_filter');
 		}
-
+		$age_cat = $this->build_Inarray($age_cat);
 		
 		if ($year==null || $year=='null') {
 			$to = $this->session->userdata('filter_year');

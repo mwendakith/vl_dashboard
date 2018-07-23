@@ -60,7 +60,7 @@ class Tat_model extends MY_Model
 				$data["outcomes"][3]["data"][$key]	= round($value->tat4,1);
 			}
 		}
-
+		
 		return $data;
 	}
 

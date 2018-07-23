@@ -530,6 +530,7 @@ class County_model extends MY_Model
 		$counties = [];
 		$ageData = [];
 		$genderData = [];
+		$data = [];
 		foreach ($resultage as $key => $value) {
 			if (!in_array($value->selection, $counties))
 				$counties[] = $value->selection;
@@ -584,8 +585,17 @@ class County_model extends MY_Model
 				}
 			}
 		}
-		// echo "<pre>";print_r($sql);die();
 		foreach ($result as $key => $value) {
+			$data[$key] = $value;
+			foreach ($genderData as $k => $v) {
+				$data[$key] = array_merge($data[$key], $v);
+			}
+			foreach ($ageData as $k => $v) {
+				$data[$key] = array_merge($data[$key], $v);
+			}
+		}
+		// echo "<pre>";print_r($sql);die();
+		foreach ($data as $key => $value) {
 			if ($value['partner'] == NULL || $value['partner'] == 'NULL') {
 				$value['partner'] = 'No Partner';
 			}
@@ -607,35 +617,25 @@ class County_model extends MY_Model
 						<td>".number_format((int) $value['confirmtx'])."</td>
 						<td>".number_format((int) $value['confirm2vl'])."</td>
 						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
-						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
-					foreach ($genderData as $k => $v) {
-						if ($value['partner'] == $v['selection']) {
-							$table .= "
-									<td>".number_format((int) $v['femaletests'])."</td>
-									<td>".number_format((int) $v['femalesustx'])."</td>
-									<td>".number_format((int) $v['maletests'])."</td>
-									<td>".number_format((int) $v['malesustx'])."</td>
-									<td>".number_format((int) $v['Nodatatests'])."</td>
-									<td>".number_format((int) $v['Nodatasustx'])."</td>";
-						}
-					}
-					foreach ($ageData as $k => $v) {
-						if ($value['partner'] == $v['selection']) {
-							$table .= "
-									<td>".number_format((int) $v['less2tests'])."</td>
-									<td>".number_format((int) $v['less2sustx'])."</td>
-									<td>".number_format((int) $v['less9tests'])."</td>
-									<td>".number_format((int) $v['less9sustx'])."</td>
-									<td>".number_format((int) $v['less14tests'])."</td>
-									<td>".number_format((int) $v['less14sustx'])."</td>
-									<td>".number_format((int) $v['less19tests'])."</td>
-									<td>".number_format((int) $v['less19sustx'])."</td>
-									<td>".number_format((int) $v['less25tests'])."</td>
-									<td>".number_format((int) $v['less25sustx'])."</td>
-									<td>".number_format((int) $v['above25tests'])."</td>
-									<td>".number_format((int) $v['above25sustx'])."</td>";
-						}
-					}
+						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>
+						<td>".number_format((int) @$value['femaletests'])."</td>
+						<td>".number_format((int) @$value['femalesustx'])."</td>
+						<td>".number_format((int) @$value['maletests'])."</td>
+						<td>".number_format((int) @$value['malesustx'])."</td>
+						<td>".number_format((int) @$value['Nodatatests'])."</td>
+						<td>".number_format((int) @$value['Nodatasustx'])."</td>
+						<td>".number_format((int) @$value['less2tests'])."</td>
+						<td>".number_format((int) @$value['less2sustx'])."</td>
+						<td>".number_format((int) @$value['less9tests'])."</td>
+						<td>".number_format((int) @$value['less9sustx'])."</td>
+						<td>".number_format((int) @$value['less14tests'])."</td>
+						<td>".number_format((int) @$value['less14sustx'])."</td>
+						<td>".number_format((int) @$value['less19tests'])."</td>
+						<td>".number_format((int) @$value['less19sustx'])."</td>
+						<td>".number_format((int) @$value['less25tests'])."</td>
+						<td>".number_format((int) @$value['less25sustx'])."</td>
+						<td>".number_format((int) @$value['above25tests'])."</td>
+						<td>".number_format((int) @$value['above25sustx'])."</td>";
 						
 					$table .= "</tr>";
 			$count++;
@@ -684,6 +684,7 @@ class County_model extends MY_Model
 		$counties = [];
 		$ageData = [];
 		$genderData = [];
+		$data = [];
 		foreach ($resultage as $key => $value) {
 			if (!in_array($value->selection, $counties))
 				$counties[] = $value->selection;
@@ -738,8 +739,17 @@ class County_model extends MY_Model
 				}
 			}
 		}
-		// echo "<pre>";print_r($sql);die();
 		foreach ($result as $key => $value) {
+			$data[$key] = $value;
+			foreach ($genderData as $k => $v) {
+				$data[$key] = array_merge($data[$key], $v);
+			}
+			foreach ($ageData as $k => $v) {
+				$data[$key] = array_merge($data[$key], $v);
+			}
+		}
+
+		foreach ($data as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
 			$table .= "<tr>
@@ -751,7 +761,6 @@ class County_model extends MY_Model
 							round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
 						<td>".number_format((int) $value['alltests'])."</td>
 						<td>".number_format((int) $value['invalids'])."</td>
-
 						<td>".number_format($routine)."</td>
 						<td>".number_format($routinesus)."</td>
 						<td>".number_format((int) $value['baseline'])."</td>
@@ -759,36 +768,25 @@ class County_model extends MY_Model
 						<td>".number_format((int) $value['confirmtx'])."</td>
 						<td>".number_format((int) $value['confirm2vl'])."</td>
 						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
-						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
-					foreach ($genderData as $k => $v) {
-						if ($value['facility'] == $v['selection']) {
-							$table .= "
-									<td>".number_format((int) $v['femaletests'])."</td>
-									<td>".number_format((int) $v['femalesustx'])."</td>
-									<td>".number_format((int) $v['maletests'])."</td>
-									<td>".number_format((int) $v['malesustx'])."</td>
-									<td>".number_format((int) $v['Nodatatests'])."</td>
-									<td>".number_format((int) $v['Nodatasustx'])."</td>";
-						}
-					}
-					foreach ($ageData as $k => $v) {
-						if ($value['facility'] == $v['selection']) {
-							$table .= "
-									<td>".number_format((int) $v['less2tests'])."</td>
-									<td>".number_format((int) $v['less2sustx'])."</td>
-									<td>".number_format((int) $v['less9tests'])."</td>
-									<td>".number_format((int) $v['less9sustx'])."</td>
-									<td>".number_format((int) $v['less14tests'])."</td>
-									<td>".number_format((int) $v['less14sustx'])."</td>
-									<td>".number_format((int) $v['less19tests'])."</td>
-									<td>".number_format((int) $v['less19sustx'])."</td>
-									<td>".number_format((int) $v['less25tests'])."</td>
-									<td>".number_format((int) $v['less25sustx'])."</td>
-									<td>".number_format((int) $v['above25tests'])."</td>
-									<td>".number_format((int) $v['above25sustx'])."</td>";
-						}
-					}
-						
+						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>
+						<td>".number_format((int) @$value['femaletests'])."</td>
+						<td>".number_format((int) @$value['femalesustx'])."</td>
+						<td>".number_format((int) @$value['maletests'])."</td>
+						<td>".number_format((int) @$value['malesustx'])."</td>
+						<td>".number_format((int) @$value['Nodatatests'])."</td>
+						<td>".number_format((int) @$value['Nodatasustx'])."</td>
+						<td>".number_format((int) @$value['less2tests'])."</td>
+						<td>".number_format((int) @$value['less2sustx'])."</td>
+						<td>".number_format((int) @$value['less9tests'])."</td>
+						<td>".number_format((int) @$value['less9sustx'])."</td>
+						<td>".number_format((int) @$value['less14tests'])."</td>
+						<td>".number_format((int) @$value['less14sustx'])."</td>
+						<td>".number_format((int) @$value['less19tests'])."</td>
+						<td>".number_format((int) @$value['less19sustx'])."</td>
+						<td>".number_format((int) @$value['less25tests'])."</td>
+						<td>".number_format((int) @$value['less25sustx'])."</td>
+						<td>".number_format((int) @$value['above25tests'])."</td>
+						<td>".number_format((int) @$value['above25sustx'])."</td>";
 					$table .= "</tr>";
 			$count++;
 		}

@@ -18,6 +18,7 @@ class Tat extends MY_Controller
 		$data['trends'] = $this->tat_model->outcomes($year, $month, $to_year, $to_month, $type, $id);
 		$data['div_name'] = "summary_tat_summary";
 		$data['tat'] = true;
+		// echo "<pre>";print_r($data);die();
 		$this->load->view('trends_outcomes_view', $data);
 	}
 
