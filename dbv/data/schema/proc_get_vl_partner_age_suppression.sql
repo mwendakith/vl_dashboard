@@ -10,7 +10,7 @@ BEGIN
     FROM `vl_partner_age`
     LEFT JOIN partners 
       ON partners.ID = vl_partner_age.partner
-    WHERE 1 ";
+    WHERE `partners`.`flag` = '1' ";
   
     IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN

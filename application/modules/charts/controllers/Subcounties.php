@@ -27,7 +27,7 @@ class Subcounties extends MY_Controller
 		$data['sites'] = TRUE;
 		$data['sub_county'] = TRUE;
 
-		$link = $year . '/' . $month . '/' . $county . '/' . $to_year . '/' . $to_month;
+		$link = '';
 
 		$data['link'] =  base_url('charts/county/download_subcounty_table/' . $link);
 		$data['table_div'] = "random_table";
@@ -86,6 +86,5 @@ class Subcounties extends MY_Controller
 	{
 		$this->subcounty_model->download_subcounty_sites($year,$month,$subcounty,$to_year,$to_month);
 	}
-
 }
 ?>

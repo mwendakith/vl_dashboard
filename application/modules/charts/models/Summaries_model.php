@@ -125,7 +125,7 @@ class Summaries_model extends MY_Model
 			$sql = "CALL `proc_get_county_sites_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			if ($pfil==1) {
-				if ($partner) {
+				if (is_int(!is_null($partner))) {
 					$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				} else {
 					$sql = "CALL `proc_get_partner_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -203,7 +203,7 @@ class Summaries_model extends MY_Model
 			}
 		}
  
-		if ($partner) {
+		if (is_int(!is_null($partner))) {
 			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql3 = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
@@ -232,8 +232,8 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
  
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
  
 		$count = 0;
  
@@ -350,7 +350,7 @@ class Summaries_model extends MY_Model
 			}
 		}
  
-		if ($partner) {
+		if (!is_null($partner)) {
 			$sql = "CALL `proc_get_partner_justification`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
@@ -407,7 +407,7 @@ class Summaries_model extends MY_Model
 			$month = $this->session->userdata('filter_month');
 		}
  
-		if ($partner) {
+		if (!is_null($partner)) {
 			// $sql = "CALL `proc_get_partner_justification_breakdown`('6','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			// $sql2 = "CALL `proc_get_partner_justification_breakdown`('9','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 
@@ -439,8 +439,8 @@ class Summaries_model extends MY_Model
 		$lac_mo = $this->db->query($sql2)->result_array();
 		// echo "<pre>";print_r($preg_mo);echo "</pre>";
 		// echo "<pre>";print_r($lac_mo);die();
-		$data['just_breakdown'][0]['name'] = 'Not Suppresed';
-		$data['just_breakdown'][1]['name'] = 'Suppresed';
+		$data['just_breakdown'][0]['name'] = 'Not Suppressed';
+		$data['just_breakdown'][1]['name'] = 'Suppressed';
  
 		$count = 0;
 		
@@ -492,7 +492,7 @@ class Summaries_model extends MY_Model
 			}
 		}
  
-		if ($partner) {
+		if (!is_null($partner)) {
 			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
@@ -511,8 +511,8 @@ class Summaries_model extends MY_Model
 		$suppressed = 0;
 		
 		// echo "<pre>";print_r($result);die();
-		$data['ageGnd'][0]['name'] = 'Not Suppresed';
-		$data['ageGnd'][1]['name'] = 'Suppresed';
+		$data['ageGnd'][0]['name'] = 'Not Suppressed';
+		$data['ageGnd'][1]['name'] = 'Suppressed';
  
 		$count = 0;
 		
@@ -600,7 +600,7 @@ class Summaries_model extends MY_Model
 			}
 		}
  
-		if ($partner) {
+		if (!is_null($partner)) {
 			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
@@ -690,7 +690,7 @@ class Summaries_model extends MY_Model
 			}
 		}
  
-		if ($partner) {
+		if (!is_null($partner)) {
 			$sql = "CALL `proc_get_partner_gender`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			if ($county==null || $county=='null') {
@@ -702,8 +702,8 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Not Suppresed';
-		$data['gender'][1]['name'] = 'Suppresed';
+		$data['gender'][0]['name'] = 'Not Suppressed';
+		$data['gender'][1]['name'] = 'Suppressed';
  
 		$count = 0;
 		
@@ -744,7 +744,7 @@ class Summaries_model extends MY_Model
 		}
 		$from = $to-1;
  
-		if ($partner) {
+		if (!is_null($partner)) {
 			$sql = "CALL `proc_get_partner_sample_types`('".$partner."','".$from."','".$to."')";
 		} else {
 			if ($county==null || $county=='null') {
@@ -872,7 +872,7 @@ class Summaries_model extends MY_Model
 
 		$sql;
 
-		if ($partner) {
+		if (!is_null($partner)) {
 			$params = "patient/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			$sql = "Select sum(totalartmar) as totalartmar from view_facilitys where partner='{$partner}'";
 		} else {
@@ -946,7 +946,7 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
 		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
 
-		if ($partner) {
+		if (!is_null($partner)) {
 			$sql = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
 			if ($annual==1) {
 				$sql = "CALL `proc_get_vl_current_suppression_year`('3','".$partner."')";
@@ -1015,8 +1015,8 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->row();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Not Suppresed';
-		$data['gender'][1]['name'] = 'Suppresed';
+		$data['gender'][0]['name'] = 'Not Suppressed';
+		$data['gender'][1]['name'] = 'Suppressed';
 
 		$data['categories'][0] = 'No data';
 		$data["gender"][0]["data"][0] = (int) $result->nogender_nonsuppressed;
@@ -1071,8 +1071,8 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->row();
 		// echo "<pre>";print_r($result);die();
-		$data['ageGnd'][0]['name'] = 'Not Suppresed';
-		$data['ageGnd'][1]['name'] = 'Suppresed';
+		$data['ageGnd'][0]['name'] = 'Not Suppressed';
+		$data['ageGnd'][1]['name'] = 'Suppressed';
 
 		$data['categories'][0] = 'No data';
 		$data["ageGnd"][0]["data"][0] = (int) $result->noage_nonsuppressed;

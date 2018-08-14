@@ -25,7 +25,6 @@
 		$("select").change(function(){
 			em = $(this).val();
 			var all = localStorage.getItem("my_var");
-
 			// Send the data using post
 	        var posting = $.post( "<?php echo base_url();?>template/filter_county_data", { county: em } );
 	     
@@ -35,6 +34,7 @@
 	        		data = JSON.parse(data);
 	        	}
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
+	        		console.log('County'+data);
 	        		$("#breadcrum").html(data);
 	        	});
 	        	$.get("<?php echo base_url();?>template/dates", function(data){

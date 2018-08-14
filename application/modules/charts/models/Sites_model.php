@@ -106,9 +106,76 @@ class Sites_model extends MY_Model
 			}
 		}
 
+		$type = 2;
+
 		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		$sqlAge = "CALL `proc_get_vl_partner_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$partner."');";
+		$sqlGender = "CALL `proc_get_vl_partner_gender_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$partner."');";
 		// echo "<pre>";print_r($sql);die();
+		$this->db->close();
 		$result = $this->db->query($sql)->result_array();
+		$this->db->close();
+		$resultage = $this->db->query($sqlAge)->result();
+		$this->db->close();
+		$resultGender = $this->db->query($sqlGender)->result();
+
+		$counties = [];
+		$ageData = [];
+		$genderData = [];
+		foreach ($resultage as $key => $value) {
+			if (!in_array($value->selection, $counties))
+				$counties[] = $value->selection;
+		}
+		foreach ($counties as $key => $value) {
+			foreach ($resultGender as $k => $v) {
+				if ($value == $v->selection) {
+					$genderData[$key]['selection'] = $v->selection;
+					if ($v->name == 'F'){
+						$genderData[$key]['femaletests'] = $v->tests;
+						$genderData[$key]['femalesustx'] = ($v->less5000+$v->above5000);
+					}
+					if ($v->name == 'M'){
+						$genderData[$key]['maletests'] = $v->tests;
+						$genderData[$key]['malesustx'] = ($v->less5000+$v->above5000);
+					}
+					if ($v->name == 'No Data'){
+						$genderData[$key]['Nodatatests'] = $v->tests;
+						$genderData[$key]['Nodatasustx'] = ($v->less5000+$v->above5000);
+					}
+				}
+			}
+		}
+		foreach ($counties as $key => $value) {
+			foreach ($resultage as $k => $v) {
+				if ($value == $v->selection) {
+					$ageData[$key]['selection'] = $v->selection;
+					if ($v->name == '15-19') {
+						$ageData[$key]['less19tests'] = $v->tests;
+						$ageData[$key]['less19sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '10-14') {
+						$ageData[$key]['less14tests'] = $v->tests;
+						$ageData[$key]['less14sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == 'Less 2') {
+						$ageData[$key]['less2tests'] = $v->tests;
+						$ageData[$key]['less2sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '2-9') {
+						$ageData[$key]['less9tests'] = $v->tests;
+						$ageData[$key]['less9sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '20-24') {
+						$ageData[$key]['less25tests'] = $v->tests;
+						$ageData[$key]['less25sustx'] = ($v->less5000+$v->above5000);	
+					}
+					if ($v->name == '25+') {
+						$ageData[$key]['above25tests'] = $v->tests;
+						$ageData[$key]['above25sustx'] = ($v->less5000+$v->above5000);	
+					}
+				}
+			}
+		}
 		// echo "<pre>";print_r($sql);die();
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
@@ -118,9 +185,10 @@ class Sites_model extends MY_Model
 				<td>".$value['MFLCode']."</td>
 				<td>".$value['name']."</td>
 				<td>".$value['county']."</td>
+				<td>".$value['subcounty']."</td>
 				<td>".number_format((int) $value['received'])."</td>
 				<td>".number_format((int) $value['rejected']) . " (" . 
-					round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+					round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
 				<td>".number_format((int) $value['alltests'])."</td>
 				<td>".number_format((int) $value['invalids'])."</td>
 
@@ -132,6 +200,36 @@ class Sites_model extends MY_Model
 				<td>".number_format((int) $value['confirm2vl'])."</td>
 				<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
 				<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
+					foreach ($genderData as $k => $v) {
+						if ($value['name'] == $v['selection']) {
+							$table .= "
+									<td>".number_format((int) $v['femaletests'])."</td>
+									<td>".number_format((int) $v['femalesustx'])."</td>
+									<td>".number_format((int) $v['maletests'])."</td>
+									<td>".number_format((int) $v['malesustx'])."</td>
+									<td>".number_format((int) $v['Nodatatests'])."</td>
+									<td>".number_format((int) $v['Nodatasustx'])."</td>";
+						}
+					}
+					foreach ($ageData as $k => $v) {
+						if ($value['name'] == $v['selection']) {
+							$table .= "
+									<td>".number_format((int) $v['less2tests'])."</td>
+									<td>".number_format((int) $v['less2sustx'])."</td>
+									<td>".number_format((int) $v['less9tests'])."</td>
+									<td>".number_format((int) $v['less9sustx'])."</td>
+									<td>".number_format((int) $v['less14tests'])."</td>
+									<td>".number_format((int) $v['less14sustx'])."</td>
+									<td>".number_format((int) $v['less19tests'])."</td>
+									<td>".number_format((int) $v['less19sustx'])."</td>
+									<td>".number_format((int) $v['less25tests'])."</td>
+									<td>".number_format((int) $v['less25sustx'])."</td>
+									<td>".number_format((int) $v['above25tests'])."</td>
+									<td>".number_format((int) $v['above25sustx'])."</td>";
+						}
+					}
+						
+			$table .= "</tr>";
 			$count++;
 		}
 		
@@ -286,8 +384,8 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
 
 		$count = 0;
 
@@ -399,8 +497,8 @@ class Sites_model extends MY_Model
 		$suppressed = 0;
 		
 		// echo "<pre>";print_r($result);die();
-		$data['ageGnd'][0]['name'] = 'Not Suppresed';
-		$data['ageGnd'][1]['name'] = 'Suppresed';
+		$data['ageGnd'][0]['name'] = 'Not Suppressed';
+		$data['ageGnd'][1]['name'] = 'Suppressed';
  
 		$count = 0;
 		
@@ -488,8 +586,8 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Not Suppresed';
-		$data['gender'][1]['name'] = 'Suppresed';
+		$data['gender'][0]['name'] = 'Not Suppressed';
+		$data['gender'][1]['name'] = 'Suppressed';
  
 		$count = 0;
 		
@@ -684,8 +782,8 @@ class Sites_model extends MY_Model
 		$lac_mo = $this->db->query($sql2)->result_array();
 		// echo "<pre>";print_r($preg_mo);echo "</pre>";
 		// echo "<pre>";print_r($lac_mo);die();
-		$data['just_breakdown'][0]['name'] = 'Not Suppresed';
-		$data['just_breakdown'][1]['name'] = 'Suppresed';
+		$data['just_breakdown'][0]['name'] = 'Not Suppressed';
+		$data['just_breakdown'][1]['name'] = 'Suppressed';
  
 		$count = 0;
 		
@@ -825,8 +923,8 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
 
 		$data['vl_outcomes']['data'][0]['y'] = (int) $result->suppressed;
 		$data['vl_outcomes']['data'][1]['y'] = (int) $result->nonsuppressed;

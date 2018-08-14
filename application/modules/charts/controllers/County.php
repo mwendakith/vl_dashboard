@@ -53,7 +53,6 @@ class County extends MY_Controller
 	function county_partners($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes'] = $this->county_model->county_partners($year,$month,$county,$to_year,$to_month);
-		$data['sites'] = FALSE;
 
 		$link = $year . '/' . $month . '/' . $county . '/' . $to_year . '/' . $to_month;
 
@@ -83,10 +82,20 @@ class County extends MY_Controller
 		$data['type'] = 'percent';
 		$data['yAxisText'] = 'Non-suppression';
 		$data['div'] = 'sub_counties_positivity_chart';
-		// die();
+		
 		$this->load->view('county_outcomes_view',$data);
 	}
 
-	
+	function county_facilities($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['outcomes'] = $this->county_model->county_facilities($year,$month,$county,$to_year,$to_month);
+
+		$link = $year . '/' . $month . '/' . $county . '/' . $to_year . '/' . $to_month;
+		$data['subcountyListing'] = true;
+		$data['link'] =  '';
+		$data['table_div'] = "county_facilities_table";
+
+    	$this->load->view('counties_table_view',$data);
+	}
 }
 ?>

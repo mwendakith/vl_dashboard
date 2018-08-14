@@ -40,6 +40,23 @@ class County extends MY_Controller {
 		$this -> template($this->data);
 	}
 
+	public function tat()
+	{
+		$this->clear_all_session_data();
+		$this->load->module('charts/counties');
+		$this->data['content_view'] = 'county/counties_tat_view';
+		$this->template($this->data);
+	}
+
+	public function subCountytat()
+	{
+		$this->clear_all_session_data();
+		$this->data['sub_county'] = TRUE;
+		$this->data['content_view'] = 'county/subcounty_tat_view';
+
+		$this->template($this->data);
+	}
+
 	function countyMap()
 	{
 		$this->data['county'] = TRUE;

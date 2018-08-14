@@ -21,6 +21,7 @@
 	        var posting = $.post( "<?php echo base_url();?>template/filter_partner_data", { partner: em } );
 	        
 			posting.done(function( data ) {
+				data = JSON.parse(data);
 	        	if (data=="") {data = 0;}
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+1, function(data){
 	        		

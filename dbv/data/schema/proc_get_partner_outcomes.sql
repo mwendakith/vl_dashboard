@@ -9,7 +9,7 @@ BEGIN
                     SUM((`vps`.`less5000`+`vps`.`above5000`)) AS `nonsuppressed`
                 FROM `vl_partner_summary` `vps`
                     JOIN `partners` `p` ON `vps`.`partner` = `p`.`ID`
-                WHERE 1";
+                WHERE `p`.`flag` = '1' ";
 
   
     IF (from_month != 0 && from_month != '') THEN
