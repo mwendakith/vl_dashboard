@@ -54,8 +54,8 @@ class Pmtct_model extends MY_Model
 		$name = '';
 		
 		// echo "<pre>";print_r($result);die();
-		$data['pmtct'][0]['name'] = 'Not Suppresed';
-		$data['pmtct'][1]['name'] = 'Suppresed';
+		$data['pmtct'][0]['name'] = 'Not Suppressed';
+		$data['pmtct'][1]['name'] = 'Suppressed';
  
 		$data["pmtct"][0]["data"][0]	= $count;
 		$data["pmtct"][1]["data"][0]	= $count;
@@ -241,8 +241,8 @@ class Pmtct_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
  
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
  
 		$count = 0;
  

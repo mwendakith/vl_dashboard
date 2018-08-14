@@ -40,8 +40,8 @@ class County_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
-		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
-		$data['county_outcomes'][1]['name'] = 'Suppresed';
+		$data['county_outcomes'][0]['name'] = 'Not Suppressed';
+		$data['county_outcomes'][1]['name'] = 'Suppressed';
 
 		$count = 0;
 		

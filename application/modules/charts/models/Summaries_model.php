@@ -232,8 +232,8 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
  
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
  
 		$count = 0;
  
@@ -439,8 +439,8 @@ class Summaries_model extends MY_Model
 		$lac_mo = $this->db->query($sql2)->result_array();
 		// echo "<pre>";print_r($preg_mo);echo "</pre>";
 		// echo "<pre>";print_r($lac_mo);die();
-		$data['just_breakdown'][0]['name'] = 'Not Suppresed';
-		$data['just_breakdown'][1]['name'] = 'Suppresed';
+		$data['just_breakdown'][0]['name'] = 'Not Suppressed';
+		$data['just_breakdown'][1]['name'] = 'Suppressed';
  
 		$count = 0;
 		
@@ -511,8 +511,8 @@ class Summaries_model extends MY_Model
 		$suppressed = 0;
 		
 		// echo "<pre>";print_r($result);die();
-		$data['ageGnd'][0]['name'] = 'Not Suppresed';
-		$data['ageGnd'][1]['name'] = 'Suppresed';
+		$data['ageGnd'][0]['name'] = 'Not Suppressed';
+		$data['ageGnd'][1]['name'] = 'Suppressed';
  
 		$count = 0;
 		
@@ -702,8 +702,8 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Not Suppresed';
-		$data['gender'][1]['name'] = 'Suppresed';
+		$data['gender'][0]['name'] = 'Not Suppressed';
+		$data['gender'][1]['name'] = 'Suppressed';
  
 		$count = 0;
 		
@@ -1015,8 +1015,8 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->row();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Not Suppresed';
-		$data['gender'][1]['name'] = 'Suppresed';
+		$data['gender'][0]['name'] = 'Not Suppressed';
+		$data['gender'][1]['name'] = 'Suppressed';
 
 		$data['categories'][0] = 'No data';
 		$data["gender"][0]["data"][0] = (int) $result->nogender_nonsuppressed;
@@ -1071,8 +1071,8 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->row();
 		// echo "<pre>";print_r($result);die();
-		$data['ageGnd'][0]['name'] = 'Not Suppresed';
-		$data['ageGnd'][1]['name'] = 'Suppresed';
+		$data['ageGnd'][0]['name'] = 'Not Suppressed';
+		$data['ageGnd'][1]['name'] = 'Suppressed';
 
 		$data['categories'][0] = 'No data';
 		$data["ageGnd"][0]["data"][0] = (int) $result->noage_nonsuppressed;

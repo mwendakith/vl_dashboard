@@ -40,8 +40,8 @@ class Samples_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['county_outcomes'][0]['name'] = 'Not Suppresed';
-		$data['county_outcomes'][1]['name'] = 'Suppresed';
+		$data['county_outcomes'][0]['name'] = 'Not Suppressed';
+		$data['county_outcomes'][1]['name'] = 'Suppressed';
 
 		$count = 0;
 		
@@ -96,8 +96,8 @@ class Samples_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppresed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppresed';
+		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
+		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
 
 		$count = 0;
 

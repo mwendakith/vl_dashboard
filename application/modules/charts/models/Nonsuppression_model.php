@@ -329,8 +329,8 @@ class Nonsuppression_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 
-		$data['sup_justification'][0]['name'] = 'Not Suppresed';
-		$data['sup_justification'][1]['name'] = 'Suppresed';
+		$data['sup_justification'][0]['name'] = 'Not Suppressed';
+		$data['sup_justification'][1]['name'] = 'Suppressed';
 
 		$count = 0;
 		
@@ -393,8 +393,8 @@ class Nonsuppression_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 
-		$data['sup_gender'][0]['name'] = 'Not Suppresed';
-		$data['sup_gender'][1]['name'] = 'Suppresed';
+		$data['sup_gender'][0]['name'] = 'Not Suppressed';
+		$data['sup_gender'][1]['name'] = 'Suppressed';
 
 		$count = 0;
 		
@@ -457,8 +457,8 @@ class Nonsuppression_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 
-		$data['sup_age'][0]['name'] = 'Not Suppresed';
-		$data['sup_age'][1]['name'] = 'Suppresed';
+		$data['sup_age'][0]['name'] = 'Not Suppressed';
+		$data['sup_age'][1]['name'] = 'Suppressed';
 
 		$count = 0;
 		
@@ -523,8 +523,8 @@ class Nonsuppression_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 
-		$data['sup_county'][0]['name'] = 'Not Suppresed';
-		$data['sup_county'][1]['name'] = 'Suppresed';
+		$data['sup_county'][0]['name'] = 'Not Suppressed';
+		$data['sup_county'][1]['name'] = 'Suppressed';
 
 		$count = 0;
 		
