@@ -55,7 +55,7 @@
 		
 	</div>
 	<div class="row">
-		<div class="col-md-5 col-sm-12 col-xs-12">
+		<div class="col-md-4 col-sm-12 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
 			    VLs Tested by Sample Type <div class="display_date" ></div>
@@ -65,7 +65,29 @@
 			  </div>
 			</div>
 		</div>
-		<div class="col-md-7 col-sm-12 col-xs-12">
+		<div class="col-md-4 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    VLs Gender Breakdown <div class="display_date" ></div>
+			  </div>
+			  <div class="panel-body" id="lab_gender">
+			    <div>Loading...</div>
+			  </div>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    VLs Age Breakdown <div class="display_date" ></div>
+			  </div>
+			  <div class="panel-body" id="lab_age">
+			    <div>Loading...</div>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
 			    Turn around Time <div class="display_date" ></div>
@@ -76,6 +98,7 @@
 			  
 			</div>
 		</div>
+		
 	</div>
 	<div class="row">
 		<!-- Map of the country -->
@@ -103,8 +126,7 @@
 		<div id="graphs">
   
   		</div>
-	</div>
-	
+	</div>	
 </div>
 
 <div id="third">
@@ -121,6 +143,21 @@
 	  </div>
 	</div>
 	
+</div>
+
+<div id="fourth">
+	<div class="row">
+	  <div class="col-md-12 col-sm-12 col-xs-12">
+	    <div class="panel panel-default">
+	      <div class="panel-heading">
+	        Rejections By Facilities <div class="display_date"></div>
+	      </div>
+	      <div class="panel-body" id="lab_facility_rejections">
+	        <center><div class="loader"></div></center>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
 </div>
 		
 <?php $this->load->view('labs_summary_view_footer'); ?>

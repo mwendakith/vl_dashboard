@@ -51,6 +51,24 @@ class Labs extends MY_Controller
 		$this->load->view('labs_sample_types',$data);
 	}
 
+	function ages($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['outcomes']= $this->labs_model->ages($year,$month,$to_year,$to_month);
+		$data['type'] = 'normal';
+		$data['div_name'] = "lab_age_breakdown";		
+
+		$this->load->view('pmtct_view', $data);
+	}
+
+	function gender($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['outcomes']= $this->labs_model->gender($year,$month,$to_year,$to_month);
+		$data['type'] = 'normal';
+		$data['div_name'] = "lab_gender_breakdown";		
+
+		$this->load->view('pmtct_view', $data);
+	}
+
 	function turn_around_time($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		// $data['trends'] = $this->labs_model->labs_turnaround($year,$month,$to_year,$to_month);
@@ -80,6 +98,12 @@ class Labs extends MY_Controller
 		$data['div_name'] = "total_lab_rejections";
 		
 		$this->load->view('trends_outcomes_view', $data);
+	}
+
+	function site_rejections($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['stats'] = $this->labs_model->lab_site_rejections($lab, $year,$month,$to_year,$to_month);		
+		$this->load->view('lab_site_rejections_view', $data);
 	}
 
 	function lab_mapping($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
