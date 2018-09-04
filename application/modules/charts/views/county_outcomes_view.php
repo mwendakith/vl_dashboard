@@ -1,10 +1,10 @@
 <?php //echo"<pre>";print_r($outcomes); ?>
-<div class="panel-body" id="county_summary">
+<div class="panel-body" id="<?= @$div; ?>">
 	
 </div>
 <script type="text/javascript">
 	$(function () {
-			    $('#county_summary').highcharts({
+			    $('#<?= @$div; ?>').highcharts({
 			        chart: {
 			            type: 'column'
 			        },
@@ -12,31 +12,33 @@
 			            text: ''
 			        },
 			        xAxis: {
-			            categories:<?php echo json_encode($outcomes['categories']);?>
+			            categories: <?php echo json_encode($outcomes['categories']);?>
 			        },
 			        yAxis: {
 			            min: 0,
 			            title: {
-			                text: 'Tests'
+			                text: '<?= @$yAxisText; ?>'
 			            },
 			            stackLabels: {
+			            	rotation: -75,
 			                enabled: true,
 			                style: {
 			                    fontWeight: 'bold',
 			                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
-			                }
+			                },
+			                y:-20
 			            }
 			        },
 			        legend: {
 			            align: 'right',
 			            x: -30,
-			            verticalAlign: 'top',
-			            y: 25,
-			            floating: true,
+			            verticalAlign: 'bottom',
+			            y: 5,
+			            floating: false,
 			            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
 			            borderColor: '#CCC',
 			            borderWidth: 1,
-			            shadow: false
+			            shadow: true
 			        },
 			        tooltip: {
 			            headerFormat: '<b>{point.x}</b><br/>',
@@ -44,18 +46,23 @@
 			        },
 			        plotOptions: {
 			            column: {
-			                stacking: 'normal',
+			                stacking: '<?= @$type; ?>',
 			                dataLabels: {
-			                    enabled: true,
+			                    enabled: false,
 			                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
 			                    style: {
 			                        textShadow: '0 0 3px black'
 			                    }
 			                }
 			            }
+			        },navigation: {
+				        buttonOptions: {
+				            verticalAlign: 'bottom',
+				            y: -20
+				        }
 			        },colors: [
-				        '#D91E18',
-				        '#1BBC9B'
+				        '#F2784B',
+				        '#1BA39C'
 				    ],
 			        series: <?php echo json_encode($outcomes['county_outcomes']);?>
 			    });

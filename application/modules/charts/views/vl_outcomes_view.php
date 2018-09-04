@@ -1,13 +1,32 @@
 <div class="panel-body">
-	<div id="vlOutcomes_pie" style="height: 350px;"></div>
+	<div id="vlOutcomes_pie" style="height: 300px;"></div>
 </div>
 <div>
-	<ul>
+	<!-- <ul>
 		<?php echo $outcomes['ul'];?>
-	</ul>
+	</ul> -->
+	<center>
+	    <table>
+	    	<?php echo $outcomes['ul'];?>
+	    </table>
+	</center>
 </div>
 
 <script type="text/javascript">
+	$().ready(function(){
+		$("table").tablecloth({
+	      striped: true,
+	      sortable: false,
+	      condensed: true
+	    });
+	});
+	// $().ready(function() {
+	// 	$.get("<?php //echo base_url('charts/summaries/suppressiondata');?>", function(data) {
+
+	// 	});
+	// 	$("#samples").load("<?php //echo base_url('charts/summaries/sample_types'); ?>");
+	// });
+
 	$(function () {
 				$('#vlOutcomes_pie').highcharts({
 			        chart: {
@@ -27,8 +46,12 @@
 		                    allowPointSelect: true,
 		                    cursor: 'pointer',
 		                    dataLabels: {
-		                        enabled: false
-		                    },
+			                    enabled: true,
+			                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+			                    style: {
+			                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+			                    }
+			                },
 		                    showInLegend: true
 		                }
 		            },
@@ -37,6 +60,8 @@
 		        });
 		    });
 </script>
-
-
-
+<style type="text/css">
+	td {
+		padding: 0px;
+	}
+</style>

@@ -11,7 +11,7 @@ BEGIN
         SUM(`alltests`) AS `alltests`,
         SUM(`sustxfail`) AS `sustxfail`,
         SUM(`rejected`) AS `rejected`,
-        SUM(`sitessending`) AS `sitessending`
+        AVG(`sitessending`) AS `sitessending`
     FROM `vl_national_summary`
     WHERE 1";
 
