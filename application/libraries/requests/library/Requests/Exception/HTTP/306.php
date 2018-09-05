@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 /**
  * Exception for 306 Switch Proxy responses
@@ -25,3 +26,32 @@ class Requests_Exception_HTTP_306 extends Requests_Exception_HTTP {
 	 */
 	protected $reason = 'Switch Proxy';
 }
+=======
+<?php
+/**
+ * Exception for 306 Switch Proxy responses
+ *
+ * @package Requests
+ */
+
+/**
+ * Exception for 306 Switch Proxy responses
+ *
+ * @package Requests
+ */
+class Requests_Exception_HTTP_306 extends Requests_Exception_HTTP {
+	/**
+	 * HTTP status code
+	 *
+	 * @var integer
+	 */
+	protected $code = 306;
+
+	/**
+	 * Reason phrase
+	 *
+	 * @var string
+	 */
+	protected $reason = 'Switch Proxy';
+}
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6

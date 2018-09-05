@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 /**
  * Exception for 417 Expectation Failed responses
@@ -24,4 +25,32 @@ class Requests_Exception_HTTP_417 extends Requests_Exception_HTTP {
 	 * @var string
 	 */
 	protected $reason = 'Expectation Failed';
+=======
+<?php
+/**
+ * Exception for 417 Expectation Failed responses
+ *
+ * @package Requests
+ */
+
+/**
+ * Exception for 417 Expectation Failed responses
+ *
+ * @package Requests
+ */
+class Requests_Exception_HTTP_417 extends Requests_Exception_HTTP {
+	/**
+	 * HTTP status code
+	 *
+	 * @var integer
+	 */
+	protected $code = 417;
+
+	/**
+	 * Reason phrase
+	 *
+	 * @var string
+	 */
+	protected $reason = 'Expectation Failed';
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 }

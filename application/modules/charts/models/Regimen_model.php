@@ -59,6 +59,14 @@ class Regimen_model extends MY_Model
 		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
 
 		$data['title'] = "";
+<<<<<<< HEAD
+=======
+
+		$data['categories'][0] = "No Data";
+		$data['outcomes'][0]['data'][0] = 0;
+		$data['outcomes'][1]['data'][0] = 0;
+		$data['outcomes'][2]['data'][0] = 0;
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
  
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
@@ -188,9 +196,12 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
+<<<<<<< HEAD
 	
 
 
+=======
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	function regimen_gender($year=NULL,$month=NULL,$regimen=NULL,$to_year=null,$to_month=null,$partner=NULL)
 	{
 		if ($partner==null || $partner=='null') {
@@ -363,8 +374,11 @@ class Regimen_model extends MY_Model
 		return $data;
 	}
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	function get_sampletypesData($year=NULL,$regimen=NULL,$partner=null)
 	{
 		$array1 = array();
@@ -532,6 +546,14 @@ class Regimen_model extends MY_Model
 		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
 
 		$data['title'] = "";
+<<<<<<< HEAD
+=======
+
+		$data['categories'][0] = "No Data";
+		$data['outcomes'][0]['data'][0] = 0;
+		$data['outcomes'][1]['data'][0] = 0;
+		$data['outcomes'][2]['data'][0] = 0;
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
  
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];

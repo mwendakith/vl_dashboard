@@ -66,8 +66,12 @@
           $year -= $i;
       ?>
       <a href="javascript:void(0)" onclick="date_filter('yearly', <?= @$year; ?> )" class="alert-link"> <?= @$year; ?> </a>|
+<<<<<<< HEAD
       <?php  }
       ?>
+=======
+      <?php } ?>
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
     </div>
     <div class="filter">
       Month: 

@@ -41,8 +41,11 @@ class Partner_summaries extends MY_Controller
 	{
 		$this->partner_summaries_model->download_partner_counties($year,$month,$partner,$to_year,$to_month);
 	}
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 }
 ?>

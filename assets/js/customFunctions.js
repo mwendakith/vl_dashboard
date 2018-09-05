@@ -12,10 +12,18 @@ function format_date(data)
 function set_multiple_date(first, second){
 	var f = first.split(" ");
 	var s = second.split(" ");
+<<<<<<< HEAD
+=======
+	// return f[0] + "-" + s[0] + " " + f[1];
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	return f[0] + ", " + f[1] + " - " + s[0] + ", " + s[1];
 }
 
 function check_error_date_range (first, second) {
+<<<<<<< HEAD
+=======
+	// console.log(first);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	firstMonth = first[0];
 	firstYear = first[1];
 

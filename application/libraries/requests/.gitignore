@@ -1,6 +1,15 @@
+<<<<<<< HEAD
 # Ignore coverage report
 tests/coverage/*
 
 # Ignore composer related files
 /composer.lock
 /vendor
+=======
+# Ignore coverage report
+tests/coverage/*
+
+# Ignore composer related files
+/composer.lock
+/vendor
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6

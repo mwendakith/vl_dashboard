@@ -21,7 +21,13 @@
 	        
 	        // Put the results in a div
 	        posting.done(function( data ) {
+<<<<<<< HEAD
 	        	data = JSON.parse(data);
+=======
+	        	if(data!=""){
+	        		data = JSON.parse(data);
+	        	}
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+1, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
@@ -36,14 +42,22 @@
 		    	});
 	        	// Condition to dispay the proper divs based on whether a partner is selected or not
 
+<<<<<<< HEAD
 	        	if (data=='null' || data==null) {
+=======
+	        	if (data=='null') {
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        		$("#second").hide();
 					$("#first").show();
 					// fetching the partner outcomes
 					$("#age_outcomes").html("<center><div class='loader'></div></center>");
 					$("#age_outcomes").load("<?php echo base_url('charts/ages/age_outcomes'); ?>");
 	        	} else {
+<<<<<<< HEAD
 
+=======
+	        		data = JSON.parse(data);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        		// alert(data);
 	        		$("#second").hide();
 					$("#first").show();

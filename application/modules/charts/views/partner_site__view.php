@@ -5,14 +5,33 @@
 			<th rowspan="2">MFL Code</th>
 			<th rowspan="2">Name</th>
 			<th rowspan="2">County</th>
+<<<<<<< HEAD
 			<th rowspan="2">Received Samples at Lab</th>
 			<th rowspan="2">Rejected Samples (on receipt at lab)</th>
 			<th rowspan="2">All Test Done at Lab</th>
+=======
+			<?php if(isset($subcounty)) {?> <th rowspan="2">Sub-County</th> <?php } ?>
+			<th rowspan="2">Received Samples at Lab</th>
+			<th rowspan="2">Rejected Samples (on receipt at lab)</th>
+			<th rowspan="2">All Test (plus reruns) Done at Lab</th>
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 			<th rowspan="2">Redraw (after testing)</th>
 			<th colspan="2">Routine VL Tests</th>
 			<th colspan="2">Baseline VL Tests</th>
 			<th colspan="2">Confirmatory Repeat Tests</th>
 			<th colspan="2">Total Tests with Valid Outcomes</th>
+<<<<<<< HEAD
+=======
+			<th colspan="2">Female</th>
+			<th colspan="2">Male</th>
+			<th colspan="2">No Data</th>
+			<th colspan="2">Less 2 Yrs</th>
+			<th colspan="2">2 - 9 Yrs</th>
+			<th colspan="2">10 - 14 yrs</th>
+			<th colspan="2">15 - 19 yrs</th>
+			<th colspan="2">20- 24 yrs</th>
+			<th colspan="2">Above 25 yrs</th>
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 		</tr>
 		<tr>
 			<th>Tests</th>
@@ -23,6 +42,27 @@
 			<th>&gt; 1000</th>
 			<th>Tests</th>
 			<th>&gt; 1000</th>
+<<<<<<< HEAD
+=======
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 		</tr>
 	</thead>
 	<tbody>

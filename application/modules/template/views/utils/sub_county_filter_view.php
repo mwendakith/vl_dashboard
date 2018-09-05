@@ -51,6 +51,7 @@
       Year: 
       <?php
         for ($i=9; $i > -1; $i--) { 
+<<<<<<< HEAD
           $year = gmdate('Y');
           $year -= $i;
       ?>
@@ -59,6 +60,14 @@
       ?>
     </div>
 
+=======
+          $year = Date('Y');
+          $year -= $i;
+      ?>
+      <a href="javascript:void(0)" onclick="date_filter('yearly', <?= @$year; ?> )" class="alert-link"> <?= @$year; ?> </a>|
+      <?php } ?>
+    </div>
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
     <div class="filter">
       Month: 
       <a href='javascript:void(0)' onclick='date_filter("monthly", 1)' class='alert-link'> Jan </a>|

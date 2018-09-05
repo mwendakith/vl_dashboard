@@ -70,9 +70,12 @@ class Trends extends MY_Controller
 		$this->load->view('trends_view_two', $data);
 	}
 
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	function quarterly($county=NULL){
 		$obj = $this->trends_model->quarterly_trends($county);
 		// echo "<pre>";print_r($obj);echo "</pre>";die();

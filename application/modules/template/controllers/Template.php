@@ -161,7 +161,11 @@ class Template extends MY_Controller
 	{
 		$this->load->model('template_model');
 		// $data = trim($data,"%22");
+<<<<<<< HEAD
 		// echo $data;
+=======
+		// echo $data;die();
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 		if ($partner=='null'||$partner==null) {
 			$partner = NULL;
 		}

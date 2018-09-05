@@ -35,7 +35,11 @@
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 		    	});
 	        	// Condition to dispay the proper divs based on whether a partner is selected or not
+<<<<<<< HEAD
 	        	if (data=='null' || data==null) {
+=======
+	        	if (data=='null'||data==null) {
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        		$("#second").hide();
 					$("#first").show();
 					// fetching the partner outcomes

@@ -100,6 +100,15 @@ class Labs extends MY_Controller
 		$this->load->view('trends_outcomes_view', $data);
 	}
 
+<<<<<<< HEAD
+=======
+	function site_rejections($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['stats'] = $this->labs_model->lab_site_rejections($lab, $year,$month,$to_year,$to_month);		
+		$this->load->view('lab_site_rejections_view', $data);
+	}
+
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	function lab_mapping($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data = $this->labs_model->lab_mapping($lab, $year,$month,$to_year,$to_month);

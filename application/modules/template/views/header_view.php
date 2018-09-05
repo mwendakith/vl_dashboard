@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+<<<<<<< HEAD
                 <!-- Global site tag (gtag.js) - Google Analytics -->
                 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-123951711-1"></script>
                 <script>
@@ -10,6 +11,8 @@
 
                         gtag('config', 'UA-123951711-1');
                 </script>
+=======
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -177,6 +180,7 @@
 								<li><a href="<?php echo base_url();?>sample">Sample Analysis</a></li>
 								<li><a href="<?php echo base_url();?>current">Current Suppression</a></li>
 								<li><a href="<?php echo base_url();?>pmtct">PMTCT Analysis</a></li>
+<<<<<<< HEAD
 								<li><a href="<?php echo base_url();?>baseline">Baseline</a></li>
 							</ul>
 						</li>
@@ -187,6 +191,16 @@
 						<li><a href="<?php echo base_url();?>county">County View</a></li> -->
 						<li><a href="http://eid.nascop.org/">Login</a></li>
 						<li><a href="http://eid.nascop.org">EID View</a></li>
+=======
+							</ul>
+						</li>
+						<!-- <li><a href="<?php echo base_url();?>live">Live Data</a></li> -->
+						<li><a href="https://api.nascop.org/">API Documentation</a></li>
+						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
+						<!-- <li><a href="<?php echo base_url();?>county">County View</a></li> -->
+						<li><a href="https://eiddash.nascop.org/">Login</a></li>
+						<li><a href="https://eid.nascop.org">EID View</a></li>
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 						<!-- <li><a href="javascript:void(0)">Link</a></li> -->
 						<li class="dropdown">
 							<!-- <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
@@ -205,4 +219,8 @@
 		</div>
 		<!-- End of Navigation Bar -->
 		<!-- Begining of Dashboard area -->
+<<<<<<< HEAD
 		<div class="container-fluid">
+=======
+		<div class="container-fluid">
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6

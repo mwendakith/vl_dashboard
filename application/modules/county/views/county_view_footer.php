@@ -137,7 +137,11 @@
 				
 						$("#sub_counties").html("<center><div class='loader'></div></center>");
 						$("#sub_counties").load("<?php echo base_url('charts/county/county_subcounties'); ?>/"+from[1]+"/"+from[0]+"/"+county+"/"+to[1]+"/"+to[0]);
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 						$("#county_facilities").html("<center><div class='loader'></div></center>");
 						$("#county_facilities").load("<?php echo base_url('charts/county/county_facilities'); ?>/"+from[1]+"/"+from[0]+"/"+county+"/"+to[1]+"/"+to[0]);
 
@@ -209,7 +213,11 @@
 		
 				$("#sub_counties").html("<center><div class='loader'></div></center>");
 				$("#sub_counties").load("<?php echo base_url('charts/county/county_subcounties'); ?>/"+year+"/"+month);
+<<<<<<< HEAD
 		
+=======
+
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 				$("#county_facilities").html("<center><div class='loader'></div></center>");
 				$("#county_facilities").load("<?php echo base_url('charts/county/county_facilities'); ?>/"+year+"/"+month);
 

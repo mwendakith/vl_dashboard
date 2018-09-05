@@ -39,7 +39,11 @@ class County extends MY_Controller {
 		// echo "<pre>";print_r($this->data);die();
 		$this -> template($this->data);
 	}
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	public function tat()
 	{
 		$this->clear_all_session_data();

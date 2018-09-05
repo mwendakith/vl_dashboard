@@ -39,7 +39,11 @@
             }, { // Secondary yAxis
                 gridLineWidth: 0,
                 title: {
+<<<<<<< HEAD
                     text: "<?= ($tat) ? 'Days': 'Tests'; ?>",
+=======
+                    text: "<?= ($tat) ? 'Days' : 'Tests'; ?>",
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
                     style: {
                         color: '#4572A7'
                     }
@@ -62,8 +66,14 @@
             legend: {
                 layout: 'vertical',
                 align: 'right',
+<<<<<<< HEAD
                 verticalAlign: 'bottom',
                 y: 24,
+=======
+                x: -50,
+                verticalAlign: 'top',
+                y: 30,
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
                 floating: true,
                 backgroundColor: '#FFFFFF'
             },colors: [

@@ -125,5 +125,9 @@
 </div>
 
 
+<<<<<<< HEAD
 <?php $this->load->view('age_view_footer');?>
 
+=======
+<?php $this->load->view('age_view_footer');?>
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6

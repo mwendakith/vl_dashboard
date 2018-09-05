@@ -34,6 +34,10 @@ class Partner_summaries_model extends MY_Model
 		}
 
 		$sql = "CALL `proc_get_vl_partner_county_details`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+<<<<<<< HEAD
+=======
+		
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
@@ -214,6 +218,10 @@ class Partner_summaries_model extends MY_Model
 			$table .= "</tr>";
 			$count++;
 		}
+<<<<<<< HEAD
+=======
+		
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 
 		return $table;
 	}
@@ -269,6 +277,9 @@ class Partner_summaries_model extends MY_Model
 
 
 	}
+<<<<<<< HEAD
 	
+=======
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 }
 ?>

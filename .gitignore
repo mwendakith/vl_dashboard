@@ -7,12 +7,21 @@ application/cache/*
 application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
+<<<<<<< HEAD
+=======
+.htaccess
+application/config/database.php
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 
 user_guide_src/build/*
 user_guide_src/cilexer/build/*
 user_guide_src/cilexer/dist/*
 user_guide_src/cilexer/pycilexer.egg-info/*
 /vendor/
+<<<<<<< HEAD
+=======
+assets/uploads/*
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 
 # IDE Files
 #-------------------------
@@ -24,4 +33,8 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.tmPreferences.cache
 *.stTheme.cache
 *.sublime-workspace
+<<<<<<< HEAD
 *.sublime-project
+=======
+*.sublime-project
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6

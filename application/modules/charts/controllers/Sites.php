@@ -27,6 +27,10 @@ class Sites extends MY_Controller
 
 		$link = $year . '/' . $month . '/' . $partner . '/' . $to_year . '/' . $to_month;
 		$data['link'] =  base_url('charts/sites/download_partner_sites/' . $link);
+<<<<<<< HEAD
+=======
+		$data['subcounty'] = true;
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 
     	$this->load->view('partner_site__view',$data);
 	}

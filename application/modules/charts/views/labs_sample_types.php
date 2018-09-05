@@ -27,9 +27,15 @@
 	            }
 	        },
 	        legend: {
+<<<<<<< HEAD
 	            align: 'right',
 	            verticalAlign: 'bottom',
 	            floating: false,
+=======
+                align: 'right',
+                verticalAlign: 'bottom',
+                floating: false,
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
 	            borderColor: '#CCC',
 	            borderWidth: 1,

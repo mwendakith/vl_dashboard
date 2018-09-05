@@ -67,7 +67,11 @@
 	     
 	        // Put the results in a div
 	        posting.done(function( data ) {
+<<<<<<< HEAD
 			data = JSON.parse(data);
+=======
+	        	data = JSON.parse(data);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+1, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
@@ -81,7 +85,11 @@
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 	        	});
 
+<<<<<<< HEAD
 	        	// alert(data);
+=======
+	        		        	// alert(data);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        	$("#current_sup").html("<center><div class='loader'></div></center>");
 	        	$("#current_sup_gender").html("<center><div class='loader'></div></center>");
 	        	$("#current_sup_age").html("<center><div class='loader'></div></center>");

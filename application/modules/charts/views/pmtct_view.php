@@ -56,7 +56,11 @@
                     },colors: [
                         '#F2784B',
                         '#1BA39C',
+<<<<<<< HEAD
 			'#913D88',
+=======
+                        '#913D88'
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
                     ],
                     series: <?php echo json_encode($outcomes['pmtct']);?>
                 });

@@ -17,7 +17,11 @@
 	        LAB PERFORMANCE STATS <div class="display_date"></div>
 	      </div>
 	      <div class="panel-body" id="lab_perfomance_stats">
+<<<<<<< HEAD
 		        <center><div class="loader"></div></center>
+=======
+	        <center><div class="loader"></div></center>
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	      </div>
 	    </div>
 	  </div>
@@ -126,8 +130,12 @@
 		<div id="graphs">
   
   		</div>
+<<<<<<< HEAD
 	</div>
 	
+=======
+	</div>	
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 </div>
 
 <div id="third">
@@ -145,5 +153,23 @@
 	</div>
 	
 </div>
+<<<<<<< HEAD
+=======
+
+<div id="fourth">
+	<div class="row">
+	  <div class="col-md-12 col-sm-12 col-xs-12">
+	    <div class="panel panel-default">
+	      <div class="panel-heading">
+	        Rejections By Facilities <div class="display_date"></div>
+	      </div>
+	      <div class="panel-body" id="lab_facility_rejections">
+	        <center><div class="loader"></div></center>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+</div>
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 		
 <?php $this->load->view('labs_summary_view_footer'); ?>

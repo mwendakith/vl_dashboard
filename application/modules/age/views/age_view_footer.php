@@ -20,7 +20,11 @@
 	     
 	   // //      // Put the results in a div
 	        posting.done(function( response ) {
+<<<<<<< HEAD
 	      	response = JSON.parse(response);
+=======
+	      	console.log(response);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	   // //      	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
 	   // //      		$("#breadcrum").html(data);
 	   // //      	});
@@ -34,13 +38,21 @@
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 	        	});
 
+<<<<<<< HEAD
 	        	if (response == null || response == 'null' || response == "") {
+=======
+	        	if (response == null || response == 'null' || response == '') {
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        		$("#second").hide();
 	        		$("#first").show();
 
 	        		$("#age_outcomes").html("<center><div class='loader'></div></center>");
 	        		$("#age_outcomes").load("<?php echo base_url('charts/ages/age_outcomes');?>");
 	        	} else {
+<<<<<<< HEAD
+=======
+	        		response = JSON.parse(response);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        		var age = "";
 	        		for (i = 0; i < response.length; i++) { 
 					    age += "." + response[i];
@@ -193,5 +205,9 @@
 			
 		}); 
 	}
+<<<<<<< HEAD
 </script>
 
+=======
+</script>
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6

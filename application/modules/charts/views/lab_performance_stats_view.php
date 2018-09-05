@@ -1,4 +1,5 @@
 <div class="table-responsive">
+<<<<<<< HEAD
 <table id="example" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="max-width: 100%;">
 	<thead>
 		<tr class="colhead">
@@ -32,6 +33,41 @@
 		<?php echo $stats;?>
 	</tbody>
 </table>
+=======
+	<table id="example" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="max-width: 100%;">
+		<thead>
+			<tr class="colhead">
+				<th rowspan="2">No</th>
+				<th rowspan="2">Lab</th>
+				<th rowspan="2">Facilities Sending Samples</th>
+				<th rowspan="2">Received Samples at Lab</th>
+				<th rowspan="2">Rejected Samples (on receipt at lab)</th>
+				<th rowspan="2">All Test (plus reruns) Done at Lab</th>
+				<th rowspan="2">Redraw (after testing)</th>
+				<th rowspan="2">EQA Tests</th>
+				<th rowspan="2">Controls Run</th>
+				<th colspan="2">Routine VL Tests</th>
+				<th colspan="2">Baseline VL Tests</th>
+				<th colspan="3">Confirmatory Repeat Tests</th>
+				<th colspan="2">Total Tests with Valid Outcomes</th>
+			</tr>
+			<tr>
+				<th>Tests</th>
+				<th>&gt; 1000</th>
+				<th>Tests</th>
+				<th>&gt; 1000</th>
+				<th>Tests</th>
+				<th>&gt; 1000</th>
+				<th>Without Previous Nonsuppressed</th>
+				<th>Tests</th>
+				<th>&gt; 1000</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php echo $stats;?>
+		</tbody>
+	</table>
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 </div>
 <div class="row" style="display: none;">
 	<div class="col-md-12">
@@ -42,7 +78,11 @@
   $(document).ready(function() {
   	$('#example').DataTable({
   		dom: '<"btn btn-primary"B>lTfgtip',
+<<<<<<< HEAD
 		responsive: true,
+=======
+		responsive: false,
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	    buttons : [
 	        {
 	          text:  'Export to CSV',

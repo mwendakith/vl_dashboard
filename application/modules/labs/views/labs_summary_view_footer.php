@@ -5,6 +5,10 @@
 			
 		$("#first").show();
     	$("#second").hide();
+<<<<<<< HEAD
+=======
+    	$("#fourth").hide();
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
     	$("#breadcrum").hide();
 
 
@@ -46,6 +50,10 @@
 				$("#lab_age").html("<div>Loading...</div>");
 				$("#ttime").html("<div>Loading...</div>");
 				$("#results").html("<div>Loading...</div>");
+<<<<<<< HEAD
+=======
+				$("#lab_facility_rejections").html("<div>Loading...</div>");
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 
 				$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends/"+from[1]);
 				$("#test_trends").load("<?php echo base_url('charts/labs/testing_trends');?>/"+from[1]);
@@ -59,6 +67,10 @@
 				var em = localStorage.getItem("my_lab");
 
 				$("#lab_rejections").load("<?php echo base_url();?>charts/labs/rejections/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+<<<<<<< HEAD
+=======
+				$("#lab_facility_rejections").load("<?php echo base_url();?>charts/labs/site_rejections/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 
 			}
 		    
@@ -74,6 +86,10 @@
 			
 				$("#first").show();
 	        	$("#second").hide();
+<<<<<<< HEAD
+=======
+	        	$("#fourth").hide();
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        	$("#breadcrum").hide();
 
 	        	$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats");
@@ -92,11 +108,19 @@
 				
 				$("#first").hide();
 	        	$("#second").show();
+<<<<<<< HEAD
+=======
+	        	$("#fourth").show();
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        	$("#breadcrum").show();
 	        	var t = $("#my_list option:selected").text();
 	        	$("#breadcrum").html(t);
 	        	$("#lab_summary").load("<?php echo base_url();?>charts/labs/summary/"+em);
 	        	$("#graphs").load("<?php echo base_url();?>charts/labs/lab_trends/"+em);
+<<<<<<< HEAD
+=======
+	        	$("#lab_facility_rejections").load("<?php echo base_url();?>charts/labs/site_rejections/"+em);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 				
 			}
 			$("#lab_rejections").html("<div>Loading...</div>");
@@ -146,10 +170,18 @@
 		$("#lab_age").html("<div>Loading...</div>");
 		$("#ttime").html("<div>Loading...</div>");
 		$("#results").html("<div>Loading...</div>");
+<<<<<<< HEAD
+=======
+		$("#lab_facility_rejections").html("<div>Loading...</div>");
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 
 		var em = localStorage.getItem("my_lab");
 
 		$("#lab_rejections").load("<?php echo base_url();?>charts/labs/rejections/"+em+"/"+year+"/"+month);
+<<<<<<< HEAD
+=======
+		$("#lab_facility_rejections").load("<?php echo base_url();?>charts/labs/site_rejections/"+em+"/"+year+"/"+month);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 		$("#lab_summary").load("<?php echo base_url();?>charts/labs/summary/"+em+"/"+year);
 
 		$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends/"+year);

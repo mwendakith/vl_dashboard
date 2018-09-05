@@ -236,7 +236,11 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			if (!$data) {
 				
 			} else {
+<<<<<<< HEAD
 				if ($data['age_category']=='NA') {
+=======
+				if ($data['age_category']=='NA' || $data['age_category']=='') {
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 					$this->session->unset_userdata('age_category_filter');
 					$this->session->unset_userdata('regimen_filter');
 					$this->session->unset_userdata('site_filter');

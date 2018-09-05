@@ -25,7 +25,10 @@
 		$("select").change(function(){
 			em = $(this).val();
 			var all = localStorage.getItem("my_var");
+<<<<<<< HEAD
 
+=======
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 			// Send the data using post
 	        var posting = $.post( "<?php echo base_url();?>template/filter_county_data", { county: em } );
 	     
@@ -35,6 +38,10 @@
 	        		data = JSON.parse(data);
 	        	}
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
+<<<<<<< HEAD
+=======
+	        		console.log('County'+data);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        		$("#breadcrum").html(data);
 	        	});
 	        	$.get("<?php echo base_url();?>template/dates", function(data){

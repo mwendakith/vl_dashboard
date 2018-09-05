@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
@@ -12,3 +13,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |	https://codeigniter.com/user_guide/general/profiling.html
 |
 */
+=======
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+/*
+| -------------------------------------------------------------------------
+| Profiler Sections
+| -------------------------------------------------------------------------
+| This file lets you determine whether or not various sections of Profiler
+| data are displayed when the Profiler is enabled.
+| Please see the user guide for info:
+|
+|	https://codeigniter.com/user_guide/general/profiling.html
+|
+*/
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6

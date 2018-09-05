@@ -21,7 +21,11 @@
 			part = $(this).val();
 			var posting = $.post( "<?php echo base_url();?>template/filter_partner_data", { partner: part } );
 			posting.done(function( data ) {
+<<<<<<< HEAD
 	        	data = $.parseJSON(data);
+=======
+				data = $.parseJSON(data);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+1, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
@@ -35,6 +39,10 @@
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 		    	});
 	        	// Condition to dispay the proper divs based on whether a partner is selected or not
+<<<<<<< HEAD
+=======
+	        	
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	        	if (data==null) {
 	        		$("#first").show();
 	        		$("#second").hide();

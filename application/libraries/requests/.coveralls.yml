@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 src_dir: library
 coverage_clover: tests/clover.xml
 json_path: tests/coveralls.json
+=======
+src_dir: library
+coverage_clover: tests/clover.xml
+json_path: tests/coveralls.json
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 service_name: travis-ci

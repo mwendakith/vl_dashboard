@@ -114,8 +114,13 @@ class Labs_model extends MY_Model
 
 		// echo "<pre>";print_r($sheet);die();
 
+<<<<<<< HEAD
   //       $data = $this->dbutil->csv_from_result($sheet, $delimiter, $newline);
   //       force_download($filename, $data);
+=======
+        // $data = $this->dbutil->csv_from_result($sheet, $delimiter, $newline);
+        // force_download($filename, $data);
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 
 		 /** open raw memory as file, no need for temp files, be careful not to run out of memory thought */
 	    $f = fopen('php://memory', 'w');
@@ -730,6 +735,53 @@ class Labs_model extends MY_Model
 
 		return $data;
 	}
+<<<<<<< HEAD
+=======
+
+
+
+	function lab_site_rejections($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL){	
+
+		if($lab == NULL || $lab == 'null'){
+			$lab = 0;
+		}
+
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+			}else {
+				$month = 0;
+			}
+		}
+		
+		$sql = "CALL `proc_get_vl_lab_site_rejections`({$lab}, '{$year}', '{$month}', '{$to_year}', '{$to_month}' );";
+
+		// echo "<pre>";print_r($sql);die();
+		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);echo "</pre>";die();
+		$ul = '';
+		foreach ($result as $key => $value) {
+
+			$ul .= "<tr>
+						<td>".($key+1)."</td>
+						<td>".$value['facility']."</td>
+						<td>".$value['rejection_reason']."</td>
+						<td>".number_format((int) $value['total_rejections'])."</td>						
+					</tr>";
+		}
+
+		return $ul;
+	}
+>>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	
 }
 ?>
