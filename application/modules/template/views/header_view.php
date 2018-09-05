@@ -170,12 +170,12 @@
 								<li><a href="<?php echo base_url();?>pmtct">PMTCT Analysis</a></li>
 							</ul>
 						</li>
-						<li><a href="<?php echo base_url();?>live">Live Data</a></li>
+						<!-- <li><a href="<?php echo base_url();?>live">Live Data</a></li> -->
 						<li><a href="https://api.nascop.org/">API Documentation</a></li>
 						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
 						<!-- <li><a href="<?php echo base_url();?>county">County View</a></li> -->
-						<li><a href="http://eid.nascop.org/login.php">Login</a></li>
-						<li><a href="http://eid.nascop.org">EID View</a></li>
+						<li><a href="https://eiddash.nascop.org/">Login</a></li>
+						<li><a href="https://eid.nascop.org">EID View</a></li>
 						<!-- <li><a href="javascript:void(0)">Link</a></li> -->
 						<li class="dropdown">
 							<!-- <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
