@@ -1,9 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-<<<<<<< HEAD
 
-=======
->>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
@@ -75,20 +72,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 $active_group = 'default';
 $query_builder = TRUE;
-<<<<<<< HEAD
 
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'mysql',
 	'username' => 'root',
 	'password' => 'FnP5FjbnMrzXCm.',
-=======
-$db['default'] = array(
-	'dsn'	=> '',
-	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
->>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 	'database' => 'apidb',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
@@ -103,33 +92,29 @@ $db['default'] = array(
 	'compress' => FALSE,
 	'stricton' => FALSE,
 	'failover' => array(),
-<<<<<<< HEAD
 	'save_queries' => TRUE,
 	'port' => 3306
 
 );
-=======
+
+/*$db['default'] = array(
+	'dsn'	=> '',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
+	'database' => 'apidb',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
 	'save_queries' => TRUE
-);
-// $db['default'] = array(
-// 	'dsn'	=> '',
-// 	'hostname' => '10.230.50.11',
-// 	'username' => 'root',
-// 	'password' => 'FnP5FjbnMrzXCm.',
-// 	'database' => 'apidb',
-// 	'dbdriver' => 'mysqli',
-// 	'dbprefix' => '',
-// 	'pconnect' => FALSE,
-// 	'db_debug' => (ENVIRONMENT !== 'production'),
-// 	'cache_on' => FALSE,
-// 	'cachedir' => '',
-// 	'char_set' => 'utf8',
-// 	'dbcollat' => 'utf8_general_ci',
-// 	'swap_pre' => '',
-// 	'encrypt' => FALSE,
-// 	'compress' => FALSE,
-// 	'stricton' => FALSE,
-// 	'failover' => array(),
-// 	'save_queries' => TRUE
-// );
->>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
+);*/

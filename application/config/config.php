@@ -23,11 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-<<<<<<< HEAD
-$config['base_url'] = 'https://viralload.nascop.org/';
-=======
 $config['base_url'] = 'http://'. $_SERVER['SERVER_NAME'] .':'.$_SERVER['SERVER_PORT']. '/vl_dashboard/';
->>>>>>> dfa5047ba0638ef2034b95dfa69e0cd14bb05ef6
 
 /*
 |--------------------------------------------------------------------------
