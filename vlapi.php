@@ -26,7 +26,7 @@ $vresult = mysqli_query($con, "SELECT v.ID,v.patient as Patient,f.facilitycode a
 if($format == 'json') {
  
 $viralsamples = array();
-while($viralsample = mysqli_fetch_array($vresult, MYSQL_ASSOC)) {
+while($viralsample = mysqli_fetch_array($vresult,MYSQLI_ASSOC){
 $viralsamples [] = array('post'=>$viralsample);
 }
  
