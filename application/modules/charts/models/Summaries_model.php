@@ -203,7 +203,7 @@ class Summaries_model extends MY_Model
 			}
 		}
  
-		if (is_int(!is_null($partner))) {
+		if (!is_null($partner)) {
 			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql3 = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
