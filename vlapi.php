@@ -25,7 +25,7 @@ FROM viralsamples v , facilitys f , viraljustifications j  WHERE  f.ID=v.facilit
 if($format == 'json') {
  
 $viralsamples = array();
-while($viralsample = mysqli_fetch_array($vresult, MYSQL_ASSOC)) {
+while($viralsample = mysqli_fetch_array($vresult,MYSQLI_ASSOC){
 $viralsamples [] = array('post'=>$viralsample);
 }
  
