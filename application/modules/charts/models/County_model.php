@@ -755,6 +755,7 @@ class County_model extends MY_Model
 			$table .= "<tr>
 						<td>".($key+1)."</td>
 						<td>".$value['facility']."</td>
+						<td>".$value['facilitycode']."</td>
 						<td>".$value['subcounty']."</td>
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
