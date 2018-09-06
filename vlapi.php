@@ -13,7 +13,7 @@ if(mysqli_connect_errno())
   if ($mflcode !='')
  {
 $sql2=mysqli_query($con, "select ID from facilitys where facilitycode='$mflcode'");
-$ss2=mysqli_fetch_array($sql2, MYSQL_ASSOC);
+$ss2=mysqli_fetch_array($sql2, MYSQLI_ASSOC);
 $facilityid=$ss2['ID'];
 }
 //echo 'uu'.$mflcode. '- : '. $facilityid;
