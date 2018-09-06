@@ -5,20 +5,21 @@ $mflcode = intval($_GET['mfl']);
  //Set our variables
 
 //Connect to the Database
-$con = mysqli_connect("mysql", "root", "FnP5FjbnMrzXCm.", "vl_kemri2");
-if(mysqli_connect_errno()){
-	echo "Failed to connect to DB";
+$con = mysqli_connect("mysql", "root", "FnP5FjbnMrzXCm.", "vl_kemri2")
+if(mysqli_connect_errno())
+{
+	echo "Could not establish a connection to the Database";
 }
   if ($mflcode !='')
  {
 $sql2=mysqli_query($con, "select ID from facilitys where facilitycode='$mflcode'");
-$ss2=mysqli_fetch_array($sql2);
+$ss2=mysqli_fetch_array($sql2, MYSQL_ASSOC);
+
 $facilityid=$ss2['ID'];
 }
 //echo 'uu'.$mflcode. '- : '. $facilityid;
 //Run our query v.facility='$facilityid' and
-$vresult = mysqli_query($con, "SELECT v.ID,v.patient as Patient,f.facilitycode as MFLCode,v.datecollected,v.datetested as DateTested,v.result as Result, j.name AS Justification
-FROM viralsamples v , facilitys f , viraljustifications j  WHERE  f.ID=v.facility and v.facility='$facilityid' and v.justification=j.ID and  v.repeatt=0 AND  v.flag=1  order by v.datetested desc") or die('errpt');
+$vresult = mysqli_query("SELECT v.ID,v.patient as Patient,f.facilitycode as MFLCode,v.datecollected,v.datetested as DateTested,v.result as Result, j.name AS Justification FROM viralsamples v , facilitys f , viraljustifications j  WHERE  f.ID=v.facility and v.facility='$facilityid' and v.justification=j.ID and  v.repeatt=0 AND  v.flag=1  order by v.datetested desc") or die('errpt');
  
 //Preapre our output
 if($format == 'json') {
