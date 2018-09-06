@@ -20,7 +20,7 @@ $facilityid=$ss2['ID'];
 //echo 'uu'.$mflcode. '- : '. $facilityid;
 //Run our query v.facility='$facilityid' and
 $vresult = mysqli_query($con, "SELECT v.ID,v.patient as Patient,f.facilitycode as MFLCode,v.datecollected,v.datetested as DateTested,v.result as Result, j.name AS Justification FROM viralsamples v , facilitys f , viraljustifications j  WHERE  f.ID=v.facility and v.facility='$facilityid' and v.justification=j.ID and  v.repeatt=0 AND  v.flag=1  order by v.datetested desc") or die('errpt');
->>>>>>> 14c22633e3e5c584a3a20685e52b515c92f55394
+
  
 //Preapre our output
 if($format == 'json') {
