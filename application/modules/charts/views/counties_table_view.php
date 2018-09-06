@@ -3,6 +3,7 @@
 		<tr class="colhead">
 			<th rowspan="2">No</th>
 			<th rowspan="2">Name</th>
+			<?php if(isset($subcountyListing)){?><th rowspan="2">MFL Code</th><?php } ?>
 			<?php if(isset($sub_county)){?><th rowspan="2">County</th><?php } ?>
 			<?php if(isset($sites)){?><th rowspan="2">Facilities Sending Samples</th><?php } ?>
 			<?php if(isset($subcountyListing)){?><th rowspan="2">Sub-County</th><?php } ?>
