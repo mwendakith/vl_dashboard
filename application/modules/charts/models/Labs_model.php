@@ -587,7 +587,8 @@ class Labs_model extends MY_Model
 			$data['categories'][0]					= 'No Data';
 
 			foreach ($result as $key => $value) {
-				$data['categories'][$key] 					= $value['labname'];
+				$data['categories'][$key] = $value['labname'];
+				if(!$data['categories'][$key]) $data['categories'][$key] = "POC Sites";
 				$data["lab_outcomes"][0]["data"][$key]	=  (int) $value['sustxfl'];
 				$data["lab_outcomes"][1]["data"][$key]	=  (int) $value['detectableNless1000'];
 			}
