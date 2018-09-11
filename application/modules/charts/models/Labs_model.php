@@ -163,6 +163,7 @@ class Labs_model extends MY_Model
 					$categories[] = $value['labname'];
 				}
 			}
+			print_r($categories);die();
 
 			$months = array(1,2,3,4,5,6,7,8,9,10,11,12);
 			$count = 0;
