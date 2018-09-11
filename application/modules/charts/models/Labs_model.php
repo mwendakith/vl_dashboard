@@ -361,6 +361,7 @@ class Labs_model extends MY_Model
 			foreach ($result as $key => $value) {
 			
 				$data['categories'][$key] = $value['labname'];
+				if(!$data['categories'][$key]) $data['categories'][$key] = "POC Sites";
 
 				$data["pmtct"][0]["data"][$key]	= (int) $value['noage'];
 				$data["pmtct"][1]["data"][$key]	= (int) $value['paeds'];
@@ -413,6 +414,7 @@ class Labs_model extends MY_Model
 			foreach ($result as $key => $value) {
 			
 				$data['categories'][$key] = $value['labname'];
+				if(!$data['categories'][$key]) $data['categories'][$key] = "POC Sites";
 
 				$data["pmtct"][0]["data"][$key]	= (int) $value['nogendertest'];
 				$data["pmtct"][1]["data"][$key]	= (int) $value['maletest'];
@@ -467,73 +469,84 @@ class Labs_model extends MY_Model
 		$tat4 = 0;
 		$tat = array();
 		
-		if ($result) {
-			foreach ($result as $key => $value) {
+		// if ($result) {
+		// 	foreach ($result as $key => $value) {
 				
-					$labname = strtolower(str_replace(" ", "_", $value['labname']));
-					// $labname = $value['labname'];
-					if ($lab) {
-						if ($lab==$value['labname']) {
-							$tat1 = $tat1+$value['tat1'];
-							$tat2 = $tat2+$value['tat2'];
-							$tat3 = $tat3+$value['tat3'];
-							$tat4 = $tat4+$value['tat4'];
-							$tat[$labname] = array(
-										'lab' => $labname,
-										'tat1' => $tat1,
-										'tat2' => $tat2,
-										'tat3' => $tat3,
-										'tat4' => $tat4,
-										'count' => $count
-										);
-							$count++;
-						} else {
-							$count = 1;
-							$tat1 = $value['tat1'];
-							$tat2 = $value['tat2'];
-							$tat3 = $value['tat3'];
-							$tat4 = $value['tat4'];
-							$lab = $value['labname'];
-							$tat[$labname] = array(
-										'lab' => $labname,
-										'tat1' => $tat1,
-										'tat2' => $tat2,
-										'tat3' => $tat3,
-										'tat4' => $tat4,
-										'count' => $count
-										);
-							$count++;
-						}
-					} else {
-						$lab = $value['labname'];
-						$tat1 = $tat1+$value['tat1'];
-						$tat2 = $tat2+$value['tat2'];
-						$tat3 = $tat3+$value['tat3'];
-						$tat4 = $tat4+$value['tat4'];
-						$tat[$labname] = array(
-									'lab' => $labname,
-									'tat1' => $tat1,
-									'tat2' => $tat2,
-									'tat3' => $tat3,
-									'tat4' => $tat4,
-									'count' => $count
-									);
+		// 			$labname = strtolower(str_replace(" ", "_", $value['labname']));
+		// 			// $labname = $value['labname'];
+		// 			if ($lab) {
+		// 				if ($lab==$value['labname']) {
+		// 					$tat1 = $tat1+$value['tat1'];
+		// 					$tat2 = $tat2+$value['tat2'];
+		// 					$tat3 = $tat3+$value['tat3'];
+		// 					$tat4 = $tat4+$value['tat4'];
+		// 					$tat[$labname] = array(
+		// 								'lab' => $labname,
+		// 								'tat1' => $tat1,
+		// 								'tat2' => $tat2,
+		// 								'tat3' => $tat3,
+		// 								'tat4' => $tat4,
+		// 								'count' => $count
+		// 								);
+		// 					$count++;
+		// 				} else {
+		// 					$count = 1;
+		// 					$tat1 = $value['tat1'];
+		// 					$tat2 = $value['tat2'];
+		// 					$tat3 = $value['tat3'];
+		// 					$tat4 = $value['tat4'];
+		// 					$lab = $value['labname'];
+		// 					$tat[$labname] = array(
+		// 								'lab' => $labname,
+		// 								'tat1' => $tat1,
+		// 								'tat2' => $tat2,
+		// 								'tat3' => $tat3,
+		// 								'tat4' => $tat4,
+		// 								'count' => $count
+		// 								);
+		// 					$count++;
+		// 				}
+		// 			} else {
+		// 				$lab = $value['labname'];
+		// 				$tat1 = $tat1+$value['tat1'];
+		// 				$tat2 = $tat2+$value['tat2'];
+		// 				$tat3 = $tat3+$value['tat3'];
+		// 				$tat4 = $tat4+$value['tat4'];
+		// 				$tat[$labname] = array(
+		// 							'lab' => $labname,
+		// 							'tat1' => $tat1,
+		// 							'tat2' => $tat2,
+		// 							'tat3' => $tat3,
+		// 							'tat4' => $tat4,
+		// 							'count' => $count
+		// 							);
 
-						$count++;
-					}
+		// 				$count++;
+		// 			}
 				
-			}
-			// echo "<pre>";print_r($tat);die();
-			foreach ($tat as $key => $value) {
-				$data[$key]['name'] = $value['lab'];
-				$data[$key]['div_name'] = "container" . $key;
-				$data[$key]['tat1'] = round($value['tat1']/$value['count']);
-				$data[$key]['tat2'] = round(($value['tat2']/$value['count']) + $data[$key]['tat1']);
-				$data[$key]['tat3'] = round(($value['tat3']/$value['count']) + $data[$key]['tat2']);
-				$data[$key]['tat4'] = round($value['tat4']/$value['count']);
-			}
-		} else {
-			echo "<pre>";print_r("NO TAT DATA FOUND FOR THE SELECTED PERIOD!");echo "</pre>";die();
+		// 	}
+		// 	// echo "<pre>";print_r($tat);die();
+		// 	foreach ($tat as $key => $value) {
+		// 		$data[$key]['name'] = $value['lab'];
+		// 		$data[$key]['div_name'] = "container" . $key;
+		// 		$data[$key]['tat1'] = round($value['tat1']/$value['count']);
+		// 		$data[$key]['tat2'] = round(($value['tat2']/$value['count']) + $data[$key]['tat1']);
+		// 		$data[$key]['tat3'] = round(($value['tat3']/$value['count']) + $data[$key]['tat2']);
+		// 		$data[$key]['tat4'] = round($value['tat4']/$value['count']);
+		// 	}
+		// } else {
+		// 	echo "<pre>";print_r("NO TAT DATA FOUND FOR THE SELECTED PERIOD!");echo "</pre>";die();
+		// }
+
+
+		foreach ($result as $key => $value) {
+			$data[$key]['name'] = strtolower(str_replace(" ", "_", $value['labname']));
+			if(!$data[$key]['name']) $data[$key]['name'] = "POC Sites";
+			$data[$key]['div_name'] = "container" . $key;
+			$data[$key]['tat1'] = round($value['tat1']);
+			$data[$key]['tat2'] = round($value['tat2']+$data[$key]['tat1']);
+			$data[$key]['tat3'] = round($value['tat3']+$data[$key]['tat2']);
+			$data[$key]['tat4'] = round($value['tat4']);
 		}
 		
 		// echo "<pre>";print_r($data);
