@@ -161,8 +161,10 @@ class Labs_model extends MY_Model
 			foreach ($result as $key => $value) {
 				if (!in_array($value['labname'], $categories)) {
 					$categories[] = $value['labname'];
+					echo "-" . $value['labname'] . "- ";
 				}
 			}
+			die();
 			// print_r($categories);die();
 
 			$months = array(1,2,3,4,5,6,7,8,9,10,11,12);
