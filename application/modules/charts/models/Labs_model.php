@@ -224,9 +224,13 @@ class Labs_model extends MY_Model
 		// echo "<pre>";print_r($result);die();
 		if ($result) {
 			$categories = array();
+			$categories2 = array();
 			foreach ($result as $key => $value) {
-				if (!in_array($value['labname'], $categories)) {
-					$categories[] = $value['labname'];
+				if (!in_array($value['lab'], $categories2)) {
+					$labname = "POC Sites";
+					if($value['labname']) $labname = $value['labname'];
+					$categories[] = $labname;
+					$categories2[] = $value['lab'];
 				}
 			}
 
@@ -235,11 +239,12 @@ class Labs_model extends MY_Model
 			foreach ($categories as $key => $value) {
 				foreach ($months as $key1 => $value1) {
 					foreach ($result as $key2 => $value2) {
-						if ((int) $value1 == (int) $value2['month'] && $value == $value2['labname']) {
+						if ((int) $value1 == (int) $value2['month'] && $categories2[$key] == $value2['lab']) {
 							$data['reject_trend'][$key]['name'] = $value;
 							$data['reject_trend'][$key]['data'][$count] = round(@((int) $value2['rejected'] * 100 / (int) $value2['received']), 1);
 						}
 					}
+					if(!isset($data['reject_trend'][$key]['data'][$count])) $data['reject_trend'][$key]['data'][$count]=0;
 					$count++;
 				}
 				$count = 0;
@@ -303,6 +308,7 @@ class Labs_model extends MY_Model
 			foreach ($result as $key => $value) {
 			
 				$data['categories'][$key] = $value['labname'];
+				if(!$data['categories'][$key]) $data['categories'][$key] = "POC Sites";
 
 				$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
 				$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
