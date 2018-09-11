@@ -35,9 +35,11 @@ class Labs_model extends MY_Model
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
+			$name = "POC Sites";
+			if($value['name']) $name = $value['name'];
 			$ul .= "<tr>
 						<td>".($key+1)."</td>
-						<td>".$value['name']."</td>
+						<td>".$name."</td>
 						<td>".number_format((int) $value['sitesending'])."</td>
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
@@ -94,7 +96,9 @@ class Labs_model extends MY_Model
         $sheet;
 
         foreach ($result as $key => $value) {
-			$sheet[$key]['name'] = $value['name'];
+        	$sheet[$key]['name'] = "POC Sites";
+        	if($value['name']) $sheet[$key]['name'] = $value['name'];
+			
 			$sheet[$key]['sites_sending'] = (int) $value['sitesending'];
 			$sheet[$key]['received'] = (int) $value['received'];
 			$sheet[$key]['rejected'] = (int) $value['rejected'];
@@ -177,6 +181,10 @@ class Labs_model extends MY_Model
 			}
 		} else {
 			echo "<pre>";print_r("NO TESTING TRENDS DATA FOUND FOR THE SELECTED PERIOD!");echo "</pre>";die();
+		}
+
+		foreach ($categories as $key => $value) {
+			if(!$value) $categories[$key] = "POC Sites";
 		}
 
 		
