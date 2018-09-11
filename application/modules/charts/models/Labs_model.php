@@ -167,7 +167,7 @@ class Labs_model extends MY_Model
 					$categories2[] = $value['lab'];
 				}
 			}
-			print_r($categories);die();
+			// print_r($categories);die();
 
 			$months = array(1,2,3,4,5,6,7,8,9,10,11,12);
 			$count = 0;
@@ -176,13 +176,12 @@ class Labs_model extends MY_Model
 					foreach ($result as $key2 => $value2) {
 						if ((int) $value1 == (int) $value2['month'] && $categories2[$key] == $value2['lab']) {
 							// $data['test_trends'][$key]['data'][$count] = (int) $value2['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx'];
-							$data['test_trends'][$keu]['name'] = $value;
+							$data['test_trends'][$key]['name'] = $value;
 							$data['test_trends'][$key]['data'][$count] = (int) $value2['alltests'];
 						}
 					}
+					if(!isset($data['test_trends'][$key]['data'][$count])) $data['test_trends'][$key]['data'][$count]=0;
 					$count++;
-
-					// if()
 				}
 				$count = 0;
 			}
