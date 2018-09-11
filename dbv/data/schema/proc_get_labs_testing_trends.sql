@@ -4,6 +4,7 @@ CREATE PROCEDURE `proc_get_labs_testing_trends`
 (IN filter_year INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
+                    `vls`.`lab`,
                     `lb`.`labname`, 
                     `vls`.`alltests`,
                     `vls`.`eqa`,

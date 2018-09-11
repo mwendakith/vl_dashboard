@@ -158,21 +158,22 @@ class Labs_model extends MY_Model
 		// echo "<pre>";print_r($result);die();
 		if ($result) {
 			$categories = array();
+			$categories2 = array();
 			foreach ($result as $key => $value) {
 				if (!in_array($value['labname'], $categories)) {
-					$categories[] = $value['labname'];
-					echo "-" . $value['labname'] . "- ";
+					$labname = "POC Sites";
+					if($value['labname']) $labname = $value['labname'];
+					$categories[] = $labname;
+					$categories2[] = $value['lab'];
 				}
 			}
-			die();
-			// print_r($categories);die();
 
 			$months = array(1,2,3,4,5,6,7,8,9,10,11,12);
 			$count = 0;
 			foreach ($categories as $key => $value) {
 				foreach ($months as $key1 => $value1) {
 					foreach ($result as $key2 => $value2) {
-						if ((int) $value1 == (int) $value2['month'] && $value == $value2['labname']) {
+						if ((int) $value1 == (int) $value2['month'] && $categories2[$key] == $value2['lab']) {
 							$data['test_trends'][$key]['name'] = $value;
 							// $data['test_trends'][$key]['data'][$count] = (int) $value2['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx'];
 							$data['test_trends'][$key]['data'][$count] = (int) $value2['alltests'];
@@ -184,10 +185,6 @@ class Labs_model extends MY_Model
 			}
 		} else {
 			echo "<pre>";print_r("NO TESTING TRENDS DATA FOUND FOR THE SELECTED PERIOD!");echo "</pre>";die();
-		}
-
-		foreach ($categories as $key => $value) {
-			if(!$value || $value == '') $categories[$key] = "POC Sites";
 		}
 
 		
