@@ -163,7 +163,7 @@ class Labs_model extends MY_Model
 					$categories[] = $value['labname'];
 				}
 			}
-			print_r($categories);die();
+			// print_r($categories);die();
 
 			$months = array(1,2,3,4,5,6,7,8,9,10,11,12);
 			$count = 0;
@@ -185,7 +185,7 @@ class Labs_model extends MY_Model
 		}
 
 		foreach ($categories as $key => $value) {
-			if(!$value) $categories[$key] = "POC Sites";
+			if(!$value || $value == '') $categories[$key] = "POC Sites";
 		}
 
 		
