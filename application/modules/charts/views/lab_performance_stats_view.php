@@ -42,7 +42,7 @@
   $(document).ready(function() {
   	$('#example').DataTable({
   		dom: '<"btn btn-primary"B>lTfgtip',
-  		pageLength: 50
+  		pageLength: 50,
 		responsive: false,
 	    buttons : [
 	        {
