@@ -111,7 +111,7 @@
 	        	$("#breadcrum").html(t);
 	        	$("#lab_summary").load("<?php echo base_url();?>charts/labs/summary/"+em);
 	        	$("#graphs").load("<?php echo base_url();?>charts/labs/lab_trends/"+em);
-	        	$("#lab_facility_rejections").load("<?php echo base_url();?>charts/labs/site_rejections/"+em);
+	        	// $("#lab_facility_rejections").load("<?php // echo base_url();?>charts/labs/site_rejections/"+em);
 	        	$("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats");
 				
 			}
