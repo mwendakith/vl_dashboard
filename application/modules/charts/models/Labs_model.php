@@ -821,60 +821,60 @@ class Labs_model extends MY_Model
 		return $data;
 	}
 
-	function poc_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null)
-	{
-		// echo round(3.6451895227869, 2, PHP_ROUND_HALF_UP);die();
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+	// function poc_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null)
+	// {
+	// 	// echo round(3.6451895227869, 2, PHP_ROUND_HALF_UP);die();
+	// 	if ($year==null || $year=='null') {
+	// 		$year = $this->session->userdata('filter_year');
+	// 	}
+	// 	if ($to_month==null || $to_month=='null') {
+	// 		$to_month = 0;
+	// 	}
+	// 	if ($to_year==null || $to_year=='null') {
+	// 		$to_year = 0;
+	// 	}
+	// 	if ($month==null || $month=='null') {
+	// 		if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+	// 			$month = 0;
+	// 		}else {
+	// 			$month = $this->session->userdata('filter_month');
+	// 		}
+	// 	}
 
-		$sql = "CALL `proc_get_vl_poc_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."');";
-		// echo "<pre>";print_r($sql);die();
-		$result = $this->db->query($sql)->result_array();
-		// echo "<pre>";print_r($result);echo "</pre>";die();
+	// 	$sql = "CALL `proc_get_vl_poc_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."');";
+	// 	// echo "<pre>";print_r($sql);die();
+	// 	$result = $this->db->query($sql)->result_array();
+	// 	// echo "<pre>";print_r($result);echo "</pre>";die();
 
 
-		$data['outcomes'][0]['name'] = "Not Suppressed";
-		$data['outcomes'][1]['name'] = "Suppressed";
-		$data['outcomes'][2]['name'] = "Suppression";
+	// 	$data['outcomes'][0]['name'] = "Not Suppressed";
+	// 	$data['outcomes'][1]['name'] = "Suppressed";
+	// 	$data['outcomes'][2]['name'] = "Suppression";
 
-		$data['outcomes'][0]['type'] = "column";
-		$data['outcomes'][1]['type'] = "column";
-		$data['outcomes'][2]['type'] = "spline";
+	// 	$data['outcomes'][0]['type'] = "column";
+	// 	$data['outcomes'][1]['type'] = "column";
+	// 	$data['outcomes'][2]['type'] = "spline";
 
-		$data['outcomes'][0]['yAxis'] = 1;
-		$data['outcomes'][1]['yAxis'] = 1;
+	// 	$data['outcomes'][0]['yAxis'] = 1;
+	// 	$data['outcomes'][1]['yAxis'] = 1;
 
-		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
-		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
-		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
-		$data['title'] = "";
+	// 	$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+	// 	$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+	// 	$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+	// 	$data['title'] = "";
 
-		foreach ($result as $key => $value) {
-			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
-			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
-			$supp = ($routine - $routinesus);
+	// 	foreach ($result as $key => $value) {
+	// 		$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
+	// 		$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
+	// 		$supp = ($routine - $routinesus);
 
-			$data['categories'][$key] 					= $value['name'];
-			$data['outcomes'][0]['data'][$key] = $routinesus;
-			$data['outcomes'][1]['data'][$key] = $supp;
-			$data['outcomes'][2]['data'][$key] = round( (@($supp*100)/$routine)), 1);
-		}
-		return $data;
-	}
+	// 		$data['categories'][$key] 					= $value['name'];
+	// 		$data['outcomes'][0]['data'][$key] = $routinesus;
+	// 		$data['outcomes'][1]['data'][$key] = $supp;
+	// 		$data['outcomes'][2]['data'][$key] = round( (@($supp*100)/$routine)), 1);
+	// 	}
+	// 	return $data;
+	// }
 
 
 
