@@ -670,6 +670,11 @@ class Labs_model extends MY_Model
 			if($b){
 				$b = false;
 				$year = (int) $value['year'];
+
+				$data['suppression_trends'][$i]['data'] = array_fill(0, 12, 0);
+				$data['test_trends'][$i]['data'] = array_fill(0, 12, 0);
+				$data['rejected_trends'][$i]['data'] = array_fill(0, 12, 0);
+				$data['tat_trends'][$i]['data'] = array_fill(0, 12, 0);
 			}
 
 			$y = (int) $value['year'];
