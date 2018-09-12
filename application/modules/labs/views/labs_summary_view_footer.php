@@ -50,6 +50,7 @@
 				$("#results").html("<div>Loading...</div>");
 				$("#lab_facility_rejections").html("<div>Loading...</div>");
 				$("#poc").html("<div>Loading...</div>");
+				$("#poc_outcomes").html("<div>Loading...</div>");
 
 				$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends/"+from[1]);
 				$("#test_trends").load("<?php echo base_url('charts/labs/testing_trends');?>/"+from[1]);
@@ -60,6 +61,7 @@
 				$("#lab_age").load("<?php echo base_url();?>charts/labs/ages/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 				$("#results").load("<?php echo base_url();?>charts/labs/results_outcome/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 				$("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+				$("#poc_outcomes").load("<?php echo base_url();?>charts/labs/poc_outcomes/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 
 				var em = localStorage.getItem("my_lab");
 
@@ -113,6 +115,7 @@
 	        	$("#graphs").load("<?php echo base_url();?>charts/labs/lab_trends/"+em);
 	        	// $("#lab_facility_rejections").load("<?php // echo base_url();?>charts/labs/site_rejections/"+em);
 	        	$("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats");
+	        	$("#poc_outcomes").load("<?php echo base_url();?>charts/labs/poc_outcomes");
 				
 			}
 			$("#lab_rejections").html("<div>Loading...</div>");
@@ -164,6 +167,7 @@
 		$("#results").html("<div>Loading...</div>");
 		$("#lab_facility_rejections").html("<div>Loading...</div>");
 		$("#poc").html("<div>Loading...</div>");
+		$("#poc_outcomes").html("<div>Loading...</div>");
 
 		var em = localStorage.getItem("my_lab");
 
@@ -176,6 +180,7 @@
 		$("#ttime").load("<?php echo base_url();?>charts/labs/turn_around_time/"+year+"/"+month);
 		$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats/"+year+"/"+month);
 		$("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats/"+year+"/"+month);
+		$("#poc_outcomes").load("<?php echo base_url();?>charts/labs/poc_outcomes/"+year+"/"+month);
 		$("#samples").load("<?php echo base_url();?>charts/labs/sample_types/"+year+"/"+month);
 		$("#lab_gender").load("<?php echo base_url();?>charts/labs/gender/"+year+"/"+month);
 		$("#lab_age").load("<?php echo base_url();?>charts/labs/ages/"+year+"/"+month);

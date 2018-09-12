@@ -179,6 +179,15 @@ class Labs extends MY_Controller
 		//echo "<pr>";print_r($obj);die;
 
 	}
+	
+	function poc_outcomes($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		// echo "die";die();
+		$data['trends'] = $this->labs_model->poc_outcomes($year,$month,$to_year,$to_month);
+		$data['div_name'] = "summary_poc_outcomes";		
+		
+		$this->load->view('trends_outcomes_view', $data);
+	}
 
 
 }
