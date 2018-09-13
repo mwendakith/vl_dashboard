@@ -699,6 +699,7 @@ class Summaries_model extends MY_Model
 				$sql = "CALL `proc_get_regional_gender`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			}
 		}
+		// CALL `proc_get_national_gender`('2017','0','0','0');
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
