@@ -4,13 +4,14 @@ CREATE PROCEDURE `proc_get_labs_tat`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
+                        `vls`.`lab`, 
                         `lb`.`labname`, 
-                        `vls`.`tat1`, 
-                        `vls`.`tat2`, 
-                        `vls`.`tat3`, 
-                        `vls`.`tat4` 
+                        AVG(`vls`.`tat1`) AS `tat1`, 
+                        AVG(`vls`.`tat2`) AS `tat2`, 
+                        AVG(`vls`.`tat3`) AS `tat3`, 
+                        AVG(`vls`.`tat4`) AS `tat4` 
                     FROM `vl_lab_summary` `vls` 
-                    JOIN `labs` `lb` 
+                    LEFT JOIN `labs` `lb` 
                         ON `vls`.`lab` = `lb`.`ID` WHERE 1";
 
    
@@ -27,7 +28,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " ORDER BY `lb`.`labname`, `vls`.`month` ASC ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `lb`.`ID` ORDER BY `lb`.`labname`, `vls`.`month` ASC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

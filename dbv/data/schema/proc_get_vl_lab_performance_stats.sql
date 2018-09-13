@@ -21,7 +21,7 @@ BEGIN
                     SUM(`ls`.`fake_confirmatory`) AS `fake_confirmatory`,
                     SUM(`ls`.`baseline`) AS `baseline`,
                     SUM(`ls`.`baselinesustxfail`) AS `baselinesustxfail`
-                  FROM `vl_lab_summary` `ls` JOIN `labs` `l` ON `ls`.`lab` = `l`.`ID` 
+                  FROM `vl_lab_summary` `ls` LEFT JOIN `labs` `l` ON `ls`.`lab` = `l`.`ID` 
                 WHERE 1 ";
 
     IF (from_month != 0 && from_month != '') THEN

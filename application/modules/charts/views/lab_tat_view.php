@@ -108,7 +108,7 @@
         },
         yAxis: {
             min: 0,
-            max: <?php echo $tat4;?>,
+            max: <?php echo ($tat4 > $tat3 ? $tat4 : $tat3); ?>,
             tickLength: 5,
             tickWidth: 1,
             tickColor: '#C0C0C0',
