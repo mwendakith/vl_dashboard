@@ -31,7 +31,7 @@ class Template_model extends MY_Model
 		$county_data = $this->db->get()->result_array();
 		
 		foreach ($county_data as $key => $value) {
-			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].' Sub-County</option>';
+			$dropdown .= '<option value="'.$value['id'].'">'.$value['name'].' Sub-County</option>';
 		}
 		
 		return $dropdown;
@@ -61,7 +61,8 @@ class Template_model extends MY_Model
 		foreach ($lab_data as $key => $value) {
 			$dropdown .= '<option value="'.$value['ID'].'">'.$value['labname'].'</option>';
 		}
-		
+		$dropdown .= '<option value="11">POC Sites</option>';
+				
 		return $dropdown;
 	}
 

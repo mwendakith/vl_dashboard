@@ -7,7 +7,7 @@ BEGIN
                     `l`.`labname`,
                     SUM((`vcs`.`Undetected`+`vcs`.`less1000`)) AS `detectableNless1000`,
                     SUM(`vcs`.`sustxfail`) AS `sustxfl`
-                FROM `vl_lab_summary` `vcs` JOIN `labs` `l` ON `vcs`.`lab` = `l`.`ID` WHERE 1";
+                FROM `vl_lab_summary` `vcs` LEFT JOIN `labs` `l` ON `vcs`.`lab` = `l`.`ID` WHERE 1";
 
 
     IF (from_month != 0 && from_month != '') THEN

@@ -5,19 +5,17 @@ $mflcode = intval($_GET['mfl']);
  //Set our variables
 //Connect to the Database
 
-$con = mysql_connect("10.230.50.11:3307", "root", "FnP5FjbnMrzXCm.") or die ('MySQL Error.');
+$con = mysql_connect("mysql", "root", "FnP5FjbnMrzXCm.") or die ('MySQL Error.');
 mysql_select_db('vl_kemri2', $con) or die('MySQL Error.');
 
-  if ($mflcode !='')
- {
+if ($mflcode !='') {
 $sql2=mysql_query("select ID from facilitys where facilitycode='$mflcode'");
 $ss2=mysql_fetch_array($sql2);
 $facilityid=$ss2['ID'];
 }
 //echo 'uu'.$mflcode. '- : '. $facilityid;
 
-$vresult = mysql_query("SELECT v.ID,v.patient as Patient,f.facilitycode as MFLCode,v.datetested as DateTested,v.result as Result, j.name AS Justification
-FROM viralsamples v , facilitys f , viraljustifications j  WHERE  f.ID=v.facility and v.facility='$facilityid' and v.justification=j.ID and  v.repeatt=0 AND  v.flag=1  order by v.datetested desc ") or die(mysql_error());
+$vresult = mysql_query("SELECT v.ID,v.patient as Patient,f.facilitycode as MFLCode,v.datetested as DateTested,v.result as Result, j.name AS Justification FROM viralsamples v , facilitys f , viraljustifications j  WHERE  f.ID=v.facility and v.facility='$facilityid' and v.justification=j.ID and  v.repeatt=0 AND  v.flag=1  order by v.datetested desc ") or die(mysql_error());
  $mnumrows=mysql_num_rows($vresult);
 
 

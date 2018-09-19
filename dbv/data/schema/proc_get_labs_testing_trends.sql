@@ -4,6 +4,7 @@ CREATE PROCEDURE `proc_get_labs_testing_trends`
 (IN filter_year INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
+                    `vls`.`lab`,
                     `lb`.`labname`, 
                     `vls`.`alltests`,
                     `vls`.`eqa`,
@@ -13,7 +14,7 @@ BEGIN
                     `vls`.`month`, 
                     `vls`.`year` 
                 FROM `vl_lab_summary` `vls` 
-                JOIN `labs` `lb` 
+                LEFT JOIN `labs` `lb` 
                     ON `vls`.`lab` = `lb`.`ID`
                 WHERE 1";
 

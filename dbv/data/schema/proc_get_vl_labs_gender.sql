@@ -10,7 +10,7 @@ BEGIN
                     SUM(`vls`.`nogendertest`) AS `nogendertest`, 
                     `vls`.`year` 
                 FROM `vl_lab_summary` `vls` 
-                JOIN `labs` `lb` 
+                LEFT JOIN `labs` `lb` 
                     ON `vls`.`lab` = `lb`.`ID`
                 WHERE 1";
 
