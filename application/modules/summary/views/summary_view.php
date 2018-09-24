@@ -136,9 +136,9 @@
 		  <div class="panel-body" id="justification" style="height:500px;">
 		    <center><div class="loader"></div></center>
 		  </div>
-		  <div>
+		  <!-- <div>
 		  	<center><button class="btn btn-default" onclick="justificationModal();" style="background-color: #1BA39C;color: white;margin-bottom: 1em;">Click here for breakdown</button></center>
-		  </div>
+		  </div> -->
 		</div>
 	</div>
 	

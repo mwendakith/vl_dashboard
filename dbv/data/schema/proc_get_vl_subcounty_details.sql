@@ -6,6 +6,7 @@ BEGIN
   SET @QUERY =    "SELECT  
                     `countys`.`name` AS `county`,
                     `districts`.`name` AS `subcounty`,
+                    `districts`.`name` AS `subcounty_id`,
                     AVG(`vcs`.`sitessending`) AS `sitesending`, 
                     SUM(`vcs`.`received`) AS `received`, 
                     SUM(`vcs`.`rejected`) AS `rejected`,  
