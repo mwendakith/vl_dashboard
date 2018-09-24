@@ -326,7 +326,7 @@ class County_model extends MY_Model
 			if (!in_array($value->selection, $counties))
 				$counties[] = $value->selection;
 		}
-		dd($counties);
+		
 		foreach ($counties as $key => $value) {
 			foreach ($resultGender as $k => $v) {
 				if ($value == $v->selection) {
