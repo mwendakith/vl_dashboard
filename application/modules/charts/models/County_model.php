@@ -326,6 +326,7 @@ class County_model extends MY_Model
 			if (!in_array($value->selection, $counties))
 				$counties[] = $value->selection;
 		}
+		dd($counties);
 		foreach ($counties as $key => $value) {
 			foreach ($resultGender as $k => $v) {
 				if ($value == $v->selection) {
@@ -399,7 +400,7 @@ class County_model extends MY_Model
 						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
 						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
 					foreach ($genderData as $k => $v) {
-						if ($value['subcounty'] == $v['selection']) {
+						if ($value['subcounty_id'] == $v['selection']) {
 							$table .= "
 									<td>".number_format((int) $v['femaletests'])."</td>
 									<td>".number_format((int) $v['femalesustx'])."</td>
