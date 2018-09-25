@@ -37,7 +37,7 @@ class County_model extends MY_Model
 
 
 		$sql = "CALL `proc_get_vl_county_subcounty_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		// echo "<pre>";print_r($sql);die();
+		
 		$result = $this->db->query($sql)->result_array();
 
 		$data['county_outcomes'][0]['name'] = 'Not Suppressed';
@@ -741,16 +741,6 @@ class County_model extends MY_Model
 				}
 			}
 		}
-		// echo "<pre>";print_r($genderData);die();
-		// foreach ($result as $key => $value) {
-		// 	$data[$key] = $value;
-		// 	foreach ($genderData as $k => $v) {
-		// 		$data[$key] = array_merge($data[$key], $v);
-		// 	}
-		// 	foreach ($ageData as $k => $v) {
-		// 		$data[$key] = array_merge($data[$key], $v);
-		// 	}
-		// }
 
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);

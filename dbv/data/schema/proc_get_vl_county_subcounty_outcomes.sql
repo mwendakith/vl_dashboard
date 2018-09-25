@@ -4,13 +4,12 @@ CREATE PROCEDURE `proc_get_vl_county_subcounty_outcomes`
 (IN filter_county INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
-                        `vf`.`countyname`, 
-						`vf`.`subcounty` AS `name`, 
+						`vf`.`name` AS `name`, 
 						SUM(`vss`.`less5000`+`vss`.`above5000`) AS `nonsuppressed`, 
 						SUM(`vss`.`Undetected`+`vss`.`less1000`) AS `suppressed` 
 						FROM `vl_subcounty_summary` `vss`
-						JOIN `view_facilitys` `vf` 
-						ON `vss`.`subcounty` = `vf`.`district`
+						JOIN `districts` `vf` 
+						ON `vss`.`subcounty` = `vf`.`id`
 					WHERE 1 ";
 
   
@@ -31,7 +30,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",filter_county,"' ");
      END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vf`.`district` ORDER BY `suppressed` DESC, `nonsuppressed` ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vf`.`id` ORDER BY `suppressed` DESC, `nonsuppressed` ");
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
