@@ -312,6 +312,7 @@ class County_model extends MY_Model
 		$sql = "CALL `proc_get_vl_subcounty_details`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		$sqlAge = "CALL `proc_get_vl_county_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$county."');";
 		$sqlGender = "CALL `proc_get_vl_county_gender_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$county."');";
+
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		$this->db->close();
@@ -411,7 +412,7 @@ class County_model extends MY_Model
 						}
 					}
 					foreach ($ageData as $k => $v) {
-						if ($value['subcounty'] == $v['selection']) {
+						if ($value['subcounty_id'] == $v['selection']) {
 							$table .= "
 									<td>".number_format((int) $v['less2tests'])."</td>
 									<td>".number_format((int) $v['less2sustx'])."</td>
