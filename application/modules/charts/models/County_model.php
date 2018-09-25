@@ -741,13 +741,16 @@ class County_model extends MY_Model
 				}
 			}
 		}
+		// echo "<pre>";print_r($genderData);die();
 		foreach ($result as $key => $value) {
-			$data[$key] = $value;
+			$data[$value['facility_id']] = $value;
 			foreach ($genderData as $k => $v) {
-				$data[$key] = array_merge($data[$key], $v);
+				if ($v->selection == $value['facility_id'])
+					$data[$key] = array_merge($data[$key], $v);
 			}
 			foreach ($ageData as $k => $v) {
-				$data[$key] = array_merge($data[$key], $v);
+				if ($v->selection == $value['facility_id'])
+					$data[$key] = array_merge($data[$key], $v);
 			}
 		}
 

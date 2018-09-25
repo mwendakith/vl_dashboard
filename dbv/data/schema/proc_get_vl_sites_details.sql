@@ -15,7 +15,8 @@ BEGIN
                     SUM(`vss`.`baseline`) AS `baseline`,
                     SUM(`vss`.`baselinesustxfail`) AS `baselinesustxfail`,
                     SUM(`vss`.`confirmtx`) AS `confirmtx`,
-                    SUM(`vss`.`confirm2vl`) AS `confirm2vl`,  
+                    SUM(`vss`.`confirm2vl`) AS `confirm2vl`,   
+                    `vf`.`ID` as `facility_id`,
                     `vf`.`name` as `facility`,
                     `vf`.`facilitycode` as `facilitycode`,
                     `vf`.`subcounty` 
