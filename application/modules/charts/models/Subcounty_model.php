@@ -170,6 +170,7 @@ class Subcounty_model extends MY_Model
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
+			$validTests = ((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx']);
 			$table .= "<tr>
 						<td>".($key+1)."</td>
 						<td>".$value['subcounty']."</td>
@@ -178,7 +179,7 @@ class Subcounty_model extends MY_Model
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
 							round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
-						<td>".number_format((int) $value['alltests'])."</td>
+						<td>".number_format((int) $validTests + (int) $value['invalids'])."</td>
 						<td>".number_format((int) $value['invalids'])."</td>
 
 						<td>".number_format($routine)."</td>
@@ -187,7 +188,7 @@ class Subcounty_model extends MY_Model
 						<td>".number_format((int) $value['baselinesustxfail'])."</td>
 						<td>".number_format((int) $value['confirmtx'])."</td>
 						<td>".number_format((int) $value['confirm2vl'])."</td>
-						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
+						<td>".number_format((int) $validTests)."</td>
 						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
 					foreach ($genderData as $k => $v) {
 						if ($value['subcounty'] == $v['selection']) {
@@ -639,6 +640,7 @@ class Subcounty_model extends MY_Model
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
+			$validTests = ((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx']);
 			$table .= "<tr>
 				<td>".$count."</td>
 				<td>".$value['MFLCode']."</td>
@@ -647,7 +649,7 @@ class Subcounty_model extends MY_Model
 				<td>".number_format((int) $value['received'])."</td>
 				<td>".number_format((int) $value['rejected']) . " (" . 
 					round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
-				<td>".number_format((int) $value['alltests'])."</td>
+				<td>".number_format((int) $validTests + (int) $value['invalids'])."</td>
 				<td>".number_format((int) $value['invalids'])."</td>
 
 				<td>".number_format($routine)."</td>
@@ -656,7 +658,7 @@ class Subcounty_model extends MY_Model
 				<td>".number_format((int) $value['baselinesustxfail'])."</td>
 				<td>".number_format((int) $value['confirmtx'])."</td>
 				<td>".number_format((int) $value['confirm2vl'])."</td>
-				<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
+				<td>".number_format((int) $validTests)."</td>
 				<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>";
 					foreach ($genderData as $k => $v) {
 						if ($value['name'] == $v['selection']) {
