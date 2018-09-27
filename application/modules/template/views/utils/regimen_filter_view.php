@@ -62,7 +62,7 @@
       Year: 
       <?php
         for ($i=9; $i > -1; $i--) { 
-          $year = Date('Y');
+          $year = gmdate('Y');
           $year -= $i;
       ?>
       <a href="javascript:void(0)" onclick="date_filter('yearly', <?= @$year; ?> )" class="alert-link"> <?= @$year; ?> </a>|
