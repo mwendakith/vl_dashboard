@@ -17,10 +17,10 @@ BEGIN
       SET @QUERY = CONCAT(@QUERY, " `jt`.`partnername` as `selection` FROM `vl_partner_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `view_facilitys` `jt` ON `jt`.`partner` = `va`.`partner` WHERE `jt`.`county` = '",ID,"' ");
    END IF;
    IF (type=2 OR type='2') THEN
-      SET @QUERY = CONCAT(@QUERY, " `jt`.`subcounty` as `selection` FROM `vl_subcounty_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `view_facilitys` `jt` ON `jt`.`district` = `va`.`subcounty` WHERE `jt`.`county` = '",ID,"' ");
+      SET @QUERY = CONCAT(@QUERY, " `va`.`subcounty` as `selection` FROM `vl_subcounty_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `districts` `jt` ON `jt`.`id` = `va`.`subcounty` WHERE `jt`.`county` = '",ID,"' ");
    END IF;
    IF (type=3 OR type='3') THEN
-      SET @QUERY = CONCAT(@QUERY, " `jt`.`name` as `selection` FROM `vl_site_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `view_facilitys` `jt` ON `jt`.`ID` = `va`.`facility` WHERE `jt`.`county` = '",ID,"' ");
+      SET @QUERY = CONCAT(@QUERY, " `jt`.`ID` as `selection` FROM `vl_site_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `view_facilitys` `jt` ON `jt`.`ID` = `va`.`facility` WHERE `jt`.`county` = '",ID,"' ");
    END IF;
                         
    IF (from_month != 0 && from_month != '') THEN
