@@ -68,14 +68,14 @@
         $("#first").show();
         $("#second").hide();
 
-        $("#graphs").load("<?php echo base_url();?>charts/partner_trends/positive_trends/"+county_id);
-        $("#stacked_graph").load("<?php echo base_url();?>charts/partner_trends/summary/"+county_id);
+        $("#graphs").load("<?php echo base_url();?>charts/partner_trends/positive_trends/"+partner_id);
+        $("#stacked_graph").load("<?php echo base_url();?>charts/partner_trends/summary/"+partner_id);
       }
       else{
         $("#first").hide();
         $("#second").show();
-        $("#q_outcomes").load("<?php echo base_url();?>charts/partner_trends/quarterly_outcomes/"+county_id);
-        $("#q_graphs").load("<?php echo base_url();?>charts/partner_trends/quarterly/"+county_id);
+        $("#q_outcomes").load("<?php echo base_url();?>charts/partner_trends/quarterly_outcomes/"+partner_id);
+        $("#q_graphs").load("<?php echo base_url();?>charts/partner_trends/quarterly/"+partner_id);
       }
       
     });
