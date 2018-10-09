@@ -147,6 +147,7 @@
 								<li><a href="<?php echo base_url();?>partner/pmtct">Partner PMTCT</a></li>
 								<li><a href="<?php echo base_url();?>partner/current">Partner Current Suppression</a></li>
 								<li><a href="<?php echo base_url();?>partner/tat">Partner TAT</a></li>
+								<li><a href="<?php echo base_url();?>partner/agencies">Funding Agencies</a></li>
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
