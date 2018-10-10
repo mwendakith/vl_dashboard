@@ -114,7 +114,7 @@ class Partner extends MY_Controller
 	public function agencies() {
 		$this->clear_all_session_data();
 		$this->data['content_view'] = 'partner/partner_agencies_view';
-
+		$this->data['agencies'] = TRUE;
 		$this->template($this->data);
 	}
 

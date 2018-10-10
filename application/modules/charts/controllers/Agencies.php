@@ -23,6 +23,16 @@ class Agencies extends MY_Controller
 	public function outcomes ($year=null,$month=null,$to_year=null,$to_month,$type=null,$agency_id=null) {
 
 	}
+
+	public function sample_types($year=NULL,$type=null,$agency_id=null,$all=NULL)
+	{
+		$data['outcomes'] = $this->agencies_model->sample_types($year,$type,$agency_id, $all);
+		$link = $year . '/' . $type . '/' . $agency_id;
+
+		$data['link'] = base_url('charts/agencies/download_sampletypes/' . $link);
+
+    	$this->load->view('national_sample_types',$data);
+	}
 }
 
 ?>
