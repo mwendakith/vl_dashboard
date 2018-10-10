@@ -151,12 +151,14 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->set_userdata('partner_filter', null);
 					$this->session->unset_userdata('site_filter');
 					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}else{
 					$this->session->set_userdata('county_filter', $data['county']);
 					$this->session->set_userdata('filter_month', null);
 					$this->session->set_userdata('partner_filter', null);
 					$this->session->unset_userdata('site_filter');
 					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}
 			}
 			
@@ -173,12 +175,14 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->set_userdata('county_filter', null);
 					$this->session->unset_userdata('site_filter');
 					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}else{
 					$this->session->set_userdata('partner_filter', $data['partner']);
 					$this->session->set_userdata('filter_month', null);
 					$this->session->set_userdata('county_filter', null);
 					$this->session->unset_userdata('site_filter');
 					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}
 			}
 			
@@ -196,12 +200,14 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->set_userdata('filter_month', null);
 					$this->session->set_userdata('county_filter', null);
 					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}else{
 					$this->session->set_userdata('site_filter', $data['site']);
 					$this->session->set_userdata('partner_filter', null);
 					$this->session->set_userdata('filter_month', null);
 					$this->session->set_userdata('county_filter', null);
 					$this->session->unset_userdata('regimen_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}
 			}
 			
@@ -219,12 +225,14 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('partner_filter');
 					$this->session->unset_userdata('filter_month');
 					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}else{
 					$this->session->set_userdata('regimen_filter', $data['regimen']);
 					$this->session->unset_userdata('site_filter');
 					$this->session->unset_userdata('partner_filter');
 					$this->session->unset_userdata('filter_month');
 					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}
 			}
 			
@@ -243,6 +251,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('partner_filter');
 					$this->session->unset_userdata('filter_month');
 					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}else{
 					$this->session->set_userdata('age_category_filter', $data['age_category']);
 					$this->session->unset_userdata('regimen_filter');
@@ -250,6 +259,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('partner_filter');
 					$this->session->unset_userdata('filter_month');
 					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}
 			}
 			
@@ -269,6 +279,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('partner_filter');
 					$this->session->unset_userdata('filter_month');
 					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}else{
 					$this->session->set_userdata('sample_filter', $data['sample']);
 					$this->session->unset_userdata('age_category_filter');
@@ -277,6 +288,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('partner_filter');
 					$this->session->unset_userdata('filter_month');
 					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}
 			}
 			
@@ -295,6 +307,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('filter_month');
 					$this->session->unset_userdata('county_filter');
 					$this->session->unset_userdata('sub_county_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}else{
 					$this->session->set_userdata('sub_county_filter', $data['subCounty']);
 					$this->session->unset_userdata('regimen_filter');
@@ -302,6 +315,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('partner_filter');
 					$this->session->unset_userdata('filter_month');
 					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}
 			}
 			
@@ -321,6 +335,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('county_filter');
 					$this->session->unset_userdata('sub_county_filter');
 					$this->session->unset_userdata('patner_age_category_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}else{
 					$this->session->set_userdata('patner_age_category_filter', $data['ageCat']);
 					$this->session->unset_userdata('sub_county_filter');
@@ -328,6 +343,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('site_filter');
 					$this->session->unset_userdata('filter_month');
 					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}
 			}
 			
@@ -348,6 +364,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('sub_county_filter');
 					$this->session->unset_userdata('patner_age_category_filter');
 					$this->session->unset_userdata('patner_regimen_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}else{
 					$this->session->set_userdata('patner_regimen_filter', $data['patReg']);
 					$this->session->unset_userdata('patner_age_category_filter');
@@ -356,6 +373,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('site_filter');
 					$this->session->unset_userdata('filter_month');
 					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}
 			}
 			
@@ -377,6 +395,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('sub_county_filter');
 					$this->session->unset_userdata('patner_age_category_filter');
 					$this->session->unset_userdata('patner_regimen_filter');
+					$this->session->unset_userdata('funding_agency_filter');
 				}else{
 					$this->session->set_userdata('pmtct_filter', $data['pmtct']);
 					$this->session->unset_userdata('patner_regimen_filter');
@@ -386,6 +405,29 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 					$this->session->unset_userdata('site_filter');
 					$this->session->unset_userdata('filter_month');
 					$this->session->unset_userdata('county_filter');
+					$this->session->unset_userdata('funding_agency_filter');
+				}
+			}
+			
+			return TRUE;
+		}
+
+		function filter_funding_agency($data=NULL) {
+			$session_data = $this->session->all_userdata();
+			
+			if(!$data){}
+			else {
+				if ($data['funding_agency'] == 'NA') {
+					foreach ($session_data as $key => $value) {
+				        if (!($key == 'filter_year' || $key == '__ci_last_regenerate'))
+				            $this->session->unset_userdata($key);
+				    }
+				} else {
+					$this->session->set_userdata('funding_agency_filter', $data['funding_agency']);
+					foreach ($session_data as $key => $value) {
+						if (!($key == 'filter_year' || $key == 'funding_agency_filter' || $key == '__ci_last_regenerate'))
+				            $this->session->unset_userdata($key);
+				    }
 				}
 			}
 			
