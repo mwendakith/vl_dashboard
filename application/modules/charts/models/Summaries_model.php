@@ -758,8 +758,7 @@ class Summaries_model extends MY_Model
 		return $array1;
 	}
  
-	function sample_types($year=null,$county=null,$partner=null, $all=null)
-	{
+	function sample_types($year=null,$county=null,$partner=null, $all=null) {
 		$result = $this->get_sampletypesData($year,$county,$partner);
 		// echo "<pre>";print_r($result);die();
 		$data['sample_types'][0]['name'] = 'EDTA';

@@ -1,5 +1,6 @@
 <script type="text/javascript">
 	$().ready(function () {
+		localStorage.setItem("my_var", 0);
 		$("#breadcrum").html("All Funding Agencies");
 		$.get("<?php echo base_url();?>template/dates", function(data){
     		obj = $.parseJSON(data);
@@ -14,7 +15,6 @@
 			$(".display_current_range").html(data);
     	});
 		$("#second").hide();
-		$("#third").hide();
 		// fetching the partner outcomes
 		$("#agency_div").load("<?php echo base_url('charts/agencies/suppression'); ?>");
 		
@@ -27,6 +27,7 @@
 	        // Put the results in a div
 	        posting.done(function( data ) {
 	        	data = $.parseJSON(data);
+	        	var all = localStorage.getItem("my_var");
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data+"/"+null+"/"+null+"/"+null+"/"+5, function(data){
 	        		$("#breadcrum").html(data);
 	        	});
@@ -43,13 +44,14 @@
 	        	
 	        	if (data==null) {
 	        		$("#second").hide();
-					$("#third").hide();
 					// fetching the partner outcomes
 					$("#agency_div").html("<center><div class='loader'></div></center>");
 					$("#agency_div").load("<?php echo base_url('charts/agencies/suppression'); ?>");
 	        	} else {
-	        		
-	        		
+	        		$("#first").hide();
+	        		$("#second").show();
+
+	        		$("#samples").load("<?php echo base_url('charts/agencies/sample_types'); ?>/"+null+"/"+null+"/"+data+"/"+all);
 	        	}
 	        });
 		});
@@ -119,7 +121,6 @@
 				
 				if (partner==0) {
 					$("#second").hide();
-					$("#third").hide();
 					// fetching the partner outcomes
 					$("#agency_div").html("<center><div class='loader'></div></center>");
 					$("#agency_div").load("<?php echo base_url('charts/agencies/suppression'); ?>/"+year+"/"+month);
@@ -129,5 +130,25 @@
 				}
 			});
 		});
+	}
+
+	function switch_source(){
+		var all = localStorage.getItem("my_var");
+
+		if(all == 0){
+			localStorage.setItem("my_var", 1);
+			all=1;
+			$("#samples_heading").html('Testing Trends for All Tests');
+			$("#switchButton").val('Click to Switch to Routine Tests Trend');
+
+		}
+		else{
+			localStorage.setItem("my_var", 0);
+			all=0;
+			$("#samples_heading").html('Testing Trends for Routine VL');
+			$("#switchButton").val('Click to Switch to All Tests');
+		}
+		$("#samples").load("<?php echo base_url('charts/agencies/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+all);
+
 	}
 </script>
