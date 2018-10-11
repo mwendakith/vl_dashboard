@@ -52,6 +52,7 @@
 	        		$("#second").show();
 
 	        		$("#samples").load("<?php echo base_url('charts/agencies/sample_types'); ?>/"+null+"/"+null+"/"+data+"/"+all);
+	        		$("#vlOutcomes").load("<?= @base_url('charts/agencies/vl_outcomes');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
 	        	}
 	        });
 		});
