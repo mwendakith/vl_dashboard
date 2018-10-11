@@ -46,9 +46,9 @@ class Agencies extends MY_Controller
 		$this->load->view('justification_breakdown_view',$data);
 	}
 
-	function age($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
+	function age($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$agency_id=NULL)
 	{
-		$data['outcomes'] = $this->agencies_model->age($year,$month,$county,$partner,$to_year,$to_month);
+		$data['outcomes'] = $this->agencies_model->age($year,$month,$to_year,$to_month,$type,$agency_id);
 		
     	$this->load->view('agegroup_view',$data);
 	}
@@ -60,9 +60,9 @@ class Agencies extends MY_Controller
 		$this->load->view('agegroupBreakdown',$data);
 	}
 
-	function gender($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
+	function gender($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$agency_id=NULL)
 	{
-		$data['outcomes'] = $this->agencies_model->gender($year,$month,$county,$partner,$to_year,$to_month);
+		$data['outcomes'] = $this->agencies_model->gender($year,$month,$to_year,$to_month,$type,$agency_id);
 
     	$this->load->view('gender_view',$data);
 	}

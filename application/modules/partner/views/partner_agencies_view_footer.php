@@ -53,6 +53,9 @@
 
 	        		$("#samples").load("<?php echo base_url('charts/agencies/sample_types'); ?>/"+null+"/"+null+"/"+data+"/"+all);
 	        		$("#vlOutcomes").load("<?= @base_url('charts/agencies/vl_outcomes');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
+	        		$("#gender").load("<?= @base_url('charts/agencies/gender');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
+	        		$("#ageGroups").load("<?= @base_url('charts/agencies/age');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
+	        		$("#justification").load("<?= @base_url('charts/agencies/justification');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
 	        	}
 	        });
 		});

@@ -230,15 +230,7 @@ class Agencies_model extends MY_Model
 			}
 		}
  
-		if (!is_null($partner)) {
-			$sql = "CALL `proc_get_partner_justification`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		} else {
-			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_justification`('".$year."','".$month."','".$to_year."','".$to_month."')";
-			} else {
-				$sql = "CALL `proc_get_regional_justification`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
-			}
-		}
+		$sql = "CALL `proc_get_vl_fundingagencies_justification`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$agency_id."')";
 		
 		$result = $this->db->query($sql)->result_array();
 		
@@ -321,6 +313,12 @@ class Agencies_model extends MY_Model
  
 	function age($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$agency_id=null)
 	{
+		if ($type == null || $to_month=='null')
+			$type = 0;
+		
+		if ($agency_id==null || $agency_id == 'null')
+			$agency_id = $this->session->userdata('funding_agency_filter');
+
 		if ($to_month==null || $to_month=='null') 
 			$to_month = 0;
 		
@@ -338,15 +336,7 @@ class Agencies_model extends MY_Model
 			}
 		}
  
-		if (!is_null($partner)) {
-			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		} else {
-			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_age`('".$year."','".$month."','".$to_year."','".$to_month."')";
-			} else {
-				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
-			}
-		}
+		$sql = "CALL `proc_get_vl_fundingagencies_age`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$agency_id."')";
 		
 		$result = $this->db->query($sql)->result_array();
 		$count = 0;
@@ -494,6 +484,12 @@ class Agencies_model extends MY_Model
  
 	function gender($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$agency_id=null)
 	{
+		if ($type == null || $to_month=='null')
+			$type = 0;
+		
+		if ($agency_id==null || $agency_id == 'null')
+			$agency_id = $this->session->userdata('funding_agency_filter');
+
 		if ($year==null || $year=='null') 
 			$year = $this->session->userdata('filter_year');
 		
@@ -511,15 +507,7 @@ class Agencies_model extends MY_Model
 			}
 		}
  
-		if (!is_null($partner)) {
-			$sql = "CALL `proc_get_partner_gender`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		} else {
-			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_gender`('".$year."','".$month."','".$to_year."','".$to_month."')";
-			} else {
-				$sql = "CALL `proc_get_regional_gender`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
-			}
-		}
+		$sql = "CALL `proc_get_vl_fundingagencies_gender`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$agency_id."')";
 		
 		$result = $this->db->query($sql)->result_array();
 		 
