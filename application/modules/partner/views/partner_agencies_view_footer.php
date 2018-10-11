@@ -78,18 +78,28 @@
 		    var error_check = check_error_date_range(from, to);
 		    
 		    if (!error_check) {
-			    $.get("<?php echo base_url();?>partner/check_partner_select", function (data) {
-					partner = data;
+			    $.get("<?php echo base_url();?>partner/check_agencies_select", function (data) {
+					agency = data;
+					agency = $.parseJSON(agency);
 					
-					if (partner==0) {
+					if (agency==0) {
 						$("#second").hide();
 						$("#third").hide();
 						// fetching the Agencies outcomes
 						$("#agency_div").html("<center><div class='loader'></div></center>");
 						$("#agency_div").load("<?php echo base_url('charts/agencies/suppression'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 					} else {
-						partner = $.parseJSON(partner);
-												
+						$("#samples").html("<center><div class='loader'></div></center>");
+						$("#vlOutcomes").html("<center><div class='loader'></div></center>");
+						$("#gender").html("<center><div class='loader'></div></center>");
+						$("#ageGroups").html("<center><div class='loader'></div></center>");
+						$("#justification").html("<center><div class='loader'></div></center>");
+						
+		        		$("#samples").load("<?php echo base_url('charts/agencies/sample_types'); ?>/"+null+"/"+null+"/"+agency+"/"+all);
+		        		$("#vlOutcomes").load("<?= @base_url('charts/agencies/vl_outcomes');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null+"/"+agency);
+		        		$("#gender").load("<?= @base_url('charts/agencies/gender');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null+"/"+agency);
+		        		$("#ageGroups").load("<?= @base_url('charts/agencies/age');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null+"/"+agency);
+		        		$("#justification").load("<?= @base_url('charts/agencies/justification');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null+"/"+agency);					
 					}
 				});
 			}
@@ -120,17 +130,27 @@
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
-			$.get("<?php echo base_url();?>partner/check_partner_select", function (data) {
-				partner = data;
+			$.get("<?php echo base_url();?>partner/check_agencies_select", function (data) {
+				agency = data;
+				agency = $.parseJSON(agency);
 				
-				if (partner==0) {
+				if (agency==0) {
 					$("#second").hide();
 					// fetching the partner outcomes
 					$("#agency_div").html("<center><div class='loader'></div></center>");
 					$("#agency_div").load("<?php echo base_url('charts/agencies/suppression'); ?>/"+year+"/"+month);
 				} else {
-					partner = $.parseJSON(partner);
+					$("#samples").html("<center><div class='loader'></div></center>");
+					$("#vlOutcomes").html("<center><div class='loader'></div></center>");
+					$("#gender").html("<center><div class='loader'></div></center>");
+					$("#ageGroups").html("<center><div class='loader'></div></center>");
+					$("#justification").html("<center><div class='loader'></div></center>");
 					
+	        		$("#samples").load("<?php echo base_url('charts/agencies/sample_types'); ?>/"+year+"/"+null+"/"+agency+"/"+all);
+	        		$("#vlOutcomes").load("<?= @base_url('charts/agencies/vl_outcomes');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+agency);
+	        		$("#gender").load("<?= @base_url('charts/agencies/gender');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+agency);
+	        		$("#ageGroups").load("<?= @base_url('charts/agencies/age');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+agency);
+	        		$("#justification").load("<?= @base_url('charts/agencies/justification');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+agency);	
 				}
 			});
 		});
