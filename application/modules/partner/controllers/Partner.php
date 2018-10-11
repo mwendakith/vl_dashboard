@@ -157,5 +157,14 @@ class Partner extends MY_Controller
 		}
 		echo json_encode($partner_regimen);
 	}
+
+	public function check_agencies_select() {
+		if ($this->session->userdata('funding_agency_filter')) {
+			$funding_agencies = $this->session->userdata('funding_agency_filter');
+		} else {
+			$funding_agencies = 0;
+		}
+		echo json_encode($funding_agencies);
+	}
 }
 ?>

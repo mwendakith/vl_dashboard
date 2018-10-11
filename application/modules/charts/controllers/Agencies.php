@@ -24,8 +24,50 @@ class Agencies extends MY_Controller
 
 	}
 
-	public function sample_types($year=NULL,$type=null,$agency_id=null,$all=NULL)
+	function vl_outcomes($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$agency_id=NULL)
 	{
+		$data['outcomes'] = $this->agencies_model->vl_outcomes($year,$month,$to_year,$to_month,$type,$agency_id);
+
+    	$this->load->view('vl_outcomes_view',$data);
+	}
+	
+
+	function justification($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$agency_id=NULL)
+	{
+		$data['outcomes'] = $this->agencies_model->justification($year,$month,$to_year,$to_month,$type,$agency_id);
+
+    	$this->load->view('justification_view',$data);
+	}
+
+	function justificationbreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['outcomes'] = $this->agencies_model->justification_breakdown($year,$month,$county,$partner,$to_year,$to_month);
+		
+		$this->load->view('justification_breakdown_view',$data);
+	}
+
+	function age($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$agency_id=NULL)
+	{
+		$data['outcomes'] = $this->agencies_model->age($year,$month,$to_year,$to_month,$type,$agency_id);
+		
+    	$this->load->view('agegroup_view',$data);
+	}
+
+	function agebreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['outcomes'] = $this->agencies_model->age_breakdown($year,$month,$county,$partner,$to_year,$to_month);
+		
+		$this->load->view('agegroupBreakdown',$data);
+	}
+
+	function gender($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$agency_id=NULL)
+	{
+		$data['outcomes'] = $this->agencies_model->gender($year,$month,$to_year,$to_month,$type,$agency_id);
+
+    	$this->load->view('gender_view',$data);
+	}
+
+	public function sample_types($year=NULL,$type=null,$agency_id=null,$all=NULL) {
 		$data['outcomes'] = $this->agencies_model->sample_types($year,$type,$agency_id, $all);
 		$link = $year . '/' . $type . '/' . $agency_id;
 
