@@ -29,7 +29,7 @@
     <form action="<?php echo base_url();?>template/filter_partner_data" method="post" id="filter_form">
       <div class="row">
         <div class="col-md-12">
-          <?php if(isset($agencies)) { ?>
+          <?php if(isset($agencies_flag)) { ?>
             <select class="btn js-example-basic-single" style="width:220px;background-color: #C5EFF7;" id="agency" name="agency">
               <option disabled="true" selected="true">Select Funding Agency:</option>
               <option value="NA">All Funding Agencies</option>
