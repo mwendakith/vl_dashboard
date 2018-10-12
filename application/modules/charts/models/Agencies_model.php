@@ -255,61 +255,61 @@ class Agencies_model extends MY_Model
 		return $data;
 	}
  
-	function justification_breakdown($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$agency_id=null)
-	{
-		if ($to_month==null || $to_month=='null')
-			$to_month = 0;
+	// function justification_breakdown($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$agency_id=null)
+	// {
+	// 	if ($to_month==null || $to_month=='null')
+	// 		$to_month = 0;
 		
-		if ($to_year==null || $to_year=='null')
-			$to_year = 0;
+	// 	if ($to_year==null || $to_year=='null')
+	// 		$to_year = 0;
  
-		if ($year==null || $year=='null')
-			$year = $this->session->userdata('filter_year');
+	// 	if ($year==null || $year=='null')
+	// 		$year = $this->session->userdata('filter_year');
 		
-		if ($month==null || $month=='null')
-			$month = $this->session->userdata('filter_month');
+	// 	if ($month==null || $month=='null')
+	// 		$month = $this->session->userdata('filter_month');
 		 
-		if (!is_null($partner)) {
-			$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','','','".$partner."','','')";
-			$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','','".$partner."','','')";
-		} else {
-			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','1','','','','')";
-				$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','1','','','','')";
-			} else {
-				$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','','".$county."','','','')";
-				$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','".$county."','','','')";
-			}
-		}
+	// 	if (!is_null($partner)) {
+	// 		$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','','','".$partner."','','')";
+	// 		$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','','".$partner."','','')";
+	// 	} else {
+	// 		if ($county==null || $county=='null') {
+	// 			$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','1','','','','')";
+	// 			$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','1','','','','')";
+	// 		} else {
+	// 			$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','','".$county."','','','')";
+	// 			$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','".$county."','','','')";
+	// 		}
+	// 	}
 		
-		$preg_mo = $this->db->query($sql)->result_array();
-		$this->db->close();
-		$lac_mo = $this->db->query($sql2)->result_array();
+	// 	$preg_mo = $this->db->query($sql)->result_array();
+	// 	$this->db->close();
+	// 	$lac_mo = $this->db->query($sql2)->result_array();
 		
-		$count = 0;
-		$data['just_breakdown'][0]['name'] = 'Not Suppressed';
-		$data['just_breakdown'][1]['name'] = 'Suppressed';
-		$data["just_breakdown"][0]["data"][0]	= $count;
-		$data["just_breakdown"][1]["data"][0]	= $count;
-		$data['categories'][0]			= 'No Data';
+	// 	$count = 0;
+	// 	$data['just_breakdown'][0]['name'] = 'Not Suppressed';
+	// 	$data['just_breakdown'][1]['name'] = 'Suppressed';
+	// 	$data["just_breakdown"][0]["data"][0]	= $count;
+	// 	$data["just_breakdown"][1]["data"][0]	= $count;
+	// 	$data['categories'][0]			= 'No Data';
  
-		foreach ($preg_mo as $key => $value) {
-			$data['categories'][0] 			= 'Pregnant Mothers';
-			$data["just_breakdown"][0]["data"][0]	=  (int) $value['less5000'] + (int) $value['above5000'];
-			$data["just_breakdown"][1]["data"][0]	=  (int) $value['undetected'] + (int) $value['less1000'];
-		}
+	// 	foreach ($preg_mo as $key => $value) {
+	// 		$data['categories'][0] 			= 'Pregnant Mothers';
+	// 		$data["just_breakdown"][0]["data"][0]	=  (int) $value['less5000'] + (int) $value['above5000'];
+	// 		$data["just_breakdown"][1]["data"][0]	=  (int) $value['undetected'] + (int) $value['less1000'];
+	// 	}
  
-		foreach ($lac_mo as $key => $value) {
-			$data['categories'][1] 			= 'Lactating Mothers';
-			$data["just_breakdown"][0]["data"][1]	=  (int) $value['less5000'] + (int) $value['above5000'];
-			$data["just_breakdown"][1]["data"][1]	=  (int) $value['undetected'] + (int) $value['less1000'];
-		}
+	// 	foreach ($lac_mo as $key => $value) {
+	// 		$data['categories'][1] 			= 'Lactating Mothers';
+	// 		$data["just_breakdown"][0]["data"][1]	=  (int) $value['less5000'] + (int) $value['above5000'];
+	// 		$data["just_breakdown"][1]["data"][1]	=  (int) $value['undetected'] + (int) $value['less1000'];
+	// 	}
  
-		$data['just_breakdown'][0]['drilldown']['color'] = '#913D88';
-		$data['just_breakdown'][1]['drilldown']['color'] = '#96281B';
+	// 	$data['just_breakdown'][0]['drilldown']['color'] = '#913D88';
+	// 	$data['just_breakdown'][1]['drilldown']['color'] = '#96281B';
 				
-		return $data;
-	}
+	// 	return $data;
+	// }
  
 	function age($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$agency_id=null)
 	{
@@ -404,83 +404,83 @@ class Agencies_model extends MY_Model
 		return $data;
 	}
  
-	function age_breakdown($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$agency_id=null)
-	{
-		if ($to_month==null || $to_month=='null') 
-			$to_month = 0;
+	// function age_breakdown($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$agency_id=null)
+	// {
+	// 	if ($to_month==null || $to_month=='null') 
+	// 		$to_month = 0;
 		
-		if ($to_year==null || $to_year=='null') 
-			$to_year = 0;
+	// 	if ($to_year==null || $to_year=='null') 
+	// 		$to_year = 0;
 		
  
-		if ($year==null || $year=='null') 
-			$year = $this->session->userdata('filter_year');
+	// 	if ($year==null || $year=='null') 
+	// 		$year = $this->session->userdata('filter_year');
 		
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
+	// 	if ($month==null || $month=='null') {
+	// 		if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+	// 			$month = $this->session->userdata('filter_month');
+	// 		}else {
+	// 			$month = 0;
+	// 		}
+	// 	}
  
-		if (!is_null($partner)) {
-			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		} else {
-			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_age`('".$year."','".$month."','".$to_year."','".$to_month."')";
-			} else {
-				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
-			}
-		}
-		$result = $this->db->query($sql)->result_array();
+	// 	if (!is_null($partner)) {
+	// 		$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+	// 	} else {
+	// 		if ($county==null || $county=='null') {
+	// 			$sql = "CALL `proc_get_national_age`('".$year."','".$month."','".$to_year."','".$to_month."')";
+	// 		} else {
+	// 			$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+	// 		}
+	// 	}
+	// 	$result = $this->db->query($sql)->result_array();
 		
-		$data['children']['name'] = 'Tests';
-		$data['children']['colorByPoint'] = true;
- 		$data['adults']['name'] = 'Tests';
-		$data['adults']['colorByPoint'] = true;
-		$adults = 0;
-		$sadult = 0;
-		$children = 0;
-		$schildren = 0;
-		$count = 0;
+	// 	$data['children']['name'] = 'Tests';
+	// 	$data['children']['colorByPoint'] = true;
+ // 		$data['adults']['name'] = 'Tests';
+	// 	$data['adults']['colorByPoint'] = true;
+	// 	$adults = 0;
+	// 	$sadult = 0;
+	// 	$children = 0;
+	// 	$schildren = 0;
+	// 	$count = 0;
  
-		foreach ($result as $key => $value) {
+	// 	foreach ($result as $key => $value) {
 			
-			if ($value['name']=='Less 2' || $value['name']=='2-9' || $value['name']=='10-14') {
-				$data['ul']['children'] = '';
-				$children = (int) $children + (int) $value['agegroups'];
-				$schildren = (int) $schildren + (int) $value['suppressed'];
-				$data['children']['data'][$key]['y'] = $count;
-				$data['children']['data'][$key]['name'] = $value['name'];
-				$data['children']['data'][$key]['y'] = (int) $value['agegroups'];
+	// 		if ($value['name']=='Less 2' || $value['name']=='2-9' || $value['name']=='10-14') {
+	// 			$data['ul']['children'] = '';
+	// 			$children = (int) $children + (int) $value['agegroups'];
+	// 			$schildren = (int) $schildren + (int) $value['suppressed'];
+	// 			$data['children']['data'][$key]['y'] = $count;
+	// 			$data['children']['data'][$key]['name'] = $value['name'];
+	// 			$data['children']['data'][$key]['y'] = (int) $value['agegroups'];
  
-			} else if ($value['name']=='15-19' || $value['name']=='20-24' || $value['name']=='25+') {
-				$data['ul']['adults'] = '';
-				$adults = (int) $adults + (int) $value['agegroups'];
-				$sadult = (int) $sadult + (int) $value['suppressed'];
-				$data['adults']['data'][$key]['y'] = $count;
-				$data['adults']['data'][$key]['name'] = $value['name'];
-				$data['adults']['data'][$key]['y'] = (int) $value['agegroups'];
-			}
-		}
+	// 		} else if ($value['name']=='15-19' || $value['name']=='20-24' || $value['name']=='25+') {
+	// 			$data['ul']['adults'] = '';
+	// 			$adults = (int) $adults + (int) $value['agegroups'];
+	// 			$sadult = (int) $sadult + (int) $value['suppressed'];
+	// 			$data['adults']['data'][$key]['y'] = $count;
+	// 			$data['adults']['data'][$key]['name'] = $value['name'];
+	// 			$data['adults']['data'][$key]['y'] = (int) $value['agegroups'];
+	// 		}
+	// 	}
 		
-		$data['ctotal'] = $children;
-		$data['atotal'] = $adults;
+	// 	$data['ctotal'] = $children;
+	// 	$data['atotal'] = $adults;
 		
-		$data['ul']['children'] = '<li>Children Suppression : '.(int)(((int) $schildren/(int) $children)*100).'%</li>';
-		$data['ul']['adults'] = '<li>Adult Suppression : '.(int)(((int) $sadult/(int) $adults)*100).'%</li>';
-		$data['children']['data'] = array_values($data['children']['data']);
-		$data['adults']['data'] = array_values($data['adults']['data']);
+	// 	$data['ul']['children'] = '<li>Children Suppression : '.(int)(((int) $schildren/(int) $children)*100).'%</li>';
+	// 	$data['ul']['adults'] = '<li>Adult Suppression : '.(int)(((int) $sadult/(int) $adults)*100).'%</li>';
+	// 	$data['children']['data'] = array_values($data['children']['data']);
+	// 	$data['adults']['data'] = array_values($data['adults']['data']);
  
-		$data['children']['data'][0]['sliced'] = true;
-		$data['children']['data'][0]['selected'] = true;
+	// 	$data['children']['data'][0]['sliced'] = true;
+	// 	$data['children']['data'][0]['selected'] = true;
  
-		$data['adults']['data'][0]['sliced'] = true;
-		$data['adults']['data'][0]['selected'] = true;
+	// 	$data['adults']['data'][0]['sliced'] = true;
+	// 	$data['adults']['data'][0]['selected'] = true;
  
-		return $data;
-	}
+	// 	return $data;
+	// }
  
 	function gender($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$agency_id=null)
 	{

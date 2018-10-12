@@ -39,12 +39,12 @@ class Agencies extends MY_Controller
     	$this->load->view('justification_view',$data);
 	}
 
-	function justificationbreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
-	{
-		$data['outcomes'] = $this->agencies_model->justification_breakdown($year,$month,$county,$partner,$to_year,$to_month);
+	// function justificationbreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
+	// {
+	// 	$data['outcomes'] = $this->agencies_model->justification_breakdown($year,$month,$county,$partner,$to_year,$to_month);
 		
-		$this->load->view('justification_breakdown_view',$data);
-	}
+	// 	$this->load->view('justification_breakdown_view',$data);
+	// }
 
 	function age($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$agency_id=NULL)
 	{
@@ -53,12 +53,12 @@ class Agencies extends MY_Controller
     	$this->load->view('agegroup_view',$data);
 	}
 
-	function agebreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
-	{
-		$data['outcomes'] = $this->agencies_model->age_breakdown($year,$month,$county,$partner,$to_year,$to_month);
+	// function agebreakdown($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
+	// {
+	// 	$data['outcomes'] = $this->agencies_model->age_breakdown($year,$month,$county,$partner,$to_year,$to_month);
 		
-		$this->load->view('agegroupBreakdown',$data);
-	}
+	// 	$this->load->view('agegroupBreakdown',$data);
+	// }
 
 	function gender($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$agency_id=NULL)
 	{
