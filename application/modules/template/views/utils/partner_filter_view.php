@@ -131,7 +131,7 @@
     // Getting the file name i.e last segment of URL (i.e. example.html)
     var fn = url.split('/').indexOf("nosuppression");
     // console.log(fn);
-    <?php if(isset($agencies)) { ?>
+    <?php if(isset($agencies_flag)) { ?>
         $("#breadcrum").html("<strong>All Funding Agencies</strong>");
     <?php } else { ?>
        if (fn==-1) {
