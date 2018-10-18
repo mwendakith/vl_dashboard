@@ -84,7 +84,7 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-default">
 		  	<div class="panel-heading" style="min-height: 4em;">
-		  		<div>Partner Suppression for Routine VL</div> <div class="display_range"></div>
+		  		<div>Partner Suppression for Routine VL</div> <div class="display_date"></div>
 		  	</div>
 		  	<div class="panel-body" id="partners">
 		    	<center><div class="loader"></div></center>
