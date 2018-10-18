@@ -91,7 +91,8 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 								'sub_county_filter',
 								'pmtct_filter',
 								'filter_year',
-								'filter_month'
+								'filter_month',
+								'funding_agency_filter'
 								);
 			$this->session->unset_userdata($filter_data);
 		}

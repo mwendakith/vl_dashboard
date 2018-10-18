@@ -15,7 +15,9 @@ class Agencies extends MY_Controller
 
 	public function suppression($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$agency_id=null) {
 		$data['trends'] = $this->agencies_model->suppression($year,$month,$to_year,$to_month,$type,$agency_id);
-		$data['div_name'] = "partner_agencies_supppression";		
+		$data['div_name'] = "funding_agencies_supppression";
+		if ($type == 1)
+			$data['div_name'] = "partner_agency_supppression";
 
 		$this->load->view('trends_outcomes_view', $data);
 	}
