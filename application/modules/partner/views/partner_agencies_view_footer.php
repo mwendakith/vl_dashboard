@@ -50,12 +50,19 @@
 	        	} else {
 	        		$("#first").hide();
 	        		$("#second").show();
+	        		
+					$("#samples").html("<center><div class='loader'></div></center>");
+					$("#vlOutcomes").html("<center><div class='loader'></div></center>");
+					$("#gender").html("<center><div class='loader'></div></center>");
+					$("#ageGroups").html("<center><div class='loader'></div></center>");
+					$("#justification").html("<center><div class='loader'></div></center>");
 
 	        		$("#samples").load("<?php echo base_url('charts/agencies/sample_types'); ?>/"+null+"/"+null+"/"+data+"/"+all);
 	        		$("#vlOutcomes").load("<?= @base_url('charts/agencies/vl_outcomes');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
 	        		$("#gender").load("<?= @base_url('charts/agencies/gender');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
 	        		$("#ageGroups").load("<?= @base_url('charts/agencies/age');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
 	        		$("#justification").load("<?= @base_url('charts/agencies/justification');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
+	        		$("#partners").load("<?php echo base_url('charts/agencies/suppression'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+1+"/"+data);
 	        	}
 	        });
 		});
@@ -89,6 +96,8 @@
 						$("#agency_div").html("<center><div class='loader'></div></center>");
 						$("#agency_div").load("<?php echo base_url('charts/agencies/suppression'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 					} else {
+		        		$("#first").hide();
+		        		$("#second").show();
 						$("#samples").html("<center><div class='loader'></div></center>");
 						$("#vlOutcomes").html("<center><div class='loader'></div></center>");
 						$("#gender").html("<center><div class='loader'></div></center>");
@@ -99,7 +108,8 @@
 		        		$("#vlOutcomes").load("<?= @base_url('charts/agencies/vl_outcomes');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null+"/"+agency);
 		        		$("#gender").load("<?= @base_url('charts/agencies/gender');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null+"/"+agency);
 		        		$("#ageGroups").load("<?= @base_url('charts/agencies/age');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null+"/"+agency);
-		        		$("#justification").load("<?= @base_url('charts/agencies/justification');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null+"/"+agency);					
+		        		$("#justification").load("<?= @base_url('charts/agencies/justification');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null+"/"+agency);
+	        			$("#partners").load("<?php echo base_url('charts/agencies/suppression'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+1+"/"+agency);				
 					}
 				});
 			}
@@ -133,13 +143,16 @@
 			$.get("<?php echo base_url();?>partner/check_agencies_select", function (data) {
 				agency = data;
 				agency = $.parseJSON(agency);
-				
+				console.log(agency);
 				if (agency==0) {
 					$("#second").hide();
 					// fetching the partner outcomes
 					$("#agency_div").html("<center><div class='loader'></div></center>");
 					$("#agency_div").load("<?php echo base_url('charts/agencies/suppression'); ?>/"+year+"/"+month);
 				} else {
+	        		$("#first").hide();
+	        		$("#second").show();
+	        		
 					$("#samples").html("<center><div class='loader'></div></center>");
 					$("#vlOutcomes").html("<center><div class='loader'></div></center>");
 					$("#gender").html("<center><div class='loader'></div></center>");
@@ -150,7 +163,8 @@
 	        		$("#vlOutcomes").load("<?= @base_url('charts/agencies/vl_outcomes');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+agency);
 	        		$("#gender").load("<?= @base_url('charts/agencies/gender');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+agency);
 	        		$("#ageGroups").load("<?= @base_url('charts/agencies/age');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+agency);
-	        		$("#justification").load("<?= @base_url('charts/agencies/justification');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+agency);	
+	        		$("#justification").load("<?= @base_url('charts/agencies/justification');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+agency);
+	        		$("#partners").load("<?php echo base_url('charts/agencies/suppression'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+1+"/"+agency);	
 				}
 			});
 		});

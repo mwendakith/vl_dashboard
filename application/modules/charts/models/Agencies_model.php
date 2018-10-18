@@ -41,10 +41,12 @@ class Agencies_model extends MY_Model
 		$data['outcomes'][0]['name'] = "Not Suppressed";
 		$data['outcomes'][1]['name'] = "Suppressed";
 		$data['outcomes'][2]['name'] = "Suppression";
+		$data['outcomes'][3]['name'] = "90% Target";
 
 		$data['outcomes'][0]['type'] = "column";
 		$data['outcomes'][1]['type'] = "column";
 		$data['outcomes'][2]['type'] = "spline";
+		$data['outcomes'][3]['type'] = "spline";
 		
 
 		$data['outcomes'][0]['yAxis'] = 1;
@@ -53,12 +55,14 @@ class Agencies_model extends MY_Model
 		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+		$data['outcomes'][3]['tooltip'] = array("valueSuffix" => ' %');
 
 		$data['title'] = "";
 		$data['categories'][0] 		   = 'No Data';
 		$data['outcomes'][0]['data'][0] = (int) 0;
 		$data['outcomes'][1]['data'][0] = (int) 0;
 		$data['outcomes'][2]['data'][0] = (int) 0;
+		$data['outcomes'][3]['data'][0] = (int) 0;
  
 		foreach ($result as $key => $value) {
 			$suppressed = (int)$value['suppressed'];
@@ -67,6 +71,7 @@ class Agencies_model extends MY_Model
 			$data['outcomes'][0]['data'][$key] = (int) $nonsuppressed;
 			$data['outcomes'][1]['data'][$key] = (int) $suppressed;
 			$data['outcomes'][2]['data'][$key] = round(@(((int) $suppressed*100)/((int) $suppressed+(int) $nonsuppressed)),1);
+			$data['outcomes'][3]['data'][$key] = 90;
 		}
 		
 		return $data;
