@@ -285,7 +285,7 @@ class Sites_model extends MY_Model
 		foreach ($months as $key1 => $value1) {
 			foreach ($result as $key2 => $value2) {
 				if ((int) $value1 == (int) $value2['month']) {
-					$data['test_trends'][0]['data'][$count] = (int) $value2['alltests'];
+					$data['test_trends'][0]['data'][$count] = ((int) $value2['undetected']+(int) $value2['less1000']+(int) $value2['less5000']+(int) $value2['above5000']);
 					$data['test_trends'][1]['data'][$count] = (int) $value2['undetected']+(int) $value2['less1000'];
 					$data['test_trends'][2]['data'][$count] = (int) $value2['less5000']+(int) $value2['above5000'];
 					$data['test_trends'][3]['data'][$count] = (int) $value2['rejected'];
