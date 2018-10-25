@@ -8,6 +8,8 @@ BEGIN
         `year`, 
         SUM(`confirmtx`) AS `confirmtx`,
         SUM(`confirm2vl`) AS `confirm2vl`,
+        SUM(`baseline`) AS `baseline`, 
+        SUM(`baselinesustxfail`) AS `baselinesustxfail`, 
         SUM(`Undetected`) AS `undetected`,
         SUM(`less1000`) AS `less1000`,
         SUM(`less5000`) AS `less5000`,
