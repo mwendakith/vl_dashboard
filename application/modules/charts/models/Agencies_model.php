@@ -78,6 +78,50 @@ class Agencies_model extends MY_Model
 
 	}
 
+	public function current_suppression($agency_id) {
+		if ($agency_id==null || $agency_id == 'null')
+			$agency_id = $this->session->userdata('funding_agency_filter');
+		$sql = "CALL `proc_get_vl_current_suppression`('5','".$agency_id."')";
+		$result = $this->db->query($sql)->result();
+		$this->db->close();
+		
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+		$data['outcomes'][3]['name'] = "90% Target";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
+		$data['outcomes'][3]['type'] = "spline";
+		
+
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+		$data['outcomes'][3]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+		$data['categories'][0] 		   = 'No Data';
+		$data['outcomes'][0]['data'][0] = (int) 0;
+		$data['outcomes'][1]['data'][0] = (int) 0;
+		$data['outcomes'][2]['data'][0] = (int) 0;
+		$data['outcomes'][3]['data'][0] = (int) 0;
+ 
+		foreach ($result as $key => $value) {
+			$data['categories'][$key] 		   = $value->partner;
+			$data['outcomes'][0]['data'][$key] = (int) $value->nonsuppressed;
+			$data['outcomes'][1]['data'][$key] = (int) $value->suppressed;
+			$data['outcomes'][2]['data'][$key] = round(@(((int) $value->suppressed*100)/((int) $value->suppressed+(int) $value->nonsuppressed)),1);
+			$data['outcomes'][3]['data'][$key] = 90;
+		}
+		
+		return $data;
+	}
+
 	public function outcomes ($year=null,$month=null,$to_year=null,$to_month,$type=null,$agency_id=null) {
 
 	}

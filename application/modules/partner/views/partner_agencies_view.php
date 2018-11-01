@@ -91,6 +91,16 @@
 		  	</div>
 		</div>
 	</div>
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="panel panel-default">
+		  	<div class="panel-heading" style="min-height: 4em;">
+		  		<div>Partner Current Suppression</div> <!-- <div class="display_date"></div> -->
+		  	</div>
+		  	<div class="panel-body" id="partners_current_suppression">
+		    	<center><div class="loader"></div></center>
+		  	</div>
+		</div>
+	</div>
 </div>
 		
 <?php $this->load->view('partner_agencies_view_footer'); ?>

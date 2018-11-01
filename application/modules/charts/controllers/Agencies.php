@@ -22,6 +22,13 @@ class Agencies extends MY_Controller
 		$this->load->view('trends_outcomes_view', $data);
 	}
 
+	public function current_suppression($agency_id = null) {
+		$data['trends'] = $this->agencies_model->current_suppression($agency_id);
+		$data['div_name'] = "funding_agencies_current_supppression";
+
+		$this->load->view('trends_outcomes_view', $data);
+	}
+
 	public function outcomes ($year=null,$month=null,$to_year=null,$to_month,$type=null,$agency_id=null) {
 
 	}
