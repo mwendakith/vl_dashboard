@@ -56,6 +56,8 @@
 					$("#gender").html("<center><div class='loader'></div></center>");
 					$("#ageGroups").html("<center><div class='loader'></div></center>");
 					$("#justification").html("<center><div class='loader'></div></center>");
+					$("#partners").html("<center><div class='loader'></div></center>");
+					$("#partners_current_suppression").html("<center><div class='loader'></div></center>");
 
 	        		$("#samples").load("<?php echo base_url('charts/agencies/sample_types'); ?>/"+null+"/"+null+"/"+data+"/"+all);
 	        		$("#vlOutcomes").load("<?= @base_url('charts/agencies/vl_outcomes');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
@@ -63,6 +65,7 @@
 	        		$("#ageGroups").load("<?= @base_url('charts/agencies/age');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
 	        		$("#justification").load("<?= @base_url('charts/agencies/justification');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+data);
 	        		$("#partners").load("<?php echo base_url('charts/agencies/suppression'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+1+"/"+data);
+	        		$("#partners_current_suppression").load("<?= @base_url('charts/agencies/current_suppression'); ?>/"+data);
 	        	}
 	        });
 		});
