@@ -33,7 +33,7 @@ BEGIN
     SET @QUERY = CONCAT(@QUERY, " JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` WHERE `vl_site_suppression`.`facility` = '",id,"' ");
   END IF;
   IF(type = 5) THEN
-    SET @QUERY = CONCAT(@QUERY, " JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` JOIN `partners` ON `partners`.`ID` = `view_facilitys`.`partner` WHERE `partners`.`funding_agency_id` = '",id,"' GROUP BY `partners` ORDER BY `suppressed`, `nonsuppressed` ");
+    SET @QUERY = CONCAT(@QUERY, " JOIN `view_facilitys` ON `vl_site_suppression`.`facility` = `view_facilitys`.`ID` JOIN `partners` ON `partners`.`ID` = `view_facilitys`.`partner` WHERE `partners`.`funding_agency_id` = '",id,"' GROUP BY `partners` ORDER BY `suppressed` desc, `nonsuppressed` desc ");
   END IF;
 
   PREPARE stmt FROM @QUERY;
