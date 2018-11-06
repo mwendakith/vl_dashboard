@@ -65,13 +65,15 @@ class Agencies_model extends MY_Model
 		$data['outcomes'][3]['data'][0] = (int) 0;
  
 		foreach ($result as $key => $value) {
-			$suppressed = (int)$value['suppressed'];
-			$nonsuppressed = (int)$value['nonsuppressed'];
-			$data['categories'][$key] 		   = $value['agency'];
-			$data['outcomes'][0]['data'][$key] = (int) $nonsuppressed;
-			$data['outcomes'][1]['data'][$key] = (int) $suppressed;
-			$data['outcomes'][2]['data'][$key] = round(@(((int) $suppressed*100)/((int) $suppressed+(int) $nonsuppressed)),1);
-			$data['outcomes'][3]['data'][$key] = 90;
+			if (!((int) $value['suppressed'] == 0 && (int) $value['nonsuppressed'] == 0)){
+				$suppressed = (int)$value['suppressed'];
+				$nonsuppressed = (int)$value['nonsuppressed'];
+				$data['categories'][$key] 		   = $value['agency'];
+				$data['outcomes'][0]['data'][$key] = (int) $nonsuppressed;
+				$data['outcomes'][1]['data'][$key] = (int) $suppressed;
+				$data['outcomes'][2]['data'][$key] = round(@(((int) $suppressed*100)/((int) $suppressed+(int) $nonsuppressed)),1);
+				$data['outcomes'][3]['data'][$key] = 90;
+			}
 		}
 		
 		return $data;
@@ -112,11 +114,13 @@ class Agencies_model extends MY_Model
 		$data['outcomes'][3]['data'][0] = (int) 0;
  
 		foreach ($result as $key => $value) {
-			$data['categories'][$key] 		   = $value->partners;
-			$data['outcomes'][0]['data'][$key] = (int) $value->nonsuppressed;
-			$data['outcomes'][1]['data'][$key] = (int) $value->suppressed;
-			$data['outcomes'][2]['data'][$key] = round(@(((int) $value->suppressed*100)/((int) $value->suppressed+(int) $value->nonsuppressed)),1);
-			$data['outcomes'][3]['data'][$key] = 90;
+			if (!((int) $value->suppressed == 0 && (int) $value->nonsuppressed == 0)){
+				$data['categories'][$key] 		   = $value->partners;
+				$data['outcomes'][0]['data'][$key] = (int) $value->nonsuppressed;
+				$data['outcomes'][1]['data'][$key] = (int) $value->suppressed;
+				$data['outcomes'][2]['data'][$key] = round(@(((int) $value->suppressed*100)/((int) $value->suppressed+(int) $value->nonsuppressed)),1);
+				$data['outcomes'][3]['data'][$key] = 90;
+			}
 		}
 		
 		return $data;
