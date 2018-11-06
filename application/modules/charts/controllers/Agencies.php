@@ -16,6 +16,7 @@ class Agencies extends MY_Controller
 	public function suppression($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$agency_id=null) {
 		$data['trends'] = $this->agencies_model->suppression($year,$month,$to_year,$to_month,$type,$agency_id);
 		$data['div_name'] = "funding_agencies_supppression";
+		$data['interval'] = 10;
 		if ($type == 1)
 			$data['div_name'] = "partner_agency_supppression";
 
@@ -25,6 +26,7 @@ class Agencies extends MY_Controller
 	public function current_suppression($agency_id = null) {
 		$data['trends'] = $this->agencies_model->current_suppression($agency_id);
 		$data['div_name'] = "funding_agencies_current_supppression";
+		$data['interval'] = 10;
 
 		$this->load->view('trends_outcomes_view', $data);
 	}

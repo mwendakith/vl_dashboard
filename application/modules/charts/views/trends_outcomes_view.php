@@ -34,7 +34,8 @@
                         color: '#89A54E'
                     }
                 },
-               opposite: true
+                <?= ($interval) ? "tickInterval: $interval," : ''; ?>
+                opposite: true
     
             }, { // Secondary yAxis
                 gridLineWidth: 0,
