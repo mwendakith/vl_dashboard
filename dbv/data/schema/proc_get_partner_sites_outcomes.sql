@@ -5,8 +5,11 @@ CREATE PROCEDURE `proc_get_partner_sites_outcomes`
 BEGIN
   SET @QUERY =    "SELECT 
                     `view_facilitys`.`name`, 
-                    SUM(`vl_site_summary`.`undetected`+`vl_site_summary`.`less1000`) AS `suppressed`,
-                    SUM(`vl_site_summary`.`less5000`+`vl_site_summary`.`above5000`) AS `nonsuppressed` FROM `vl_site_summary` LEFT JOIN `view_facilitys` ON `vl_site_summary`.`facility` = `view_facilitys`.`ID` WHERE 1";
+                    SUM(`vl_site_summary`.`undetected`) as `undetected`,
+                    SUM(`vl_site_summary`.`less1000`) AS `less1000`,
+                    (SUM(`undetected`) + SUM(`less1000`)) as `suppressed`,
+                    (SUM(`vl_site_summary`.`less5000`)+SUM(`vl_site_summary`.`above5000`)) AS `nonsuppressed` FROM `vl_site_summary` 
+                    LEFT JOIN `view_facilitys` ON `vl_site_summary`.`facility` = `view_facilitys`.`ID` WHERE 1";
 
   
     IF (from_month != 0 && from_month != '') THEN
