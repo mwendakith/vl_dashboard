@@ -47,25 +47,32 @@ class Sites_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 
-
 		$data['outcomes'][0]['name'] = "Not Suppressed";
-		$data['outcomes'][1]['name'] = "Suppressed";
-		$data['outcomes'][2]['name'] = "Suppression";
-		$data['outcomes'][3]['name'] = "90% Target";
+		$data['outcomes'][1]['name'] = "&lt; 1000";
+		$data['outcomes'][2]['name'] = "&lt; LDL";
+		$data['outcomes'][3]['name'] = "Suppression";
+		$data['outcomes'][4]['name'] = "90% Target";
 
 		$data['outcomes'][0]['type'] = "column";
 		$data['outcomes'][1]['type'] = "column";
-		$data['outcomes'][2]['type'] = "spline";
+		$data['outcomes'][2]['type'] = "column";
 		$data['outcomes'][3]['type'] = "spline";
+		$data['outcomes'][4]['type'] = "spline"; 
+
+		$data['outcomes'][0]['color'] = '#F2784B';
+		$data['outcomes'][1]['color'] = '#1BA39C';
+		$data['outcomes'][2]['color'] = '#66ff66';
 		
 
 		$data['outcomes'][0]['yAxis'] = 1;
 		$data['outcomes'][1]['yAxis'] = 1;
+		$data['outcomes'][2]['yAxis'] = 1;
 
 		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
-		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][3]['tooltip'] = array("valueSuffix" => ' %');
+		$data['outcomes'][4]['tooltip'] = array("valueSuffix" => ' %');
 
 		$data['title'] = "";
  		$data['categories'][0] 			= "No Data";
@@ -76,9 +83,10 @@ class Sites_model extends MY_Model
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
-			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
-			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
-			$data['outcomes'][3]['data'][$key] = 90;
+			$data['outcomes'][1]['data'][$key] = (int) $value['less1000'];
+			$data['outcomes'][2]['data'][$key] = (int) $value['undetected'];
+			$data['outcomes'][3]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
+			$data['outcomes'][4]['data'][$key] = 90;
 		}
 		
 		// echo "<pre>";print_r($data);die();
@@ -393,8 +401,9 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
+		$data['vl_outcomes']['data'][0]['name'] = '&lt; 1000';
+		$data['vl_outcomes']['data'][1]['name'] = '&lt; LDL';
+		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 
 		$count = 0;
 
@@ -434,9 +443,16 @@ class Sites_model extends MY_Model
  
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
-	    		<td>'.number_format($less).'</td>
+	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((($less/$total)*100),1).'%</td>
+	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
+	    	</tr>
+ 
+	    	<tr>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; LDL:</td>
+	    		<td>'.number_format($value['undetected']).'</td>
+	    		<td>Percentage Undetectable</td>
+	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
@@ -460,15 +476,17 @@ class Sites_model extends MY_Model
 	    		<td>'. round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
-			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
-			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less5000']+(int) $value['above5000'];
-
+			$data['vl_outcomes']['data'][0]['y'] = (int) $value['less1000'];
+			$data['vl_outcomes']['data'][1]['y'] = (int) $value['undetected'];
+			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
+ 
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
-			$data['vl_outcomes']['data'][1]['color'] = '#F2784B';
+			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+			$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 		}
 
-		$data['vl_outcomes']['data'][0]['sliced'] = true;
-		$data['vl_outcomes']['data'][0]['selected'] = true;
+		$data['vl_outcomes']['data'][2]['sliced'] = true;
+		$data['vl_outcomes']['data'][2]['selected'] = true;
 		
 		return $data;
 	}

@@ -5,14 +5,14 @@ CREATE PROCEDURE `proc_get_all_sites_outcomes`
 BEGIN
   SET @QUERY =    "SELECT 
                     `vf`.`name`, 
-                    SUM((`vss`.`Undetected`+`vss`.`less1000`)) AS `suppressed`, 
+                    SUM(`vss`.`Undetected`) AS `undetected`,
+                    SUM(`vss`.`less1000`) AS `less1000`,
+                    (SUM(`vss`.`Undetected`)+SUM(`vss`.`less1000`)) AS `suppressed`, 
                     SUM(`vss`.`sustxfail`) AS `nonsuppressed` 
                   FROM `vl_site_summary` `vss` 
                   LEFT JOIN `view_facilitys` `vf` 
                     ON `vss`.`facility` = `vf`.`ID`
-    WHERE 1";
-
-   
+    WHERE 1";   
 
     IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
