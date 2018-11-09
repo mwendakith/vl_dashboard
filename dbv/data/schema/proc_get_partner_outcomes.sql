@@ -5,8 +5,10 @@ CREATE PROCEDURE `proc_get_partner_outcomes`
 BEGIN
   SET @QUERY =    "SELECT
                     `p`.`name`,
-                    SUM((`vps`.`Undetected`+`vps`.`less1000`)) AS `suppressed`,
-                    SUM((`vps`.`less5000`+`vps`.`above5000`)) AS `nonsuppressed`
+                    SUM(`vps`.`undetected`) AS `undetected`,
+                    SUM(`vps`.`less1000`) AS `less1000`,
+                    (SUM(`vps`.`Undetected`)+SUM(`vps`.`less1000`)) AS `suppressed`,
+                    (SUM(`vps`.`less5000`)+SUM(`vps`.`above5000`)) AS `nonsuppressed`
                 FROM `vl_partner_summary` `vps`
                     JOIN `partners` `p` ON `vps`.`partner` = `p`.`ID`
                 WHERE `p`.`flag` = '1' ";

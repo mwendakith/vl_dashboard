@@ -40,21 +40,29 @@ class Partner_summaries_model extends MY_Model
 
 		// echo "<pre>";print_r($result);die();
 
-		$data['outcomes'][0]['name'] = "Not Suppressed";
-		$data['outcomes'][1]['name'] = "Suppressed";
-		$data['outcomes'][2]['name'] = "Suppression";
+		$data['outcomes'][0]['name'] = "&lt; LDL";
+		$data['outcomes'][1]['name'] = "&lt; 1000 cp/ml";
+		$data['outcomes'][2]['name'] = "Suppressed";
+		$data['outcomes'][3]['name'] = "Suppression";
 
 		$data['outcomes'][0]['type'] = "column";
 		$data['outcomes'][1]['type'] = "column";
-		$data['outcomes'][2]['type'] = "spline";
+		$data['outcomes'][2]['type'] = "column";
+		$data['outcomes'][3]['type'] = "spline";
 		
 
 		$data['outcomes'][0]['yAxis'] = 1;
 		$data['outcomes'][1]['yAxis'] = 1;
+		$data['outcomes'][2]['yAxis'] = 1;
 
 		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+		$data['outcomes'][3]['tooltip'] = array("valueSuffix" => ' %');
+ 
+		$data['outcomes'][0]['color'] = '#1BA39C';
+		$data['outcomes'][1]['color'] = '#66ff66';
+		$data['outcomes'][2]['color'] = '#F2784B';
 
 		$data['title'] = "";
  
@@ -62,7 +70,8 @@ class Partner_summaries_model extends MY_Model
 			$suppressed = (int)$value['undetected']+(int)$value['less1000'];
 			$nonsuppressed = (int)$value['less5000']+(int)$value['above5000'];
 			$data['categories'][$key] 					= $value['county'];
-			$data['outcomes'][0]['data'][$key] = (int) $nonsuppressed;
+			$data['outcomes'][0]['data'][$key] = (int) $value['undetected'];
+			$data['outcomes'][0]['data'][$key] = (int) $value['less1000'];
 			$data['outcomes'][1]['data'][$key] = (int) $suppressed;
 			$data['outcomes'][2]['data'][$key] = round(@(((int) $suppressed*100)/((int) $suppressed+(int) $nonsuppressed)),1);
 		}

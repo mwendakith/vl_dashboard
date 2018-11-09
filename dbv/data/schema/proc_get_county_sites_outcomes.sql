@@ -5,9 +5,11 @@ CREATE PROCEDURE `proc_get_county_sites_outcomes`
 BEGIN
   SET @QUERY =    "SELECT 
                     `vf`.`name`,
-                    SUM(`vss`.`undetected`+`vss`.`less1000`) AS `suppressed`,
-                    SUM(`vss`.`less5000`+`vss`.`above5000`) AS `nonsuppressed`,
-                    SUM(`vss`.`undetected`+`vss`.`less1000`+`vss`.`less5000`+`vss`.`above5000`) AS `total`  
+                    SUM(`vss`.`undetected`) AS `undetected`,
+                    SUM(`vss`.`less1000`) AS `less1000`,
+                    (SUM(`vss`.`undetected`)+SUM(`vss`.`less1000`)) AS `suppressed`,
+                    (SUM(`vss`.`less5000`)+SUM(`vss`.`above5000`)) AS `nonsuppressed`,
+                    (SUM(`vss`.`undetected`)+SUM(`vss`.`less1000`)+SUM(`vss`.`less5000`)+SUM(`vss`.`above5000`)) AS `total`  
                   FROM `vl_site_summary` `vss` 
                   LEFT JOIN `view_facilitys` `vf` 
                     ON `vss`.`facility` = `vf`.`ID` 
@@ -26,9 +28,6 @@ BEGIN
     ELSE
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
-
-
-
 
 
     SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",C_id,"' GROUP BY `vss`.`facility` ORDER BY `total` DESC LIMIT 0, 50 ");
