@@ -773,13 +773,14 @@ class Summaries_model extends MY_Model
 				$sql = "CALL `proc_get_regional_sample_types`('".$county."','".$from."','".$to."')";
 			}
 		}
+		echo "<pre>";print_r($sql);die();
 		$array1 = $this->db->query($sql)->result_array();
 		return $array1;
 	}
  
 	function sample_types($year=null,$county=null,$partner=null, $all=null) {
 		$result = $this->get_sampletypesData($year,$county,$partner);
-		// echo "<pre>";print_r($result);die();
+		
 		$data['sample_types'][0]['name'] = 'EDTA';
 		$data['sample_types'][1]['name'] = 'DBS';
 		$data['sample_types'][2]['name'] = 'Plasma';
