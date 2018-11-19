@@ -5,9 +5,9 @@ CREATE PROCEDURE `proc_get_vl_national_sustxfail_age`
 BEGIN
   SET @QUERY =  "SELECT 
                     `ag`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
-                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                    (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+                    (SUM(`less5000`)+SUM(`above5000`)) AS `nonsuppressed`,
+                    (SUM(`Undetected`)+SUM(`less1000`))/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `pecentage`
                 FROM vl_national_age `vna`
                 LEFT JOIN agecategory `ag`
                     ON ag.ID = vna.age

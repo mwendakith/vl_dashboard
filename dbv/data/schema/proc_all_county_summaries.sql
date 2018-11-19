@@ -30,8 +30,8 @@ CREATE PROCEDURE `proc_get_county_non_suppression`
 BEGIN
   SET @QUERY =    "SELECT
                     `vnj`.`county` AS `id`, 
-                    SUM((`vnj`.`tests`)) AS `tests`, 
-                    SUM((`vnj`.`above5000`)+(`vnj`.`less5000`)) AS `non_suppressed`
+                    SUM(`vnj`.`tests`) AS `tests`, 
+                    (SUM(`vnj`.`above5000`)+SUM(`vnj`.`less5000`)) AS `non_suppressed`
                 FROM `vl_county_justification` `vnj`
                 WHERE 1 ";
 
@@ -127,8 +127,8 @@ CREATE PROCEDURE `proc_get_county_partner_details`
 (IN county INT(11), IN filter_year INT(11), IN filter_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT `p`.`name` AS `partner`, `vf`.`name` AS `facility`, SUM(`vss`.`alltests`) AS `tests`, 
-                  SUM(`vss`.`less1000` + `vss`.`undetected`) AS `suppressed`, 
-                  SUM(`vss`.`less5000` + `vss`.`above5000`) AS `non_suppressed`,
+                  (SUM(`vss`.`less1000`) + SUM(`vss`.`undetected`)) AS `suppressed`, 
+                  (SUM(`vss`.`less5000`) + SUM(`vss`.`above5000`)) AS `non_suppressed`,
                   SUM(`vss`.`rejected`) AS `rejected`, SUM(`vss`.`adults`) AS `adults`, SUM(`vss`.`paeds`) AS `children`
                 FROM `vl_site_summary` `vss`
                 JOIN (`view_facilitys` `vf` CROSS JOIN `partners` `p`)
@@ -158,8 +158,8 @@ BEGIN
   SET @QUERY =    "SELECT
                     `vnj`.`county` AS `id`, 
                     SUM(`vnj`.`tests`) AS `tests`,
-                    SUM(`vnj`.`less1000` + `vnj`.`undetected`) AS `suppressed`, 
-                    SUM(`vnj`.`less5000` + `vnj`.`above5000`) AS `non_suppressed`,
+                    (SUM(`vnj`.`less1000`) + SUM(`vnj`.`undetected`)) AS `suppressed`, 
+                    (SUM(`vnj`.`less5000`) + SUM(`vnj`.`above5000`)) AS `non_suppressed`,
                     SUM(`vnj`.`rejected`) AS `rejected`
                 FROM `vl_county_justification` `vnj`
                 WHERE 1  ";

@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_county_regimen_outcomes`
 BEGIN
   SET @QUERY =    "SELECT
                     `c`.`name`,
-                    SUM(`vcr`.`undetected`+`vcr`.`less1000`) AS `suppressed`,
-                    SUM(`vcr`.`less5000`+`vcr`.`above5000`) AS `nonsuppressed` 
+                    (SUM(`vcr`.`undetected`)+SUM(`vcr`.`less1000`)) AS `suppressed`,
+                    (SUM(`vcr`.`less5000`)+SUM(`vcr`.`above5000`)) AS `nonsuppressed` 
                 FROM `vl_county_regimen` `vcr`
                     JOIN `countys` `c` ON `vcr`.`county` = `c`.`ID`
     WHERE 1 ";

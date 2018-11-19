@@ -12,9 +12,9 @@ BEGIN
 					`alledta`,
 					`alldbs`,
 					`allplasma`,
-					(`Undetected`+`less1000`) AS `suppressed`,
-					(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
-					((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression`
+					(SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+					(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `tests`,
+					(SUM(`Undetected`)+SUM(`less1000`))*100/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `suppression`
 				FROM `vl_national_summary`
                 WHERE 1";
 

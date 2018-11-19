@@ -7,7 +7,7 @@ BEGIN
                     `c`.`name`,
                     SUM(`Undetected`+`less1000`) AS `suppressed`,
                     SUM(`less5000`+`above5000`) AS `nonsuppressed`,
-                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                    (SUM(`Undetected`)+SUM(`less1000`)/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`))) AS `pecentage`
                 FROM vl_county_summary `vcs`
                 LEFT JOIN countys `c`
                     ON c.ID = vcs.county 
@@ -42,9 +42,9 @@ CREATE PROCEDURE `proc_get_vl_county_sustxfail_justification`
 BEGIN
   SET @QUERY =    "SELECT 
                     `vj`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
-                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                    (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+                    (SUM(`less5000`)+SUM(`above5000`)) AS `nonsuppressed`,
+                    (SUM(`Undetected`)+SUM(`less1000`)/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`))) AS `pecentage`
                 FROM vl_county_justification `vcj`
                 LEFT JOIN viraljustifications `vj`
                     ON vj.ID = vcj.justification
@@ -79,9 +79,9 @@ CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_justification`
 BEGIN
   SET @QUERY =    "SELECT 
                     `vj`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
-                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                    (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+                    (SUM(`less5000`)+SUM(`above5000`)) AS `nonsuppressed`,
+                    (SUM(`Undetected`)+SUM(`less1000`)/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`))) AS `pecentage`
                 FROM vl_subcounty_justification `vsj`
                 LEFT JOIN viraljustifications `vj`
                     ON vj.ID = vsj.justification
@@ -116,9 +116,9 @@ CREATE PROCEDURE `proc_get_vl_national_sustxfail_justification`
 BEGIN
   SET @QUERY =    "SELECT 
                     `vj`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
-                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                    (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+                    (SUM(`less5000`)+SUM(`above5000`)) AS `nonsuppressed`,
+                    (SUM(`Undetected`)+SUM(`less1000`)/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`))) AS `pecentage`
                 FROM vl_national_justification `vnj`
                 LEFT JOIN viraljustifications `vj`
                     ON vj.ID = vnj.justification
@@ -153,9 +153,9 @@ CREATE PROCEDURE `proc_get_vl_county_sustxfail_age`
 BEGIN
   SET @QUERY =  "SELECT 
                     `ag`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
-                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                    (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+                    (SUM(`less5000`)+SUM(`above5000`)) AS `nonsuppressed`,
+                    (SUM(`Undetected`)+SUM(`less1000`)/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`))) AS `pecentage`
                 FROM vl_county_age `vca`
                 LEFT JOIN agecategory `ag`
                     ON ag.ID = vca.age
@@ -191,9 +191,9 @@ CREATE PROCEDURE `proc_get_vl_subcounty_sustxfail_age`
 BEGIN
   SET @QUERY =  "SELECT 
                     `ag`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
-                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                    (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+                    (SUM(`less5000`)+SUM(`above5000`)) AS `nonsuppressed`,
+                    ((SUM(`Undetected`)+SUM(`less1000`))/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`))) AS `pecentage`
                 FROM vl_subcounty_age `vsa`
                 LEFT JOIN agecategory `ag`
                     ON ag.ID = vsa.age
@@ -229,9 +229,9 @@ CREATE PROCEDURE `proc_get_vl_national_sustxfail_age`
 BEGIN
   SET @QUERY =  "SELECT 
                     `ag`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`,
-                    (SUM(`Undetected`+`less1000`)/(SUM(`Undetected`+`less1000`)+SUM(`less5000`+`above5000`))) AS `pecentage`
+                    (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+                    (SUM(`less5000`)+SUM(`above5000`)) AS `nonsuppressed`,
+                    ((SUM(`Undetected`)+SUM(`less1000`))/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`))) AS `pecentage`
                 FROM vl_national_age `vna`
                 LEFT JOIN agecategory `ag`
                     ON ag.ID = vna.age

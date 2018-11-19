@@ -5,7 +5,7 @@ $mflcode = intval($_GET['mfl']);
  //Set our variables
 
 //Connect to the Database
-$con = mysqli_connect("mysql", "root", "FnP5FjbnMrzXCm.", "vl_kemri2");
+$con = mysqli_connect("10.230.50.11", "root", "FnP5FjbnMrzXCm.", "vl_kemri2");
 if(mysqli_connect_errno())
 {
 	echo "Could not establish a connection to the Database";
