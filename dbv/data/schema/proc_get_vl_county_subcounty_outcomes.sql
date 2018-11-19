@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_county_subcounty_outcomes`
 BEGIN
   SET @QUERY =    "SELECT 
 						`vf`.`name` AS `name`, 
-						SUM(`vss`.`less5000`+`vss`.`above5000`) AS `nonsuppressed`, 
-						SUM(`vss`.`Undetected`+`vss`.`less1000`) AS `suppressed` 
+						(SUM(`vss`.`less5000`)+SUM(`vss`.`above5000`)) AS `nonsuppressed`, 
+						(SUM(`vss`.`Undetected`)+SUM(`vss`.`less1000`)) AS `suppressed` 
 						FROM `vl_subcounty_summary` `vss`
 						JOIN `districts` `vf` 
 						ON `vss`.`subcounty` = `vf`.`id`

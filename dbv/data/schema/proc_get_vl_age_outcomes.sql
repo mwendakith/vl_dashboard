@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_age_outcomes`
 BEGIN
   SET @QUERY =    "SELECT 
 						`ac`.`name`, 
-						SUM(`vna`.`less5000`+`vna`.`above5000`) AS `nonsuppressed`, 
-						SUM(`vna`.`Undetected`+`vna`.`less1000`) AS `suppressed` 
+						(SUM(`vna`.`less5000`)+SUM(`vna`.`above5000`)) AS `nonsuppressed`, 
+						(SUM(`vna`.`Undetected`)+SUM(`vna`.`less1000`)) AS `suppressed` 
 						FROM `vl_national_age` `vna`
 						LEFT JOIN `agecategory` `ac` 
 						ON `vna`.`age` = `ac`.`ID`

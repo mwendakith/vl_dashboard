@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_county_samples_outcomes`
 BEGIN
   SET @QUERY =    "SELECT
                     `c`.`name`,
-                    SUM(`vcs`.`undetected`+`vcs`.`less1000`) AS `suppressed`,
-                    SUM(`vcs`.`less5000`+`vcs`.`above5000`) AS `nonsuppressed`
+                    (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`)) AS `suppressed`,
+                    (SUM(`vcs`.`less5000`)+SUM(`vcs`.`above5000`)) AS `nonsuppressed`
                     FROM `vl_county_sampletype` `vcs`
                     JOIN `countys` `c` ON `vcs`.`county` = `c`.`ID`
     WHERE 1 ";

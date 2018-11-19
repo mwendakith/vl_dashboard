@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_regional_gender`
 BEGIN
   SET @QUERY =    "SELECT
                     `g`.`name`,
-                    SUM(`vng`.`undetected`+`vng`.`less1000`) AS `suppressed`,
-                    SUM(`vng`.`less5000`+`vng`.`above5000`) AS `nonsuppressed`
+                    (SUM(`vng`.`undetected`)+SUM(`vng`.`less1000`)) AS `suppressed`,
+                    (SUM(`vng`.`less5000`)+SUM(`vng`.`above5000`)) AS `nonsuppressed`
                 FROM `vl_county_gender` `vng`
                 JOIN `gender` `g`
                     ON `vng`.`gender` = `g`.`ID`

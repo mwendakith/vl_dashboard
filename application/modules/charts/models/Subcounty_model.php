@@ -260,7 +260,7 @@ class Subcounty_model extends MY_Model
 		$sql2 = "CALL `proc_get_vl_current_suppression`('2','".$subcounty."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-
+		
 		$this->db->close();
 		$current = $this->db->query($sql2)->row();
 		$this->db->close();
@@ -272,8 +272,9 @@ class Subcounty_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
+		$data['vl_outcomes']['data'][0]['name'] = '&lt; 1000';
+		$data['vl_outcomes']['data'][1]['name'] = '&lt; LDL';
+		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 
 		$count = 0;
 
@@ -309,9 +310,16 @@ class Subcounty_model extends MY_Model
 
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
-	    		<td>'.number_format($less).'</td>
+	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((($less/$total)*100),1).'%</td>
+	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
+	    	</tr>
+ 
+	    	<tr>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; LDL:</td>
+	    		<td>'.number_format($value['undetected']).'</td>
+	    		<td>Percentage Undetectable</td>
+	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
@@ -333,14 +341,16 @@ class Subcounty_model extends MY_Model
 	    		<td>'. round((($value['rejected']*100)/$value['alltests']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
-			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
-			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less5000']+(int) $value['above5000'];
+			$data['vl_outcomes']['data'][0]['y'] = (int) $value['less1000'];
+			$data['vl_outcomes']['data'][1]['y'] = (int) $value['undetected'];
+			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
 
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
-			$data['vl_outcomes']['data'][1]['color'] = '#F2784B';
+			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+			$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 		}
-		$data['vl_outcomes']['data'][0]['sliced'] = true;
-		$data['vl_outcomes']['data'][0]['selected'] = true;
+		$data['vl_outcomes']['data'][2]['sliced'] = true;
+		$data['vl_outcomes']['data'][2]['selected'] = true;
 		
 		return $data;
 	}

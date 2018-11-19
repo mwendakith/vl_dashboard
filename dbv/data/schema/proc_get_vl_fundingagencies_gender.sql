@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_fundingagencies_gender`
 BEGIN
   SET @QUERY =    "SELECT
                     `g`.`name`,
-                    SUM(`vpg`.`undetected`+`vpg`.`less1000`) AS `suppressed`,
-                    SUM(`vpg`.`less5000`+`vpg`.`above5000`) AS `nonsuppressed`
+                    (SUM(`vpg`.`undetected`)+SUM(`vpg`.`less1000`)) AS `suppressed`,
+                    (SUM(`vpg`.`less5000`)+SUM(`vpg`.`above5000`)) AS `nonsuppressed`
                 FROM `vl_partner_gender` `vpg`
                 JOIN `partners` `p` ON `p`.`ID` = `vpg`.`partner`
                 JOIN `gender` `g` ON `vpg`.`gender` = `g`.`ID`

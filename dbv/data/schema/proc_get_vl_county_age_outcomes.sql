@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_county_age_outcomes`
 BEGIN
   SET @QUERY =    "SELECT
                     `c`.`name`,
-                    SUM(`vca`.`undetected`+`vca`.`less1000`) AS `suppressed`,
-                    SUM(`vca`.`less5000`+`vca`.`above5000`) AS `nonsuppressed` 
+                    (SUM(`vca`.`undetected`)+SUM(`vca`.`less1000`)) AS `suppressed`,
+                    (SUM(`vca`.`less5000`)+SUM(`vca`.`above5000`)) AS `nonsuppressed` 
                 FROM `vl_county_age` `vca`
                     JOIN `countys` `c` ON `vca`.`county` = `c`.`ID`
     WHERE 1 ";

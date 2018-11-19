@@ -5,7 +5,7 @@ CREATE PROCEDURE `proc_get_lab_outcomes`
 BEGIN
   SET @QUERY =    "SELECT
                     `l`.`labname`,
-                    SUM((`vcs`.`Undetected`+`vcs`.`less1000`)) AS `detectableNless1000`,
+                    (SUM(`vcs`.`Undetected`)+SUM(`vcs`.`less1000`)) AS `detectableNless1000`,
                     SUM(`vcs`.`sustxfail`) AS `sustxfl`
                 FROM `vl_lab_summary` `vcs` LEFT JOIN `labs` `l` ON `vcs`.`lab` = `l`.`ID` WHERE 1";
 

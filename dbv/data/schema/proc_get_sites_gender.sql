@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_sites_gender`
 BEGIN
   SET @QUERY =    "SELECT  
                     `g`.`name`,
-                      SUM(`vsg`.`Undetected` + `vsg`.`less1000`) AS `suppressed`, 
-                      SUM(`vsg`.`less5000` + `vsg`.`above5000`) AS `nonsuppressed` 
+                      (SUM(`vsg`.`Undetected`) + SUM(`vsg`.`less1000`)) AS `suppressed`, 
+                      (SUM(`vsg`.`less5000`) + SUM(`vsg`.`above5000`)) AS `nonsuppressed` 
                 FROM `vl_site_gender` `vsg`
                 JOIN `gender` `g`
                     ON `vsg`.`gender` = `g`.`ID`

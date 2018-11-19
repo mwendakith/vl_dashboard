@@ -9,13 +9,13 @@ BEGIN
           SUM(`edta`) AS `edta`,
           SUM(`dbs`) AS `dbs`,
           SUM(`plasma`) AS `plasma`,
-          SUM(`Undetected`+`less1000`) AS `suppressed`,
-          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
-          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression` 
+          (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+          (SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `tests`,
+          (SUM(`Undetected`)+SUM(`less1000`))*100/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `suppression` 
     FROM `vl_national_age`
     WHERE 1";
 
-    SET @QUERY = CONCAT(@QUERY, " AND `age` ",A_id," AND `year` = '",filter_year,"' GROUP BY `month` ORDER BY `year` ASC, `month` ");
+    SET @QUERY = CONCAT(@QUERY, " AND `age` = ",A_id," AND `year` = '",filter_year,"' GROUP BY `month` ORDER BY `year` ASC, `month` ");
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
