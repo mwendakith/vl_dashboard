@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_partner_county_age_outcomes`
 BEGIN
   SET @QUERY =    "SELECT 
                     `c`.`name`,
-                    SUM(`vpa`.`undetected`+`vpa`.`less1000`) AS `suppressed`,
-                    SUM(`vpa`.`less5000`+`vpa`.`above5000`) AS `nonsuppressed`
+                    (SUM(`vpa`.`undetected`)+SUM(`vpa`.`less1000`)) AS `suppressed`,
+                    (SUM(`vpa`.`less5000`)+SUM(`vpa`.`above5000`)) AS `nonsuppressed`
                   FROM vl_partner_age vpa
                   LEFT JOIN view_facilitys vf
                     ON vf.partner = vpa.partner

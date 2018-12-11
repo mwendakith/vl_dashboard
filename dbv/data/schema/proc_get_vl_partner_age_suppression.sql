@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_partner_age_suppression`
 BEGIN
   SET @QUERY =    "SELECT
         partners.name,
-        SUM(`Undetected` + `less1000`) AS `suppressed`, 
-        SUM(`above5000` + `less5000`) AS `nonsuppressed`
+        (SUM(`Undetected`) + SUM(`less1000`)) AS `suppressed`, 
+        (SUM(`above5000`) + SUM(`less5000`)) AS `nonsuppressed`
     FROM `vl_partner_age`
     LEFT JOIN partners 
       ON partners.ID = vl_partner_age.partner

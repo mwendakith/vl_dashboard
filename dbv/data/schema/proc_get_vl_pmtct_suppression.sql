@@ -6,10 +6,10 @@ BEGIN
   SET @QUERY =    "SELECT
           `vcs`.`month`,
           `vcs`.`year`,
-          SUM(`vcs`.`undetected`+`vcs`.`less1000`) AS `suppressed`,
-          SUM(`vcs`.`less5000`+`vcs`.`above5000`) AS `nonsuppressed`,
-          SUM(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`) AS `tests`,
-          SUM(`vcs`.`undetected`+`vcs`.`less1000`)*100/SUM(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`) AS `suppression`
+          (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`)) AS `suppressed`,
+          (SUM(`vcs`.`less5000`)+SUM(`vcs`.`above5000`)) AS `nonsuppressed`,
+          (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`)+SUM(`vcs`.`less5000`)+SUM(`vcs`.`above5000`)) AS `tests`,
+          (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`))*100/SUM(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`) AS `suppression`
                   ";
 
     IF (national != 0 && national != '') THEN
