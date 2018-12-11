@@ -15,7 +15,7 @@ BEGIN
           SUM(`vcs`.`confirm2vl`) AS `confirm2vl`,
           SUM(`vcs`.`baseline`) AS `baseline`,
           SUM(`vcs`.`baselinesustxfail`) AS `baselinesustxfail`,
-          SUM(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`) AS `routine` ";
+          (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`)+SUM(`vcs`.`less5000`)+SUM(`vcs`.`above5000`)) AS `routine` ";
 
     IF (county != 0 || county != '') THEN
         SET @QUERY = CONCAT(@QUERY, "FROM `vl_county_pmtct` `vcs` LEFT JOIN `countys` `com` ON `vcs`.`county` = `com`.`ID` ");

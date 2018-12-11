@@ -9,9 +9,9 @@ BEGIN
           SUM(`edta`) AS `edta`,
           SUM(`dbs`) AS `dbs`,
           SUM(`plasma`) AS `plasma`,
-          SUM(`Undetected`+`less1000`) AS `suppressed`,
-          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
-          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression`  
+          (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+          (SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `tests`,
+          (SUM(`Undetected`)+SUM(`less1000`))*100/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `suppression`  
     FROM `vl_partner_regimen`
     WHERE 1";
 
