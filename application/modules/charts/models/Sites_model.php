@@ -132,7 +132,7 @@ class Sites_model extends MY_Model
 		$ageData = [];
 		$genderData = [];
 		foreach ($resultage as $key => $value) {
-			if (!in_array($value->selection, $counties))
+			if (!in_array($value->selectionID, $counties))
 				$counties[] = $value->selectionID;
 		}
 		echo "<pre>";print_r($resultage);echo "</pre>";die();
@@ -160,7 +160,6 @@ class Sites_model extends MY_Model
         // ini_set("max_execution_time", "3000");
 		foreach ($counties as $key => $value) {
 			foreach ($resultage as $k => $v) {
-
 				if ($value == $v->selectionID) {
 					$ageData[$value]['selection'] = $v->selection;
 					if ($v->name == '15-19') {
@@ -195,24 +194,24 @@ class Sites_model extends MY_Model
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
 			$validTests = ((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx']);
-			$femaletests = ($genderData[$value['name']]['femaletests']) ? number_format((int) $genderData[$value['name']]['femaletests']) : 0;
-			$femalesustx = ($genderData[$value['name']]['femalesustx']) ? number_format((int) $genderData[$value['name']]['femalesustx']) : 0;
-			$maletests = ($genderData[$value['name']]['maletests']) ? number_format((int) $genderData[$value['name']]['maletests']) : 0;
-			$malesustx = ($genderData[$value['name']]['malesustx']) ? number_format((int) $genderData[$value['name']]['malesustx']) : 0;
-			$Nodatatests = ($genderData[$value['name']]['Nodatatests']) ? number_format((int) $genderData[$value['name']]['Nodatatests']) : 0;
-			$Nodatasustx = ($genderData[$value['name']]['Nodatasustx']) ? number_format((int) $genderData[$value['name']]['Nodatasustx']) : 0;
-			$less2tests = ($ageData[$value['name']]['less2tests']) ? number_format($ageData[$value['name']]['less2tests']) : 0;
-			$less2sustx = ($ageData[$value['name']]['less2sustx']) ? number_format($ageData[$value['name']]['less2sustx']) : 0;
-			$less9tests = ($ageData[$value['name']]['less9tests']) ? number_format($ageData[$value['name']]['less9tests']) : 0;
-			$less9sustx = ($ageData[$value['name']]['less9sustx']) ? number_format($ageData[$value['name']]['less9sustx']) : 0;
-			$less14tests = ($ageData[$value['name']]['less14tests']) ? number_format($ageData[$value['name']]['less14tests']) : 0;
-			$less14sustx = ($ageData[$value['name']]['less14sustx']) ? number_format($ageData[$value['name']]['less14sustx']) : 0;
-			$less19tests = ($ageData[$value['name']]['less19tests']) ? number_format($ageData[$value['name']]['less19tests']) : 0;
-			$less19sustx = ($ageData[$value['name']]['less19sustx']) ? number_format($ageData[$value['name']]['less19sustx']) : 0;
-			$less25tests = ($ageData[$value['name']]['less25tests']) ? number_format($ageData[$value['name']]['less25tests']) : 0;
-			$less25sustx = ($ageData[$value['name']]['less25sustx']) ? number_format($ageData[$value['name']]['less25sustx']) : 0;
-			$above25tests = ($ageData[$value['name']]['above25tests']) ? number_format($ageData[$value['name']]['above25tests']) : 0;
-			$above25sustx = ($ageData[$value['name']]['above25sustx']) ? number_format($ageData[$value['name']]['above25sustx']) : 0;
+			$femaletests = ($genderData[$value['facility']]['femaletests']) ? number_format((int) $genderData[$value['facility']]['femaletests']) : 0;
+			$femalesustx = ($genderData[$value['facility']]['femalesustx']) ? number_format((int) $genderData[$value['facility']]['femalesustx']) : 0;
+			$maletests = ($genderData[$value['facility']]['maletests']) ? number_format((int) $genderData[$value['facility']]['maletests']) : 0;
+			$malesustx = ($genderData[$value['facility']]['malesustx']) ? number_format((int) $genderData[$value['facility']]['malesustx']) : 0;
+			$Nodatatests = ($genderData[$value['facility']]['Nodatatests']) ? number_format((int) $genderData[$value['facility']]['Nodatatests']) : 0;
+			$Nodatasustx = ($genderData[$value['facility']]['Nodatasustx']) ? number_format((int) $genderData[$value['facility']]['Nodatasustx']) : 0;
+			$less2tests = ($ageData[$value['facility']]['less2tests']) ? number_format($ageData[$value['facility']]['less2tests']) : 0;
+			$less2sustx = ($ageData[$value['facility']]['less2sustx']) ? number_format($ageData[$value['facility']]['less2sustx']) : 0;
+			$less9tests = ($ageData[$value['facility']]['less9tests']) ? number_format($ageData[$value['facility']]['less9tests']) : 0;
+			$less9sustx = ($ageData[$value['facility']]['less9sustx']) ? number_format($ageData[$value['facility']]['less9sustx']) : 0;
+			$less14tests = ($ageData[$value['facility']]['less14tests']) ? number_format($ageData[$value['facility']]['less14tests']) : 0;
+			$less14sustx = ($ageData[$value['facility']]['less14sustx']) ? number_format($ageData[$value['facility']]['less14sustx']) : 0;
+			$less19tests = ($ageData[$value['facility']]['less19tests']) ? number_format($ageData[$value['facility']]['less19tests']) : 0;
+			$less19sustx = ($ageData[$value['facility']]['less19sustx']) ? number_format($ageData[$value['facility']]['less19sustx']) : 0;
+			$less25tests = ($ageData[$value['facility']]['less25tests']) ? number_format($ageData[$value['facility']]['less25tests']) : 0;
+			$less25sustx = ($ageData[$value['facility']]['less25sustx']) ? number_format($ageData[$value['facility']]['less25sustx']) : 0;
+			$above25tests = ($ageData[$value['facility']]['above25tests']) ? number_format($ageData[$value['facility']]['above25tests']) : 0;
+			$above25sustx = ($ageData[$value['facility']]['above25sustx']) ? number_format($ageData[$value['facility']]['above25sustx']) : 0;
 			$table .= "<tr>
 				<td>".$count."</td>
 				<td>".$value['MFLCode']."</td>
