@@ -8,6 +8,7 @@ BEGIN
                     `view_facilitys`.`name`, 
                     `view_facilitys`.`subcounty`, 
                     `countys`.`name` AS `county`,
+                    `vl_site_summary`.`facility` AS `facility`,
                     SUM(`vl_site_summary`.`received`) AS `received`, 
                     SUM(`vl_site_summary`.`rejected`) AS `rejected`,  
                     SUM(`vl_site_summary`.`invalids`) AS `invalids`,

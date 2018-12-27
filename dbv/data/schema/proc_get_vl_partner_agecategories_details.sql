@@ -11,13 +11,13 @@ BEGIN
                     SUM(`va`.`above5000`) AS `above5000`,
                     `ac`.`name`, ";
    IF (type=0 OR type='0') THEN 
-      SET @QUERY = CONCAT(@QUERY, " `jt`.`name` as `selection` FROM `vl_partner_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `partners` `jt` ON `jt`.`id` = `va`.`partner` WHERE 1 ");
+      SET @QUERY = CONCAT(@QUERY, " `jt`.`name` as `selection`, `jt`.`id` AS `selectionID` FROM `vl_partner_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `partners` `jt` ON `jt`.`id` = `va`.`partner` WHERE 1 ");
    END IF;
    IF (type=1 OR type='1') THEN 
-      SET @QUERY = CONCAT(@QUERY, " `jt`.`countyname` as `selection` FROM `vl_site_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `view_facilitys` `jt` ON `jt`.`id` = `va`.`facility` WHERE `jt`.`partner` = '",ID,"' ");
+      SET @QUERY = CONCAT(@QUERY, " `jt`.`countyname` as `selection`, `jt`.`county` AS `selectionID` FROM `vl_site_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `view_facilitys` `jt` ON `jt`.`id` = `va`.`facility` WHERE `jt`.`partner` = '",ID,"' ");
    END IF;
    IF (type=2 OR type='2') THEN 
-      SET @QUERY = CONCAT(@QUERY, " `jt`.`name` as `selection` FROM `vl_site_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `view_facilitys` `jt` ON `jt`.`id` = `va`.`facility` WHERE `jt`.`partner` = '",ID,"' ");
+      SET @QUERY = CONCAT(@QUERY, " `jt`.`name` as `selection`, `jt`.`id` AS `selectionID` FROM `vl_site_age` `va` JOIN `agecategory` `ac` ON `ac`.`ID` = `va`.`age` JOIN `view_facilitys` `jt` ON `jt`.`id` = `va`.`facility` WHERE `jt`.`partner` = '",ID,"' ");
    END IF;
                         
    IF (from_month != 0 && from_month != '') THEN
@@ -33,7 +33,7 @@ BEGIN
       SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
    END IF;
 
-   SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`name`, `selection` ");
+   SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`name`, `selection`, `selectionID` ");
 
    PREPARE stmt FROM @QUERY;
    EXECUTE stmt;

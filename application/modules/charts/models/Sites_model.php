@@ -132,11 +132,11 @@ class Sites_model extends MY_Model
 		$genderData = [];
 		foreach ($resultage as $key => $value) {
 			if (!in_array($value->selection, $counties))
-				$counties[] = $value->selection;
+				$counties[] = $value->selectionID;
 		}
 		foreach ($counties as $key => $value) {
 			foreach ($resultGender as $k => $v) {
-				if ($value == $v->selection) {
+				if ($value == $v->selectionID) {
 					$genderData[$value]['selection'] = $v->selection;
 					if ($v->name == 'F'){
 						$genderData[$value]['femaletests'] = $v->tests;
@@ -159,7 +159,7 @@ class Sites_model extends MY_Model
 		foreach ($counties as $key => $value) {
 			foreach ($resultage as $k => $v) {
 
-				if ($value == $v->selection) {
+				if ($value == $v->selectionID) {
 					$ageData[$value]['selection'] = $v->selection;
 					if ($v->name == '15-19') {
 						$ageData[$value]['less19tests'] = $v->tests;
