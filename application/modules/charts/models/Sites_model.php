@@ -126,6 +126,7 @@ class Sites_model extends MY_Model
 		$resultage = $this->db->query($sqlAge)->result();
 		$this->db->close();
 		$resultGender = $this->db->query($sqlGender)->result();
+		$this->db->close();
 		// echo "<pre>";print_r($result);echo "</pre>";die();
 		$counties = [];
 		$ageData = [];
@@ -134,6 +135,7 @@ class Sites_model extends MY_Model
 			if (!in_array($value->selection, $counties))
 				$counties[] = $value->selectionID;
 		}
+		echo "<pre>";print_r($resultage);echo "</pre>";die();
 		foreach ($counties as $key => $value) {
 			foreach ($resultGender as $k => $v) {
 				if ($value == $v->selectionID) {
