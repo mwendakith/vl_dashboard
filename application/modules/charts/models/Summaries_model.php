@@ -773,7 +773,7 @@ class Summaries_model extends MY_Model
 				$sql = "CALL `proc_get_regional_sample_types`('".$county."','".$from."','".$to."')";
 			}
 		}
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$array1 = $this->db->query($sql)->result_array();
 		return $array1;
 	}
