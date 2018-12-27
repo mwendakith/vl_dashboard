@@ -119,14 +119,14 @@ class Sites_model extends MY_Model
 		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		$sqlAge = "CALL `proc_get_vl_partner_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$partner."');";
 		$sqlGender = "CALL `proc_get_vl_partner_gender_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$partner."');";
-		// echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sqlGender);die();
 		$this->db->close();
 		$result = $this->db->query($sql)->result_array();
 		$this->db->close();
 		$resultage = $this->db->query($sqlAge)->result();
 		$this->db->close();
 		$resultGender = $this->db->query($sqlGender)->result();
-
+		// echo "<pre>";print_r($result);echo "</pre>";die();
 		$counties = [];
 		$ageData = [];
 		$genderData = [];
@@ -153,10 +153,12 @@ class Sites_model extends MY_Model
 				}
 			}
 		}
+		echo "<pre>";print_r($resultage);echo "</pre>";die();
 		// ini_set("memory_limit", "-1");
         // ini_set("max_execution_time", "3000");
 		foreach ($counties as $key => $value) {
 			foreach ($resultage as $k => $v) {
+
 				if ($value == $v->selection) {
 					$ageData[$value]['selection'] = $v->selection;
 					if ($v->name == '15-19') {
