@@ -93,48 +93,19 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
-	function partner_sites_outcomes($year=NULL,$month=NULL,$partner=NULL,$to_year=null,$to_month=null)
-	{
-		$table = '';
-		$count = 1;
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-
-		$type = 2;
-
-		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		$sqlAge = "CALL `proc_get_vl_partner_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$partner."');";
-		$sqlGender = "CALL `proc_get_vl_partner_gender_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$partner."');";
-		// echo "<pre>";print_r($sqlGender);die();
-		$this->db->close();
-		$result = $this->db->query($sql)->result_array();
-		$this->db->close();
-		$resultage = $this->db->query($sqlAge)->result();
-		$this->db->close();
-		$resultGender = $this->db->query($sqlGender)->result();
-		$this->db->close();
-		// echo "<pre>";print_r($result);echo "</pre>";die();
+	function getSelectionData($resultage) {
 		$counties = [];
-		$ageData = [];
-		$genderData = [];
 		foreach ($resultage as $key => $value) {
 			if (!in_array($value->selectionID, $counties))
 				$counties[] = $value->selectionID;
 		}
+
+		return $counties;
+	}
+
+	public function getbreakdownData($counties, $resultage, $resultGender) {
+		$ageData = [];
+		$genderData = [];
 		// echo "<pre>";print_r($resultage);echo "</pre>";die();
 		foreach ($counties as $key => $value) {
 			foreach ($resultGender as $k => $v) {
@@ -184,30 +155,72 @@ class Sites_model extends MY_Model
 					}
 				}
 			}
+
+			return ['ageData' => $ageData, 'genderData' => $genderData];
 		}
+	}
+
+	function partner_sites_outcomes($year=NULL,$month=NULL,$partner=NULL,$to_year=null,$to_month=null)
+	{
+		$table = '';
+		$count = 1;
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+			}else {
+				$month = $this->session->userdata('filter_month');
+			}
+		}
+
+		$type = 2;
+
+		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		$sqlAge = "CALL `proc_get_vl_partner_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$partner."');";
+		$sqlGender = "CALL `proc_get_vl_partner_gender_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$partner."');";
+		// echo "<pre>";print_r($sqlGender);die();
+		$this->db->close();
+		$result = $this->db->query($sql)->result_array();
+		$this->db->close();
+		$resultage = $this->db->query($sqlAge)->result();
+		$this->db->close();
+		$resultGender = $this->db->query($sqlGender)->result();
+		$this->db->close();
+		// echo "<pre>";print_r($result);echo "</pre>";die();
+		$counties = $this->getSelectionData($resultage);
+		$breakdownData = $this->getbreakdownData($counties, $resultage, $resultGender);
+		
 		// echo "<pre>";print_r($sql);die();
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
 			$validTests = ((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx']);
-			$femaletests = ($genderData[$value['facility']]['femaletests']) ? number_format((int) $genderData[$value['facility']]['femaletests']) : 0;
-			$femalesustx = ($genderData[$value['facility']]['femalesustx']) ? number_format((int) $genderData[$value['facility']]['femalesustx']) : 0;
-			$maletests = ($genderData[$value['facility']]['maletests']) ? number_format((int) $genderData[$value['facility']]['maletests']) : 0;
-			$malesustx = ($genderData[$value['facility']]['malesustx']) ? number_format((int) $genderData[$value['facility']]['malesustx']) : 0;
-			$Nodatatests = ($genderData[$value['facility']]['Nodatatests']) ? number_format((int) $genderData[$value['facility']]['Nodatatests']) : 0;
-			$Nodatasustx = ($genderData[$value['facility']]['Nodatasustx']) ? number_format((int) $genderData[$value['facility']]['Nodatasustx']) : 0;
-			$less2tests = ($ageData[$value['facility']]['less2tests']) ? number_format($ageData[$value['facility']]['less2tests']) : 0;
-			$less2sustx = ($ageData[$value['facility']]['less2sustx']) ? number_format($ageData[$value['facility']]['less2sustx']) : 0;
-			$less9tests = ($ageData[$value['facility']]['less9tests']) ? number_format($ageData[$value['facility']]['less9tests']) : 0;
-			$less9sustx = ($ageData[$value['facility']]['less9sustx']) ? number_format($ageData[$value['facility']]['less9sustx']) : 0;
-			$less14tests = ($ageData[$value['facility']]['less14tests']) ? number_format($ageData[$value['facility']]['less14tests']) : 0;
-			$less14sustx = ($ageData[$value['facility']]['less14sustx']) ? number_format($ageData[$value['facility']]['less14sustx']) : 0;
-			$less19tests = ($ageData[$value['facility']]['less19tests']) ? number_format($ageData[$value['facility']]['less19tests']) : 0;
-			$less19sustx = ($ageData[$value['facility']]['less19sustx']) ? number_format($ageData[$value['facility']]['less19sustx']) : 0;
-			$less25tests = ($ageData[$value['facility']]['less25tests']) ? number_format($ageData[$value['facility']]['less25tests']) : 0;
-			$less25sustx = ($ageData[$value['facility']]['less25sustx']) ? number_format($ageData[$value['facility']]['less25sustx']) : 0;
-			$above25tests = ($ageData[$value['facility']]['above25tests']) ? number_format($ageData[$value['facility']]['above25tests']) : 0;
-			$above25sustx = ($ageData[$value['facility']]['above25sustx']) ? number_format($ageData[$value['facility']]['above25sustx']) : 0;
+			$femaletests = ($breakdownData['genderData'][$value['facility']]['femaletests']) ? number_format((int) $breakdownData['genderData'][$value['facility']]['femaletests']) : 0;
+			$femalesustx = ($breakdownData['genderData'][$value['facility']]['femalesustx']) ? number_format((int) $breakdownData['genderData'][$value['facility']]['femalesustx']) : 0;
+			$maletests = ($breakdownData['genderData'][$value['facility']]['maletests']) ? number_format((int) $breakdownData['genderData'][$value['facility']]['maletests']) : 0;
+			$malesustx = ($breakdownData['genderData'][$value['facility']]['malesustx']) ? number_format((int) $breakdownData['genderData'][$value['facility']]['malesustx']) : 0;
+			$Nodatatests = ($breakdownData['genderData'][$value['facility']]['Nodatatests']) ? number_format((int) $breakdownData['genderData'][$value['facility']]['Nodatatests']) : 0;
+			$Nodatasustx = ($breakdownData['genderData'][$value['facility']]['Nodatasustx']) ? number_format((int) $breakdownData['genderData'][$value['facility']]['Nodatasustx']) : 0;
+			$less2tests = ($breakdownData['ageData'][$value['facility']]['less2tests']) ? number_format($breakdownData['ageData'][$value['facility']]['less2tests']) : 0;
+			$less2sustx = ($breakdownData['ageData'][$value['facility']]['less2sustx']) ? number_format($breakdownData['ageData'][$value['facility']]['less2sustx']) : 0;
+			$less9tests = ($breakdownData['ageData'][$value['facility']]['less9tests']) ? number_format($breakdownData['ageData'][$value['facility']]['less9tests']) : 0;
+			$less9sustx = ($breakdownData['ageData'][$value['facility']]['less9sustx']) ? number_format($breakdownData['ageData'][$value['facility']]['less9sustx']) : 0;
+			$less14tests = ($breakdownData['ageData'][$value['facility']]['less14tests']) ? number_format($breakdownData['ageData'][$value['facility']]['less14tests']) : 0;
+			$less14sustx = ($breakdownData['ageData'][$value['facility']]['less14sustx']) ? number_format($breakdownData['ageData'][$value['facility']]['less14sustx']) : 0;
+			$less19tests = ($breakdownData['ageData'][$value['facility']]['less19tests']) ? number_format($breakdownData['ageData'][$value['facility']]['less19tests']) : 0;
+			$less19sustx = ($breakdownData['ageData'][$value['facility']]['less19sustx']) ? number_format($breakdownData['ageData'][$value['facility']]['less19sustx']) : 0;
+			$less25tests = ($breakdownData['ageData'][$value['facility']]['less25tests']) ? number_format($breakdownData['ageData'][$value['facility']]['less25tests']) : 0;
+			$less25sustx = ($breakdownData['ageData'][$value['facility']]['less25sustx']) ? number_format($breakdownData['ageData'][$value['facility']]['less25sustx']) : 0;
+			$above25tests = ($breakdownData['ageData'][$value['facility']]['above25tests']) ? number_format($breakdownData['ageData'][$value['facility']]['above25tests']) : 0;
+			$above25sustx = ($breakdownData['ageData'][$value['facility']]['above25sustx']) ? number_format($breakdownData['ageData'][$value['facility']]['above25sustx']) : 0;
 			$table .= "<tr>
 				<td>".$count."</td>
 				<td>".$value['MFLCode']."</td>
