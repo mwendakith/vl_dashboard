@@ -135,7 +135,7 @@ class Sites_model extends MY_Model
 			if (!in_array($value->selectionID, $counties))
 				$counties[] = $value->selectionID;
 		}
-		echo "<pre>";print_r($resultage);echo "</pre>";die();
+		// echo "<pre>";print_r($resultage);echo "</pre>";die();
 		foreach ($counties as $key => $value) {
 			foreach ($resultGender as $k => $v) {
 				if ($value == $v->selectionID) {
@@ -155,7 +155,7 @@ class Sites_model extends MY_Model
 				}
 			}
 		}
-		echo "<pre>";print_r($resultage);echo "</pre>";die();
+		// echo "<pre>";print_r($resultage);echo "</pre>";die();
 		// ini_set("memory_limit", "-1");
         // ini_set("max_execution_time", "3000");
 		foreach ($counties as $key => $value) {
