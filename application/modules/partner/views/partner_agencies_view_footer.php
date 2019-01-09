@@ -146,7 +146,7 @@
 			$.get("<?php echo base_url();?>partner/check_agencies_select", function (data) {
 				agency = data;
 				agency = $.parseJSON(agency);
-				console.log(agency);
+				
 				if (agency==0) {
 					$("#second").hide();
 					// fetching the partner outcomes

@@ -125,17 +125,17 @@
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
-		});
- 		$.get("<?php echo base_url('partner/check_partner_select')?>", function(data) {
- 			data = "<?php echo json_decode("+data+")?>";
- 			partner = data;
- 			// console.log(partner);
-	 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+year+"/"+month+"/"+null+"/"+partner);
-	 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+year+"/"+month+"/"+null+"/"+partner);
-			$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+year+"/"+month+"/"+null+"/"+partner);
-			$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+year+"/"+month+"/"+null+"/"+partner);
-			$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+year+"/"+month+"/"+null+"/"+partner);
-			$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+year+"/"+month+"/"+null);
+	 		$.get("<?php echo base_url('partner/check_partner_select')?>", function(data) {
+	 			data = "<?php echo json_decode("+data+")?>";
+	 			partner = data;
+	 			// console.log(partner);
+		 		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+year+"/"+month+"/"+null+"/"+partner);
+		 		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+year+"/"+month+"/"+null+"/"+partner);
+				$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+year+"/"+month+"/"+null+"/"+partner);
+				$("#regimen").load("<?php echo base_url('charts/nonsuppression/regimen');?>/"+year+"/"+month+"/"+null+"/"+partner);
+				$("#sampleType").load("<?php echo base_url('charts/nonsuppression/sample_type');?>/"+year+"/"+month+"/"+null+"/"+partner);
+				$("#sites_listing").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+year+"/"+month+"/"+null);
+			});
 		});
 	}
 </script>

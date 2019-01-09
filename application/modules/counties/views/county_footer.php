@@ -89,15 +89,15 @@
 			}
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
-			
+
+	 		$("#county").html("<center><div class='loader'></div></center>"); 
+			$("#county_sites").html("<center><div class='loader'></div></center>");
+
+		
+	 		$("#county").load("<?php echo base_url('charts/counties/'); ?>/"+year+"/"+month);
+			$("#county_sites").load("<?php echo base_url('charts/counties/'); ?>/"+year+"/"+month); 
 		});
  		
 		
- 		$("#county").html("<center><div class='loader'></div></center>"); 
-		$("#county_sites").html("<center><div class='loader'></div></center>");
-
-	
- 		$("#county").load("<?php echo base_url('charts/counties/'); ?>/"+year+"/"+month);
-		$("#county_sites").load("<?php echo base_url('charts/counties/'); ?>/"+year+"/"+month); 
 	}
 </script>

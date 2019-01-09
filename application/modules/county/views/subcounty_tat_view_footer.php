@@ -111,11 +111,11 @@
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
-		});
- 		$("#subcounty_tat_outcomes").html("<center><div class='loader'></div></center>");
- 		$("#subcounty_tat_details").html("<center><div class='loader'></div></center>");
-    	
-		$("#subcounty_tat_outcomes").load("<?= @base_url('charts/tat/outcomes');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+2);
-		$("#subcounty_tat_details").load("<?= @base_url('charts/tat/details'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+2); 
+	 		$("#subcounty_tat_outcomes").html("<center><div class='loader'></div></center>");
+	 		$("#subcounty_tat_details").html("<center><div class='loader'></div></center>");
+	    	
+			$("#subcounty_tat_outcomes").load("<?= @base_url('charts/tat/outcomes');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+2);
+			$("#subcounty_tat_details").load("<?= @base_url('charts/tat/details'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+2);
+		}); 
 	}
 </script>
