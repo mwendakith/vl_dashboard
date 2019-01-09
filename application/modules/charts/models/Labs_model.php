@@ -215,11 +215,11 @@ class Labs_model extends MY_Model
 			$categories = array();
 			$categories2 = array();
 			foreach ($result as $key => $value) {
-				if (!in_array($value['lab'], $categories2)) {
+				if (!in_array($value['labname'], $categories2)) {
 					$labname = "POC Sites";
 					if($value['labname']) $labname = $value['labname'];
 					$categories[] = $labname;
-					$categories2[] = $value['lab'];
+					$categories2[] = $value['labname'];
 				}
 			}
 			// print_r($categories);die();
@@ -229,7 +229,7 @@ class Labs_model extends MY_Model
 			foreach ($categories as $key => $value) {
 				foreach ($months as $key1 => $value1) {
 					foreach ($result as $key2 => $value2) {
-						if ((int) $value1 == (int) $value2['month'] && $categories2[$key] == $value2['lab']) {
+						if ((int) $value1 == (int) $value2['month'] && $categories2[$key] == $value2['labname']) {
 							// $data['test_trends'][$key]['data'][$count] = (int) $value2['alltests'] + (int) $value['eqa'] + (int) $value['confirmtx'];
 							$data['test_trends'][$key]['name'] = $value;
 							$data['test_trends'][$key]['data'][$count] = (int) $value2['alltests'];
@@ -281,11 +281,11 @@ class Labs_model extends MY_Model
 			$categories = array();
 			$categories2 = array();
 			foreach ($result as $key => $value) {
-				if (!in_array($value['lab'], $categories2)) {
+				if (!in_array($value['labname'], $categories2)) {
 					$labname = "POC Sites";
 					if($value['labname']) $labname = $value['labname'];
 					$categories[] = $labname;
-					$categories2[] = $value['lab'];
+					$categories2[] = $value['labname'];
 				}
 			}
 
@@ -294,7 +294,7 @@ class Labs_model extends MY_Model
 			foreach ($categories as $key => $value) {
 				foreach ($months as $key1 => $value1) {
 					foreach ($result as $key2 => $value2) {
-						if ((int) $value1 == (int) $value2['month'] && $categories2[$key] == $value2['lab']) {
+						if ((int) $value1 == (int) $value2['month'] && $categories2[$key] == $value2['labname']) {
 							$data['reject_trend'][$key]['name'] = $value;
 							$data['reject_trend'][$key]['data'][$count] = round(@((int) $value2['rejected'] * 100 / (int) $value2['received']), 1);
 						}

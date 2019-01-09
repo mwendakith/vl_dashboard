@@ -10,8 +10,8 @@
     	$("#breadcrum").hide();
 
 
-		$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats");
-		$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends");
+		$("#lab_perfomance_stats").load("<?= @base_url();?>charts/labs/lab_performance_stats");
+		$("#rejected").load("<?= @base_url();?>charts/labs/rejection_trends");
 		$("#test_trends").load("<?php echo base_url('charts/labs/testing_trends');?>");
 		$("#samples").load("<?php echo base_url();?>charts/labs/sample_types");
 		$("#lab_gender").load("<?php echo base_url();?>charts/labs/gender");
@@ -127,8 +127,6 @@
 
 	function date_filter(criteria, id)
  	{
- 		
-	        	
  		if (criteria === "monthly") {
  			year = null;
  			month = id;
@@ -149,42 +147,38 @@
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
-		});
+			$("#lab_rejections").html("<div>Loading...</div>");
+			$("#lab_summary").html("<div>Loading...</div>");
+	 		
+	 		
+	 		$("#lab_perfomance_stats").html("<div>Loading...</div>"); 
+	 		$("#rejected").html("<div>Loading...</div>"); 
+			$("#test_trends").html("<div>Loading...</div>");
+			$("#samples").html("<div>Loading...</div>");
+			$("#lab_gender").html("<div>Loading...</div>");
+			$("#lab_age").html("<div>Loading...</div>");
+			$("#ttime").html("<div>Loading...</div>");
+			$("#results").html("<div>Loading...</div>");
+			$("#lab_facility_rejections").html("<div>Loading...</div>");
+			$("#poc").html("<div>Loading...</div>");
+			$("#poc_outcomes").html("<div>Loading...</div>");
 
+			var em = localStorage.getItem("my_lab");
 
-		
-		$("#lab_rejections").html("<div>Loading...</div>");
-		$("#lab_summary").html("<div>Loading...</div>");
- 		
- 		
- 		$("#lab_perfomance_stats").html("<div>Loading...</div>"); 
- 		$("#rejected").html("<div>Loading...</div>"); 
-		$("#test_trends").html("<div>Loading...</div>");
-		$("#samples").html("<div>Loading...</div>");
-		$("#lab_gender").html("<div>Loading...</div>");
-		$("#lab_age").html("<div>Loading...</div>");
-		$("#ttime").html("<div>Loading...</div>");
-		$("#results").html("<div>Loading...</div>");
-		$("#lab_facility_rejections").html("<div>Loading...</div>");
-		$("#poc").html("<div>Loading...</div>");
-		$("#poc_outcomes").html("<div>Loading...</div>");
+			$("#lab_rejections").load("<?php echo base_url();?>charts/labs/rejections/"+em+"/"+year+"/"+month);
+			$("#lab_facility_rejections").load("<?php echo base_url();?>charts/labs/site_rejections/"+em+"/"+year+"/"+month);
+			$("#lab_summary").load("<?php echo base_url();?>charts/labs/summary/"+em+"/"+year);
 
-		var em = localStorage.getItem("my_lab");
-
-		$("#lab_rejections").load("<?php echo base_url();?>charts/labs/rejections/"+em+"/"+year+"/"+month);
-		$("#lab_facility_rejections").load("<?php echo base_url();?>charts/labs/site_rejections/"+em+"/"+year+"/"+month);
-		$("#lab_summary").load("<?php echo base_url();?>charts/labs/summary/"+em+"/"+year);
-
-		$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends/"+year);
-		$("#test_trends").load("<?php echo base_url('charts/labs/testing_trends');?>/"+year);
-		$("#ttime").load("<?php echo base_url();?>charts/labs/turn_around_time/"+year+"/"+month);
-		$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats/"+year+"/"+month);
-		$("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats/"+year+"/"+month);
-		$("#poc_outcomes").load("<?php echo base_url();?>charts/labs/poc_outcomes/"+year+"/"+month);
-		$("#samples").load("<?php echo base_url();?>charts/labs/sample_types/"+year+"/"+month);
-		$("#lab_gender").load("<?php echo base_url();?>charts/labs/gender/"+year+"/"+month);
-		$("#lab_age").load("<?php echo base_url();?>charts/labs/ages/"+year+"/"+month);
-		$("#results").load("<?php echo base_url();?>charts/labs/results_outcome/"+year+"/"+month);
-		
+			$("#rejected").load("<?php echo base_url();?>charts/labs/rejection_trends/"+year);
+			$("#test_trends").load("<?php echo base_url('charts/labs/testing_trends');?>/"+year);
+			$("#ttime").load("<?php echo base_url();?>charts/labs/turn_around_time/"+year+"/"+month);
+			$("#lab_perfomance_stats").load("<?php echo base_url();?>charts/labs/lab_performance_stats/"+year+"/"+month);
+			$("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats/"+year+"/"+month);
+			$("#poc_outcomes").load("<?php echo base_url();?>charts/labs/poc_outcomes/"+year+"/"+month);
+			$("#samples").load("<?php echo base_url();?>charts/labs/sample_types/"+year+"/"+month);
+			$("#lab_gender").load("<?php echo base_url();?>charts/labs/gender/"+year+"/"+month);
+			$("#lab_age").load("<?php echo base_url();?>charts/labs/ages/"+year+"/"+month);
+			$("#results").load("<?php echo base_url();?>charts/labs/results_outcome/"+year+"/"+month);
+		});		
 	}
 </script>
