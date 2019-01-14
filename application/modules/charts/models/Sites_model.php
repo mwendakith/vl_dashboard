@@ -175,7 +175,7 @@ class Sites_model extends MY_Model
 		$count = 1;
 		if ($partner==null || $partner=='null')
 			$partner = $this->session->userdata('partner_filter');
-		
+
 		if ($to_month==null || $to_month=='null')
 			$to_month = 0;
 		
@@ -196,6 +196,7 @@ class Sites_model extends MY_Model
 		$type = 2;
 
 		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		echo $sql;
 		$sqlAge = "CALL `proc_get_vl_partner_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$partner."');";
 		$sqlGender = "CALL `proc_get_vl_partner_gender_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$partner."');";
 		$this->db->close();
