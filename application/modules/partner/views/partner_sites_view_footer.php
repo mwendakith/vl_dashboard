@@ -17,7 +17,7 @@
 		$("select").change(function(){
 			$("#partnerSites").html("<center><div class='loader'></div></center>");
 			em = $(this).val();
-			console.log(em);
+			
 			// Send the data using post
 	        var posting = $.post( "<?php echo base_url();?>template/filter_partner_data", { partner: em } );
 	        $.get("<?php echo base_url();?>template/dates", function(data){

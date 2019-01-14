@@ -173,7 +173,7 @@ class Sites_model extends MY_Model
 	{
 		$table = '';
 		$count = 1;
-		echo $partner;
+		
 		if ($partner==null || $partner=='null')
 			$partner = $this->session->userdata('partner_filter');
 

@@ -46,7 +46,7 @@ class Template_model extends MY_Model
 		// $partner_data = $this->db->query('SELECT `ID`, `name` FROM `partners` ORDER BY `name` ASC')->result_array();
 
 		foreach ($partner_data as $key => $value) {
-			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
+			$dropdown .= '<option value="'.$value['id'].'">'.$value['name'].'</option>';
 		}
 		
 		return $dropdown;
