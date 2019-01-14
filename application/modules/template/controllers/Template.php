@@ -59,8 +59,7 @@ class Template extends MY_Controller
 	}
 
 	function filter_partner_data()
-	{
-		
+	{		
 		$data = array(
 				'partner' => $this->input->post('partner')
 			);

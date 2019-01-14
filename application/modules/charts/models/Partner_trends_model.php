@@ -15,9 +15,8 @@ class Partner_trends_model extends MY_Model
 	function yearly_trends($partner=NULL){
 
 		
-		if ($partner==null || $partner=='null') {
+		if ($partner==null || $partner=='null')
 			$partner = $this->session->userdata('partner_filter');
-		}
 
 		if (is_null($partner)) {
 			$sql = "CALL `proc_get_vl_national_yearly_trends`();";

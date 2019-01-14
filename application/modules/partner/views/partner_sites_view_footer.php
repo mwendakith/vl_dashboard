@@ -35,18 +35,18 @@
 	        		
 	        		$("#breadcrum").html(data);
 	        	});
+	        	if (em == "NA") {
+					$("#partner_sites").hide();
+					$("#sites_all").show();
+					$("#siteOutcomes").html("<center><div class='loader'></div></center>");
+					$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>");
+				} else {
+					$("#sites_all").hide();
+					$("#partner_sites").show();
+					$("#partnerSites").html("<center><div class='loader'></div></center>");
+					$("#partnerSites").load("<?php echo base_url('charts/sites/partner_sites');?>/"+null+"/"+null+"/"+em);
+				}
 	        });
-			if (em == "NA") {
-				$("#partner_sites").hide();
-				$("#sites_all").show();
-				$("#siteOutcomes").html("<center><div class='loader'></div></center>");
-				$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>");
-			} else {
-				$("#sites_all").hide();
-				$("#partner_sites").show();
-				$("#partnerSites").html("<center><div class='loader'></div></center>");
-				$("#partnerSites").load("<?php echo base_url('charts/sites/partner_sites');?>/"+null+"/"+null+"/"+em);
-			}
 		});
 
 		$("button").click(function () {

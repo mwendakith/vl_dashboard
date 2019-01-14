@@ -173,15 +173,18 @@ class Sites_model extends MY_Model
 	{
 		$table = '';
 		$count = 1;
-		if ($to_month==null || $to_month=='null') {
+		if ($partner==null || $partner=='null')
+			$partner = $this->session->userdata('partner_filter');
+		
+		if ($to_month==null || $to_month=='null')
 			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
+		
+		if ($to_year==null || $to_year=='null')
 			$to_year = 0;
-		}
-		if ($year==null || $year=='null') {
+		
+		if ($year==null || $year=='null')
 			$year = $this->session->userdata('filter_year');
-		}
+
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
 				$month = 0;
