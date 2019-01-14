@@ -210,7 +210,7 @@ class Sites_model extends MY_Model
 
 		$counties = $this->getSelectionData($resultage);
 		$breakdownData = $this->getbreakdownData($counties, $resultage, $resultGender);
-		echo "<pre>";print_r($breakdownData);die();
+		// echo "<pre>";print_r($breakdownData);die();
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
