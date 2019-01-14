@@ -103,10 +103,9 @@ class Sites_model extends MY_Model
 		return $counties;
 	}
 
-	public function getbreakdownData($counties, $resultage, $resultGender) {
-		$ageData = [];
+	public function getbreakdownGenderData($counties, $resultage) {
+		ini_set("memory_limit", "-1");
 		$genderData = [];
-		// echo "<pre>";print_r($resultage);echo "</pre>";die();
 		foreach ($counties as $key => $value) {
 			foreach ($resultGender as $k => $v) {
 				if ($value == $v->selectionID) {
@@ -125,7 +124,14 @@ class Sites_model extends MY_Model
 					}
 				}
 			}
-			
+		}
+		return $genderData;
+	}
+
+	public function getbreakdownAgeData($counties, $resultage) {
+		ini_set("memory_limit", "-1");
+		$ageData = [];
+		foreach ($counties as $key => $value) {
 			foreach ($resultage as $k => $v) {
 				if ($value == $v->selectionID) {
 					$ageData[$value]['selection'] = $v->selection;
@@ -156,7 +162,11 @@ class Sites_model extends MY_Model
 				}
 			}
 		}
-		return ['ageData' => $ageData, 'genderData' => $genderData];
+		return $ageData;
+	}
+
+	public function getbreakdownData($counties, $resultage, $resultGender) {
+		return ['ageData' => $this->getbreakdownAgeData, 'genderData' => $this->getbreakdownGenderData];
 	}
 
 	function partner_sites_outcomes($year=NULL,$month=NULL,$partner=NULL,$to_year=null,$to_month=null)
