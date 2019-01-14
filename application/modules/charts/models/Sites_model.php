@@ -103,7 +103,7 @@ class Sites_model extends MY_Model
 		return $counties;
 	}
 
-	public function getbreakdownGenderData($counties, $resultage) {
+	public function getbreakdownGenderData($counties, $resultGender) {
 		ini_set("memory_limit", "-1");
 		$genderData = [];
 		foreach ($counties as $key => $value) {
@@ -166,14 +166,14 @@ class Sites_model extends MY_Model
 	}
 
 	public function getbreakdownData($counties, $resultage, $resultGender) {
-		return ['ageData' => $this->getbreakdownAgeData, 'genderData' => $this->getbreakdownGenderData];
+		return ['ageData' => $this->getbreakdownAgeData($counties,$resultage), 'genderData' => $this->getbreakdownGenderData($counties,$resultGender)];
 	}
 
 	function partner_sites_outcomes($year=NULL,$month=NULL,$partner=NULL,$to_year=null,$to_month=null)
 	{
 		$table = '';
 		$count = 1;
-		
+
 		if ($partner==null || $partner=='null')
 			$partner = $this->session->userdata('partner_filter');
 
@@ -210,8 +210,7 @@ class Sites_model extends MY_Model
 
 		$counties = $this->getSelectionData($resultage);
 		$breakdownData = $this->getbreakdownData($counties, $resultage, $resultGender);
-		
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($breakdownData);die();
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
