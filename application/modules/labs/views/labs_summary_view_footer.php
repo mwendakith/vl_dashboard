@@ -40,6 +40,13 @@
 		    var error_check = check_error_date_range(from, to);
 		    
 		    if (!error_check) {
+
+				localStorage.setItem("from_year", from[1]);
+				localStorage.setItem("from_month", from[0]);
+
+				localStorage.setItem("to_year", to[1]);
+				localStorage.setItem("to_month", to[0]);
+
 			    $("#lab_perfomance_stats").html("<div>Loading...</div>"); 
 		 		$("#rejected").html("<div>Loading...</div>"); 
 				$("#test_trends").html("<div>Loading...</div>");
@@ -127,10 +134,17 @@
 
 	function date_filter(criteria, id)
  	{
+		localStorage.setItem("to_year", 'null');
+		localStorage.setItem("to_month", 'null');
+
  		if (criteria === "monthly") {
+ 			localStorage.setItem("from_year", 'null');
+ 			localStorage.setItem("from_month", id);
  			year = null;
  			month = id;
  		}else {
+ 			localStorage.setItem("from_year", id);
+ 			localStorage.setItem("from_month", 'null');
  			year = id;
  			month = null;
  		}
@@ -185,6 +199,18 @@
 	function expand_modal(div_name){
 		$(div_name).modal('show');
 	}
-	
+
+	function expand_poc(facility_id)
+	{
+		var year = localStorage.getItem("from_year");
+		var month = localStorage.getItem("from_month");
+
+		var to_year = localStorage.getItem("to_year");
+		var to_month = localStorage.getItem("to_month");
+
+		$("#empty_div").load("<?php echo base_url();?>charts/labs/results_outcome/"+year+"/"+month+"/"+to_year+"/"+to_month);
+
+
+	}
 
 </script>
