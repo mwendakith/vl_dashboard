@@ -210,7 +210,6 @@
 		var to_month = localStorage.getItem("to_month");
 
 		$("#my_empty_div").load("<?php echo base_url();?>charts/labs/poc_performance_details/"+facility_id+"/"+year+"/"+month+"/"+to_year+"/"+to_month);
-	    $("#poc_site_details").modal('show');
 	}
 
 </script>
