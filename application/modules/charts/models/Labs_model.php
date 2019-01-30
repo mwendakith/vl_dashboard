@@ -112,7 +112,7 @@ class Labs_model extends MY_Model
 						<td>".number_format((int) $value['confirm2vl'])."</td>
 						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
 						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>
-						<td> <button class='btn btn-primary'  onclick='expand_poc(" . $value['id']) . ");' style='background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;'>View Full Listing</button> </td>						
+						<td> <button class='btn btn-primary'  onclick='expand_poc(" . $value['id'] . ");' style='background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;'>View Full Listing</button> </td>						
 					</tr>";
 		}
 
