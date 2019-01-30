@@ -4,11 +4,11 @@ CREATE PROCEDURE `proc_get_vl_age_gender`
 (IN A_id VARCHAR(100), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT
-        SUM(`maletest`-`malenonsuppressed`) AS `malesuppressed`,
+        (SUM(`maletest`)-SUM(`malenonsuppressed`)) AS `malesuppressed`,
         SUM(`malenonsuppressed`) AS `malenonsuppressed`, 
-        SUM(`femaletest`-`femalenonsuppressed`) AS `femalesuppressed`,
+        (SUM(`femaletest`)-SUM(`femalenonsuppressed`)) AS `femalesuppressed`,
         SUM(`femalenonsuppressed`) AS `femalenonsuppressed`, 
-        SUM(`nogendertest`-`nogendernonsuppressed`) AS `nodatasuppressed`,
+        (SUM(`nogendertest`)-SUM(`nogendernonsuppressed`)) AS `nodatasuppressed`,
         SUM(`nogendernonsuppressed`) AS `nodatanonsuppressed`
     FROM `vl_national_age`
     WHERE 1 ";
@@ -26,7 +26,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `age` ",A_id," ");
+    SET @QUERY = CONCAT(@QUERY, " AND `age` = ",A_id," ");
 
 
     

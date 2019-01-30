@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_national_sustxfail_gender`
 BEGIN
   SET @QUERY =  "SELECT 
                     `g`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                    (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+                    (SUM(`less5000`)+SUM(`above5000`)) AS `nonsuppressed`
                 FROM vl_national_gender `vng`
                 LEFT JOIN gender `g`
                     ON g.ID = vng.gender 

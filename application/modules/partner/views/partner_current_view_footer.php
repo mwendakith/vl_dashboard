@@ -174,11 +174,10 @@
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
+	 		$("#long_tracking").html("<center><div class='loader'></div></center>");
+			$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+year+"/"+month);
 		});
  		
- 		$("#long_tracking").html("<center><div class='loader'></div></center>");
-
-		$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+year+"/"+month);
 	}
 
 	function expand_modal(div_name){

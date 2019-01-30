@@ -6,8 +6,8 @@ BEGIN
   SET @QUERY =    "SELECT
                     `ac`.`name`, 
                     SUM(`vna`.`tests`) AS `agegroups`, 
-                    SUM(`vna`.`undetected`+`vna`.`less1000`) AS `suppressed`,
-                    SUM(`vna`.`less5000`+`vna`.`above5000`) AS `nonsuppressed`
+                    (SUM(`vna`.`undetected`)+SUM(`vna`.`less1000`)) AS `suppressed`,
+                    (SUM(`vna`.`less5000`)+SUM(`vna`.`above5000`)) AS `nonsuppressed`
                 FROM `vl_national_age` `vna`
                 JOIN `agecategory` `ac`
                     ON `vna`.`age` = `ac`.`ID`

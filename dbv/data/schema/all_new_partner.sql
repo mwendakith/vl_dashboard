@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_partner_regimen_outcomes`
 BEGIN
   SET @QUERY =    "SELECT 
 						`vp`.`name`, 
-						SUM(`vnr`.`less5000`+`vnr`.`above5000`) AS `nonsuppressed`, 
-						SUM(`vnr`.`Undetected`+`vnr`.`less1000`) AS `suppressed` 
+						(SUM(`vnr`.`less5000`)+SUM(`vnr`.`above5000`)) AS `nonsuppressed`, 
+						(SUM(`vnr`.`Undetected`)+SUM(`vnr`.`less1000`)) AS `suppressed` 
 						FROM `vl_partner_regimen` `vnr`
 						LEFT JOIN `viralprophylaxis` `vp` 
 						ON `vnr`.`regimen` = `vp`.`ID`
@@ -155,9 +155,9 @@ BEGIN
           SUM(`edta`) AS `edta`,
           SUM(`dbs`) AS `dbs`,
           SUM(`plasma`) AS `plasma`,
-          SUM(`Undetected`+`less1000`) AS `suppressed`,
-          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
-          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression`  
+          (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+          (SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `tests`,
+          (SUM(`Undetected`)+SUM(`less1000`))*100/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `suppression`  
     FROM `vl_partner_regimen`
     WHERE 1";
 
@@ -176,8 +176,8 @@ CREATE PROCEDURE `proc_get_vl_partner_county_regimen_outcomes`
 BEGIN
   SET @QUERY =    "SELECT
                     `c`.`name`,
-                    SUM(`vcr`.`undetected`+`vcr`.`less1000`) AS `suppressed`,
-                    SUM(`vcr`.`less5000`+`vcr`.`above5000`) AS `nonsuppressed` 
+                    (SUM(`vcr`.`undetected`)+SUM(`vcr`.`less1000`)) AS `suppressed`,
+                    (SUM(`vcr`.`less5000`)+SUM(`vcr`.`above5000`)) AS `nonsuppressed` 
                 FROM `vl_partner_regimen` `vcr`
                     LEFT JOIN view_facilitys vf
                     ON vf.partner = vcr.partner
@@ -213,8 +213,8 @@ CREATE PROCEDURE `proc_get_vl_partner_county_age_outcomes`
 BEGIN
   SET @QUERY =    "SELECT 
                     `c`.`name`,
-                    SUM(`vpa`.`undetected`+`vpa`.`less1000`) AS `suppressed`,
-                    SUM(`vpa`.`less5000`+`vpa`.`above5000`) AS `nonsuppressed`
+                    (SUM(`vpa`.`undetected`)+SUM(`vpa`.`less1000`)) AS `suppressed`,
+                    (SUM(`vpa`.`less5000`)+SUM(`vpa`.`above5000`)) AS `nonsuppressed`
                   FROM vl_partner_age vpa
                   LEFT JOIN view_facilitys vf
                     ON vf.partner = vpa.partner
@@ -254,9 +254,9 @@ BEGIN
           SUM(`edta`) AS `edta`,
           SUM(`dbs`) AS `dbs`,
           SUM(`plasma`) AS `plasma`,
-          SUM(`Undetected`+`less1000`) AS `suppressed`,
-          SUM(`Undetected`+`less1000`+`less5000`+`above5000`) AS `tests`,
-          SUM((`Undetected`+`less1000`)*100/(`Undetected`+`less1000`+`less5000`+`above5000`)) AS `suppression` 
+          (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+          (SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `tests`,
+          (SUM(`Undetected`)+SUM(`less1000`))*100/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `suppression` 
 
     FROM `vl_partner_age`
     WHERE 1";
@@ -352,8 +352,8 @@ CREATE PROCEDURE `proc_get_vl_partner_age_outcomes`
 BEGIN
   SET @QUERY =    "SELECT 
                         `ac`.`name`, 
-                        SUM(`vna`.`less5000`+`vna`.`above5000`) AS `nonsuppressed`, 
-                        SUM(`vna`.`Undetected`+`vna`.`less1000`) AS `suppressed` 
+                        (SUM(`vna`.`less5000`)+SUM(`vna`.`above5000`)) AS `nonsuppressed`, 
+                        (SUM(`vna`.`Undetected`)+SUM(`vna`.`less1000`)) AS `suppressed` 
                         FROM `vl_partner_age` `vna`
                         LEFT JOIN `agecategory` `ac` 
                         ON `vna`.`age` = `ac`.`ID`

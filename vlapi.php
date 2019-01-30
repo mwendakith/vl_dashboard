@@ -1,11 +1,12 @@
 <?php
 error_reporting(0);
+//error_reporting(E_ALL);
 $format = 'json';
 $mflcode = intval($_GET['mfl']);
  //Set our variables
 
 //Connect to the Database
-$con = mysqli_connect("mysql", "root", "FnP5FjbnMrzXCm.", "vl_kemri2");
+$con = mysqli_connect("10.230.50.11", "root", "FnP5FjbnMrzXCm.", "national_db");
 if(mysqli_connect_errno())
 {
 	echo "Could not establish a connection to the Database";
@@ -18,8 +19,8 @@ $facilityid=$ss2['ID'];
 }
 //echo 'uu'.$mflcode. '- : '. $facilityid;
 //Run our query v.facility='$facilityid' and
-$vresult = mysqli_query($con, "SELECT v.ID,v.patient as Patient,f.facilitycode as MFLCode,v.datecollected,v.datetested as DateTested,v.result as Result, j.name AS Justification
-FROM viralsamples v , facilitys f , viraljustifications j  WHERE  f.ID=v.facility and v.facility='$facilityid' and v.justification=j.ID and  v.repeatt=0 AND  v.flag=1  order by v.datetested desc") or die('errpt');
+$vresult = mysqli_query($con, "SELECT v.ID as `ID`,v.patient as Patient,f.facilitycode as MFLCode,v.datecollected,v.datetested as DateTested,v.result as Result, j.name AS Justification FROM viralsamples_view v , facilitys f , viraljustifications j  WHERE  f.ID=v.facility_id and v.facility_id='$facilityid' and v.justification=j.ID and  v.repeatt=0 AND  v.flag=1  order by v.datetested desc") or die('errpt');
+
  
 //Preapre our output
 if($format == 'json') {

@@ -176,52 +176,46 @@
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
+			$.get("<?php echo base_url('county/check_county_select');?>", function(county) {
+				//Checking if county was previously selected and calling the relevant views
+				if (county==0) {
+					$("#first").show();
+					$("#second").hide();
+
+					$('#heading').html('Counties Outcomes <div class="display_date"></div>');
+
+					$("#county").html("<center><div class='loader'></div></center>"); 
+	 				$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+year+"/"+month);
+			
+					$("#county_sites").html("<center><div class='loader'></div></center>");
+					$("#county_sites").load("<?php echo base_url('charts/county/county_table'); ?>/"+year+"/"+month);
+
+				} else {
+					county = JSON.parse(county);
+					$("#second").show();
+					$("#first").hide();
+
+					$('#heading').html('Sub-Counties Outcomes <div class="display_date"></div>');
+
+					$("#subcounty").html("<center><div class='loader'></div></center>"); 
+	 				$("#subcounty").load("<?php echo base_url('charts/county/subcounty_outcomes'); ?>/"+year+"/"+month);
+
+	 				$("#subcountypos").html("<center><div class='loader'></div></center>"); 
+	 				$("#subcountypos").load("<?php echo base_url('charts/county/subcounty_outcomes_positivity'); ?>/"+year+"/"+month);
+			
+					$("#sub_counties").html("<center><div class='loader'></div></center>");
+					$("#sub_counties").load("<?php echo base_url('charts/county/county_subcounties'); ?>/"+year+"/"+month);
+
+					$("#county_facilities").html("<center><div class='loader'></div></center>");
+					$("#county_facilities").load("<?php echo base_url('charts/county/county_facilities'); ?>/"+year+"/"+month);
+
+					$("#partners").html("<center><div class='loader'></div></center>");
+					$("#partners").load("<?php echo base_url('charts/county/county_partners'); ?>/"+year+"/"+month);
+
+					$("#facilities_pmtct").html("<center><div class='loader'></div></center>");
+					$("#facilities_pmtct").load("<?php echo base_url('charts/pmtct/pmtct'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+county);
+				}
+			});
 		});
-
-		
-
-		$.get("<?php echo base_url('county/check_county_select');?>", function(county) {
-			//Checking if county was previously selected and calling the relevant views
-			if (county==0) {
-				$("#first").show();
-				$("#second").hide();
-
-				$('#heading').html('Counties Outcomes <div class="display_date"></div>');
-
-				$("#county").html("<center><div class='loader'></div></center>"); 
- 				$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+year+"/"+month);
-		
-				$("#county_sites").html("<center><div class='loader'></div></center>");
-				$("#county_sites").load("<?php echo base_url('charts/county/county_table'); ?>/"+year+"/"+month);
-
-			} else {
-				county = JSON.parse(county);
-				$("#second").show();
-				$("#first").hide();
-
-				$('#heading').html('Sub-Counties Outcomes <div class="display_date"></div>');
-
-				$("#subcounty").html("<center><div class='loader'></div></center>"); 
- 				$("#subcounty").load("<?php echo base_url('charts/county/subcounty_outcomes'); ?>/"+year+"/"+month);
-
- 				$("#subcountypos").html("<center><div class='loader'></div></center>"); 
- 				$("#subcountypos").load("<?php echo base_url('charts/county/subcounty_outcomes_positivity'); ?>/"+year+"/"+month);
-		
-				$("#sub_counties").html("<center><div class='loader'></div></center>");
-				$("#sub_counties").load("<?php echo base_url('charts/county/county_subcounties'); ?>/"+year+"/"+month);
-
-				$("#county_facilities").html("<center><div class='loader'></div></center>");
-				$("#county_facilities").load("<?php echo base_url('charts/county/county_facilities'); ?>/"+year+"/"+month);
-
-				$("#partners").html("<center><div class='loader'></div></center>");
-				$("#partners").load("<?php echo base_url('charts/county/county_partners'); ?>/"+year+"/"+month);
-
-				$("#facilities_pmtct").html("<center><div class='loader'></div></center>");
-				$("#facilities_pmtct").load("<?php echo base_url('charts/pmtct/pmtct'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+county);
-			}
-		});
- 		
-		
- 		 
 	}
 </script>

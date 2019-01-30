@@ -5,10 +5,10 @@ CREATE PROCEDURE `proc_get_vl_age_breakdowns_outcomes`
 BEGIN
   SET @QUERY =    "SELECT
                     `c`.`name`,
-                    SUM(`vca`.`undetected`+`vca`.`less1000`) AS `suppressed`,
-                    SUM(`vca`.`less5000`+`vca`.`above5000`) AS `nonsuppressed`, 
-                    SUM(`vca`.`undetected`+`vca`.`less1000`+`vca`.`less5000`+`vca`.`above5000`) AS `total`,
-                    ((SUM(`vca`.`undetected`+`vca`.`less1000`)/SUM(`vca`.`undetected`+`vca`.`less1000`+`vca`.`less5000`+`vca`.`above5000`))*100) AS `percentage` ";
+                    (SUM(`vca`.`undetected`)+SUM(`vca`.`less1000`)) AS `suppressed`,
+                    (SUM(`vca`.`less5000`)+SUM(`vca`.`above5000`)) AS `nonsuppressed`, 
+                    (SUM(`vca`.`undetected`)+SUM(`vca`.`less1000`)+SUM(`vca`.`less5000`)+SUM(`vca`.`above5000`)) AS `total`,
+                    ((SUM(`vca`.`undetected`)+SUM(`vca`.`less1000`))/(SUM(`vca`.`undetected`)+SUM(`vca`.`less1000`)+SUM(`vca`.`less5000`)+SUM(`vca`.`above5000`))*100) AS `percentage` ";
 
     IF (county != 0 && county != '') THEN
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_county_age` `vca` JOIN `countys` `c` ON `vca`.`county` = `c`.`ID` WHERE 1 ");
@@ -37,7 +37,7 @@ BEGIN
     END IF;
 
 
-    SET @QUERY = CONCAT(@QUERY, " AND `age` ",filter_age," GROUP BY `c`.`ID` ORDER BY `percentage` DESC ");
+    SET @QUERY = CONCAT(@QUERY, " AND `age` = ",filter_age," GROUP BY `c`.`ID` ORDER BY `percentage` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

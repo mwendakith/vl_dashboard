@@ -133,32 +133,30 @@
 			}
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			
+	 		$("#notification").html("<div>Loading...</div>");
+			$("#genderGrp").html("<div>Loading...</div>");
+			$("#ageGrp").html("<div>Loading...</div>");
+			$("#countys").html("<div>Loading...</div>");
+			$("#justification").html("<div>Loading...</div>");
+			$("#gender").html("<div>Loading...</div>");
+			$("#age").html("<div>Loading...</div>");
+			$("#countiesGraph").html("<div>Loading...</div>");
+			$("#partners").html("<div>Loading...</div>");
+			$("#subcounty").html("<div>Loading...</div>");
+			$("#facilities").html("<div>Loading...</div>");
+
+			$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+year+"/"+month);
+			$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+year+"/"+month);
+			$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+year+"/"+month);
+			$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>/"+year+"/"+month);
+			$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+year+"/"+month);
+			$("#gender").load("<?php echo base_url('charts/nonsuppression/gender');?>/"+year+"/"+month);
+			$("#age").load("<?php echo base_url('charts/nonsuppression/age');?>/"+year+"/"+month);
+			$("#countiesGraph").load("<?php echo base_url('charts/nonsuppression/county');?>/"+year+"/"+month);
+			$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+year+"/"+month);
+			$("#subcounty").load("<?php echo base_url('charts/nonsuppression/subcounty_listings');?>/"+year+"/"+month);
+			$("#facilities").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+year+"/"+month);
 		});
- 		
- 		$("#notification").html("<div>Loading...</div>");
-		$("#genderGrp").html("<div>Loading...</div>");
-		$("#ageGrp").html("<div>Loading...</div>");
-		$("#countys").html("<div>Loading...</div>");
-		$("#justification").html("<div>Loading...</div>");
-		$("#gender").html("<div>Loading...</div>");
-		$("#age").html("<div>Loading...</div>");
-		$("#countiesGraph").html("<div>Loading...</div>");
-		$("#partners").html("<div>Loading...</div>");
-		$("#subcounty").html("<div>Loading...</div>");
-		$("#facilities").html("<div>Loading...</div>");
-
-		$("#notification").load("<?php echo base_url('charts/nonsuppression/notification');?>/"+year+"/"+month);
-		$("#genderGrp").load("<?php echo base_url('charts/nonsuppression/gender_group');?>/"+year+"/"+month);
-		$("#ageGrp").load("<?php echo base_url('charts/nonsuppression/age_group');?>/"+year+"/"+month);
-		$("#countys").load("<?php echo base_url('charts/nonsuppression/county_listings');?>/"+year+"/"+month);
-		$("#justification").load("<?php echo base_url('charts/nonsuppression/justification');?>/"+year+"/"+month);
-		$("#gender").load("<?php echo base_url('charts/nonsuppression/gender');?>/"+year+"/"+month);
-		$("#age").load("<?php echo base_url('charts/nonsuppression/age');?>/"+year+"/"+month);
-		$("#countiesGraph").load("<?php echo base_url('charts/nonsuppression/county');?>/"+year+"/"+month);
-		$("#partners").load("<?php echo base_url('charts/nonsuppression/partner_listing');?>/"+year+"/"+month);
-		$("#subcounty").load("<?php echo base_url('charts/nonsuppression/subcounty_listings');?>/"+year+"/"+month);
-		$("#facilities").load("<?php echo base_url('charts/nonsuppression/site_listings');?>/"+year+"/"+month);
-
 	}
 
 	function county_filter(data)

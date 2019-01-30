@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_partner_regimen_outcomes`
 BEGIN
   SET @QUERY =    "SELECT 
 						`vp`.`name`, 
-						SUM(`vnr`.`less5000`+`vnr`.`above5000`) AS `nonsuppressed`, 
-						SUM(`vnr`.`Undetected`+`vnr`.`less1000`) AS `suppressed` 
+						(SUM(`vnr`.`less5000`)+SUM(`vnr`.`above5000`)) AS `nonsuppressed`, 
+						(SUM(`vnr`.`Undetected`)+SUM(`vnr`.`less1000`)) AS `suppressed` 
 						FROM `vl_partner_regimen` `vnr`
 						LEFT JOIN `viralprophylaxis` `vp` 
 						ON `vnr`.`regimen` = `vp`.`ID`

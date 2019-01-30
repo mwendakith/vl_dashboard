@@ -11,13 +11,13 @@ BEGIN
                     SUM(`vg`.`above5000`) AS `above5000`,
                     `g`.`name`, ";
    IF (type=0 OR type='0') THEN 
-      SET @QUERY = CONCAT(@QUERY, " `jt`.`name` as `selection` FROM `vl_partner_gender` `vg` JOIN `gender` `g` ON `g`.`ID` = `vg`.`gender` JOIN `partners` `jt` ON `jt`.`id` = `vg`.`partner` WHERE 1 ");
+      SET @QUERY = CONCAT(@QUERY, " `jt`.`name` as `selection`, `jt`.`id` AS `selectionID` FROM `vl_partner_gender` `vg` JOIN `gender` `g` ON `g`.`ID` = `vg`.`gender` JOIN `partners` `jt` ON `jt`.`id` = `vg`.`partner` WHERE 1 ");
    END IF;
    IF (type=1 OR type='1') THEN 
-      SET @QUERY = CONCAT(@QUERY, " `jt`.`countyname` as `selection` FROM `vl_site_gender` `vg` JOIN `gender` `g` ON `g`.`ID` = `vg`.`gender` JOIN `view_facilitys` `jt` ON `jt`.`id` = `vg`.`facility` WHERE `jt`.`partner` = '",ID,"' ");
+      SET @QUERY = CONCAT(@QUERY, " `jt`.`countyname` as `selection`, `jt`.`county` AS `selectionID` FROM `vl_site_gender` `vg` JOIN `gender` `g` ON `g`.`ID` = `vg`.`gender` JOIN `view_facilitys` `jt` ON `jt`.`id` = `vg`.`facility` WHERE `jt`.`partner` = '",ID,"' ");
    END IF;
    IF (type=2 OR type='2') THEN 
-      SET @QUERY = CONCAT(@QUERY, " `jt`.`name` as `selection` FROM `vl_site_gender` `vg` JOIN `gender` `g` ON `g`.`ID` = `vg`.`gender` JOIN `view_facilitys` `jt` ON `jt`.`id` = `vg`.`facility` WHERE `jt`.`partner` = '",ID,"' ");
+      SET @QUERY = CONCAT(@QUERY, " `jt`.`name` as `selection`, `jt`.`id` AS `selectionID` FROM `vl_site_gender` `vg` JOIN `gender` `g` ON `g`.`ID` = `vg`.`gender` JOIN `view_facilitys` `jt` ON `jt`.`id` = `vg`.`facility` WHERE `jt`.`partner` = '",ID,"' ");
    END IF;
                         
    IF (from_month != 0 && from_month != '') THEN
@@ -33,10 +33,9 @@ BEGIN
       SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
    END IF;
 
-   SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name`, `selection` ");
+   SET @QUERY = CONCAT(@QUERY, " GROUP BY `g`.`name`, `selection`, `selectionID` ");
 
    PREPARE stmt FROM @QUERY;
    EXECUTE stmt;
 END //
 DELIMITER ;
-

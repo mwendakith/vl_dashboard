@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_partner_yearly_summary`
 BEGIN
   SET @QUERY =    "SELECT
                     `cs`.`year`, `cs`.`month`, 
-                    SUM(`cs`.`Undetected` + `cs`.`less1000`) AS `suppressed`, 
-                    SUM(`cs`.`above5000` + `cs`.`less5000`) AS `nonsuppressed`
+                    (SUM(`cs`.`Undetected`) + SUM(`cs`.`less1000`)) AS `suppressed`, 
+                    (SUM(`cs`.`above5000`) + SUM(`cs`.`less5000`)) AS `nonsuppressed`
                 FROM `vl_partner_summary` `cs`
                 WHERE 1  ";
 

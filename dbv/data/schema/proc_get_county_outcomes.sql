@@ -5,9 +5,11 @@ CREATE PROCEDURE `proc_get_county_outcomes`
 BEGIN
   SET @QUERY =    "SELECT
                     `c`.`name`,
-                    SUM(`vcs`.`undetected`+`vcs`.`less1000`) AS `suppressed`,
-                    SUM(`vcs`.`less5000`+`vcs`.`above5000`) AS `nonsuppressed`,
-                    SUM(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`) AS `total`
+                    SUM(`vcs`.`undetected`) AS `undetected`,
+                    SUM(`vcs`.`less1000`) AS `less1000`,
+                    (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`)) AS `suppressed`,
+                    (SUM(`vcs`.`less5000`)+SUM(`vcs`.`above5000`)) AS `nonsuppressed`,
+                    (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`)+SUM(`vcs`.`less5000`)+SUM(`vcs`.`above5000`)) AS `total`
                 FROM `vl_county_summary` `vcs`
                     JOIN `countys` `c` ON `vcs`.`county` = `c`.`ID`
     WHERE 1";

@@ -134,23 +134,22 @@
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
-		});
- 		
-		$("#nattat").html("<div>Loading...</div>");
- 		$("#samples").html("<center><div class='loader'></div></center>"); 
-		$("#vlOutcomes").html("<center><div class='loader'></div></center>");
-		$("#justification").html("<center><div class='loader'></div></center>");
-		$("#ageGroups").html("<center><div class='loader'></div></center>");
-		$("#gender").html("<center><div class='loader'></div></center>");
- 		$("#county").html("<center><div class='loader'></div></center>");
+			$("#nattat").html("<div>Loading...</div>");
+	 		$("#samples").html("<center><div class='loader'></div></center>"); 
+			$("#vlOutcomes").html("<center><div class='loader'></div></center>");
+			$("#justification").html("<center><div class='loader'></div></center>");
+			$("#ageGroups").html("<center><div class='loader'></div></center>");
+			$("#gender").html("<center><div class='loader'></div></center>");
+	 		$("#county").html("<center><div class='loader'></div></center>");
 
-		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+year+"/"+month);
-		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year+"/"+null+"/"+null+"/"+all);
- 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+year+"/"+month);
-		$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+year+"/"+month); 
-		$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+year+"/"+month); 
-		$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>/"+year+"/"+month);
-		$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+year+"/"+month); 
+			$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+year+"/"+month);
+			$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year+"/"+null+"/"+null+"/"+all);
+	 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+year+"/"+month);
+			$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+year+"/"+month); 
+			$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+year+"/"+month); 
+			$("#gender").load("<?php echo base_url('charts/summaries/gender'); ?>/"+year+"/"+month);
+			$("#county").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+year+"/"+month);
+		});
 	}
 
 	function switch_source(){

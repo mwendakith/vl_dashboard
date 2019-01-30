@@ -114,7 +114,7 @@ class Partner extends MY_Controller
 	public function agencies() {
 		$this->clear_all_session_data();
 		$this->data['content_view'] = 'partner/partner_agencies_view';
-
+		$this->data['agencies_flag'] = TRUE;
 		$this->template($this->data);
 	}
 
@@ -156,6 +156,15 @@ class Partner extends MY_Controller
 			$partner_regimen = 0;
 		}
 		echo json_encode($partner_regimen);
+	}
+
+	public function check_agencies_select() {
+		if ($this->session->userdata('funding_agency_filter')) {
+			$funding_agencies = $this->session->userdata('funding_agency_filter');
+		} else {
+			$funding_agencies = 0;
+		}
+		echo json_encode($funding_agencies);
 	}
 }
 ?>

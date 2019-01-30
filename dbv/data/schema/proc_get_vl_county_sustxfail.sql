@@ -5,8 +5,8 @@ CREATE PROCEDURE `proc_get_vl_county_sustxfail`
 BEGIN
   SET @QUERY =    "SELECT 
                     `c`.`name`,
-                    SUM(`Undetected`+`less1000`) AS `suppressed`,
-                    SUM(`less5000`+`above5000`) AS `nonsuppressed`
+                    (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
+                    (SUM(`less5000`)+SUM(`above5000`)) AS `nonsuppressed`
                 FROM vl_county_summary `vcs`
                 LEFT JOIN countys `c`
                     ON c.ID = vcs.county

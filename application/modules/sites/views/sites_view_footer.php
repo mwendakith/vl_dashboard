@@ -173,49 +173,44 @@
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
+			$.get("<?php echo base_url('sites/check_site_select');?>", function(site) {
+				//Checking if site was previously selected and calling the relevant views
+				site = $.parseJSON(site);
+				// alert(site);
+
+				// site = null;
+
+				// console.log("site is " +site+" .");
+
+				site = localStorage.getItem("site");
+				console.log(site);			
+
+				if (site=="NA") {
+					$("#siteOutcomes").html("<center><div class='loader'></div></center>");
+					$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>/"+year+"/"+month);
+					
+				} else {
+					$("#tsttrends").html("<center><div class='loader'></div></center>");
+					$("#stoutcomes").html("<center><div class='loader'></div></center>");
+					$("#vlOutcomes").html("<center><div class='loader'></div></center>");
+					$("#ageGroups").html("<center><div class='loader'></div></center>");
+					$("#long_tracking").html("<center><div class='loader'></div></center>");
+					$("#justification").html("<center><div class='loader'></div></center>");
+					$("#gender").html("<center><div class='loader'></div></center>");
+
+					$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+year+"/"+month+"/"+site);
+					$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+year+"/"+month+"/"+site);
+					$("#vlOutcomes").load("<?php echo base_url('charts/sites/site_Vlotcomes');?>/"+year+"/"+month+"/"+site);
+					$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+year+"/"+month+"/"+site);
+					$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+year+"/"+month+"/"+site);
+					$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+year+"/"+month+"/"+site);
+					$("#long_tracking").load("<?php echo base_url('charts/sites/get_patients');?>/"+year+"/"+month+"/"+site);
+
+				}
+			});
 		});
-		
-
-		$.get("<?php echo base_url('sites/check_site_select');?>", function(site) {
-			//Checking if site was previously selected and calling the relevant views
-			site = $.parseJSON(site);
-			// alert(site);
-
-			// site = null;
-
-			// console.log("site is " +site+" .");
-
-			site = localStorage.getItem("site");
-			console.log(site);			
-
-			if (site=="NA") {
-				$("#siteOutcomes").html("<center><div class='loader'></div></center>");
-				$("#siteOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>/"+year+"/"+month);
-				
-			} else {
-				$("#tsttrends").html("<center><div class='loader'></div></center>");
-				$("#stoutcomes").html("<center><div class='loader'></div></center>");
-				$("#vlOutcomes").html("<center><div class='loader'></div></center>");
-				$("#ageGroups").html("<center><div class='loader'></div></center>");
-				$("#long_tracking").html("<center><div class='loader'></div></center>");
-				$("#justification").html("<center><div class='loader'></div></center>");
-				$("#gender").html("<center><div class='loader'></div></center>");
-
-				$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+year+"/"+month+"/"+site);
-				$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+year+"/"+month+"/"+site);
-				$("#vlOutcomes").load("<?php echo base_url('charts/sites/site_Vlotcomes');?>/"+year+"/"+month+"/"+site);
-				$("#ageGroups").load("<?php echo base_url('charts/sites/site_agegroups');?>/"+year+"/"+month+"/"+site);
-				$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+year+"/"+month+"/"+site);
-				$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+year+"/"+month+"/"+site);
-				$("#long_tracking").load("<?php echo base_url('charts/sites/get_patients');?>/"+year+"/"+month+"/"+site);
-
-			}
-		});
-		
 		///console.log(county);
-
-	 	
- 	}
+	}
 
 	// function ageModal()
 	// {

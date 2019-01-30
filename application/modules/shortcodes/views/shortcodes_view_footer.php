@@ -114,21 +114,20 @@
 			}
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
-			
-		});
- 		
-		$("#requests").html("<div>Loading...</div>");
- 		$("#counties").html("<center><div class='loader'></div></center>");
- 		$("#subcounties").html("<center><div class='loader'></div></center>"); 
-		$("#facilities").html("<center><div class='loader'></div></center>");
-		$("#partners").html("<center><div class='loader'></div></center>");
-		$("#facilities_requesting").html("<center><div class='loader'></div></center>");
+				 		
+			$("#requests").html("<div>Loading...</div>");
+	 		$("#counties").html("<center><div class='loader'></div></center>");
+	 		$("#subcounties").html("<center><div class='loader'></div></center>"); 
+			$("#facilities").html("<center><div class='loader'></div></center>");
+			$("#partners").html("<center><div class='loader'></div></center>");
+			$("#facilities_requesting").html("<center><div class='loader'></div></center>");
 
-		$("#requests").load("<?php echo base_url('charts/shortcodes/request_trends'); ?>/"+year+"/"+month);
-		$("#counties").load("<?php echo base_url('charts/shortcodes/counties'); ?>/"+year);
- 		$("#subcounties").load("<?php echo base_url('charts/shortcodes/subcounties'); ?>/"+year+"/"+month);
-		$("#facilities").load("<?php echo base_url('charts/shortcodes/facilities'); ?>/"+year+"/"+month); 
-		$("#partners").load("<?php echo base_url('charts/shortcodes/partner'); ?>/"+year+"/"+month);
-		$("#facilities_requesting").load("<?php echo base_url('charts/shortcodes/facilities_requesting'); ?>/"+year+"/"+month);
+			$("#requests").load("<?php echo base_url('charts/shortcodes/request_trends'); ?>/"+year+"/"+month);
+			$("#counties").load("<?php echo base_url('charts/shortcodes/counties'); ?>/"+year);
+	 		$("#subcounties").load("<?php echo base_url('charts/shortcodes/subcounties'); ?>/"+year+"/"+month);
+			$("#facilities").load("<?php echo base_url('charts/shortcodes/facilities'); ?>/"+year+"/"+month); 
+			$("#partners").load("<?php echo base_url('charts/shortcodes/partner'); ?>/"+year+"/"+month);
+			$("#facilities_requesting").load("<?php echo base_url('charts/shortcodes/facilities_requesting'); ?>/"+year+"/"+month);
+		});
 	}
 </script>
