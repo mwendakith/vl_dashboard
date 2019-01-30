@@ -23,6 +23,9 @@
               <th>Suppressed</th>
               <th>Non - Suppressed</th>
               <th>Suppression</th>
+              <?php  
+                if(isset($is_counties)) echo "<th>Male Test </th><th>Male > 1000 </th><th>Female Test </th><th>Female > 1000 </th> ";
+              ?>
         		</tr>
         	</thead>
         	<tbody>

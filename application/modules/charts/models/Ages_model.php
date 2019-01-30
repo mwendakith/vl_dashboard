@@ -543,6 +543,12 @@ class Ages_model extends MY_Model
 					$table .= '<td>'.number_format((int) $value['suppressed']).'</td>';
 					$table .= '<td>'.number_format((int) $value['nonsuppressed']).'</td>';
 					$table .= '<td>'.round($value['percentage'],1).'%</td>';
+					if ($county == 1 || $county == '1'){
+						$table .= '<td>'.number_format((int) $value['maletest']).'</td>';
+						$table .= '<td>'.number_format((int) $value['malenonsuppressed']).'</td>';
+						$table .= '<td>'.number_format((int) $value['femaletest']).'</td>';
+						$table .= '<td>'.number_format((int) $value['femalenonsuppressed']).'</td>';
+					}
 					$table .= '</tr>';
 					$count++;
 			}

@@ -11,7 +11,14 @@ BEGIN
                     ((SUM(`vca`.`undetected`)+SUM(`vca`.`less1000`))/(SUM(`vca`.`undetected`)+SUM(`vca`.`less1000`)+SUM(`vca`.`less5000`)+SUM(`vca`.`above5000`))*100) AS `percentage` ";
 
     IF (county != 0 && county != '') THEN
-      SET @QUERY = CONCAT(@QUERY, " FROM `vl_county_age` `vca` JOIN `countys` `c` ON `vca`.`county` = `c`.`ID` WHERE 1 ");
+      SET @QUERY = CONCAT(@QUERY, " ,
+        SUM(`vca`.`maletest`) AS `maletest`,
+        SUM(`vca`.`femaletest`) AS `femaletest`,
+        SUM(`vca`.`nogendertest`) AS `nogendertest`,
+        SUM(`vca`.`malenonsuppressed`) AS `malenonsuppressed`,
+        SUM(`vca`.`femalenonsuppressed`) AS `femalenonsuppressed`,
+        SUM(`vca`.`nogendernonsuppressed`) AS `nogendernonsuppressed`
+        FROM `vl_county_age` `vca` JOIN `countys` `c` ON `vca`.`county` = `c`.`ID` WHERE 1 ");
     END IF;
     IF (partner != 0 && partner != '') THEN
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_partner_age` `vca` JOIN `partners` `c` ON `vca`.`partner` = `c`.`ID` WHERE 1 ");
