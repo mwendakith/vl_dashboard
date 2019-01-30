@@ -51,6 +51,8 @@
             }
           ]
 		});
+    
+    $("#poc_site_details").modal('show');
 
 		// $("table").tablecloth({
 		// 	theme: "paper",
