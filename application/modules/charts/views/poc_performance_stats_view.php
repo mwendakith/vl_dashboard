@@ -14,6 +14,7 @@
 				<th colspan="2">Baseline VL Tests</th>
 				<th colspan="2">Confirmatory Repeat Tests</th>
 				<th colspan="2">Total Tests with Valid Outcomes</th>
+				<th colspan="2">View Details</th>
 			</tr>
 			<tr>
 				<th>Tests</th>

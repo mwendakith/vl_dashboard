@@ -181,4 +181,10 @@
 			$("#results").load("<?php echo base_url();?>charts/labs/results_outcome/"+year+"/"+month);
 		});		
 	}
+
+	function expand_modal(div_name){
+		$(div_name).modal('show');
+	}
+	
+
 </script>

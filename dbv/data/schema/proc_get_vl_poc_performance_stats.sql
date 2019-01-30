@@ -4,6 +4,7 @@ CREATE PROCEDURE `proc_get_vl_poc_performance_stats`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
+                    `f`.`id`, 
                     `f`.`name`, 
                     `f`.`facilitycode`, 
                     AVG(`vps`.`sitessending`) AS `sitesending`, 
