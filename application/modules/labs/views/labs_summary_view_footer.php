@@ -199,5 +199,18 @@
 	function expand_modal(div_name){
 		$(div_name).modal('show');
 	}
-	
+
+
+	function expand_poc(facility_id)
+	{
+		var year = localStorage.getItem("from_year");
+		var month = localStorage.getItem("from_month");
+
+		var to_year = localStorage.getItem("to_year");
+		var to_month = localStorage.getItem("to_month");
+
+		$("#my_empty_div").load("<?php echo base_url();?>charts/labs/poc_performance_details/"+facility_id+"/"+year+"/"+month+"/"+to_year+"/"+to_month);
+	    $("#poc_site_details").modal('show');
+	}
+
 </script>
