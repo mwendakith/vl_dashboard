@@ -188,15 +188,7 @@ class Poc_model extends MY_Model
 			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
 			$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 		}
- 
-		$count = 0;
-		$sites = 0;
-		foreach ($sitessending as $key => $value) {
-			if ((int) $value['sitessending'] != 0) {
-				$sites = (int) $sites + (int) $value['sitessending'];
-				$count++;
-			}
-		}
+		
 		// echo "<pre>";print_r($sites);echo "<pre>";print_r($count);echo "<pre>";print_r(round(@$sites / $count));die();
 		// $data['ul'] .= "<tr> <td colspan=2>Average Sites Sending:</td><td colspan=2>".number_format(round(@($sites / $count)))."</td></tr>";
  

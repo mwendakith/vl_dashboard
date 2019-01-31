@@ -24,11 +24,11 @@ BEGIN
                     SUM(`alledta`) AS `alledta`,
                     SUM(`alldbs`) AS `alldbs`,
                     SUM(`allplasma`) AS `allplasma`,
-                    SUM(`vcs`.`undetected`) AS `undetected`,
-                    SUM(`vcs`.`less1000`) AS `less1000`,
-                    (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`)) AS `suppressed`,
-                    (SUM(`vcs`.`less5000`)+SUM(`vcs`.`above5000`)) AS `nonsuppressed`,
-                    (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`)+SUM(`vcs`.`less5000`)+SUM(`vcs`.`above5000`)) AS `total`
+                    SUM(`ssp`.`undetected`) AS `undetected`,
+                    SUM(`ssp`.`less1000`) AS `less1000`,
+                    (SUM(`ssp`.`undetected`)+SUM(`ssp`.`less1000`)) AS `suppressed`,
+                    (SUM(`ssp`.`less5000`)+SUM(`ssp`.`above5000`)) AS `nonsuppressed`,
+                    (SUM(`ssp`.`undetected`)+SUM(`ssp`.`less1000`)+SUM(`ssp`.`less5000`)+SUM(`ssp`.`above5000`)) AS `total`
                   FROM `vl_site_summary_poc` `ssp`
                   LEFT JOIN `view_facilitys` `vf` ON `ssp`.`facility` = `vf`.`ID` 
                   WHERE 1 ";
