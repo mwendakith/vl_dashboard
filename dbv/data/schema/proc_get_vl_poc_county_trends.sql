@@ -1,18 +1,22 @@
-DROP PROCEDURE IF EXISTS `proc_get_vl_regional_poc_gender`;
+DROP PROCEDURE IF EXISTS `proc_get_vl_poc_county_trends`;
 DELIMITER //
-CREATE PROCEDURE `proc_get_vl_regional_poc_gender`
-(IN filter_county INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+CREATE PROCEDURE `proc_get_vl_poc_county_trends`
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
-                    `ac`.`name`, 
-                    SUM(`ssp`.`tests`) AS `tests`, 
+                    `vf`.`countyname`, 
+                    SUM(`edta`) AS `edta`,
+                    SUM(`dbs`) AS `dbs`,
+                    SUM(`plasma`) AS `plasma`,
+                    SUM(`alledta`) AS `alledta`,
+                    SUM(`alldbs`) AS `alldbs`,
+                    SUM(`allplasma`) AS `allplasma`,
                     SUM(`ssp`.`undetected`) AS `undetected`,
                     SUM(`ssp`.`less1000`) AS `less1000`,
                     (SUM(`ssp`.`undetected`)+SUM(`ssp`.`less1000`)) AS `suppressed`,
-                    (SUM(`ssp`.`less5000`)+SUM(`ssp`.`above5000`)) AS `nonsuppressed`
-                  FROM `vl_site_gender_poc` `ssp`
-                  JOIN `gender` `ac`
-                      ON `ssp`.`gender` = `ac`.`ID`
+                    (SUM(`ssp`.`less5000`)+SUM(`ssp`.`above5000`)) AS `nonsuppressed`,
+                    (SUM(`ssp`.`undetected`)+SUM(`ssp`.`less1000`)+SUM(`ssp`.`less5000`)+SUM(`ssp`.`above5000`)) AS `total`
+                  FROM `vl_site_summary_poc` `ssp`
                   LEFT JOIN `view_facilitys` `vf` ON `ssp`.`facility` = `vf`.`ID` 
                   WHERE 1 ";
    
@@ -31,11 +35,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    IF (filter_county != 0 && filter_county != '') THEN
-      SET @QUERY = CONCAT(@QUERY, " AND `county` = '",filter_county,"' ");
-    END IF;
-
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`name` ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vf`.`countyname` ORDER BY `ssp`.`alltests` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

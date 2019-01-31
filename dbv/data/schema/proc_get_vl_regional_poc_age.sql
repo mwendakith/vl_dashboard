@@ -35,7 +35,7 @@ BEGIN
       SET @QUERY = CONCAT(@QUERY, " AND `county` = '",filter_county,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`name` ORDER BY `ac`.`id` ASC ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`name` ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

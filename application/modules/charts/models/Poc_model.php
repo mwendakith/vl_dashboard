@@ -188,7 +188,7 @@ class Poc_model extends MY_Model
 			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
 			$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 		}
-		
+
 		// echo "<pre>";print_r($sites);echo "<pre>";print_r($count);echo "<pre>";print_r(round(@$sites / $count));die();
 		// $data['ul'] .= "<tr> <td colspan=2>Average Sites Sending:</td><td colspan=2>".number_format(round(@($sites / $count)))."</td></tr>";
  
@@ -230,9 +230,9 @@ class Poc_model extends MY_Model
  
 		foreach ($result as $key => $value) {
 			
-			$data['categories'][$loop] 			= $value['name'];
-			$data["ageGnd"][0]["data"][$loop]	=  (int) $nonsuppressed;
-			$data["ageGnd"][1]["data"][$loop]	=  (int) $suppressed;
+			$data['categories'][$key] 			= $value['name'];
+			$data["ageGnd"][0]["data"][$key]	=  (int) $nonsuppressed;
+			$data["ageGnd"][1]["data"][$key]	=  (int) $suppressed;
 		}
 		// die();
 		$data['ageGnd'][0]['drilldown']['color'] = '#913D88';
