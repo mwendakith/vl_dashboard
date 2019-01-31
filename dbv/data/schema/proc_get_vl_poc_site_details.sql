@@ -26,7 +26,7 @@ BEGIN
                   LEFT JOIN `facilitys` `f` ON `vps`.`facility` = `f`.`ID` 
                 WHERE 1 ";
 
-    SET @QUERY = CONCAT(@QUERY, " AND `facility_tested_id` = '",filter_lab,"' ");
+    SET @QUERY = CONCAT(@QUERY, " AND `facility_tested_in` = '",filter_lab,"' ");
 
     IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN

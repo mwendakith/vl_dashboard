@@ -20,5 +20,12 @@ class Labs extends MY_Controller
 		$this->data['content_view'] = 'labs/labs_summary_view';
 		$this -> template($this->data);
 	}
+
+	public function poc()
+	{
+		$this->data['content_view'] = 'labs/poc';
+		$this -> template($this->data);
+	}
+
 }
 ?>

@@ -44,7 +44,7 @@ BEGIN
     END IF;
 
 
-    SET @QUERY = CONCAT(@QUERY, " AND `age` = ",filter_age," GROUP BY `c`.`ID` ORDER BY `percentage` DESC ");
+    SET @QUERY = CONCAT(@QUERY, " AND `age` ",filter_age," GROUP BY `c`.`ID` ORDER BY `percentage` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
