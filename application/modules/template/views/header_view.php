@@ -150,7 +150,15 @@
 								<li><a href="<?php echo base_url();?>partner/agencies">Funding Agencies</a></li>
 							</ul>
 						</li>
-						<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
+						<li class="dropdown">
+							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Labs
+							<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
+								<li><a href="<?php echo base_url();?>labs/poc">POC</a></li>
+							</ul>
+						</li>
+						
 						<li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Facilities
 							<b class="caret"></b></a>
