@@ -12,7 +12,8 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 			parent:: __construct();
 
 			if($this->config->item('maintenance_mode') && $this->config->item('maintenance_mode') == TRUE){
-				$this->load->view('maintenance_view');
+				// $this->load->view('maintenance_view');
+				echo eval(APPPATH . 'views/maintenance_view.php');								
 				die();
 			}
 
