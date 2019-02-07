@@ -13,7 +13,7 @@ if(!defined("BASEPATH")) exit("No direct script access allowed!");
 
 			if($this->config->item('maintenance_mode') && $this->config->item('maintenance_mode') == TRUE){
 				// $this->load->view('maintenance_view');
-				echo eval(APPPATH . 'views/maintenance_view.php');								
+				echo "We are undergoing maintenance. We apologise for the inconvenience.";							
 				die();
 			}
 

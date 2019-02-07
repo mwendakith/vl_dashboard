@@ -30,7 +30,7 @@ class Labs extends MY_Controller
 	public function test()
 	{
 		// echo eval(APPPATH . 'views/maintenance_view.php');	
-		echo "We are undergoing maintenance.";							
+		echo "We are undergoing maintenance. We apologise for the inconvenience.";							
 		die();
 	}
 
