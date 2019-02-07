@@ -27,5 +27,11 @@ class Labs extends MY_Controller
 		$this -> template($this->data);
 	}
 
+	public function test()
+	{
+		echo eval(APPPATH . 'views/maintenance_view.php');								
+		die();
+	}
+
 }
 ?>
