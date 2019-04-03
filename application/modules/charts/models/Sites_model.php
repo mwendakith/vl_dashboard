@@ -959,6 +959,78 @@ class Sites_model extends MY_Model
 		return $data;
 	}
 
+
+
+	function get_current_suppresion($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
+	{
+		$type = 0;
+		$params;
+
+		if ($site==null || $site=='null') $site = $this->session->userdata('site_filter');
+
+		if ($year==null || $year=='null') $year = $this->session->userdata('filter_year');
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+				$type = 1;
+			}else {
+				$month = $this->session->userdata('filter_month');
+				$type = 3;
+			}
+		}
+		
+		if ($to_year==null || $to_year=='null') $to_year = 0;
+		if ($to_month==null || $to_month=='null') $to_month = 0;
+
+		if ($type == 0) {
+			if($to_year == 0){
+				$type = 3;
+			}
+			else{
+				$type = 5;
+			}
+		}
+		
+		$params = "patient/suppression/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+
+		$this->db->close();
+
+		$result = $this->req($params);	
+
+
+		$data['vl_outcomes']['name'] = 'Tests';
+		$data['vl_outcomes']['colorByPoint'] = true;
+		$data['ul'] = '';
+
+		$data['vl_outcomes']['data'][0]['name'] = '< 400 copies/ml';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 1000 copies/ml';
+		$data['vl_outcomes']['data'][2]['name'] = '> 1000 copies/ml';
+		
+		$data['vl_outcomes']['data'][0]['y'] = (int) $result->rcategory2;
+		$data['vl_outcomes']['data'][1]['y'] = (int) $result->rcategory1;
+		$data['vl_outcomes']['data'][2]['y'] = (int) $result->rcategory3 + (int) $result->rcategory4;
+		
+		$data['vl_outcomes']['data'][0]['z'] = number_format($result->rcategory2);
+		$data['vl_outcomes']['data'][1]['z'] = number_format($result->rcategory1);
+		$data['vl_outcomes']['data'][2]['z'] = number_format($result->rcategory3 + $result->rcategory4);
+
+		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
+		$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+		$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
+
+		$data['vl_outcomes']['data'][1]['sliced'] = true;
+		$data['vl_outcomes']['data'][1]['selected'] = true;
+
+		$data['ul'] = "<p>  ";
+		$data['ul'] .= "< 400 copies/ml - " . number_format($result->rcategory2) . "<br />";
+		$data['ul'] .= "401 - 1000 copies/ml - " . number_format($result->rcategory1) . "<br />";
+		$data['ul'] .= "Non Suppressed - " . number_format($result->rcategory3 + $result->rcategory4) . "<br />";
+		$data['ul'] .= "<b>N.B.</b> These values exclude baseline tests. </p>";
+
+		return $data;
+	}
+
+
 	function current_suppression($site=null){
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');

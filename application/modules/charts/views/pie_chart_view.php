@@ -19,7 +19,7 @@
 		                text: ''
 		            },
 		            tooltip: {
-		                pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+		                pointFormat: '{series.name}: {point.z} <b>({point.percentage:.1f} %)</b>'
 		            },
 		            plotOptions: {
 		                pie: {
