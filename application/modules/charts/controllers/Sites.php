@@ -94,13 +94,6 @@ class Sites extends MY_Controller
 		$this->load->view('longitudinal_view',$data);
 	}
 
-	function get_patients($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL){
-		$data['trends'] = $this->sites_model->get_patients($site,$year,$month,$to_year,$to_month);
-		$data['div_name'] = "unique_patients";
-
-		$this->load->view('longitudinal_view',$data);
-	}
-
 	function get_current_suppresion($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL){
 		$data['outcomes'] = $this->sites_model->get_current_suppresion($site,$year,$month,$to_year,$to_month);
 		$data['div_name'] = "current_suppression_pie";
