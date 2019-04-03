@@ -2,7 +2,7 @@
 <div id="<?php echo $div_name; ?>"></div>
 
 <?php
-	if(isset($outcomes['ul'])) echo $outcomes['ul']);
+	if(isset($outcomes['ul'])) echo $outcomes['ul'];
 ?>
 
 <script type="text/javascript">
