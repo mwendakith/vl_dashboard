@@ -990,6 +990,12 @@ class Sites_model extends MY_Model
 				$type = 5;
 			}
 		}
+
+		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
+
+		$facility = $query->facilitycode;
+
+		$this->db->close();
 		
 		$params = "patient/suppression/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 
