@@ -28,6 +28,7 @@
 </div>
 <div class="row" id="second">
 	<!-- Map of the country -->
+	<div class="row">
 		<div class="col-md-7 col-sm-7 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
@@ -49,8 +50,10 @@
 			  </div>
 			</div>
 		</div>
+	</div>
 
 	<!-- Map of the country -->
+	<div class="row">
 		<div class="col-md-6">
 			<div class="panel panel-default">
 					  <div class="panel-heading">
@@ -77,7 +80,9 @@
 			  	</div>
 			</div>
 		</div>
+	</div>
 
+	<div class="row">
 		<div class="col-md-4 col-sm-4 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
@@ -110,6 +115,7 @@
 			  </div>
 			</div>
 		</div>
+	</div>
 
 </div>
 
