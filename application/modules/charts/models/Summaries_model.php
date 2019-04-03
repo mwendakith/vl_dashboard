@@ -948,6 +948,76 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
+	function get_current_suppresion($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
+	{
+		$type = 0;
+		$params;
+
+		if ($county==null || $county=='null') $county = $this->session->userdata('county_filter');
+		if ($partner==null || $partner=='null') $partner = $this->session->userdata('partner_filter');
+
+		if ($year==null || $year=='null') $year = $this->session->userdata('filter_year');
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = 0;
+				$type = 1;
+			}else {
+				$month = $this->session->userdata('filter_month');
+				$type = 3;
+			}
+		}
+		
+		if ($to_year==null || $to_year=='null') $to_year = 0;
+		if ($to_month==null || $to_month=='null') $to_month = 0;
+
+		if ($type == 0) {
+			if($to_year == 0){
+				$type = 3;
+			}
+			else{
+				$type = 5;
+			}
+		}	
+
+		if (!is_null($partner)) {
+			$params = "patient/suppression/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+		} else {
+			if ($county==null || $county=='null') {
+				$params = "patient/suppression/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+			} else {
+				$query = $this->db->get_where('countys', array('id' => $county), 1)->row();
+				$c = $query->CountyMFLCode;
+
+				$params = "patient/suppression/county/{$c}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+			}
+		}
+		$this->db->close();
+
+		$result = $this->req($params);	
+
+
+		$data['vl_outcomes']['name'] = 'Tests';
+		$data['vl_outcomes']['colorByPoint'] = true;
+		$data['ul'] = '';
+
+		$data['vl_outcomes']['data'][0]['name'] = '< 400 copies/ml';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 1000 copies/ml';
+		$data['vl_outcomes']['data'][2]['name'] = '> 1000 copies/ml';
+		
+		$data['vl_outcomes']['data'][0]['y'] = (int) $result->rcategory2;
+		$data['vl_outcomes']['data'][1]['y'] = (int) $result->rcategory1;
+		$data['vl_outcomes']['data'][2]['y'] = (int) $result->rcategory3 + (int) $result->rcategory4;
+
+		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
+		$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+		$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
+
+		$data['vl_outcomes']['data'][1]['sliced'] = true;
+		$data['vl_outcomes']['data'][1]['selected'] = true;
+
+		return $data;
+	}
+
 	function current_suppression($county=null, $partner=null, $annual=NULL){
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
@@ -962,9 +1032,6 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['name'] = 'Tests';
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
-
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
 
 		if (!is_null($partner)) {
 			$sql = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
@@ -984,18 +1051,26 @@ class Summaries_model extends MY_Model
 		$this->db->close();
 		
 
-		$data['vl_outcomes']['data'][0]['y'] = (int) $result->suppressed;
-		$data['vl_outcomes']['data'][1]['y'] = (int) $result->nonsuppressed;
+		$data['vl_outcomes']['data'][0]['name'] = '401 - 1000 copies/ml';
+		$data['vl_outcomes']['data'][1]['name'] = '< 400 copies/ml';
+		$data['vl_outcomes']['data'][2]['name'] = '> 1000 copies/ml';
+
+		$data['vl_outcomes']['data'][0]['y'] = (int) $result->less1000;
+		$data['vl_outcomes']['data'][1]['y'] = (int) $result->undetected;
+		$data['vl_outcomes']['data'][2]['y'] = (int) $result->nonsuppressed;
 
 		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
-		$data['vl_outcomes']['data'][1]['color'] = '#F2784B';
-		
+		$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+		$data['vl_outcomes']['data'][2]['color'] = '#F2784B';		
 
-		$data['vl_outcomes']['data'][0]['sliced'] = true;
-		$data['vl_outcomes']['data'][0]['selected'] = true;
+		$data['vl_outcomes']['data'][1]['sliced'] = true;
+		$data['vl_outcomes']['data'][1]['selected'] = true;
 
-		$data['total'][0] = (int) $result->suppressed;
-		$data['total'][1] = (int) $result->nonsuppressed;
+		$data['ul'] = "<p>  ";
+		$data['ul'] .= "< 400 copies/ml - " . number_format($result->undetected) . "<br />";
+		$data['ul'] .= "401 - 1000 copies/ml - " . number_format($result->less1000) . "<br />";
+		$data['ul'] .= "Non Suppressed - " . number_format($result->nonsuppressed) . "<br />";
+		$data['ul'] .= "<b>N.B.</b> These values exclude baseline tests. </p>";
 		
 		return $data;
 	}

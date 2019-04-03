@@ -1,9 +1,9 @@
-<p>
-	Suppressed Patients - <?php echo number_format($outcomes['total'][0]) ; ?> <br />
-	Non Suppressed Patients - <?php echo number_format($outcomes['total'][1]) ; ?> <br />
-	<b>N.B.</b> These values exclude baseline tests.
-</p>
+
 <div id="<?php echo $div_name; ?>"></div>
+
+<?php
+	if(isset($outcomes['ul'])) echo $outcomes['ul']);
+?>
 
 <script type="text/javascript">
 
@@ -27,7 +27,7 @@
 		                    cursor: 'pointer',
 		                    dataLabels: {
 			                    enabled: true,
-			                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+			                    format: '<b>{point.name}</b>: {point.y} ({point.percentage:.1f} %)',
 			                    style: {
 			                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
 			                    }
