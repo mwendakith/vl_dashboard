@@ -985,6 +985,10 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['y'] = (int) $result->undetected;
 		$data['vl_outcomes']['data'][2]['y'] = (int) $result->nonsuppressed;
 
+		$data['vl_outcomes']['data'][0]['z'] = number_format($result->less1000);
+		$data['vl_outcomes']['data'][1]['z'] = number_format($result->undetected);
+		$data['vl_outcomes']['data'][2]['z'] = number_format($result->nonsuppressed);
+
 		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
 		$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
 		$data['vl_outcomes']['data'][2]['color'] = '#F2784B';		
