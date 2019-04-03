@@ -61,6 +61,7 @@
 					$("#partner_div").html("<center><div class='loader'></div></center>");
 
 					$("#long_tracking").html("<center><div class='loader'></div></center>");
+					$("#current_sup_dynamic").html("<center><div class='loader'></div></center>");
 					$("#current_sup").html("<center><div class='loader'></div></center>");
 
 					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+data+"/"+all);
@@ -126,6 +127,8 @@
 						$("#pat_stats").html("<center><div class='loader'></div></center>");
 						$("#pat_out").html("<center><div class='loader'></div></center>");
 						$("#pat_graph").html("<center><div class='loader'></div></center>");
+						$("#long_tracking").html("<center><div class='loader'></div></center>");
+						$("#current_sup_dynamic").html("<center><div class='loader'></div></center>");
 
 						$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+from[1]+"/"+null+"/"+partner+"/"+all);
 						$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+partner+"/"+to[1]+"/"+to[0]);
@@ -192,6 +195,8 @@
 					$("#pat_stats").html("<center><div class='loader'></div></center>");
 					$("#pat_out").html("<center><div class='loader'></div></center>");
 					$("#pat_graph").html("<center><div class='loader'></div></center>");
+					$("#long_tracking").html("<center><div class='loader'></div></center>");
+					$("#current_sup_dynamic").html("<center><div class='loader'></div></center>");
 
 					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year+"/"+month+"/"+partner+"/"+all);
 					$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+year+"/"+month+"/"+null+"/"+partner);
