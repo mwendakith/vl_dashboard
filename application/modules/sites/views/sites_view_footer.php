@@ -30,6 +30,7 @@
 			$("#gender").html("<center><div class='loader'></div></center>");
 			$("#justification").html("<center><div class='loader'></div></center>");
 			$("#long_tracking").html("<center><div class='loader'></div></center>");
+			$("#current_sup_dynamic").html("<center><div class='loader'></div></center>");
 			$("#current_sup").html("<center><div class='loader'></div></center>");
 
 			$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+null+"/"+null+"/"+site);
@@ -39,6 +40,7 @@
 			$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+null+"/"+null+"/"+site);
 			$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+null+"/"+null+"/"+site);
 			$("#long_tracking").load("<?php echo base_url('charts/sites/get_patients');?>/"+null+"/"+null+"/"+site);
+			$("#current_sup_dynamic").load("<?php echo base_url('charts/sites/get_current_suppresion');?>/"+null+"/"+null+"/"+site);
 			$("#current_sup").load("<?php echo base_url('charts/sites/current_suppression');?>/"+null+"/"+site);
 
 		}
@@ -85,6 +87,7 @@
 					$("#gender").html("<center><div class='loader'></div></center>");
 					$("#justification").html("<center><div class='loader'></div></center>");
 					$("#long_tracking").html("<center><div class='loader'></div></center>");
+					$("#current_sup_dynamic").html("<center><div class='loader'></div></center>");
 					$("#current_sup").html("<center><div class='loader'></div></center>");
 
 					$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+null+"/"+null+"/"+em);
@@ -94,6 +97,7 @@
 					$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+null+"/"+null+"/"+em);
 					$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+null+"/"+null+"/"+em);
 					$("#long_tracking").load("<?php echo base_url('charts/sites/get_patients');?>/"+null+"/"+null+"/"+em);
+					$("#current_sup_dynamic").load("<?php echo base_url('charts/sites/get_current_suppresion');?>/"+null+"/"+null+"/"+em);
 					$("#current_sup").load("<?php echo base_url('charts/sites/current_suppression');?>/"+null+"/"+em);
 				}
 	        });
@@ -133,6 +137,7 @@
 						$("#gender").html("<center><div class='loader'></div></center>");
 
 						$("#long_tracking").html("<center><div class='loader'></div></center>");
+						$("#current_sup_dynamic").html("<center><div class='loader'></div></center>");
 
 						$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
 						$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
@@ -141,6 +146,7 @@
 						$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
 						$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
 						$("#long_tracking").load("<?php echo base_url('charts/sites/get_patients');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
+						$("#current_sup_dynamic").load("<?php echo base_url('charts/sites/get_current_suppresion');?>/"+from[1]+"/"+from[0]+"/"+site+"/"+to[1]+"/"+to[0]);
 					}
 				});
 			}
@@ -197,6 +203,7 @@
 					$("#long_tracking").html("<center><div class='loader'></div></center>");
 					$("#justification").html("<center><div class='loader'></div></center>");
 					$("#gender").html("<center><div class='loader'></div></center>");
+					$("#current_sup_dynamic").html("<center><div class='loader'></div></center>");
 
 					$("#tsttrends").load("<?php echo base_url('charts/sites/site_trends');?>/"+year+"/"+month+"/"+site);
 					$("#stoutcomes").load("<?php echo base_url('charts/sites/site_outcomes_chart');?>/"+year+"/"+month+"/"+site);
@@ -205,6 +212,7 @@
 					$("#gender").load("<?php echo base_url('charts/sites/site_gender');?>/"+year+"/"+month+"/"+site);
 					$("#justification").load("<?php echo base_url('charts/sites/site_justification');?>/"+year+"/"+month+"/"+site);
 					$("#long_tracking").load("<?php echo base_url('charts/sites/get_patients');?>/"+year+"/"+month+"/"+site);
+					$("#current_sup_dynamic").load("<?php echo base_url('charts/sites/get_current_suppresion');?>/"+year+"/"+month+"/"+site);
 
 				}
 			});

@@ -94,6 +94,12 @@ class Sites extends MY_Controller
 		$this->load->view('longitudinal_view',$data);
 	}
 
+	function get_current_suppresion($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL){
+		$data['outcomes'] = $this->sites_model->get_current_suppresion($site,$year,$month,$to_year,$to_month);
+		$data['div_name'] = "current_suppression_pie";
+		$this->load->view('pie_chart_view',$data);
+	}
+
 	function current_suppression($site=NULL)
 	{
 		$data['outcomes'] = $this->sites_model->current_suppression($site);

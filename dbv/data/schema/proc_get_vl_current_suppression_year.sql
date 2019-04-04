@@ -6,6 +6,8 @@ BEGIN
   SET @QUERY =    "SELECT 
                     SUM(`suppressed`) AS `suppressed`, 
                     SUM(`nonsuppressed`) AS `nonsuppressed`, 
+                    SUM(`undetected`) AS `undetected`, 
+                    SUM(`less1000`) AS `less1000`, 
                     AVG(`suppression`) AS `suppression`, 
                     AVG(`coverage`) AS `coverage`, 
                     SUM(`totalartmar`) AS `totallstrpt` 

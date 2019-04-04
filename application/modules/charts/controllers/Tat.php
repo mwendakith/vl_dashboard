@@ -31,10 +31,10 @@ class Tat extends MY_Controller
 		$data['th'] = '<tr class="colhead">
 							<th>#</th>
 							<th>'.$title.'</th>
-							<th>TAT 1</th>
-							<th>TAT 2</th>
-							<th>TAT 3</th>
-							<th>TAT 4</th>
+							<th>Collection To Receipt</th>
+							<th>Receipt To Processing</th>
+							<th>Processing To Dispatch</th>
+							<th>Collection To Dispatch</th>
 						</tr>';
 		$data['outcomes'] = $this->tat_model->details($year, $month, $to_year, $to_month, $type, $id);
 		// echo "<pre>";print_r($data);die();
