@@ -59,6 +59,7 @@ class Ages extends MY_Controller
 	{
 		$age = $this->split_ages($age);
 		$data['outcomes'] = $this->ages_model->ages_breakdowns($year,$month,$age,$to_year,$to_month,$county,$partner,$subcounty,$site);
+		if ($county == 1 || $county == '1') $data['is_counties'] = true;
 		
 		$this->load->view('age_breakdown_listing',$data);
 	}

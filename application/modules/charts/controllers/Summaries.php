@@ -91,12 +91,18 @@ class Summaries extends MY_Controller {
 	}
 
 	function get_patients($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
-	{
-		
+	{		
 		$data['trends'] = $this->summaries_model->get_patients($year,$month,$county,$partner,$to_year,$to_month);
 		$data['div_name'] = "unique_patients";
 
 		$this->load->view('longitudinal_view',$data);
+	}
+
+	function get_current_suppresion($year=NULL,$month=NULL,$county=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
+	{		
+		$data['outcomes'] = $this->summaries_model->get_current_suppresion($year,$month,$county,$partner,$to_year,$to_month);
+		$data['div_name'] = "current_suppression_pie";
+		$this->load->view('pie_chart_view',$data);
 	}
 
 	function current_suppression($county=NULL,$partner=NULL,$annual=NULL)

@@ -186,6 +186,8 @@
 	  </div>
 	</div>	
 </div>
+
+<div id="my_empty_div"></div>
 		
 
 <?php $this->load->view('labs_summary_view_footer'); ?>

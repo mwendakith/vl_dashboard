@@ -59,6 +59,7 @@
 		$("#facilities_na").load("<?php echo base_url('charts/summaries/site_listing_age_n/4/1');?>");
 
 		$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>");
+		$("#current_sup_dynamic").load("<?php echo base_url('charts/summaries/get_current_suppresion'); ?>");
 
 		$("select").change(function(){
 			em = $(this).val();
@@ -87,6 +88,7 @@
 
 	        	// alert(data);
 	        	$("#long_tracking").html("<center><div class='loader'></div></center>");
+	        	$("#current_sup_dynamic").html("<center><div class='loader'></div></center>");
 	        	$("#current_sup").html("<center><div class='loader'></div></center>");
 
 				$("#partners").html("<div>Loading...</div>");
@@ -125,6 +127,7 @@
 
 			
 				$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+null+"/"+null+"/"+data);
+				$("#current_sup_dynamic").load("<?php echo base_url('charts/summaries/get_current_suppresion'); ?>/"+null+"/"+null+"/"+data);
 				$("#current_sup").load("<?php echo base_url('charts/summaries/current_suppression'); ?>/"+data);
 	        });
 		});
@@ -148,8 +151,10 @@
 		    
 		    if (!error_check) {
 	        	$("#long_tracking").html("<center><div class='loader'></div></center>");
+	        	$("#current_sup_dynamic").html("<center><div class='loader'></div></center>");
 				
 		 		$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
+		 		$("#current_sup_dynamic").load("<?php echo base_url('charts/summaries/get_current_suppresion'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
 			}
 		    
 		});
@@ -178,7 +183,9 @@
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 			
  			$("#long_tracking").html("<center><div class='loader'></div></center>");
+ 			$("#current_sup_dynamic").html("<center><div class='loader'></div></center>");
 			$("#long_tracking").load("<?php echo base_url('charts/summaries/get_patients'); ?>/"+year+"/"+month);
+			$("#current_sup_dynamic").load("<?php echo base_url('charts/summaries/get_current_suppresion'); ?>/"+year+"/"+month);
 		});
 	}
 

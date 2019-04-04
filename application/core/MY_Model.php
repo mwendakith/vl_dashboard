@@ -61,8 +61,9 @@ class MY_Model extends CI_Model
 		$this->requests->register_autoloader();
 		// $headers = array('X-Auth-Token' => 'jhWXc65gZUI=yG5ndWkpAGNsaW50b85oZWFsdGhhY2Nlc3Mub3Jn');
 		$headers = array();
-		$options = array('timeout' => 40);
-		$my_url = "http://eidapi.nascop.org/vl/ver2.0/" . $url;
+		$options = array('verify' => false, 'timeout' => 40);
+		// $my_url = "http://eidapi.nascop.org/vl/ver2.0/" . $url;
+		$my_url = "https://api.nascop.org/vl/ver2.0/" . $url;
 		$request = $this->requests->get($my_url, $headers, $options);
 		// $request = $this->requests->get($my_url);
 

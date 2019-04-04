@@ -28,6 +28,7 @@
 </div>
 <div class="row" id="second">
 	<!-- Map of the country -->
+	<div class="row">
 		<div class="col-md-7 col-sm-7 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
@@ -49,8 +50,10 @@
 			  </div>
 			</div>
 		</div>
+	</div>
 
 	<!-- Map of the country -->
+	<div class="row">
 		<div class="col-md-6">
 			<div class="panel panel-default">
 					  <div class="panel-heading">
@@ -77,9 +80,10 @@
 			  	</div>
 			</div>
 		</div>
+	</div>
 
 	<div class="row">
-		<div class="col-md-6 col-sm-6 col-xs-12">
+		<div class="col-md-4 col-sm-4 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
 			    &nbsp;&nbsp;&nbsp;&nbsp; Tests done by unique patients <div class="display_date"></div>
@@ -90,7 +94,18 @@
 			</div>
 		</div>
 
-		<div class="col-md-6 col-sm-6 col-xs-12">
+		<div class="col-md-4 col-sm-4 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    Current Suppression Rate <div class="display_date"></div>
+			  </div>
+			  <div class="panel-body" id="current_sup_dynamic">
+			    <center><div class="loader"></div></center>
+			  </div>
+			</div>
+		</div>
+
+		<div class="col-md-4 col-sm-4 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
 			    Suppression Rate <div class="display_current_range"></div>
@@ -100,7 +115,8 @@
 			  </div>
 			</div>
 		</div>
-	</div>	
+	</div>
+
 </div>
 
 <div class="row" id="first">

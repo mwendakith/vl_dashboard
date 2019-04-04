@@ -30,6 +30,12 @@ class Labs extends MY_Controller
 		$this->load->view('poc_performance_stats_view', $data);
 	}
 
+	function poc_performance_details($lab_id=NULL,$year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['data']['table'] = $this->labs_model->poc_performance_details($lab_id,$year,$month,$to_year,$to_month);
+		$this->load->view('poc_site_table_details', $data);
+	}
+
 	function download_lab_performance_stats($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$this->labs_model->download_lab_performance_stats($year,$month,$to_year,$to_month);
