@@ -1012,12 +1012,12 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['name'] = '401 - 1000 copies/ml';
 		$data['vl_outcomes']['data'][2]['name'] = '> 1000 copies/ml';
 		
-		$data['vl_outcomes']['data'][0]['y'] = (int) $result->rcategory2;
-		$data['vl_outcomes']['data'][1]['y'] = (int) $result->rcategory1;
+		$data['vl_outcomes']['data'][0]['y'] = (int) $result->rcategory1;
+		$data['vl_outcomes']['data'][1]['y'] = (int) $result->rcategory2;
 		$data['vl_outcomes']['data'][2]['y'] = (int) $result->rcategory3 + (int) $result->rcategory4;
 		
-		$data['vl_outcomes']['data'][0]['z'] = number_format($result->rcategory2);
-		$data['vl_outcomes']['data'][1]['z'] = number_format($result->rcategory1);
+		$data['vl_outcomes']['data'][0]['z'] = number_format($result->rcategory1);
+		$data['vl_outcomes']['data'][1]['z'] = number_format($result->rcategory2);
 		$data['vl_outcomes']['data'][2]['z'] = number_format($result->rcategory3 + $result->rcategory4);
 
 		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
@@ -1028,8 +1028,8 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['selected'] = true;
 
 		$data['ul'] = "<p>  ";
-		$data['ul'] .= "< 400 copies/ml - " . number_format($result->rcategory2) . "<br />";
-		$data['ul'] .= "401 - 1000 copies/ml - " . number_format($result->rcategory1) . "<br />";
+		$data['ul'] .= "< 400 copies/ml - " . number_format($result->rcategory1) . "<br />";
+		$data['ul'] .= "401 - 1000 copies/ml - " . number_format($result->rcategory2) . "<br />";
 		$data['ul'] .= "Non Suppressed - " . number_format($result->rcategory3 + $result->rcategory4) . "<br />";
 		$data['ul'] .= "<b>N.B.</b> These values exclude baseline tests. </p>";
 
