@@ -1020,12 +1020,12 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['z'] = number_format($result->rcategory2);
 		$data['vl_outcomes']['data'][2]['z'] = number_format($result->rcategory3 + $result->rcategory4);
 
-		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
-		$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+		$data['vl_outcomes']['data'][0]['color'] = '#66ff66';
+		$data['vl_outcomes']['data'][1]['color'] = '#1BA39C';
 		$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 
-		$data['vl_outcomes']['data'][1]['sliced'] = true;
-		$data['vl_outcomes']['data'][1]['selected'] = true;
+		$data['vl_outcomes']['data'][0]['sliced'] = true;
+		$data['vl_outcomes']['data'][0]['selected'] = true;
 
 		$data['ul'] = "<p>  ";
 		$data['ul'] .= "< 400 copies/ml - " . number_format($result->rcategory1) . "<br />";
