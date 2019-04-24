@@ -188,6 +188,8 @@ class Summaries_model extends MY_Model
  
 	function vl_outcomes($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
+		$type = 0;
+		$params;
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
@@ -206,25 +208,40 @@ class Summaries_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+				$type = 1;
+			}else {
+				$month = $this->session->userdata('filter_month');
+				$type = 3;
 			}
 		}
- 
+ 	
+ 		if ($type == 0) {
+			if($to_year == 0)
+				$type = 3;
+			else
+				$type = 5;
+		}
+
 		if (!is_null($partner)) {
 			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql3 = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
+			$params = "patient/suppression/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		} else {
 			if ($county==null || $county=='null') {
 				$sql = "CALL `proc_get_national_vl_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_national_sitessending`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql3 = "CALL `proc_get_vl_current_suppression`('0','0')";
+				$params = "patient/suppression/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			} else {
 				$sql = "CALL `proc_get_regional_vl_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_regional_sitessending`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql3 = "CALL `proc_get_vl_current_suppression`('1','".$county."')";
+				$query = $this->db->get_where('countys', array('id' => $county), 1)->row();
+				$c = $query->CountyMFLCode;
+
+				$params = "patient/suppression/county/{$c}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			}
 		}
 		// echo "<pre>";print_r($sql);echo "</pre>";
@@ -233,6 +250,11 @@ class Summaries_model extends MY_Model
 		$this->db->close();
 		$sitessending = $this->db->query($sql2)->result_array();
 		$this->db->close();
+
+		// Getting the broken down r categories
+		echo "<pre>";print_r($params);echo "</pre>";
+		$res = $this->req($params);
+		// dd($res);
 		// echo "<pre>";print_r($result);echo "</pre>";
 		// echo "<pre>";print_r($sitessending);echo "</pre>";die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
