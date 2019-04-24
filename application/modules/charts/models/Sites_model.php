@@ -432,7 +432,7 @@ class Sites_model extends MY_Model
 		$this->db->close();
 
 		$params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-		
+
 		$res = $this->req($params);
 		
 		echo "<pre>";print_r($res);die();
@@ -1141,7 +1141,7 @@ class Sites_model extends MY_Model
 
 		$facility = $query->facilitycode;
 
-		$params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+		$params = "patient/suppression/site/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 
 		$result = $this->req($params);
 
