@@ -430,9 +430,9 @@ class Sites_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 
 		$this->db->close();
-		$params = "patient/suppression/site/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+		$params = "patient/suppression/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		// $params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-		
+
 		$res = $this->req($params);
 		
 		echo "<pre>";print_r($res);die();
