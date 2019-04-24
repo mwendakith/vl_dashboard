@@ -244,7 +244,7 @@ class Summaries_model extends MY_Model
 				$params = "patient/suppression/county/{$c}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			}
 		}
-		// echo "<pre>";print_r($sql);echo "</pre>";
+		echo "<pre>";print_r($params);echo "</pre>";
 		// echo "<pre>";print_r($sql2);echo "</pre>";die();
 		$result = $this->db->query($sql)->result_array();
 		$this->db->close();
