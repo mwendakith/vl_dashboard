@@ -396,25 +396,22 @@ class Labs_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['sample_types'][0]['name'] = 'EDTA';
+		$data['sample_types'][0]['name'] = 'Plasma';
 		$data['sample_types'][1]['name'] = 'DBS';
-		$data['sample_types'][2]['name'] = 'Plasma';
 
 		$count = 0;
 		
 		$data['categories'][0] = 'No Data';
 		$data["sample_types"][0]["data"][0]	= $count;
 		$data["sample_types"][1]["data"][0]	= $count;
-		$data["sample_types"][2]["data"][0]	= $count;
 		if ($result) {
 			foreach ($result as $key => $value) {
 			
 				$data['categories'][$key] = $value['labname'];
 				if(!$data['categories'][$key]) $data['categories'][$key] = "POC Sites";
 
-				$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
+				$data["sample_types"][0]["data"][$key]	= ((int) $value['edta'] + (int) $value['plasma']);
 				$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
-				$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
 			
 			}
 		}
