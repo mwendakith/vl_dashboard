@@ -781,9 +781,8 @@ class Summaries_model extends MY_Model
 	function sample_types($year=null,$county=null,$partner=null, $all=null) {
 		$result = $this->get_sampletypesData($year,$county,$partner);
 		
-		$data['sample_types'][0]['name'] = 'EDTA';
+		$data['sample_types'][0]['name'] = 'Plasma';
 		$data['sample_types'][1]['name'] = 'DBS';
-		$data['sample_types'][2]['name'] = 'Plasma';
 		// $data['sample_types'][3]['name'] = 'Suppression';
  
 		$count = 0;
@@ -791,7 +790,6 @@ class Summaries_model extends MY_Model
 		$data['categories'][0] = 'No Data';
 		$data["sample_types"][0]["data"][0]	= $count;
 		$data["sample_types"][1]["data"][0]	= $count;
-		$data["sample_types"][2]["data"][0]	= $count;
 		// $data["sample_types"][3]["data"][0]	= $count;
  
 		foreach ($result as $key => $value) {
@@ -799,14 +797,12 @@ class Summaries_model extends MY_Model
 				$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
 
 				if($all == 1){
- 					$data["sample_types"][0]["data"][$key]	= (int) $value['alledta'];
+ 					$data["sample_types"][0]["data"][$key]	= ((int) $value['alledta'] + (int) $value['allplasma']);
 					$data["sample_types"][1]["data"][$key]	= (int) $value['alldbs'];
-					$data["sample_types"][2]["data"][$key]	= (int) $value['allplasma'];
 				}
  				else{
- 					$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
+ 					$data["sample_types"][0]["data"][$key]	= ((int) $value['edta'] + (int) $value['plasma']);
 					$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
-					$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
  				}
 
 				// $data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
@@ -1004,24 +1000,24 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['name'] = '401 - 1000 copies/ml';
 		$data['vl_outcomes']['data'][2]['name'] = '> 1000 copies/ml';
 		
-		$data['vl_outcomes']['data'][0]['y'] = (int) $result->rcategory2;
-		$data['vl_outcomes']['data'][1]['y'] = (int) $result->rcategory1;
+		$data['vl_outcomes']['data'][0]['y'] = (int) $result->rcategory1;
+		$data['vl_outcomes']['data'][1]['y'] = (int) $result->rcategory2;
 		$data['vl_outcomes']['data'][2]['y'] = (int) $result->rcategory3 + (int) $result->rcategory4;
 		
-		$data['vl_outcomes']['data'][0]['z'] = number_format($result->rcategory2);
-		$data['vl_outcomes']['data'][1]['z'] = number_format($result->rcategory1);
+		$data['vl_outcomes']['data'][0]['z'] = number_format($result->rcategory1);
+		$data['vl_outcomes']['data'][1]['z'] = number_format($result->rcategory2);
 		$data['vl_outcomes']['data'][2]['z'] = number_format($result->rcategory3 + $result->rcategory4);
 
-		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
-		$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+		$data['vl_outcomes']['data'][0]['color'] = '#66ff66';
+		$data['vl_outcomes']['data'][1]['color'] = '#1BA39C';
 		$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 
-		$data['vl_outcomes']['data'][1]['sliced'] = true;
-		$data['vl_outcomes']['data'][1]['selected'] = true;
+		$data['vl_outcomes']['data'][0]['sliced'] = true;
+		$data['vl_outcomes']['data'][0]['selected'] = true;
 
 		$data['ul'] = "<p>  ";
-		$data['ul'] .= "< 400 copies/ml - " . number_format($result->rcategory2) . "<br />";
-		$data['ul'] .= "401 - 1000 copies/ml - " . number_format($result->rcategory1) . "<br />";
+		$data['ul'] .= "< 400 copies/ml - " . number_format($result->rcategory1) . "<br />";
+		$data['ul'] .= "401 - 1000 copies/ml - " . number_format($result->rcategory2) . "<br />";
 		$data['ul'] .= "Non Suppressed - " . number_format($result->rcategory3 + $result->rcategory4) . "<br />";
 		$data['ul'] .= "<b>N.B.</b> These values exclude baseline tests. </p>";
 
