@@ -392,6 +392,8 @@ class Sites_model extends MY_Model
 
 	function sites_vloutcomes($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
+		$type = 0;
+		$params;
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
 		}
@@ -408,9 +410,18 @@ class Sites_model extends MY_Model
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
 				$month = 0;
+				$type = 1;
 			}else {
 				$month = $this->session->userdata('filter_month');
+				$type = 3;
 			}
+		}
+ 	
+ 		if ($type == 0) {
+			if($to_year == 0)
+				$type = 3;
+			else
+				$type = 5;
 		}
 
 		$sql = "CALL `proc_get_sites_vl_outcomes`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
