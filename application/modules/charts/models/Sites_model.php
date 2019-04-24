@@ -392,6 +392,8 @@ class Sites_model extends MY_Model
 
 	function sites_vloutcomes($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
+		$type = 0;
+		$params;
 		if ($site==null || $site=='null') {
 			$site = $this->session->userdata('site_filter');
 		}
@@ -408,10 +410,25 @@ class Sites_model extends MY_Model
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
 				$month = 0;
+				$type = 1;
 			}else {
 				$month = $this->session->userdata('filter_month');
+				$type = 3;
 			}
 		}
+ 	
+ 		if ($type == 0) {
+			if($to_year == 0)
+				$type = 3;
+			else
+				$type = 5;
+		}
+		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
+		$facility = $query->facilitycode;
+		
+		$params = "patient/suppression/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+		// $params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+		// echo "<pre>";print_r($params);die();
 
 		$sql = "CALL `proc_get_sites_vl_outcomes`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		$sql2 = "CALL `proc_get_vl_current_suppression`('4','".$site."')";
@@ -419,27 +436,30 @@ class Sites_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 
 		$this->db->close();
+
+		$res = $this->req($params);
 		
-		// echo "<pre>";print_r($result);die();
+		// echo "<pre>";print_r($res);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
 
 		$data['vl_outcomes']['name'] = 'Tests';
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '&lt; 1000';
-		$data['vl_outcomes']['data'][1]['name'] = '&lt; LDL';
+		$data['vl_outcomes']['data'][0]['name'] = '&lt; 400';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 1000';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 
 		$count = 0;
 
 		$data['vl_outcomes']['data'][0]['y'] = $count;
 		$data['vl_outcomes']['data'][1]['y'] = $count;
+		$data['vl_outcomes']['data'][1]['y'] = $count;
 
 		foreach ($result as $key => $value) {
-			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
-			$less = (int) ($value['undetected']+$value['less1000']);
-			$greater = (int) ($value['less5000']+$value['above5000']);
+			$total = (int) ($res->rcategory1+$res->rcategory2+$res->rcategory3+$res->rcategory4);
+			$less = (int) ($res->rcategory1+$res->rcategory2);
+			$greater = (int) ($res->rcategory3+$res->rcategory4);
 			$non_suppressed = $greater + (int) $value['confirm2vl'];
 			$total_tests = (int) $value['confirmtx'] + $total + (int) $value['baseline'];
 			
@@ -468,17 +488,17 @@ class Sites_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
-	    		<td>'.number_format($value['less1000']).'</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt 400 copies/ml:</td>
+	    		<td>'.number_format($res->rcategory1).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
+	    		<td>'.round((@($res->rcategory1/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; LDL:</td>
-	    		<td>'.number_format($value['undetected']).'</td>
-	    		<td>Percentage Undetectable</td>
-	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 1000 copies/ml:</td>
+	    		<td>'.number_format($res->rcategory2).'</td>
+	    		<td>Percentage Suppression</td>
+	    		<td>'.round((@($res->rcategory2/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
@@ -502,9 +522,9 @@ class Sites_model extends MY_Model
 	    		<td>'. round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
-			$data['vl_outcomes']['data'][0]['y'] = (int) $value['less1000'];
-			$data['vl_outcomes']['data'][1]['y'] = (int) $value['undetected'];
-			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
+			$data['vl_outcomes']['data'][0]['y'] = (int) $res->rcategory1;
+			$data['vl_outcomes']['data'][1]['y'] = (int) $res->rcategory2;
+			$data['vl_outcomes']['data'][2]['y'] = (int) $res->rcategory3+(int) $res->rcategory4;
  
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
 			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';

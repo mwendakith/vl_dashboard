@@ -188,6 +188,8 @@ class Summaries_model extends MY_Model
  
 	function vl_outcomes($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
+		$type = 0;
+		$params;
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
@@ -206,33 +208,52 @@ class Summaries_model extends MY_Model
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+				$type = 1;
+			}else {
+				$month = $this->session->userdata('filter_month');
+				$type = 3;
 			}
 		}
- 
+ 	
+ 		if ($type == 0) {
+			if($to_year == 0)
+				$type = 3;
+			else
+				$type = 5;
+		}
+
 		if (!is_null($partner)) {
 			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql3 = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
+			$params = "patient/suppression/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		} else {
 			if ($county==null || $county=='null') {
 				$sql = "CALL `proc_get_national_vl_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_national_sitessending`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql3 = "CALL `proc_get_vl_current_suppression`('0','0')";
+				$params = "patient/suppression/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			} else {
 				$sql = "CALL `proc_get_regional_vl_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_regional_sitessending`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql3 = "CALL `proc_get_vl_current_suppression`('1','".$county."')";
+				$query = $this->db->get_where('countys', array('id' => $county), 1)->row();
+				$c = $query->CountyMFLCode;
+
+				$params = "patient/suppression/county/{$c}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			}
 		}
-		// echo "<pre>";print_r($sql);echo "</pre>";
+		// echo "<pre>";print_r($params);echo "</pre>";
 		// echo "<pre>";print_r($sql2);echo "</pre>";die();
 		$result = $this->db->query($sql)->result_array();
 		$this->db->close();
 		$sitessending = $this->db->query($sql2)->result_array();
 		$this->db->close();
+
+		// Getting the broken down r categories
+		$res = $this->req($params);
+		// echo "<pre>";print_r($res);echo "</pre>";
 		// echo "<pre>";print_r($result);echo "</pre>";
 		// echo "<pre>";print_r($sitessending);echo "</pre>";die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
@@ -241,19 +262,20 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
  
-		$data['vl_outcomes']['data'][0]['name'] = '&lt; 1000';
-		$data['vl_outcomes']['data'][1]['name'] = '&lt; LDL';
+		$data['vl_outcomes']['data'][0]['name'] = '&lt; 400';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 1000';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
  
 		$count = 0;
  
 		$data['vl_outcomes']['data'][0]['y'] = $count;
 		$data['vl_outcomes']['data'][1]['y'] = $count;
+		$data['vl_outcomes']['data'][2]['y'] = $count;
  
 		foreach ($result as $key => $value) {
-			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
-			$less = (int) ($value['undetected']+$value['less1000']);
-			$greater = (int) ($value['less5000']+$value['above5000']);
+			$total = (int) ($res->rcategory1+$res->rcategory2+$res->rcategory3+$res->rcategory4);
+			$less = (int) ($res->rcategory1+$res->rcategory2);
+			$greater = (int) ($res->rcategory3+$res->rcategory4);
 			$non_suppressed = $greater + (int) $value['confirm2vl'];
 			$total_tests = (int) $value['confirmtx'] + $total + (int) $value['baseline'];
 			
@@ -282,17 +304,17 @@ class Summaries_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
-	    		<td>'.number_format($value['less1000']).'</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt 400 copies/ml:</td>
+	    		<td>'.number_format($res->rcategory1).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
+	    		<td>'.round((@($res->rcategory1/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; LDL:</td>
-	    		<td>'.number_format($value['undetected']).'</td>
-	    		<td>Percentage Undetectable</td>
-	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 1000 copies/ml:</td>
+	    		<td>'.number_format($res->rcategory2).'</td>
+	    		<td>Percentage Suppression</td>
+	    		<td>'.round((@($res->rcategory2/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
@@ -314,10 +336,18 @@ class Summaries_model extends MY_Model
 	    		<td>Percentage Rejection Rate</td>
 	    		<td>'. round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
+	    	/*
+				<tr>
+		    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; LDL:</td>
+		    		<td>'.number_format($value['undetected']).'</td>
+		    		<td>Percentage Undetectable</td>
+		    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
+		    	</tr>
+	    	*/
 						
-			$data['vl_outcomes']['data'][0]['y'] = (int) $value['less1000'];
-			$data['vl_outcomes']['data'][1]['y'] = (int) $value['undetected'];
-			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
+			$data['vl_outcomes']['data'][0]['y'] = (int) $res->rcategory1;
+			$data['vl_outcomes']['data'][1]['y'] = (int) $res->rcategory2;
+			$data['vl_outcomes']['data'][2]['y'] = (int) $res->rcategory3+(int) $res->rcategory4;
  
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
 			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
