@@ -439,7 +439,7 @@ class Sites_model extends MY_Model
 
 		$res = $this->req($params);
 		
-		echo "<pre>";print_r($res);die();
+		// echo "<pre>";print_r($res);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
 
 		$data['vl_outcomes']['name'] = 'Tests';
