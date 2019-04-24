@@ -428,7 +428,7 @@ class Sites_model extends MY_Model
 		
 		$params = "patient/suppression/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		// $params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-		echo "<pre>";print_r($params);die();
+		// echo "<pre>";print_r($params);die();
 
 		$sql = "CALL `proc_get_sites_vl_outcomes`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		$sql2 = "CALL `proc_get_vl_current_suppression`('4','".$site."')";
