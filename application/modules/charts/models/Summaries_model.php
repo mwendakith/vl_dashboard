@@ -253,7 +253,7 @@ class Summaries_model extends MY_Model
 
 		// Getting the broken down r categories
 		$res = $this->req($params);
-		echo "<pre>";print_r($res);echo "</pre>";
+		// echo "<pre>";print_r($res);echo "</pre>";
 		// echo "<pre>";print_r($result);echo "</pre>";
 		// echo "<pre>";print_r($sitessending);echo "</pre>";die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
@@ -272,9 +272,9 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['y'] = $count;
  
 		foreach ($result as $key => $value) {
-			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
-			$less = (int) ($value['undetected']+$value['less1000']);
-			$greater = (int) ($value['less5000']+$value['above5000']);
+			$total = (int) ($res->rcategory1+$res->rcategory2+$res->rcategory3+$res->rcategory4);
+			$less = (int) ($res->rcategory1+$res->rcategory2);
+			$greater = (int) ($res->rcategory3+$res->rcategory4);
 			$non_suppressed = $greater + (int) $value['confirm2vl'];
 			$total_tests = (int) $value['confirmtx'] + $total + (int) $value['baseline'];
 			
@@ -303,10 +303,17 @@ class Summaries_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
-	    		<td>'.number_format($value['less1000']).'</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt 400 copies/ml:</td>
+	    		<td>'.number_format($res->rcategory1).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
+	    		<td>'.round((@($res->rcategory1/$total)*100),1).'%</td>
+	    	</tr>
+ 
+	    	<tr>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 1000 copies/ml:</td>
+	    		<td>'.number_format($res->rcategory2).'</td>
+	    		<td>Percentage Suppression</td>
+	    		<td>'.round((@($res->rcategory2/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
