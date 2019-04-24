@@ -317,13 +317,6 @@ class Summaries_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; LDL:</td>
-	    		<td>'.number_format($value['undetected']).'</td>
-	    		<td>Percentage Undetectable</td>
-	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
-	    	</tr>
- 
-	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
 	    		<td>'.number_format($value['baseline']).'</td>
 	    		<td>Non Suppression ( &gt; 1000cpml)</td>
@@ -342,6 +335,14 @@ class Summaries_model extends MY_Model
 	    		<td>Percentage Rejection Rate</td>
 	    		<td>'. round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
+	    	/*
+				<tr>
+		    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; LDL:</td>
+		    		<td>'.number_format($value['undetected']).'</td>
+		    		<td>Percentage Undetectable</td>
+		    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
+		    	</tr>
+	    	*/
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['less1000'];
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['undetected'];
