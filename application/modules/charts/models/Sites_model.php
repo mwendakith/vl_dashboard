@@ -432,23 +432,24 @@ class Sites_model extends MY_Model
 		$this->db->close();
 
 		$params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-
+		
 		$res = $this->req($params);
 		
-		// echo "<pre>";print_r($result);die();
+		echo "<pre>";print_r($res);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
 
 		$data['vl_outcomes']['name'] = 'Tests';
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '&lt; 1000';
-		$data['vl_outcomes']['data'][1]['name'] = '&lt; LDL';
+		$data['vl_outcomes']['data'][0]['name'] = '&lt; 400';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 1000';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 
 		$count = 0;
 
 		$data['vl_outcomes']['data'][0]['y'] = $count;
+		$data['vl_outcomes']['data'][1]['y'] = $count;
 		$data['vl_outcomes']['data'][1]['y'] = $count;
 
 		foreach ($result as $key => $value) {
@@ -517,9 +518,9 @@ class Sites_model extends MY_Model
 	    		<td>'. round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
-			$data['vl_outcomes']['data'][0]['y'] = (int) $value['less1000'];
-			$data['vl_outcomes']['data'][1]['y'] = (int) $value['undetected'];
-			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
+			$data['vl_outcomes']['data'][0]['y'] = (int) $res->rcategory1;
+			$data['vl_outcomes']['data'][1]['y'] = (int) $res->rcategory2;
+			$data['vl_outcomes']['data'][2]['y'] = (int) $res->rcategory3+(int) $res->rcategory4;
  
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
 			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
