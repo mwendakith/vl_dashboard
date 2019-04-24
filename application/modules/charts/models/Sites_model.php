@@ -431,6 +431,7 @@ class Sites_model extends MY_Model
 
 		$this->db->close();
 		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
+		echo "<pre>";print_r($query);die();
 		$facility = $query->facilitycode;
 		
 		$params = "patient/suppression/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
