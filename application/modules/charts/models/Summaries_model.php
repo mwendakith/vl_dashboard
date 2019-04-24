@@ -252,9 +252,8 @@ class Summaries_model extends MY_Model
 		$this->db->close();
 
 		// Getting the broken down r categories
-		echo "<pre>";print_r($params);echo "</pre>";
 		$res = $this->req($params);
-		// dd($res);
+		echo "<pre>";print_r($params);echo "</pre>";
 		// echo "<pre>";print_r($result);echo "</pre>";
 		// echo "<pre>";print_r($sitessending);echo "</pre>";die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
