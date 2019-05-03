@@ -417,24 +417,20 @@ class Regimen_model extends MY_Model
 	{
 		$result = $this->get_sampletypesData($year,$regimen,$partner);
 
-		$data['sample_types'][0]['name'] = 'EDTA';
+		$data['sample_types'][0]['name'] = 'Plasma';
 		$data['sample_types'][1]['name'] = 'DBS';
-		$data['sample_types'][2]['name'] = 'Plasma';
-		$data['sample_types'][3]['name'] = 'Suppression';
+		$data['sample_types'][2]['name'] = 'Suppression';
 
 		$data['sample_types'][0]['type'] = "column";
 		$data['sample_types'][1]['type'] = "column";
-		$data['sample_types'][2]['type'] = "column";
-		$data['sample_types'][3]['type'] = "spline";
+		$data['sample_types'][2]['type'] = "spline";
 
 		$data['sample_types'][0]['yAxis'] = 1;
 		$data['sample_types'][1]['yAxis'] = 1;
-		$data['sample_types'][2]['yAxis'] = 1;
 
 		$data['sample_types'][0]['tooltip'] = array("valueSuffix" => ' ');
 		$data['sample_types'][1]['tooltip'] = array("valueSuffix" => ' ');
-		$data['sample_types'][2]['tooltip'] = array("valueSuffix" => ' ');
-		$data['sample_types'][3]['tooltip'] = array("valueSuffix" => ' %');
+		$data['sample_types'][2]['tooltip'] = array("valueSuffix" => ' %');
  
 		$count = 0;
 		
@@ -442,16 +438,14 @@ class Regimen_model extends MY_Model
 		$data["sample_types"][0]["data"][0]	= $count;
 		$data["sample_types"][1]["data"][0]	= $count;
 		$data["sample_types"][2]["data"][0]	= $count;
-		$data["sample_types"][3]["data"][0]	= $count;
  
 		foreach ($result as $key => $value) {
 			
 				$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
  
-				$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
+				$data["sample_types"][0]["data"][$key]	= (int) ($value['edta'] + $value['plasma']);
 				$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
-				$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
-				$data["sample_types"][3]["data"][$key]	= round($value['suppression'],1);
+				$data["sample_types"][2]["data"][$key]	= round($value['suppression'],1);
 			
 		}
 		
