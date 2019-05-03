@@ -107,7 +107,7 @@ class Regimen_model extends MY_Model
 		}
 				
 		$result = $this->db->query($sql)->result_array();
-		echo "<pre>";print_r($result);die();
+		// echo "<pre>";print_r($result);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
 
 		$data['vl_outcomes']['name'] = 'Tests';
