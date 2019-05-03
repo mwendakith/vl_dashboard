@@ -346,7 +346,7 @@ class Summaries_model extends MY_Model
 	    	*/
 						
 			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected'];
-			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less1000']
+			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less1000'];
 			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
  
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
