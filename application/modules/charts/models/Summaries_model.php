@@ -227,21 +227,21 @@ class Summaries_model extends MY_Model
 			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql3 = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
-			$params = "patient/suppression/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+			// $params = "patient/suppression/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		} else {
 			if ($county==null || $county=='null') {
 				$sql = "CALL `proc_get_national_vl_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_national_sitessending`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql3 = "CALL `proc_get_vl_current_suppression`('0','0')";
-				$params = "patient/suppression/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+				// $params = "patient/suppression/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			} else {
 				$sql = "CALL `proc_get_regional_vl_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_regional_sitessending`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql3 = "CALL `proc_get_vl_current_suppression`('1','".$county."')";
-				$query = $this->db->get_where('countys', array('id' => $county), 1)->row();
-				$c = $query->CountyMFLCode;
+				// $query = $this->db->get_where('countys', array('id' => $county), 1)->row();
+				// $c = $query->CountyMFLCode;
 
-				$params = "patient/suppression/county/{$c}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+				// $params = "patient/suppression/county/{$c}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			}
 		}
 		// echo "<pre>";print_r($params);echo "</pre>";
@@ -252,7 +252,7 @@ class Summaries_model extends MY_Model
 		$this->db->close();
 
 		// Getting the broken down r categories
-		$res = $this->req($params);
+		// $res = $this->req($params);
 		// echo "<pre>";print_r($res);echo "</pre>";
 		// echo "<pre>";print_r($result);echo "</pre>";
 		// echo "<pre>";print_r($sitessending);echo "</pre>";die();
@@ -273,9 +273,9 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['data'][2]['y'] = $count;
  
 		foreach ($result as $key => $value) {
-			$total = (int) ($res->rcategory1+$res->rcategory2+$res->rcategory3+$res->rcategory4);
-			$less = (int) ($res->rcategory1+$res->rcategory2);
-			$greater = (int) ($res->rcategory3+$res->rcategory4);
+			$total = (int) ($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000']);
+			$less = (int) ($value['undetected'] + $value['less1000']);
+			$greater = (int) ($value['less5000'] + $value['above5000']);
 			$non_suppressed = $greater + (int) $value['confirm2vl'];
 			$total_tests = (int) $value['confirmtx'] + $total + (int) $value['baseline'];
 			
@@ -305,16 +305,16 @@ class Summaries_model extends MY_Model
  
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt 400 copies/ml:</td>
-	    		<td>'.number_format($res->rcategory1).'</td>
+	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((@($res->rcategory1/$total)*100),1).'%</td>
+	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 1000 copies/ml:</td>
-	    		<td>'.number_format($res->rcategory2).'</td>
+	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((@($res->rcategory2/$total)*100),1).'%</td>
+	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
@@ -345,9 +345,9 @@ class Summaries_model extends MY_Model
 		    	</tr>
 	    	*/
 						
-			$data['vl_outcomes']['data'][0]['y'] = (int) $res->rcategory1;
-			$data['vl_outcomes']['data'][1]['y'] = (int) $res->rcategory2;
-			$data['vl_outcomes']['data'][2]['y'] = (int) $res->rcategory3+(int) $res->rcategory4;
+			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected'];
+			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less1000'];
+			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
  
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
 			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';

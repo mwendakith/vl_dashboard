@@ -189,20 +189,22 @@ class Ages_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = 'Suppressed';
-		$data['vl_outcomes']['data'][1]['name'] = 'Not Suppressed';
+		$data['vl_outcomes']['data'][0]['name'] = '&lt; 400';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 1000';
+		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 
 		$count = 0;
 
 		$data['vl_outcomes']['data'][0]['y'] = $count;
 		$data['vl_outcomes']['data'][1]['y'] = $count;
+		$data['vl_outcomes']['data'][2]['y'] = $count;
 
 		foreach ($result as $key => $value) {
-			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
-			$less = (int) ($value['undetected']+$value['less1000']);
-			$greater = (int) ($value['less5000']+$value['above5000']);
+			$total = (int) ($value['undetected'] + $value['less1000'] + $value['less5000'] + $value['above5000']);
+			$less = (int) ($value['undetected'] + $value['less1000']);
+			$greater = (int) ($value['less5000'] + $value['above5000']);
 			$non_suppressed = $greater + (int) $value['confirm2vl'];
-			$total_tests = (int) $value['confirmtx'] + $total;
+			$total_tests = (int) $value['confirmtx'] + $total + (int) $value['baseline'];
 			
 			// 	<td colspan="2">Cumulative Tests (All Samples Run):</td>
 	    	// 	<td colspan="2">'.number_format($value['alltests']).'</td>
@@ -213,7 +215,7 @@ class Ages_model extends MY_Model
 	    		<td>Total VL tests done:</td>
 	    		<td>'.number_format($total_tests ).'</td>
 	    		<td>Non Suppression</td>
-	    		<td>'. number_format($non_suppressed) . ' (' . round((($non_suppressed / $total_tests  )*100),1).'%)</td>
+	    		<td>'. number_format($non_suppressed) . ' (' . round((@($non_suppressed / $total_tests  )*100),1).'%)</td>
 	    	</tr>
  
 			<tr>
@@ -225,41 +227,50 @@ class Ages_model extends MY_Model
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
-	    		<td>'.round((($greater/$total)*100),1).'%</td>
+	    		<td>'.round((@($greater/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
-	    		<td>'.number_format($less).'</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt 400 copies/ml:</td>
+	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((($less/$total)*100),1).'%</td>
+	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
+	    	</tr>
+ 
+	    	<tr>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 1000 copies/ml:</td>
+	    		<td>'.number_format($value['less1000']).'</td>
+	    		<td>Percentage Suppression</td>
+	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
 	    		<td>'.number_format($value['baseline']).'</td>
 	    		<td>Non Suppression ( &gt; 1000cpml)</td>
-	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
+	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(@($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
 	    		<td>'.number_format($value['confirmtx']).'</td>
 	    		<td>Non Suppression ( &gt; 1000cpml)</td>
-	    		<td>'.number_format($value['confirm2vl']). ' (' .round(($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
+	    		<td>'.number_format($value['confirm2vl']). ' (' .round(@($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
 	    	</tr>
  
 	    	<tr>
 	    		<td>Rejected Samples:</td>
 	    		<td>'.number_format($value['rejected']).'</td>
 	    		<td>Percentage Rejection Rate</td>
-	    		<td>'. round((($value['rejected']*100)/$value['alltests']), 1, PHP_ROUND_HALF_UP).'%</td>
+	    		<td>'. round(@(($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
-			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected']+(int) $value['less1000'];
-			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less5000']+(int) $value['above5000'];
-
+			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected'];
+			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less1000'];
+			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
+ 
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
-			$data['vl_outcomes']['data'][1]['color'] = '#F2784B';
+			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+			$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 		}
 		$data['vl_outcomes']['data'][0]['sliced'] = true;
 		$data['vl_outcomes']['data'][0]['selected'] = true;
@@ -408,24 +419,20 @@ class Ages_model extends MY_Model
 	{
 		$result = $this->get_sampletypesData($year,$age_cat,$partner);
 		
-		$data['sample_types'][0]['name'] = 'EDTA';
+		$data['sample_types'][0]['name'] = 'Plasma';
 		$data['sample_types'][1]['name'] = 'DBS';
-		$data['sample_types'][2]['name'] = 'Plasma';
-		$data['sample_types'][3]['name'] = 'Suppression';
+		$data['sample_types'][2]['name'] = 'Suppression';
 
 		$data['sample_types'][0]['type'] = "column";
 		$data['sample_types'][1]['type'] = "column";
-		$data['sample_types'][2]['type'] = "column";
-		$data['sample_types'][3]['type'] = "spline";
+		$data['sample_types'][2]['type'] = "spline";
 
 		$data['sample_types'][0]['yAxis'] = 1;
 		$data['sample_types'][1]['yAxis'] = 1;
-		$data['sample_types'][2]['yAxis'] = 1;
 
 		$data['sample_types'][0]['tooltip'] = array("valueSuffix" => ' ');
 		$data['sample_types'][1]['tooltip'] = array("valueSuffix" => ' ');
-		$data['sample_types'][2]['tooltip'] = array("valueSuffix" => ' ');
-		$data['sample_types'][3]['tooltip'] = array("valueSuffix" => ' %');
+		$data['sample_types'][2]['tooltip'] = array("valueSuffix" => ' %');
  
 		$count = 0;
 		
@@ -433,16 +440,12 @@ class Ages_model extends MY_Model
 		$data["sample_types"][0]["data"][0]	= $count;
 		$data["sample_types"][1]["data"][0]	= $count;
 		$data["sample_types"][2]["data"][0]	= $count;
-		$data["sample_types"][3]["data"][0]	= $count;
  
 		foreach ($result as $key => $value) {
-			
-				$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
- 
-				$data["sample_types"][0]["data"][$key]	= (int) $value['edta'];
-				$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
-				$data["sample_types"][2]["data"][$key]	= (int) $value['plasma'];
-				$data["sample_types"][3]["data"][$key]	= round(@($value['suppressed']/$value['tests'])*100,1);
+			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
+			$data["sample_types"][0]["data"][$key]	= (int) ($value['edta'] + $value['plasma']);
+			$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
+			$data["sample_types"][2]["data"][$key]	= round(@($value['suppressed']/$value['tests'])*100,1);
 			
 		}
 		
