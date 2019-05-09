@@ -426,7 +426,7 @@ class Sites_model extends MY_Model
 		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
 		$facility = $query->facilitycode;
 		
-		$params = "patient/suppression/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+		// $params = "patient/suppression/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		// $params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		// echo "<pre>";print_r($params);die();
 
@@ -437,7 +437,7 @@ class Sites_model extends MY_Model
 
 		$this->db->close();
 
-		$res = $this->req($params);
+		// $res = $this->req($params);
 		
 		// echo "<pre>";print_r($res);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
@@ -457,9 +457,9 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['y'] = $count;
 
 		foreach ($result as $key => $value) {
-			$total = (int) ($res->rcategory1+$res->rcategory2+$res->rcategory3+$res->rcategory4);
-			$less = (int) ($res->rcategory1+$res->rcategory2);
-			$greater = (int) ($res->rcategory3+$res->rcategory4);
+			$total = (int) ($value['undetected']+$value['less1000']+$value['less5000']+$value['above5000']);
+			$less = (int) ($value['undetected']+$value['less1000']);
+			$greater = (int) ($value['less5000']+$value['above5000']);
 			$non_suppressed = $greater + (int) $value['confirm2vl'];
 			$total_tests = (int) $value['confirmtx'] + $total + (int) $value['baseline'];
 			
@@ -489,16 +489,16 @@ class Sites_model extends MY_Model
  
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt 400 copies/ml:</td>
-	    		<td>'.number_format($res->rcategory1).'</td>
+	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((@($res->rcategory1/$total)*100),1).'%</td>
+	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 1000 copies/ml:</td>
-	    		<td>'.number_format($res->rcategory2).'</td>
+	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((@($res->rcategory2/$total)*100),1).'%</td>
+	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
@@ -522,9 +522,9 @@ class Sites_model extends MY_Model
 	    		<td>'. round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP).'%</td>
 	    	</tr>';
 						
-			$data['vl_outcomes']['data'][0]['y'] = (int) $res->rcategory1;
-			$data['vl_outcomes']['data'][1]['y'] = (int) $res->rcategory2;
-			$data['vl_outcomes']['data'][2]['y'] = (int) $res->rcategory3+(int) $res->rcategory4;
+			$data['vl_outcomes']['data'][0]['y'] = (int) $value['undetected'];
+			$data['vl_outcomes']['data'][1]['y'] = (int) $value['less1000'];
+			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
  
 			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
 			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
