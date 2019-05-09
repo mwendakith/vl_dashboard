@@ -205,12 +205,19 @@ class Agencies_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
-	    		<td>'.number_format($less).'</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt 400 copies/ml:</td>
+	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Suppression</td>
-	    		<td>'.round((@($less/$total)*100),1).'%</td>
+	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
+	    	<tr>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 1000 copies/ml:</td>
+	    		<td>'.number_format($value['less1000']).'</td>
+	    		<td>Percentage Suppression</td>
+	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
+	    	</tr>
+  
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
 	    		<td>'.number_format($value['baseline']).'</td>
