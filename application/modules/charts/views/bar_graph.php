@@ -3,7 +3,7 @@
 <script type="text/javascript">
 	
     $(function () {
-        $('#{{$div}}').highcharts({
+        $('#<?php echo $div_name; ?>').highcharts({
             plotOptions: {
                 column: {
                     stacking: 'normal'
