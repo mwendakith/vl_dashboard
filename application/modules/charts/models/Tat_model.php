@@ -32,6 +32,11 @@ class Tat_model extends MY_Model
 		$data['outcomes'][2]['type'] = "column";
 		$data['outcomes'][3]['type'] = "spline";
 
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+		$data['outcomes'][2]['yAxis'] = 1;
+		$data['outcomes'][2]['yAxis'] = 1;
+
 		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' ');
