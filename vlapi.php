@@ -11,10 +11,11 @@ if(mysqli_connect_errno())
 {
 	echo "Could not establish a connection to the Database";
 }
-  if ($mflcode !='')
- {
+if ($mflcode !='')
+{
 $sql2=mysqli_query($con, "select ID from facilitys where facilitycode='$mflcode'");
 $ss2=mysqli_fetch_array($sql2, MYSQLI_ASSOC);
+print_r($ss2);die();
 $facilityid=$ss2['ID'];
 }
 //echo 'uu'.$mflcode. '- : '. $facilityid;
