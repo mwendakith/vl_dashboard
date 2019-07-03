@@ -98,6 +98,7 @@
             <center><div id="errorAlertDateRange"><div id="errorAlert" class="alert alert-danger" role="alert">...</div></div></center>
     </div>
 </div>
+
 <script type="text/javascript">
   $(function() {
     $('.date-picker').datepicker( {

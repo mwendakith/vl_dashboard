@@ -23,6 +23,9 @@
     background-color: #E08283;
     color: #96281B;
 }
+#detail {
+    background-color: white;
+}
 </style>
 <div class="row" id="filter">
   <div class="col-md-2">
@@ -89,6 +92,20 @@
             <center><div id="errorAlertDateRange"><div id="errorAlert" class="alert alert-danger" role="alert">...</div></div></center>
     </div>
 </div>
+<div class="row" id="detail">
+  <div class="col-md-4">
+      <p><strong>Facility:<label id="facility"></label></strong></p>
+      <p><strong>MFL Code:<label id="mflcode"></label></strong></p>
+  </div>
+  <div class="col-md-4">
+      <p><strong>County:<label id="county"></label></strong></p>
+      <p><strong>Sub county:<label id="sub_county"></label></strong></p>
+  </div>
+  <div class="col-md-4">
+      <p><strong>Partner:<label id="partner"></label></strong></p>
+  </div>
+  
+</div>
 <script type="text/javascript">
   $(function() {
     $('.date-picker').datepicker( {
@@ -119,5 +136,27 @@
     $('#errorAlertDateRange').hide();
     $(".js-example-basic-single").select2();
     $("#breadcrum").html("<a href='javascript:void(0)' class='alert-link'><strong>All Sites</strong></a>");
+    $('#detail').hide();
+    $("select").change(function() {
+      em = $(this).val();
+      if (em=='NA') {
+        $('#detail').hide();
+      } else {
+        $('#detail').fadeIn();
+        $.get("<?php echo base_url('template/get_site_details');?>/"+em, function(data) {
+        obj = $.parseJSON(data);
+        console.log(obj);
+        $("#facility").html(obj[0].name);
+        $("#mflcode").html(obj[0].facilitycode);
+        $("#county").html(obj[0].countyname);
+        $("#sub_county").html(obj[0].subcounty);
+        $("#partner").html(obj[0].partnername);
+      });
+      }
+      // console.log(em);
+      
+    });
+
   });
+  
 </script>
