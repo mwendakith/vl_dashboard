@@ -19,7 +19,7 @@ class Tat extends MY_Controller
 		$data['div_name'] = "summary_tat_summary";
 		$data['tat'] = true;
 		// echo "<pre>";print_r($data);die();
-		$this->load->view('trends_outcomes_view', $data);
+		$this->load->view('bar_graph', $data);
 	}
 
 	public function details($year=null, $month=null, $to_year=null, $to_month=null, $type=null, $id=null)

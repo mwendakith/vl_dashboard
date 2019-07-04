@@ -302,7 +302,7 @@ class Subcounty_model extends MY_Model
 	    	</tr>
 
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
 	    		<td>'.round((($greater/$total)*100),1).'%</td>
@@ -325,7 +325,7 @@ class Subcounty_model extends MY_Model
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
 	    		<td>'.number_format($value['baseline']).'</td>
-	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>Non Suppression ( &gt;= 1000cpml)</td>
 	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
 

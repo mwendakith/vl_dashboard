@@ -14,7 +14,7 @@
                 zoomType: 'xy'
             },
             title: {
-                text: '<?php echo $trends['title'];?>'
+                text: "<?php echo $trends['title'];?>"
             },
             xAxis: [{
                 categories: <?php echo json_encode($trends['categories']);?>

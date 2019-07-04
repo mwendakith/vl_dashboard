@@ -205,14 +205,14 @@ class Agencies_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt 400 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt;= 400 copies/ml:</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml:</td>
 	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
@@ -221,13 +221,13 @@ class Agencies_model extends MY_Model
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
 	    		<td>'.number_format($value['baseline']).'</td>
-	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>Non Suppression ( &gt;= 1000cpml)</td>
 	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(@($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
 	    		<td>'.number_format($value['confirmtx']).'</td>
-	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>Non Suppression ( &gt;= 1000cpml)</td>
 	    		<td>'.number_format($value['confirm2vl']). ' (' .round(@($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
 	    	</tr>
  
