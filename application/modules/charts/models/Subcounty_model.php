@@ -272,8 +272,8 @@ class Subcounty_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '&lt; 1000';
-		$data['vl_outcomes']['data'][1]['name'] = '&lt; LDL';
+		$data['vl_outcomes']['data'][0]['name'] = '&lt;= 1000';
+		$data['vl_outcomes']['data'][1]['name'] = 'LDL';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 
 		$count = 0;
@@ -316,7 +316,7 @@ class Subcounty_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; LDL:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests LDL:</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Undetectable</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>

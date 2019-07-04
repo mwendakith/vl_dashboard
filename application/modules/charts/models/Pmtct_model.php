@@ -242,7 +242,7 @@ class Pmtct_model extends MY_Model
 		$data['ul'] = '';
  
 		$data['vl_outcomes']['data'][0]['name'] = '&lt; 1000';
-		$data['vl_outcomes']['data'][1]['name'] = '&lt; LDL';
+		$data['vl_outcomes']['data'][1]['name'] = 'LDL';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 		
 		$data['vl_outcomes']['data'][2]['sliced'] = true;
@@ -275,21 +275,21 @@ class Pmtct_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
 	    		<td>'.round((($greater/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt;= 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
 	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; LDL:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests LDL:</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Undetectable</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
@@ -298,13 +298,13 @@ class Pmtct_model extends MY_Model
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
 	    		<td>'.number_format($value['baseline']).'</td>
-	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>Non Suppression ( &gt;= 1000cpml)</td>
 	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(@($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
 	    		<td>'.number_format($value['confirmtx']).'</td>
-	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>Non Suppression ( &gt;= 1000cpml)</td>
 	    		<td>'.number_format($value['confirm2vl']). ' (' .round(@($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
 	    	</tr>
  
