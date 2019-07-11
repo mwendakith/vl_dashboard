@@ -85,10 +85,17 @@ class Template_model extends MY_Model
 		$site_data = $this->db->query('SELECT DISTINCT `view_facilitys`.`ID`, `view_facilitys`.`name` FROM `vl_site_summary` JOIN `view_facilitys` ON `vl_site_summary`.`facility` = `view_facilitys`.`ID`')->result_array();
 
 		foreach ($site_data as $key => $value) {
-			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
+			$dropdown .= '<option  value="'.$value['ID'].'">'.$value['name'].'</option>';
 		}
 
 		return $dropdown;
+	}
+
+	function get_site_details($id)
+	{
+		
+		$site_data = $this->db->query("SELECT * FROM `view_facilitys` WHERE `ID` = $id")->result();
+		return $site_data;
 	}
 
 	function get_regimen_dropdown()
