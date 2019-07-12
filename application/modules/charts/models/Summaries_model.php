@@ -698,52 +698,16 @@ class Summaries_model extends MY_Model
 
 	function get_patients($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
-		$type = 0;
-		$params;
-
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-				$type = 1;
-			}else {
-				$month = $this->session->userdata('filter_month');
-				$type = 3;
-			}
-		}
-		
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($type == 0) {
-			if($to_year == 0){
-				$type = 3;
-			}
-			else{
-				$type = 5;
-			}
-		}	
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner], true);
+		extract($d);
 
 		$sql;
 
-		if (!is_null($partner)) {
+		if (isset($partner)) {
 			$params = "patient/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			$sql = "Select sum(totalartmar) as totalartmar from view_facilitys where partner='{$partner}'";
 		} else {
-			if ($county==null || $county=='null') {
+			if (!isset($county)) {
 				$params = "patient/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 				$sql = "Select sum(totalartmar) as totalartmar from view_facilitys";
 			} else {
@@ -797,39 +761,13 @@ class Summaries_model extends MY_Model
 
 	function get_current_suppresion($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
-		$type = 0;
-		$params;
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner], true);
+		extract($d);
 
-		if ($county==null || $county=='null') $county = $this->session->userdata('county_filter');
-		if ($partner==null || $partner=='null') $partner = $this->session->userdata('partner_filter');
-
-		if ($year==null || $year=='null') $year = $this->session->userdata('filter_year');
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-				$type = 1;
-			}else {
-				$month = $this->session->userdata('filter_month');
-				$type = 3;
-			}
-		}
-		
-		if ($to_year==null || $to_year=='null') $to_year = 0;
-		if ($to_month==null || $to_month=='null') $to_month = 0;
-
-		if ($type == 0) {
-			if($to_year == 0){
-				$type = 3;
-			}
-			else{
-				$type = 5;
-			}
-		}	
-
-		if (!is_null($partner)) {
+		if (isset($partner)) {
 			$params = "patient/suppression/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		} else {
-			if ($county==null || $county=='null') {
+			if (!isset($county)) {
 				$params = "patient/suppression/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			} else {
 				$query = $this->db->get_where('countys', array('id' => $county), 1)->row();

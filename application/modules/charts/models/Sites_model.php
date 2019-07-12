@@ -15,28 +15,10 @@ class Sites_model extends MY_Model
 
 	function sites_outcomes($year=null,$month=null,$partner=null,$to_year=null,$to_month=null)
 	{
-		
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_year');
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
+		extract($d);
 
-		if ($partner) {
+		if (isset($partner)) {
 			$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		}  else {
 			$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -174,25 +156,8 @@ class Sites_model extends MY_Model
 		$table = '';
 		$count = 1;
 
-		if ($partner==null || $partner=='null')
-			$partner = $this->session->userdata('partner_filter');
-
-		if ($to_month==null || $to_month=='null')
-			$to_month = 0;
-		
-		if ($to_year==null || $to_year=='null')
-			$to_year = 0;
-		
-		if ($year==null || $year=='null')
-			$year = $this->session->userdata('filter_year');
-
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
+		extract($d);
 
 		$type = 2;
 
@@ -282,18 +247,8 @@ class Sites_model extends MY_Model
 
 	function sites_trends($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site]);
+		extract($d);
 		$data['year'] = $year;
 
 		$sql = "CALL `proc_get_sites_trends`('".$site."','".$year."')";
@@ -336,25 +291,8 @@ class Sites_model extends MY_Model
 
 	function site_outcomes_chart($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site]);
+		extract($d);
 		
 		$sql = "CALL `proc_get_sites_sample_types`('".$site."','".$year."')";
 		
@@ -392,43 +330,8 @@ class Sites_model extends MY_Model
 
 	function sites_vloutcomes($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
-		$type = 0;
-		$params;
-		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-				$type = 1;
-			}else {
-				$month = $this->session->userdata('filter_month');
-				$type = 3;
-			}
-		}
- 	
- 		if ($type == 0) {
-			if($to_year == 0)
-				$type = 3;
-			else
-				$type = 5;
-		}
-		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
-		$facility = $query->facilitycode;
-		
-		// $params = "patient/suppression/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-		// $params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-		// echo "<pre>";print_r($params);die();
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site]);
+		extract($d);
 
 		$sql = "CALL `proc_get_sites_vl_outcomes`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		$sql2 = "CALL `proc_get_vl_current_suppression`('4','".$site."')";
@@ -437,9 +340,6 @@ class Sites_model extends MY_Model
 
 		$this->db->close();
 
-		// $res = $this->req($params);
-		
-		// echo "<pre>";print_r($res);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
 
 		$data['vl_outcomes']['name'] = 'Tests';
@@ -539,25 +439,8 @@ class Sites_model extends MY_Model
 
 	function sites_age($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site]);
+		extract($d);
 
 		$sql = "CALL `proc_get_sites_age`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -635,25 +518,8 @@ class Sites_model extends MY_Model
 
 	function sites_gender($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site]);
+		extract($d);
 
 		$sql = "CALL `proc_get_sites_gender`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -682,23 +548,8 @@ class Sites_model extends MY_Model
 
 	function partner_sites_outcomes_download($year=NULL,$month=NULL,$partner=NULL,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
+		extract($d);
 
 		$sql = "CALL `proc_get_partner_sites_details`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -774,27 +625,8 @@ class Sites_model extends MY_Model
 
 	function justification($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
-		
-		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
- 
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site]);
+		extract($d);
  
 		$sql = "CALL `proc_get_vl_site_justification`('".$site."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -825,29 +657,11 @@ class Sites_model extends MY_Model
  
 	function justification_breakdown($year=null,$month=null,$site=null,$to_year=null,$to_month=null)
 	{
-		
-		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
-		}
-
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
- 
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			$month = $this->session->userdata('filter_month');
-		}
- 
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site]);
+		extract($d); 
 
 		$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','','','','','".$site."')";
 		$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','','','','".$site."')";
-
 		
 		
 		$preg_mo = $this->db->query($sql)->result_array();
@@ -886,40 +700,8 @@ class Sites_model extends MY_Model
 
 	function get_patients($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
 	{
-		$type = 0;
-
-		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-				$type = 1;
-			}else {
-				$month = $this->session->userdata('filter_month');
-				$type = 3;
-			}
-		}
-		
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($type == 0) {
-			if($to_year == 0){
-				$type = 3;
-			}
-			else{
-				$type = 5;
-			}
-		}	
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site], true);
+		extract($d);
 
 		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
 
@@ -983,33 +765,8 @@ class Sites_model extends MY_Model
 
 	function get_current_suppresion($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
 	{
-		$type = 0;
-		$params;
-
-		if ($site==null || $site=='null') $site = $this->session->userdata('site_filter');
-
-		if ($year==null || $year=='null') $year = $this->session->userdata('filter_year');
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-				$type = 1;
-			}else {
-				$month = $this->session->userdata('filter_month');
-				$type = 3;
-			}
-		}
-		
-		if ($to_year==null || $to_year=='null') $to_year = 0;
-		if ($to_month==null || $to_month=='null') $to_month = 0;
-
-		if ($type == 0) {
-			if($to_year == 0){
-				$type = 3;
-			}
-			else{
-				$type = 5;
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site], true);
+		extract($d);
 
 		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
 
@@ -1106,40 +863,8 @@ class Sites_model extends MY_Model
 
 	function get_patients_outcomes($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
 	{
-		$type = 0;
-
-		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-				$type = 1;
-			}else {
-				$month = $this->session->userdata('filter_month');
-				$type = 3;
-			}
-		}
-		
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($type == 0) {
-			if($to_year == 0){
-				$type = 3;
-			}
-			else{
-				$type = 5;
-			}
-		}		
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site], true);
+		extract($d);	
 
 		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
 
@@ -1160,40 +885,8 @@ class Sites_model extends MY_Model
 
 	function get_patients_graph($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
 	{
-		$type = 0;
-
-		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-				$type = 1;
-			}else {
-				$month = $this->session->userdata('filter_month');
-				$type = 3;
-			}
-		}
-		
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($type == 0) {
-			if($to_year == 0){
-				$type = 3;
-			}
-			else{
-				$type = 5;
-			}
-		}		
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site], true);
+		extract($d);	
 
 		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
 
@@ -1289,40 +982,8 @@ class Sites_model extends MY_Model
 
 	function site_patients($site=null,$year=null,$month=null,$to_year=NULL,$to_month=NULL)
 	{
-		$type = 0;
-
-		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-				$type = 1;
-			}else {
-				$month = $this->session->userdata('filter_month');
-				$type = 3;
-			}
-		}
-		
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($type == 0) {
-			if($to_year == 0){
-				$type = 3;
-			}
-			else{
-				$type = 5;
-			}
-		}		
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['site' => $site], true);
+		extract($d);
 
 		$query = $this->db->get_where('facilitys', array('id' => $site), 1)->row();
 

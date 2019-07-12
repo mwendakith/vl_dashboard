@@ -109,6 +109,8 @@ class MY_Model extends CI_Model
 
 		if($to_api) $data['type'] = $type;
 
+		if(!is_array($others)) return $data;
+
 		if(isset($others['partner'])){
 			$partner = $others['partner'];
 			if ($partner==null || $partner=='null') {
