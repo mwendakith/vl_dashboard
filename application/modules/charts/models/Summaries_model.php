@@ -10,22 +10,25 @@ class Summaries_model extends MY_Model
  
 	function turnaroundtime($year=null,$month=null,$county=null,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		// if ($year==null || $year=='null') {
+		// 	$year = $this->session->userdata('filter_year');
+		// }
+		// if ($to_month==null || $to_month=='null') {
+		// 	$to_month = 0;
+		// }
+		// if ($to_year==null || $to_year=='null') {
+		// 	$to_year = 0;
+		// }
+		// if ($month==null || $month=='null') {
+		// 	if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+		// 		$month = 0;
+		// 	}else {
+		// 		$month = $this->session->userdata('filter_month');
+		// 	}
+		// }
+
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county]);
+		extract($d);
  
 		$sql = "CALL `proc_get_national_tat`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();

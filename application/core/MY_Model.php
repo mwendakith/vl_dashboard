@@ -70,5 +70,88 @@ class MY_Model extends CI_Model
 		// return json_decode(json_encode(json_decode($request->body)), true);
 		return json_decode($request->body);
 	}
+
+
+	public function extract_variables($year=null,$month=null,$to_year=null,$to_month=null,$others=null)
+	{
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}
+ 
+		if ($year==null || $year=='null') {
+			$year = $this->session->userdata('filter_year');
+		}
+		if ($month==null || $month=='null') {
+			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
+				$month = $this->session->userdata('filter_month');
+			}else {
+				$month = 0;
+			}
+		}
+
+		$data = ['year' => $year, 'month' => $month, 'to_year' => $to_year, 'to_month' => $to_month];
+
+		if(isset($others['partner'])){
+			$partner = $others['partner'];
+			if ($partner==null || $partner=='null') {
+				$partner = $this->session->userdata('partner_filter');
+			}
+			if($partner) $data['partner'] = $partner;
+		}
+
+		if(isset($others['county'])){
+			$county = $others['county'];
+			if ($county==null || $county=='null') {
+				$county = $this->session->userdata('county_filter');
+			}
+			if($county) $data['county'] = $county;
+		}
+
+		if(isset($others['subcounty'])){
+			$subcounty = $others['subcounty'];
+			if ($subcounty==null || $subcounty=='null') {
+				$subcounty = $this->session->userdata('sub_county_filter');
+			}
+			if($subcounty) $data['subcounty'] = $subcounty;
+		}
+
+		if(isset($others['site'])){
+			$site = $others['site'];
+			if ($site==null || $site=='null') {
+				$site = $this->session->userdata('site_filter');
+			}
+			if($site) $data['site'] = $site;
+		}
+
+		if(isset($others['agency_id'])){
+			$agency_id = $others['agency_id'];
+			if ($agency_id==null || $agency_id=='null') {
+				$agency_id = $this->session->userdata('funding_agency_filter');
+			}
+			if($agency_id) $data['agency_id'] = $agency_id;
+		}
+
+		if(isset($others['age_cat'])){
+			$age_cat = $others['age_cat'];
+			if ($age_cat==null || $age_cat=='null') {
+				$age_cat = $this->session->userdata('age_category_filter');
+			}
+			if($age_cat) $data['age_cat'] = $age_cat;
+		}
+
+		if(isset($others['regimen'])){
+			$regimen = $others['regimen'];
+			if ($regimen==null || $regimen=='null') {
+				$regimen = $this->session->userdata('regimen_filter');
+			}
+			if($regimen) $data['regimen'] = $regimen;
+		}
+
+		return $data;
+		// call extract() to the data that returns
+	}
 }
 ?>
