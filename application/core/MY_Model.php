@@ -167,6 +167,14 @@ class MY_Model extends CI_Model
 			if($regimen) $data['regimen'] = $regimen;
 		}
 
+		if(isset($others['sample'])){
+			$sample = $others['sample'];
+			if ($sample==null || $sample=='null') {
+				$sample = $this->session->userdata('sample_filter');
+			}
+			if($sample) $data['sample'] = $sample;
+		}
+
 		return $data;
 		// call extract() to the data that returns
 	}
