@@ -15,25 +15,11 @@ class Shortcodes_model extends MY_Model
 
 	function request_trends($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
 	{
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
+
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
 		}
 
 		if ($county==null || $county=='null') {
@@ -65,23 +51,8 @@ class Shortcodes_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		if ($county == NULL || $county == 'NULL') {
 			$county = 0;
@@ -119,23 +90,8 @@ class Shortcodes_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		$sql = "CALL `proc_get_vl_county_shortcodes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -174,23 +130,8 @@ class Shortcodes_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 		if ($county==null || $county=='null') {
 			$county = 0;
 		}
@@ -230,23 +171,8 @@ class Shortcodes_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 		if ($county==null || $county=='null') {
 			$county = 0;
 		}
@@ -287,23 +213,8 @@ class Shortcodes_model extends MY_Model
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		
 		if ($county==null || $county=='null') {
