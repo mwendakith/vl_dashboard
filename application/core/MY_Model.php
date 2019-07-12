@@ -72,27 +72,42 @@ class MY_Model extends CI_Model
 	}
 
 
-	public function extract_variables($year=null,$month=null,$to_year=null,$to_month=null,$others=null)
+	public function extract_variables($year=null,$month=null,$to_year=null,$to_month=null,$others=null,$to_api=false)
 	{
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
+		$type = 0;
  
 		if ($year==null || $year=='null') {
 			$year = $this->session->userdata('filter_year');
 		}
 		if ($month==null || $month=='null') {
 			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
 				$month = 0;
+				$type = 1;
+			}else {
+				$month = $this->session->userdata('filter_month');
+				$type = 3;
+			}
+		}
+
+		if ($to_month==null || $to_month=='null') {
+			$to_month = 0;
+		}
+		if ($to_year==null || $to_year=='null') {
+			$to_year = 0;
+		}		
+
+		if ($type == 0) {
+			if($to_year == 0){
+				$type = 3;
+			}
+			else{
+				$type = 5;
 			}
 		}
 
 		$data = ['year' => $year, 'month' => $month, 'to_year' => $to_year, 'to_month' => $to_month];
+
+		if($to_api) $data['type'] = $type;
 
 		if(isset($others['partner'])){
 			$partner = $others['partner'];
