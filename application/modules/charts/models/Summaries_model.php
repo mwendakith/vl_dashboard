@@ -743,7 +743,7 @@ class Summaries_model extends MY_Model
 		$data['total_patients'] = $res->totalartmar;
 		$data['total_tests'] = 0;
 
-		foreach ($result as $key => $value) {
+		foreach ($result->unique as $key => $value) {
 
 			$data['categories'][$key] = (int) $value->tests;
 		
