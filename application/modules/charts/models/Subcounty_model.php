@@ -773,6 +773,7 @@ class Subcounty_model extends MY_Model
 		$data['vl_outcomes']['data'][0]['selected'] = true;
 
 		$data['ul'] = "<p>  ";
+		$data['ul'] = "id - {$subcounty}  ";
 		$data['ul'] .= "<= 400 copies/ml - " . number_format($result->rcategory1) . "<br />";
 		$data['ul'] .= "401 - 999 copies/ml - " . number_format($result->rcategory2) . "<br />";
 		$data['ul'] .= "Non Suppressed - " . number_format($result->rcategory3 + $result->rcategory4) . "<br />";
