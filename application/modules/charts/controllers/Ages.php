@@ -49,7 +49,6 @@ class Ages extends MY_Controller
 	function age_gender($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)
 	{
 		$age = $this->split_ages($age);
-		echo "<pre>";print_r($age);die();
 		$data['trends'] = $this->ages_model->ages_gender($year,$month,$age,$to_year,$to_month,$partner);
 		$data['div_name'] = 'age_gender_outcomes';
 		
