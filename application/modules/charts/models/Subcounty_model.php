@@ -688,5 +688,98 @@ class Subcounty_model extends MY_Model
 				
 		return $data;
 	}
+
+
+
+
+
+
+	function get_patients($year=null,$month=null,$subcounty=null,$to_year=null,$to_month=null)
+	{
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['subcounty' => $subcounty], true);
+		extract($d);
+
+		$query = $this->db->get_where('districts', array('id' => $subcounty), 1)->row();
+		$sc = $query->SubCountyDHISCode;
+
+		$params = "patient/subcounty/{$sc}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+
+		$this->db->close();
+
+		$result = $this->req($params);	
+
+		// echo "<pre>";print_r($result);die();
+
+		$data['outcomes'][0]['name'] = "Patients grouped by tests received";
+
+		$data['title'] = " ";
+
+		$data['unique_patients'] = 0;
+		$data['size'] = 0;
+		$data['total_patients'] = $result->art;
+		$data['as_at'] = $result->as_at;
+		$data['total_tests'] = 0;
+
+		foreach ($result->unique as $key => $value) {
+
+			$data['categories'][$key] = (int) $value->tests;
+		
+			$data['outcomes'][0]['data'][$key] = (int) $value->totals;
+			$data['unique_patients'] += (int) $value->totals;
+			$data['total_tests'] += ($data['categories'][$key] * $data['outcomes'][0]['data'][$key]);
+			$data['size']++;
+		}
+
+		$data['coverage'] = round(($data['unique_patients'] / $data['total_patients'] * 100), 2);
+
+		return $data;
+	}
+
+	function get_current_suppresion($year=null,$month=null,$subcounty=null,$to_year=null,$to_month=null)
+	{
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['subcounty' => $subcounty], true);
+		extract($d);
+
+		$query = $this->db->get_where('districts', array('id' => $subcounty), 1)->row();
+		$sc = $query->SubCountyDHISCode;
+		$params = "patient/suppression/subcounty/{$sc}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
+		
+		$this->db->close();
+
+		$result = $this->req($params);	
+
+
+		$data['vl_outcomes']['name'] = 'Tests';
+		$data['vl_outcomes']['colorByPoint'] = true;
+		$data['ul'] = '';
+
+		$data['vl_outcomes']['data'][0]['name'] = '<= 400 copies/ml';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 999 copies/ml';
+		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml';
+		
+		$data['vl_outcomes']['data'][0]['y'] = (int) $result->rcategory1;
+		$data['vl_outcomes']['data'][1]['y'] = (int) $result->rcategory2;
+		$data['vl_outcomes']['data'][2]['y'] = (int) $result->rcategory3 + (int) $result->rcategory4;
+		
+		$data['vl_outcomes']['data'][0]['z'] = number_format($result->rcategory1);
+		$data['vl_outcomes']['data'][1]['z'] = number_format($result->rcategory2);
+		$data['vl_outcomes']['data'][2]['z'] = number_format($result->rcategory3 + $result->rcategory4);
+
+		$data['vl_outcomes']['data'][0]['color'] = '#66ff66';
+		$data['vl_outcomes']['data'][1]['color'] = '#1BA39C';
+		$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
+
+		$data['vl_outcomes']['data'][0]['sliced'] = true;
+		$data['vl_outcomes']['data'][0]['selected'] = true;
+
+		$data['ul'] = "<p>  ";
+		$data['ul'] .= "<= 400 copies/ml - " . number_format($result->rcategory1) . "<br />";
+		$data['ul'] .= "401 - 999 copies/ml - " . number_format($result->rcategory2) . "<br />";
+		$data['ul'] .= "Non Suppressed - " . number_format($result->rcategory3 + $result->rcategory4) . "<br />";
+		$data['ul'] .= "<b>N.B.</b> These values exclude baseline tests. </p>";
+
+		return $data;
+	}
+
 }
 ?>
