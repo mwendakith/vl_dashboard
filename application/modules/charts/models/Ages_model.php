@@ -228,7 +228,7 @@ class Ages_model extends MY_Model
 	{
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['age_cat' => $age_cat, 'partner' => $partner]);
 		extract($d);
-
+		echo "<pre>";print_r($age_cat);die();
 		$age_cat = $this->build_Inarray($age_cat);
 
 		if (!isset($partner)) {
