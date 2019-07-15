@@ -16,7 +16,7 @@ class Regimen_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
 		extract($d);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_regimen_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_regimen_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -63,7 +63,7 @@ class Regimen_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'regimen' => $regimen]);
 		extract($d);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_regimen_vl_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_regimen_vl_outcomes`('".$partner."','".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -171,7 +171,7 @@ class Regimen_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'regimen' => $regimen]);
 		extract($d);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_regimen_gender`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_regimen_gender`('".$partner."','".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -229,7 +229,7 @@ class Regimen_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'regimen' => $regimen]);
 		extract($d);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_regimen_age`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_regimen_age`('".$partner."','".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -410,7 +410,7 @@ class Regimen_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'regimen' => $regimen]);
 		extract($d);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_county_regimen_outcomes`('".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_county_regimen_outcomes`('".$partner."','".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";

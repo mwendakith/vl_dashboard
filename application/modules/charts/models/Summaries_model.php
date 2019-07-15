@@ -81,11 +81,11 @@ class Summaries_model extends MY_Model
 		extract($d);
 				
 		// echo "PFil: ".$pfil." --Partner: ".$partner." -- County: ".$county;
-		if (isset($county)) {
+		if ($county) {
 			$sql = "CALL `proc_get_county_sites_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			if ($pfil==1) {
-				if (isset($partner) && is_int(!is_null($partner))) {
+				if ($partner && is_int(!is_null($partner))) {
 					$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				} else {
 					$sql = "CALL `proc_get_partner_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -151,12 +151,12 @@ class Summaries_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
 		extract($d);
 
-		if (isset($partner)) {
+		if ($partner) {
 			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql3 = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
 		} else {
-			if (!isset($county) ) {
+			if (!$county) ) {
 				$sql = "CALL `proc_get_national_vl_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_national_sitessending`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql3 = "CALL `proc_get_vl_current_suppression`('0','0')";
@@ -300,10 +300,10 @@ class Summaries_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
 		extract($d);
  
-		if (isset($partner)) {
+		if ($partner) {
 			$sql = "CALL `proc_get_partner_justification`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if (!isset($county)) {
+			if (!$county)) {
 				$sql = "CALL `proc_get_national_justification`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_justification`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -340,7 +340,7 @@ class Summaries_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
 		extract($d);
  
-		if (isset($partner)) {
+		if ($partner) {
 			// $sql = "CALL `proc_get_partner_justification_breakdown`('6','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			// $sql2 = "CALL `proc_get_partner_justification_breakdown`('9','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 
@@ -348,7 +348,7 @@ class Summaries_model extends MY_Model
 			$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','','".$partner."','','')";
 
 		} else {
-			if (!isset($county)) {
+			if (!$county)) {
 				// $sql = "CALL `proc_get_national_justification_breakdown`('6','".$year."','".$month."','".$to_year."','".$to_month."')";
 				// $sql2 = "CALL `proc_get_national_justification_breakdown`('9','".$year."','".$month."','".$to_year."','".$to_month."')";
 
@@ -404,10 +404,10 @@ class Summaries_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
 		extract($d);
  
-		if (isset($partner)) {
+		if ($partner) {
 			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if (!isset($county)) {
+			if (!$county)) {
 				$sql = "CALL `proc_get_national_age`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -491,10 +491,10 @@ class Summaries_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
 		extract($d);
  
-		if (isset($partner)) {
+		if ($partner) {
 			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if (!isset($county)) {
+			if (!$county)) {
 				$sql = "CALL `proc_get_national_age`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -560,10 +560,10 @@ class Summaries_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
 		extract($d);
  
-		if (isset($partner)) {
+		if ($partner) {
 			$sql = "CALL `proc_get_partner_gender`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if (!isset($county)) {
+			if (!$county)) {
 				$sql = "CALL `proc_get_national_gender`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_gender`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -703,11 +703,11 @@ class Summaries_model extends MY_Model
 
 		$sql;
 
-		if (isset($partner)) {
+		if ($partner) {
 			$params = "patient/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			// $sql = "Select sum(totalartmar) as totalartmar from view_facilitys where partner='{$partner}'";
 		} else {
-			if (!isset($county)) {
+			if (!$county)) {
 				$params = "patient/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 				// $sql = "Select sum(totalartmar) as totalartmar from view_facilitys";
 			} else {
@@ -766,10 +766,10 @@ class Summaries_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner], true);
 		extract($d);
 
-		if (isset($partner)) {
+		if ($partner) {
 			$params = "patient/suppression/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		} else {
-			if (!isset($county)) {
+			if (!$county)) {
 				$params = "patient/suppression/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			} else {
 				$query = $this->db->get_where('countys', array('id' => $county), 1)->row();
@@ -787,9 +787,9 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '< 400 copies/ml';
-		$data['vl_outcomes']['data'][1]['name'] = '401 - 1000 copies/ml';
-		$data['vl_outcomes']['data'][2]['name'] = '> 1000 copies/ml';
+		$data['vl_outcomes']['data'][0]['name'] = '<= 400 copies/ml';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 999 copies/ml';
+		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml';
 		
 		$data['vl_outcomes']['data'][0]['y'] = (int) $result->rcategory1;
 		$data['vl_outcomes']['data'][1]['y'] = (int) $result->rcategory2;
@@ -807,8 +807,8 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['data'][0]['selected'] = true;
 
 		$data['ul'] = "<p>  ";
-		$data['ul'] .= "< 400 copies/ml - " . number_format($result->rcategory1) . "<br />";
-		$data['ul'] .= "401 - 1000 copies/ml - " . number_format($result->rcategory2) . "<br />";
+		$data['ul'] .= "<= 400 copies/ml - " . number_format($result->rcategory1) . "<br />";
+		$data['ul'] .= "401 - 999 copies/ml - " . number_format($result->rcategory2) . "<br />";
 		$data['ul'] .= "Non Suppressed - " . number_format($result->rcategory3 + $result->rcategory4) . "<br />";
 		$data['ul'] .= "<b>N.B.</b> These values exclude baseline tests. </p>";
 
@@ -847,10 +847,9 @@ class Summaries_model extends MY_Model
 
 		$this->db->close();
 		
-
-		$data['vl_outcomes']['data'][0]['name'] = '401 - 1000 copies/ml';
-		$data['vl_outcomes']['data'][1]['name'] = '< 400 copies/ml';
-		$data['vl_outcomes']['data'][2]['name'] = '> 1000 copies/ml';
+		$data['vl_outcomes']['data'][0]['name'] = '<= 400 copies/ml';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 999 copies/ml';
+		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml';
 
 		$data['vl_outcomes']['data'][0]['y'] = (int) $result->less1000;
 		$data['vl_outcomes']['data'][1]['y'] = (int) $result->undetected;
@@ -868,8 +867,8 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['selected'] = true;
 
 		$data['ul'] = "<p>  ";
-		$data['ul'] .= "< 400 copies/ml - " . number_format($result->undetected) . "<br />";
-		$data['ul'] .= "401 - 1000 copies/ml - " . number_format($result->less1000) . "<br />";
+		$data['ul'] .= "<= 400 copies/ml - " . number_format($result->undetected) . "<br />";
+		$data['ul'] .= "401 - 999 copies/ml - " . number_format($result->less1000) . "<br />";
 		$data['ul'] .= "Non Suppressed - " . number_format($result->nonsuppressed) . "<br />";
 		$data['ul'] .= "<b>N.B.</b> These values exclude baseline tests. </p>";
 		
