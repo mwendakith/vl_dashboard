@@ -88,24 +88,8 @@ class Baseline_model extends MY_Model
 	
 	function baseline_list($param_type=NULL,$year=null,$month=null,$to_year=null,$to_month=null)
 	{
-		
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		//Assigning the value of the month or setting it to the selected value
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 
 		if ($param_type==null || $param_type=='null') {
@@ -155,23 +139,8 @@ class Baseline_model extends MY_Model
 
 	function age($param_type=NULL,$param=NULL,$year=null,$month=null,$to_year=null,$to_month=null)
 	{
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
- 
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		if ($param==null || $param=='null') {
 			if($param_type == 1){
@@ -228,23 +197,8 @@ class Baseline_model extends MY_Model
 
 	function gender($param_type=NULL,$param=NULL,$year=null,$month=null,$to_year=null,$to_month=null)
 	{
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
- 
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		if ($param==null || $param=='null') {
 			if($param_type == 1){
@@ -292,23 +246,8 @@ class Baseline_model extends MY_Model
 
 	function samples($param_type=NULL,$param=NULL,$year=null,$month=null,$to_year=null,$to_month=null)
 	{
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
- 
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		if ($param==null || $param=='null') {
 			if($param_type == 1){

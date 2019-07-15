@@ -15,17 +15,8 @@ class Poc_model extends MY_Model
 	function testing_trends($county=null,$year=null,$month=null,$to_year=null,$to_month=null)
 	{
 		if($county == NULL || $county == 48 || $county=='null') $county=0;
-		if ($year==null || $year=='null') $year = $this->session->userdata('filter_year');
-
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($to_month==null || $to_month=='null') $to_month = 0;
-		if ($to_year==null || $to_year=='null') $to_year = 0;
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 
 		$sql = "CALL `proc_get_vl_poc_trends`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -83,17 +74,8 @@ class Poc_model extends MY_Model
 	function vl_outcomes($county=null,$year=null,$month=null,$to_year=null,$to_month=null)
 	{
 		if($county == NULL || $county == 48 || $county=='null') $county=0;
-		if ($year==null || $year=='null') $year = $this->session->userdata('filter_year');
-
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($to_month==null || $to_month=='null') $to_month = 0;
-		if ($to_year==null || $to_year=='null') $to_year = 0;
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 
 		$sql = "CALL `proc_get_county_poc_vl_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -202,17 +184,8 @@ class Poc_model extends MY_Model
 	function ages($county=null,$year=null,$month=null,$to_year=null,$to_month=null)
 	{
 		if($county == NULL || $county == 48 || $county=='null') $county=0;
-		if ($year==null || $year=='null') $year = $this->session->userdata('filter_year');
-
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($to_month==null || $to_month=='null') $to_month = 0;
-		if ($to_year==null || $to_year=='null') $to_year = 0;
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 
 		$sql = "CALL `proc_get_vl_regional_poc_age`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -250,17 +223,8 @@ class Poc_model extends MY_Model
 	function gender($county=null,$year=null,$month=null,$to_year=null,$to_month=null)
 	{
 		if($county == NULL || $county == 48 || $county=='null') $county=0;
-		if ($year==null || $year=='null') $year = $this->session->userdata('filter_year');
-
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($to_month==null || $to_month=='null') $to_month = 0;
-		if ($to_year==null || $to_year=='null') $to_year = 0;
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 
 		$sql = "CALL `proc_get_vl_regional_poc_gender`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -293,17 +257,8 @@ class Poc_model extends MY_Model
 
 	function county_outcomes($year=null,$month=null,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') $year = $this->session->userdata('filter_year');
-
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($to_month==null || $to_month=='null') $to_month = 0;
-		if ($to_year==null || $to_year=='null') $to_year = 0;
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 
 		$sql = "CALL `proc_get_vl_poc_county_trends`('".$year."','".$month."','".$to_year."','".$to_month."')";

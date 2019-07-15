@@ -13,22 +13,8 @@ class Subcounty_model extends MY_Model
 
 	function subcounty_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		$sql = "CALL `proc_get_vl_subcounty_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -80,22 +66,8 @@ class Subcounty_model extends MY_Model
 	{
 		$table = '';
 		$count = 1;
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		$type = 0;
 		$default = 0;
@@ -236,25 +208,8 @@ class Subcounty_model extends MY_Model
 
 	function subcounty_vl_outcomes($year=NULL,$month=NULL,$subcounty=NULL,$to_year=null,$to_month=null)
 	{
-		if ($subcounty==null || $subcounty=='null') {
-			$subcounty = $this->session->userdata('sub_county_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['subcounty' => $subcounty]);
+		extract($d);
 
 		$sql = "CALL `proc_get_vl_subcounty_vl_outcomes`('".$subcounty."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		$sql2 = "CALL `proc_get_vl_current_suppression`('2','".$subcounty."')";
@@ -272,8 +227,8 @@ class Subcounty_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '&lt; 1000';
-		$data['vl_outcomes']['data'][1]['name'] = '&lt; LDL';
+		$data['vl_outcomes']['data'][0]['name'] = '&lt;= 1000';
+		$data['vl_outcomes']['data'][1]['name'] = 'LDL';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 
 		$count = 0;
@@ -316,7 +271,7 @@ class Subcounty_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; LDL:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests LDL:</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Undetectable</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
@@ -357,25 +312,8 @@ class Subcounty_model extends MY_Model
 
 	function subcounty_gender($year=NULL,$month=NULL,$subcounty=NULL,$to_year=null,$to_month=null)
 	{
-		if ($subcounty==null || $subcounty=='null') {
-			$subcounty = $this->session->userdata('sub_county_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['subcounty' => $subcounty]);
+		extract($d);
 
 		$sql = "CALL `proc_get_vl_subcounty_gender`('".$subcounty."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -404,25 +342,8 @@ class Subcounty_model extends MY_Model
 
 	function subcounty_age($year=NULL,$month=NULL,$subcounty=NULL,$to_year=null,$to_month=null)
 	{
-		if ($subcounty==null || $subcounty=='null') {
-			$subcounty = $this->session->userdata('sub_county_filter');
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['subcounty' => $subcounty]);
+		extract($d);
 
 		$sql = "CALL `proc_get_vl_subcounty_age`('".$subcounty."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -543,25 +464,8 @@ class Subcounty_model extends MY_Model
 
 	function subcounty_sites($year=NULL,$month=NULL,$subcounty=NULL,$to_year=null,$to_month=null)
 	{
-		if ($subcounty==null || $subcounty=='null') {
-			$subcounty = $this->session->userdata('sub_county_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['subcounty' => $subcounty]);
+		extract($d);
 
 		$table = '';
 		$count = 1;
@@ -707,25 +611,8 @@ class Subcounty_model extends MY_Model
 
 	function download_subcounty_sites($year=NULL,$month=NULL,$subcounty=NULL,$to_year=null,$to_month=null)
 	{
-		if ($subcounty==null || $subcounty=='null') {
-			$subcounty = $this->session->userdata('sub_county_filter');
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['subcounty' => $subcounty]);
+		extract($d);
 
 		$table = '';
 		$count = 1;
@@ -762,25 +649,8 @@ class Subcounty_model extends MY_Model
 
 	function justification_breakdown($year=null,$month=null,$subcounty=null,$to_year=null,$to_month=null)
 	{
-		
-		if ($subcounty==null || $subcounty=='null') {
-			$subcounty = $this->session->userdata('sub_county_filter');
-		}
-
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
- 
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			$month = $this->session->userdata('filter_month');
-		}
- 
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['subcounty' => $subcounty]);
+		extract($d); 
 
 		$sql = "CALL `proc_get_vl_pmtct`('1','".$year."','".$month."','".$to_year."','".$to_month."','','','','".$subcounty."','')";
 		$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','','','".$subcounty."','')";
