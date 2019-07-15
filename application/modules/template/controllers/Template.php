@@ -123,7 +123,7 @@ class Template extends MY_Controller
 
 		$this->filter_partner_ages($data);
 
-		echo $this->session->userdata('patner_age_category_filter');
+		echo json_encode($this->session->userdata('patner_age_category_filter'));
 	}
 
 	function filter_partner_regimen_data()
