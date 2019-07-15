@@ -17,7 +17,7 @@ class Samples_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
 		extract($d);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_samples_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_samples_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -48,7 +48,7 @@ class Samples_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'sample' => $sample]);
 		extract($d);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_samples_vl_outcomes`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_samples_vl_outcomes`('".$partner."','".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -153,7 +153,7 @@ class Samples_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'sample' => $sample]);
 		extract($d);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_samples_gender`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_samples_gender`('".$partner."','".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -187,7 +187,7 @@ class Samples_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'sample' => $sample]);
 		extract($d);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_samples_age`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_samples_age`('".$partner."','".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -290,7 +290,7 @@ class Samples_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'sample' => $sample]);
 		extract($d);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_county_samples_outcomes`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_county_samples_outcomes`('".$partner."','".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
