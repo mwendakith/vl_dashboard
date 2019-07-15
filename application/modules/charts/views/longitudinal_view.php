@@ -1,6 +1,6 @@
 <div  style="margin-left:2em;">
     <p>
-     Patients on Art as reported of DHIS as at <?php date('F', strtotime($trends['as_at'])) . ', ' . date('Y', strtotime($trends['as_at'])); ?>  - <?php echo number_format($trends['total_patients']) ; ?> <br />
+     Patients on Art as reported on DHIS as at <?php date('F', strtotime($trends['as_at'])) . ', ' . date('Y', strtotime($trends['as_at'])); ?>  - <?php echo number_format($trends['total_patients']) ; ?> <br />
      Total Unique Patients Tested - <?php echo number_format($trends['unique_patients']) ; ?> <br />
 
         <?php  
