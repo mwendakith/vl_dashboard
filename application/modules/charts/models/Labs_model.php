@@ -9,23 +9,8 @@ class Labs_model extends MY_Model
 
 	function lab_performance_stat($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
-		// echo round(3.6451895227869, 2, PHP_ROUND_HALF_UP);die();
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		$sql = "CALL `proc_get_vl_lab_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."');";
 		// echo "<pre>";print_r($sql);die();
@@ -66,23 +51,8 @@ class Labs_model extends MY_Model
 
 	function poc_performance_stat($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
-		// echo round(3.6451895227869, 2, PHP_ROUND_HALF_UP);die();
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		$sql = "CALL `proc_get_vl_poc_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."');";
 		// echo "<pre>";print_r($sql);die();
@@ -121,23 +91,8 @@ class Labs_model extends MY_Model
 
 	function poc_performance_details($lab_id=NULL,$year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
-		// echo round(3.6451895227869, 2, PHP_ROUND_HALF_UP);die();
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		$sql = "CALL `proc_get_vl_poc_site_details`('".$lab_id."','".$year."','".$month."','".$to_year."','".$to_month."');";
 		// echo "<pre>";print_r($sql);die();
@@ -166,24 +121,10 @@ class Labs_model extends MY_Model
 		return $ul;
 	}
 
-	function download_lab_performance_stats($year=null, $month=null,$to_year=null,$to_month=null){
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+	function download_lab_performance_stats($year=null, $month=null,$to_year=null,$to_month=null)
+	{
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		$sql = "CALL `proc_get_vl_lab_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."');";
 
@@ -374,22 +315,8 @@ class Labs_model extends MY_Model
 
 	function sample_types($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 		
 		$sql = "CALL `proc_get_labs_sampletypes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		
@@ -422,22 +349,8 @@ class Labs_model extends MY_Model
 
 	function ages($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 		
 		$sql = "CALL `proc_get_vl_labs_ages`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		
@@ -475,22 +388,8 @@ class Labs_model extends MY_Model
 
 	function gender($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 		
 		$sql = "CALL `proc_get_vl_labs_gender`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		
@@ -528,33 +427,12 @@ class Labs_model extends MY_Model
 
 	function labs_turnaround($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
-		$title = null;
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-				$title = " (" . $year . ")";
-			}else {
-				$month = 0;
-			}
-		}
-
-		if(!$title){
-			$title = " (" . $year . ", " . $this->resolve_month($month) . ")";
-		}
-
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}else {
-			$title = " (" . $year . ", " . $this->resolve_month($month) . " - ". $to_year . ", " . $this->resolve_month($to_month) .")";
-		}
-
+		$title = " (" . $year . ")";
+		if($month) $title = " (" . $year . ", " . $this->resolve_month($month) . ")";
+		if($to_year) $title = " (" . $year . ", " . $this->resolve_month($month) . " - ". $to_year . ", " . $this->resolve_month($to_month) .")";
 
 		$sql = "CALL `proc_get_labs_tat`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -654,22 +532,8 @@ class Labs_model extends MY_Model
 
 	function labs_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		$sql = "CALL `proc_get_lab_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		
@@ -802,27 +666,13 @@ class Labs_model extends MY_Model
 		return $data;
 	}
 
-	function rejections($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL){	
+	function rejections($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{	
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		if($lab == NULL || $lab == 'null'){
 			$lab = 0;
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
 		}
 		
 		$sql = "CALL `proc_get_vl_lab_rejections`({$lab}, '{$year}', '{$month}', '{$to_year}', '{$to_month}' );";
@@ -867,23 +717,8 @@ class Labs_model extends MY_Model
 
 	function poc_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
-		// echo round(3.6451895227869, 2, PHP_ROUND_HALF_UP);die();
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		$sql = "CALL `proc_get_vl_poc_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."');";
 		// echo "<pre>";print_r($sql);die();
@@ -922,27 +757,13 @@ class Labs_model extends MY_Model
 
 
 
-	function lab_site_rejections($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL){	
+	function lab_site_rejections($lab=NULL, $year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{	
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		if($lab == NULL || $lab == 'null'){
 			$lab = 0;
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
 		}
 		
 		$sql = "CALL `proc_get_vl_lab_site_rejections`({$lab}, '{$year}', '{$month}', '{$to_year}', '{$to_month}' );";
