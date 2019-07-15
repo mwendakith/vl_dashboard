@@ -280,7 +280,7 @@ class Ages_model extends MY_Model
 				$data["outcomes"][2]["data"][2]	=  round(((int) $value['nodatasuppressed']/$nodata)*100,1);
 			}
 		} else {
-			echo "<pre>";print_r($result);die();
+			// echo "<pre>";print_r($result);die();
 			$data['outcomes'][0]['name'] = "Tests";
 
 			$data['title'] = "";
