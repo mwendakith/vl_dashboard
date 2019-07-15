@@ -156,7 +156,7 @@ class Summaries_model extends MY_Model
 			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql3 = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
 		} else {
-			if (!$county) ) {
+			if (!$county) {
 				$sql = "CALL `proc_get_national_vl_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_national_sitessending`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql3 = "CALL `proc_get_vl_current_suppression`('0','0')";
