@@ -726,7 +726,7 @@ class Summaries_model extends MY_Model
 
 		// $this->db->close();	
 
-		// echo "<pre>";print_r($result);die();
+		echo "<pre>";print_r($result);die();
 
 		$data['outcomes'][0]['name'] = "Patients grouped by tests received";
 
