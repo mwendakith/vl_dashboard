@@ -303,7 +303,7 @@ class Summaries_model extends MY_Model
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_justification`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if (!$county)) {
+			if (!$county) {
 				$sql = "CALL `proc_get_national_justification`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_justification`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -348,7 +348,7 @@ class Summaries_model extends MY_Model
 			$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','','".$partner."','','')";
 
 		} else {
-			if (!$county)) {
+			if (!$county) {
 				// $sql = "CALL `proc_get_national_justification_breakdown`('6','".$year."','".$month."','".$to_year."','".$to_month."')";
 				// $sql2 = "CALL `proc_get_national_justification_breakdown`('9','".$year."','".$month."','".$to_year."','".$to_month."')";
 
@@ -407,7 +407,7 @@ class Summaries_model extends MY_Model
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if (!$county)) {
+			if (!$county) {
 				$sql = "CALL `proc_get_national_age`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -494,7 +494,7 @@ class Summaries_model extends MY_Model
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if (!$county)) {
+			if (!$county) {
 				$sql = "CALL `proc_get_national_age`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -563,7 +563,7 @@ class Summaries_model extends MY_Model
 		if ($partner) {
 			$sql = "CALL `proc_get_partner_gender`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if (!$county)) {
+			if (!$county) {
 				$sql = "CALL `proc_get_national_gender`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_gender`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -707,7 +707,7 @@ class Summaries_model extends MY_Model
 			$params = "patient/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			// $sql = "Select sum(totalartmar) as totalartmar from view_facilitys where partner='{$partner}'";
 		} else {
-			if (!$county)) {
+			if (!$county) {
 				$params = "patient/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 				// $sql = "Select sum(totalartmar) as totalartmar from view_facilitys";
 			} else {
@@ -769,7 +769,7 @@ class Summaries_model extends MY_Model
 		if ($partner) {
 			$params = "patient/suppression/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		} else {
-			if (!$county)) {
+			if (!$county) {
 				$params = "patient/suppression/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			} else {
 				$query = $this->db->get_where('countys', array('id' => $county), 1)->row();
