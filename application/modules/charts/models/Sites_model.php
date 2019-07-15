@@ -786,9 +786,9 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '< 400 copies/ml';
-		$data['vl_outcomes']['data'][1]['name'] = '401 - 1000 copies/ml';
-		$data['vl_outcomes']['data'][2]['name'] = '> 1000 copies/ml';
+		$data['vl_outcomes']['data'][0]['name'] = '<= 400 copies/ml';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 999 copies/ml';
+		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml';
 		
 		$data['vl_outcomes']['data'][0]['y'] = (int) $result->rcategory1;
 		$data['vl_outcomes']['data'][1]['y'] = (int) $result->rcategory2;
@@ -806,8 +806,8 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['data'][0]['selected'] = true;
 
 		$data['ul'] = "<p>  ";
-		$data['ul'] .= "< 400 copies/ml - " . number_format($result->rcategory1) . "<br />";
-		$data['ul'] .= "401 - 1000 copies/ml - " . number_format($result->rcategory2) . "<br />";
+		$data['ul'] .= "<= 400 copies/ml - " . number_format($result->rcategory1) . "<br />";
+		$data['ul'] .= "401 - 999 copies/ml - " . number_format($result->rcategory2) . "<br />";
 		$data['ul'] .= "Non Suppressed - " . number_format($result->rcategory3 + $result->rcategory4) . "<br />";
 		$data['ul'] .= "<b>N.B.</b> These values exclude baseline tests. </p>";
 
@@ -833,9 +833,9 @@ class Sites_model extends MY_Model
 		$data['ul'] = '';
 
 
-		$data['vl_outcomes']['data'][0]['name'] = '401 - 1000 copies/ml';
-		$data['vl_outcomes']['data'][1]['name'] = '< 400 copies/ml';
-		$data['vl_outcomes']['data'][2]['name'] = '> 1000 copies/ml';
+		$data['vl_outcomes']['data'][0]['name'] = '401 - 999 copies/ml';
+		$data['vl_outcomes']['data'][1]['name'] = '<= 400 copies/ml';
+		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml';
 
 		$data['vl_outcomes']['data'][0]['y'] = (int) $result->less1000;
 		$data['vl_outcomes']['data'][1]['y'] = (int) $result->undetected;
@@ -853,8 +853,8 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['selected'] = true;
 
 		$data['ul'] = "<p>  ";
-		$data['ul'] .= "< 400 copies/ml - " . number_format($result->undetected) . "<br />";
-		$data['ul'] .= "401 - 1000 copies/ml - " . number_format($result->less1000) . "<br />";
+		$data['ul'] .= "<= 400 copies/ml - " . number_format($result->undetected) . "<br />";
+		$data['ul'] .= "401 - 999 copies/ml - " . number_format($result->less1000) . "<br />";
 		$data['ul'] .= "Non Suppressed - " . number_format($result->nonsuppressed) . "<br />";
 		$data['ul'] .= "<b>N.B.</b> These values exclude baseline tests. </p>";
 		

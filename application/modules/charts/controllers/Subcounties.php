@@ -86,5 +86,20 @@ class Subcounties extends MY_Controller
 	{
 		$this->subcounty_model->download_subcounty_sites($year,$month,$subcounty,$to_year,$to_month);
 	}
+
+	function get_patients($year=NULL,$month=NULL,$subcounty=NULL,$to_year=NULL,$to_month=NULL)
+	{		
+		$data['trends'] = $this->subcounty_model->get_patients($year,$month,$subcounty,$to_year,$to_month);
+		$data['div_name'] = "unique_patients";
+
+		$this->load->view('longitudinal_view',$data);
+	}
+
+	function get_current_suppresion($year=NULL,$month=NULL,$subcounty=NULL,$to_year=NULL,$to_month=NULL)
+	{		
+		$data['outcomes'] = $this->subcounty_model->get_current_suppresion($year,$month,$subcounty,$to_year,$to_month);
+		$data['div_name'] = "current_suppression_pie";
+		$this->load->view('pie_chart_view',$data);
+	}
 }
 ?>
