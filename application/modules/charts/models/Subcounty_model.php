@@ -246,7 +246,7 @@ class Subcounty_model extends MY_Model
 			$data['ul'] .= '
 			<tr>
 	    		<td>Total VL tests done:</td>
-	    		<td>'.number_format($total_tests ).' id ' . $subcounty . '</td>
+	    		<td>'.number_format($total_tests ). '</td>
 	    		<td>Non Suppression</td>
 	    		<td>'. number_format($non_suppressed) . ' (' . round((($non_suppressed / $total_tests  )*100),1).'%</td>
 	    	</tr>
@@ -773,7 +773,6 @@ class Subcounty_model extends MY_Model
 		$data['vl_outcomes']['data'][0]['selected'] = true;
 
 		$data['ul'] = "<p>  ";
-		$data['ul'] = "id - {$subcounty}  ";
 		$data['ul'] .= "<= 400 copies/ml - " . number_format($result->rcategory1) . "<br />";
 		$data['ul'] .= "401 - 999 copies/ml - " . number_format($result->rcategory2) . "<br />";
 		$data['ul'] .= "Non Suppressed - " . number_format($result->rcategory3 + $result->rcategory4) . "<br />";

@@ -61,7 +61,7 @@
 					$("#samples").html("<center><div class='loader'></div></center>");
 					$("#sub_counties").html("<center><div class='loader'></div></center>");
 					
-					$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/subcounty_vl_outcomes'); ?>");
+					$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/subcounty_vl_outcomes'); ?>/"+null+"/"+null+"/"+subcounty);
 					$("#gender").load("<?php echo base_url('charts/subcounties/subcounty_gender'); ?>/"+null+"/"+null+"/"+subcounty);
 					$("#age").load("<?php echo base_url('charts/subcounties/subcounty_age'); ?>/"+null+"/"+null+"/"+subcounty); 
 					$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+null+"/"+subcounty+"/"+all);
