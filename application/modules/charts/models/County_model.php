@@ -14,26 +14,8 @@ class County_model extends MY_Model
 
 	function subcounty_outcomes($year=NULL,$month=NULL,$county=NULL,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county]);
+		extract($d);
 
 
 		$sql = "CALL `proc_get_vl_county_subcounty_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -89,22 +71,8 @@ class County_model extends MY_Model
 	{
 		$table = '';
 		$count = 1;
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 		$type = 0;
 		$default = 0;
 		$sql = "CALL `proc_get_vl_county_details`('".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -244,24 +212,8 @@ class County_model extends MY_Model
 
 	function download_county_table($year=NULL,$month=NULL,$to_year=null,$to_month=null)
 	{
-		
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
 
 		$sql = "CALL `proc_get_vl_county_details`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -298,26 +250,8 @@ class County_model extends MY_Model
 	{
 		$table = '';
 		$count = 1;
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county]);
+		extract($d);
 
 		$type = 2;
 		$sql = "CALL `proc_get_vl_subcounty_details`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -463,26 +397,8 @@ class County_model extends MY_Model
 	{
 		$table = '';
 		$count = 1;
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county]);
+		extract($d);
 
 
 		$sql = "CALL `proc_get_vl_subcounty_details`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -520,26 +436,8 @@ class County_model extends MY_Model
 	{
 		$table = '';
 		$count = 1;
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county]);
+		extract($d);
 
 		$type = 1;
 		$sql = "CALL `proc_get_vl_county_partners`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -675,26 +573,8 @@ class County_model extends MY_Model
 	{
 		$table = '';
 		$count = 1;
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county]);
+		extract($d);
 
 		$type = 1;
 		$type2 = 3;
@@ -839,26 +719,8 @@ class County_model extends MY_Model
 	{
 		$table = '';
 		$count = 1;
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county]);
+		extract($d);
 
 
 		$sql = "CALL `proc_get_vl_county_partners`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";

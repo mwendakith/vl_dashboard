@@ -14,25 +14,10 @@ class Samples_model extends MY_Model
 	function samples_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
 		//return "this";
-		
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
+		extract($d);
 
-		if ($partner==null || $partner=='null') {
+		if (!isset($partner)) {
 			$sql = "CALL `proc_get_vl_samples_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_samples_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -60,28 +45,10 @@ class Samples_model extends MY_Model
 
 	function samples_vl_outcomes($year=NULL,$month=NULL,$sample=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
-		
-		if ($sample==null || $sample=='null') {
-			$sample = $this->session->userdata('sample_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'sample' => $sample]);
+		extract($d);
 
-		if ($partner==null || $partner=='null') {
+		if (!isset($partner)) {
 			$sql = "CALL `proc_get_vl_samples_vl_outcomes`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_samples_vl_outcomes`('".$partner."','".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -183,28 +150,10 @@ class Samples_model extends MY_Model
 
 	function samples_gender($year=NULL,$month=NULL,$sample=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
-		
-		if ($sample==null || $sample=='null') {
-			$sample = $this->session->userdata('sample_filter');
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'sample' => $sample]);
+		extract($d);
 
-		if ($partner==null || $partner=='null') {
+		if (!isset($partner)) {
 			$sql = "CALL `proc_get_vl_samples_gender`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_samples_gender`('".$partner."','".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -235,28 +184,10 @@ class Samples_model extends MY_Model
 
 	function samples_age($year=NULL,$month=NULL,$sample=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
-		
-		if ($sample==null || $sample=='null') {
-			$sample = $this->session->userdata('sample_filter');
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'sample' => $sample]);
+		extract($d);
 
-		if ($partner==null || $partner=='null') {
+		if (!isset($partner)) {
 			$sql = "CALL `proc_get_vl_samples_age`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_samples_age`('".$partner."','".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -356,31 +287,10 @@ class Samples_model extends MY_Model
 
 	function county_outcomes($year=null,$month=null,$sample=null,$to_year=null,$to_month=null,$partner=null)
 	{
-		
-		
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		//Assigning the value of the month or setting it to the selected value
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'sample' => $sample]);
+		extract($d);
 
-		if ($sample==null || $sample=='null') {
-			$sample = $this->session->userdata('sample_filter');
-		}
-
-		if ($partner==null || $partner=='null') {
+		if (!isset($partner)) {
 			$sql = "CALL `proc_get_vl_county_samples_outcomes`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_county_samples_outcomes`('".$partner."','".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";

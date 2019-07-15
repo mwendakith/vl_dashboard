@@ -10,22 +10,8 @@ class Summaries_model extends MY_Model
  
 	function turnaroundtime($year=null,$month=null,$county=null,$to_year=null,$to_month=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county]);
+		extract($d);
  
 		$sql = "CALL `proc_get_national_tat`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
@@ -91,41 +77,15 @@ class Summaries_model extends MY_Model
  
 	function county_outcomes($year=null,$month=null,$pfil=null,$partner=null,$county=null,$to_year=null,$to_month=null)
 	{
-		// echo "Year:".$year.":--: Month:".$month.":--: County:".$county.":--: Partner:".$partner.":--: pfil:".$pfil;die();
-		//Initializing the value of the Year to the selected year or the default year which is current year
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		//Assigning the value of the month or setting it to the selected value
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
- 
-		// Assigning the value of the county
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
+		extract($d);
 				
 		// echo "PFil: ".$pfil." --Partner: ".$partner." -- County: ".$county;
-		if ($county) {
+		if (isset($county)) {
 			$sql = "CALL `proc_get_county_sites_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			if ($pfil==1) {
-				if (is_int(!is_null($partner))) {
+				if (isset($partner) && is_int(!is_null($partner))) {
 					$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				} else {
 					$sql = "CALL `proc_get_partner_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -188,60 +148,22 @@ class Summaries_model extends MY_Model
  
 	function vl_outcomes($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
-		$type = 0;
-		$params;
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
- 
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-				$type = 1;
-			}else {
-				$month = $this->session->userdata('filter_month');
-				$type = 3;
-			}
-		}
- 	
- 		if ($type == 0) {
-			if($to_year == 0)
-				$type = 3;
-			else
-				$type = 5;
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
+		extract($d);
 
-		if (!is_null($partner)) {
+		if (isset($partner)) {
 			$sql = "CALL `proc_get_partner_vl_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql2 = "CALL `proc_get_partner_sitessending`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			$sql3 = "CALL `proc_get_vl_current_suppression`('3','".$partner."')";
-			// $params = "patient/suppression/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		} else {
-			if ($county==null || $county=='null') {
+			if (!isset($county) ) {
 				$sql = "CALL `proc_get_national_vl_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_national_sitessending`('".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql3 = "CALL `proc_get_vl_current_suppression`('0','0')";
-				// $params = "patient/suppression/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			} else {
 				$sql = "CALL `proc_get_regional_vl_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql2 = "CALL `proc_get_regional_sitessending`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 				$sql3 = "CALL `proc_get_vl_current_suppression`('1','".$county."')";
-				// $query = $this->db->get_where('countys', array('id' => $county), 1)->row();
-				// $c = $query->CountyMFLCode;
-
-				// $params = "patient/suppression/county/{$c}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			}
 		}
 		// echo "<pre>";print_r($params);echo "</pre>";
@@ -375,34 +297,13 @@ class Summaries_model extends MY_Model
  
 	function justification($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
+		extract($d);
  
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
- 
-		if (!is_null($partner)) {
+		if (isset($partner)) {
 			$sql = "CALL `proc_get_partner_justification`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if ($county==null || $county=='null') {
+			if (!isset($county)) {
 				$sql = "CALL `proc_get_national_justification`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_justification`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -436,27 +337,10 @@ class Summaries_model extends MY_Model
  
 	function justification_breakdown($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
+		extract($d);
  
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			$month = $this->session->userdata('filter_month');
-		}
- 
-		if (!is_null($partner)) {
+		if (isset($partner)) {
 			// $sql = "CALL `proc_get_partner_justification_breakdown`('6','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			// $sql2 = "CALL `proc_get_partner_justification_breakdown`('9','".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 
@@ -464,7 +348,7 @@ class Summaries_model extends MY_Model
 			$sql2 = "CALL `proc_get_vl_pmtct`('2','".$year."','".$month."','".$to_year."','".$to_month."','','','".$partner."','','')";
 
 		} else {
-			if ($county==null || $county=='null') {
+			if (!isset($county)) {
 				// $sql = "CALL `proc_get_national_justification_breakdown`('6','".$year."','".$month."','".$to_year."','".$to_month."')";
 				// $sql2 = "CALL `proc_get_national_justification_breakdown`('9','".$year."','".$month."','".$to_year."','".$to_month."')";
 
@@ -517,34 +401,13 @@ class Summaries_model extends MY_Model
  
 	function age($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
+		extract($d);
  
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
- 
-		if (!is_null($partner)) {
+		if (isset($partner)) {
 			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if ($county==null || $county=='null') {
+			if (!isset($county)) {
 				$sql = "CALL `proc_get_national_age`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -625,34 +488,13 @@ class Summaries_model extends MY_Model
  
 	function age_breakdown($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
+		extract($d);
  
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
- 
-		if (!is_null($partner)) {
+		if (isset($partner)) {
 			$sql = "CALL `proc_get_partner_age`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if ($county==null || $county=='null') {
+			if (!isset($county)) {
 				$sql = "CALL `proc_get_national_age`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_age`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -715,34 +557,13 @@ class Summaries_model extends MY_Model
  
 	function gender($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner]);
+		extract($d);
  
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = $this->session->userdata('filter_month');
-			}else {
-				$month = 0;
-			}
-		}
- 
-		if (!is_null($partner)) {
+		if (isset($partner)) {
 			$sql = "CALL `proc_get_partner_gender`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
-			if ($county==null || $county=='null') {
+			if (!isset($county)) {
 				$sql = "CALL `proc_get_national_gender`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			} else {
 				$sql = "CALL `proc_get_regional_gender`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -877,69 +698,33 @@ class Summaries_model extends MY_Model
 
 	function get_patients($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
-		$type = 0;
-		$params;
-
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
-		}
-
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-				$type = 1;
-			}else {
-				$month = $this->session->userdata('filter_month');
-				$type = 3;
-			}
-		}
-		
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-
-		if ($type == 0) {
-			if($to_year == 0){
-				$type = 3;
-			}
-			else{
-				$type = 5;
-			}
-		}	
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner], true);
+		extract($d);
 
 		$sql;
 
-		if (!is_null($partner)) {
+		if (isset($partner)) {
 			$params = "patient/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-			$sql = "Select sum(totalartmar) as totalartmar from view_facilitys where partner='{$partner}'";
+			// $sql = "Select sum(totalartmar) as totalartmar from view_facilitys where partner='{$partner}'";
 		} else {
-			if ($county==null || $county=='null') {
+			if (!isset($county)) {
 				$params = "patient/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-				$sql = "Select sum(totalartmar) as totalartmar from view_facilitys";
+				// $sql = "Select sum(totalartmar) as totalartmar from view_facilitys";
 			} else {
 				$query = $this->db->get_where('countys', array('id' => $county), 1)->row();
 				$c = $query->CountyMFLCode;
 
 				$params = "patient/county/{$c}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-				$sql = "Select sum(totalartmar) as totalartmar from view_facilitys where county='{$county}'";
+				// $sql = "Select sum(totalartmar) as totalartmar from view_facilitys where county='{$county}'";
 			}
 		}
 		$this->db->close();
 
 		$result = $this->req($params);	
 
-		$res = $this->db->query($sql)->row();
+		// $res = $this->db->query($sql)->row();
 
-		$this->db->close();	
+		// $this->db->close();	
 
 		// echo "<pre>";print_r($result);die();
 
@@ -955,10 +740,12 @@ class Summaries_model extends MY_Model
 
 		$data['unique_patients'] = 0;
 		$data['size'] = 0;
-		$data['total_patients'] = $res->totalartmar;
+		// $data['total_patients'] = $res->totalartmar;
+		$data['total_patients'] = $result->art;
+		$data['as_at'] = $result->as_at;
 		$data['total_tests'] = 0;
 
-		foreach ($result as $key => $value) {
+		foreach ($result->unique as $key => $value) {
 
 			$data['categories'][$key] = (int) $value->tests;
 		
@@ -976,39 +763,13 @@ class Summaries_model extends MY_Model
 
 	function get_current_suppresion($year=null,$month=null,$county=null,$partner=null,$to_year=null,$to_month=null)
 	{
-		$type = 0;
-		$params;
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county, 'partner' => $partner], true);
+		extract($d);
 
-		if ($county==null || $county=='null') $county = $this->session->userdata('county_filter');
-		if ($partner==null || $partner=='null') $partner = $this->session->userdata('partner_filter');
-
-		if ($year==null || $year=='null') $year = $this->session->userdata('filter_year');
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-				$type = 1;
-			}else {
-				$month = $this->session->userdata('filter_month');
-				$type = 3;
-			}
-		}
-		
-		if ($to_year==null || $to_year=='null') $to_year = 0;
-		if ($to_month==null || $to_month=='null') $to_month = 0;
-
-		if ($type == 0) {
-			if($to_year == 0){
-				$type = 3;
-			}
-			else{
-				$type = 5;
-			}
-		}	
-
-		if (!is_null($partner)) {
+		if (isset($partner)) {
 			$params = "patient/suppression/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 		} else {
-			if ($county==null || $county=='null') {
+			if (!isset($county)) {
 				$params = "patient/suppression/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 			} else {
 				$query = $this->db->get_where('countys', array('id' => $county), 1)->row();
