@@ -709,14 +709,13 @@ class Sites_model extends MY_Model
 
 		$this->db->close();
 
-		$sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
-		$res = $this->db->query($sql)->row();
+		// $sql = "CALL `proc_get_vl_site_patients`('".$site."','".$year."')";
+		// $res = $this->db->query($sql)->row();
 
-		$this->db->close();
+		// $this->db->close();
 		
 
 		$params = "patient/facility/{$facility}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-		// $params = "patient/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
 
 		$result = $this->req($params);
 
@@ -728,10 +727,12 @@ class Sites_model extends MY_Model
 
 		$data['unique_patients'] = 0;
 		$data['size'] = 0;
-		$data['total_patients'] = $query->totalartmar;
+		// $data['total_patients'] = $query->totalartmar;
+		$data['total_patients'] = $result->art;
+		$data['as_at'] = $result->as_at;
 		$data['total_tests'] = 0;
 
-		foreach ($result as $key => $value) {
+		foreach ($result->unique as $key => $value) {
 
 			$data['categories'][$key] = $value->tests;
 		

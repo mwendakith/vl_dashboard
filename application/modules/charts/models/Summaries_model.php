@@ -705,26 +705,26 @@ class Summaries_model extends MY_Model
 
 		if (isset($partner)) {
 			$params = "patient/partner/{$partner}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-			$sql = "Select sum(totalartmar) as totalartmar from view_facilitys where partner='{$partner}'";
+			// $sql = "Select sum(totalartmar) as totalartmar from view_facilitys where partner='{$partner}'";
 		} else {
 			if (!isset($county)) {
 				$params = "patient/national/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-				$sql = "Select sum(totalartmar) as totalartmar from view_facilitys";
+				// $sql = "Select sum(totalartmar) as totalartmar from view_facilitys";
 			} else {
 				$query = $this->db->get_where('countys', array('id' => $county), 1)->row();
 				$c = $query->CountyMFLCode;
 
 				$params = "patient/county/{$c}/{$type}/{$year}/{$month}/{$to_year}/{$to_month}";
-				$sql = "Select sum(totalartmar) as totalartmar from view_facilitys where county='{$county}'";
+				// $sql = "Select sum(totalartmar) as totalartmar from view_facilitys where county='{$county}'";
 			}
 		}
 		$this->db->close();
 
 		$result = $this->req($params);	
 
-		$res = $this->db->query($sql)->row();
+		// $res = $this->db->query($sql)->row();
 
-		$this->db->close();	
+		// $this->db->close();	
 
 		// echo "<pre>";print_r($result);die();
 
@@ -740,7 +740,9 @@ class Summaries_model extends MY_Model
 
 		$data['unique_patients'] = 0;
 		$data['size'] = 0;
-		$data['total_patients'] = $res->totalartmar;
+		// $data['total_patients'] = $res->totalartmar;
+		$data['total_patients'] = $result->art;
+		$data['as_at'] = $result->as_at;
 		$data['total_tests'] = 0;
 
 		foreach ($result->unique as $key => $value) {
