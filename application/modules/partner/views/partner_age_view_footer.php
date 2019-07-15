@@ -61,7 +61,6 @@
 
 			var posting = $.post( "<?php echo base_url();?>template/filter_partner_age_data", { ageCat: age } );
 			posting.done(function( adata ) {
-				console.log(adata);
 				$.get("<?php echo base_url();?>partner/check_partner_select", function (data) {
 					partner = JSON.parse(data);
 					if (partner==null||partner==""||partner==undefined) {

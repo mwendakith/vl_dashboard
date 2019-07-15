@@ -226,7 +226,6 @@ class Ages_model extends MY_Model
 
 	function ages_gender($year=NULL,$month=NULL,$age_cat=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
-		echo "<pre>";print_r($partner);die();
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['age_cat' => $age_cat, 'partner' => $partner]);
 		extract($d);
 
