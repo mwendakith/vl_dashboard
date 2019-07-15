@@ -26,27 +26,10 @@ class Ages_model extends MY_Model
 
 	function ages_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = null;
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
+		extract($d);
 
-		if ($partner==null) {
+		if (!isset($partner)) {
 			$sql = "CALL `proc_get_vl_age_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_age_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -90,26 +73,9 @@ class Ages_model extends MY_Model
 
 	function partner_ages_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null,$age_cat=null)
 	{
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['age_cat' => $age_cat]);
+		extract($d);
 
-		if ($age_cat==null || $age_cat=='null') {
-			$age_cat = $this->session->userdata('age_category_filter');
-		}
 		$age_cat = $this->build_Inarray($age_cat);
 				
 		$sql = "CALL `proc_get_vl_partner_age_suppression`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";	
@@ -149,32 +115,12 @@ class Ages_model extends MY_Model
 
 	function ages_vl_outcomes($year=NULL,$month=NULL,$age_cat=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
-		if ($age_cat==null || $age_cat=='null') {
-			$age_cat = $this->session->userdata('age_category_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = null;
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['age_cat' => $age_cat, 'partner' => $partner]);
+		extract($d);
 		
 		$age_cat = $this->build_Inarray($age_cat);
 		
-		if ($partner==null) {
+		if (!isset($partner)) {
 			$sql = "CALL `proc_get_vl_age_vl_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_age_vl_outcomes`('".$partner."','".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -224,21 +170,21 @@ class Ages_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt; 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml:</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
 	    		<td>'.round((@($greater/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt 400 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt= 400 copies/ml:</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml:</td>
 	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
@@ -247,13 +193,13 @@ class Ages_model extends MY_Model
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Baseline VLs:</td>
 	    		<td>'.number_format($value['baseline']).'</td>
-	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>Non Suppression ( &gt;= 1000cpml)</td>
 	    		<td>'.number_format($value['baselinesustxfail']). ' (' .round(@($value['baselinesustxfail'] * 100 / $value['baseline']), 1). '%)' .'</td>
 	    	</tr>
 	    	<tr>
 	    		<td>&nbsp;&nbsp;&nbsp;Confirmatory Repeat Tests:</td>
 	    		<td>'.number_format($value['confirmtx']).'</td>
-	    		<td>Non Suppression ( &gt; 1000cpml)</td>
+	    		<td>Non Suppression ( &gt;= 1000cpml)</td>
 	    		<td>'.number_format($value['confirm2vl']). ' (' .round(@($value['confirm2vl'] * 100 / $value['confirmtx']), 1). '%)' .'</td>
 	    	</tr>
  
@@ -280,31 +226,12 @@ class Ages_model extends MY_Model
 
 	function ages_gender($year=NULL,$month=NULL,$age_cat=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
-		$age_cat = $this->build_Inarray($age_cat);
-		if ($age_cat==null || $age_cat=='null') {
-			$age_cat = $this->session->userdata('age_category_filter');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = null;
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['age_cat' => $age_cat, 'partner' => $partner]);
+		extract($d);
 
-		if ($partner==null) {
+		$age_cat = $this->build_Inarray($age_cat);
+
+		if (!isset($partner)) {
 			$sql = "CALL `proc_get_vl_age_gender`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_age_gender`('".$partner."','".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -487,27 +414,10 @@ class Ages_model extends MY_Model
 		$default = 0;
 		$li = '';
 		$table = '';
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		//Assigning the value of the month or setting it to the selected value
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
 
-		if ($age_cat==null || $age_cat=='null') {
-			$age_cat = $this->session->userdata('age_category_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['age_cat' => $age_cat]);
+		extract($d);
+
 		$age_cat = $this->build_Inarray($age_cat);
 		
 		if ($county == 1 || $county == '1') {
@@ -569,34 +479,12 @@ class Ages_model extends MY_Model
 
 	function county_outcomes($year=null,$month=null,$age_cat=null,$to_year=null,$to_month=null,$partner=null)
 	{
-		
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['age_cat' => $age_cat, 'partner' => $partner]);
+		extract($d);
+
 		$age_cat = $this->build_Inarray($age_cat);
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		//Assigning the value of the month or setting it to the selected value
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = null;
-		}
 
-		if ($age_cat==null || $age_cat=='null') {
-			$age_cat = $this->session->userdata('age_category_filter');
-		}
-
-		if ($partner==null) {
+		if (!isset($partner)) {
 			$sql = "CALL `proc_get_vl_county_age_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_county_age_outcomes`('".$partner."','".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -633,31 +521,12 @@ class Ages_model extends MY_Model
 		return $data;
 	}
 
-	function age_regimens($year=NULL,$month=NULL,$age=NULL,$to_year=NULL,$to_month=NULL)
+	function age_regimens($year=NULL,$month=NULL,$age_cat=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$age = $age[0];
-		// $age = $this->build_Inarray($age);
-		if ($year==null || $year=='null') {
-			$year = $this->session->userdata('filter_year');
-		}
-		if ($to_month==null || $to_month=='null') {
-			$to_month = 0;
-		}
-		if ($to_year==null || $to_year=='null') {
-			$to_year = 0;
-		}
-		//Assigning the value of the month or setting it to the selected value
-		if ($month==null || $month=='null') {
-			if ($this->session->userdata('filter_month')==null || $this->session->userdata('filter_month')=='null') {
-				$month = 0;
-			}else {
-				$month = $this->session->userdata('filter_month');
-			}
-		}
-
-		if ($age==null || $age=='null') {
-			$age = $this->session->userdata('age_category_filter');
-		}
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['age_cat' => $age_cat]);
+		extract($d);
+		$age_cat = $this->build_Inarray($age_cat);
+		$age = $age_cat[0];
 
 		$sql = "CALL `proc_get_vl_age_regimen`('".$age."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		

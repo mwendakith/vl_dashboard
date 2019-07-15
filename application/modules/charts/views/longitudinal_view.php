@@ -1,6 +1,6 @@
 <div  style="margin-left:2em;">
     <p>
-     Patients on Art as at September, 30 2017 - <?php echo number_format($trends['total_patients']) ; ?> <br />
+     Patients on Art as reported on DHIS as at <?php echo date('F', strtotime($trends['as_at'])) . ', ' . date('Y', strtotime($trends['as_at'])); ?>  - <?php echo number_format($trends['total_patients']) ; ?> <br />
      Total Unique Patients Tested - <?php echo number_format($trends['unique_patients']) ; ?> <br />
 
         <?php  
@@ -30,7 +30,7 @@
                 type: 'column'
             },
             title: {
-                text: '<?php echo $trends['title'];?>'
+                text: "<?php echo $trends['title'];?>"
             },
             xAxis: {
                 categories: <?php echo json_encode($trends['categories']);?>
@@ -51,12 +51,13 @@
                 }
             },
             legend: {
-                layout: 'vertical',
-                align: 'right',
-                x: -50,
-                verticalAlign: 'top',
-                y: 30,
-                floating: true,
+                layout: 'horizontal',
+                align: 'left',
+                x: 5,
+                verticalAlign: 'bottom',
+                y: 5,
+                floating: false,
+                width: $(window).width() - 20,
                 backgroundColor: '#FFFFFF'
             },
             series: <?php echo json_encode($trends['outcomes']);?>

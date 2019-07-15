@@ -9,7 +9,7 @@ BEGIN
                 FROM `vl_national_justification` `vnj`
                 JOIN `viraljustifications` `vj` 
                     ON `vnj`.`justification` = `vj`.`ID`
-                WHERE 1";
+                WHERE `vj`.`flag` = 1";
 
     IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
