@@ -9,7 +9,7 @@ BEGIN
                 FROM `vl_site_justification` `vsj`
                 JOIN `viraljustifications` `vj` 
                     ON `vsj`.`justification` = `vj`.`ID`
-                WHERE 1";
+                WHERE `vj`.`flag` = 1";
 
 
     IF (from_month != 0 && from_month != '') THEN
