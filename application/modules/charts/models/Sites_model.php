@@ -18,7 +18,7 @@ class Sites_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
 		extract($d);
 
-		if (isset($partner)) {
+		if ($partner) {
 			$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		}  else {
 			$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
