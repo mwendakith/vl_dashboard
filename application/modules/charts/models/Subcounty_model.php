@@ -246,7 +246,7 @@ class Subcounty_model extends MY_Model
 			$data['ul'] .= '
 			<tr>
 	    		<td>Total VL tests done:</td>
-	    		<td>'.number_format($total_tests ).'</td>
+	    		<td>'.number_format($total_tests ). '</td>
 	    		<td>Non Suppression</td>
 	    		<td>'. number_format($non_suppressed) . ' (' . round((($non_suppressed / $total_tests  )*100),1).'%</td>
 	    	</tr>
