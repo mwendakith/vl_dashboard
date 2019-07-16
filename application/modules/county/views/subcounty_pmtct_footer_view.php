@@ -18,8 +18,8 @@
 		$("#subcounty_div").load("<?= @base_url('charts/subcounties/subcounty_outcomes'); ?>");
 
 		$("#sub_county_drpd").change(function(){
-			subcounty = $(this).val();
-			var posting = $.post( "<?= @base_url();?>template/filter_sub_county_data", { subCounty: subcounty } );
+			em = $(this).val();
+			var posting = $.post( "<?= @base_url();?>template/filter_sub_county_data", { subCounty: em } );
 			// After setting the sub county data
 			posting.done(function( subcounty ) {
 				if (subcounty==null||subcounty=='null'||subcounty==undefined||subcounty=='') 
