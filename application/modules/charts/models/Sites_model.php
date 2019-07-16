@@ -309,7 +309,6 @@ class Sites_model extends MY_Model
 		$data['categories'] = array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
 		$data["sample_types"][0]["data"][0]	= $count;
 		$data["sample_types"][1]["data"][0]	= $count;
-		$data["sample_types"][2]["data"][0]	= $count;
 
 		foreach ($months as $key => $value) {
 			foreach ($result as $key1 => $value1) {
