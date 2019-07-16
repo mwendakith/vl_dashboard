@@ -69,7 +69,7 @@ class Pmtct_model extends MY_Model
 		$default = $pmtcttype = $partner = $national = $county = $subcounty = $site = 0;
 		$d = $this->extract_variables($year, $month, $to_year, $to_month);
 		extract($d);
-
+		echo "<pre>";print_r($d);die();
 		if ($pmtcttype==null || $pmtcttype=='null') {
 			if($this->session->userdata('pmtct_filter'))
 				$pmtcttype = $this->session->userdata('pmtct_filter');
