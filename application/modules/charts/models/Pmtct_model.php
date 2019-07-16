@@ -71,11 +71,17 @@ class Pmtct_model extends MY_Model
 		extract($d);
 
 		if ($pmtcttype==null || $pmtcttype=='null') {
-			$pmtcttype = $this->session->userdata('pmtct_filter');
+			if($this->session->userdata('pmtct_filter'))
+				$pmtcttype = $this->session->userdata('pmtct_filter');
+			else
+				$pmtcttype = 0;
 		}
 
 		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
+			if($this->session->userdata('partner_filter'))
+				$partner = $this->session->userdata('partner_filter');
+			else
+				$partner = 0;
 		}
 		if ($national==null || $national=='null') {
 			$national = $default;
