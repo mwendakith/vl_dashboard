@@ -851,8 +851,8 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['name'] = '401 - 999 copies/ml';
 		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml';
 
-		$data['vl_outcomes']['data'][0]['y'] = (int) $result->less1000;
-		$data['vl_outcomes']['data'][1]['y'] = (int) $result->undetected;
+		$data['vl_outcomes']['data'][0]['y'] = (int) $result->undetected;
+		$data['vl_outcomes']['data'][1]['y'] = (int) $result->less1000;
 		$data['vl_outcomes']['data'][2]['y'] = (int) $result->nonsuppressed;
 
 		$data['vl_outcomes']['data'][0]['z'] = number_format($result->less1000);
