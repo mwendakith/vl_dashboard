@@ -97,13 +97,15 @@
                         [
                             'name' => 'Covered',
                             'y' => $trends['coverage'],
-                            'z' => $trends['unique_patients'],
+                            'z' => number_format($trends['unique_patients']),
                             'color' => '#66ff66',
+                            'sliced' => true,
+                            'selected' => true,
                         ],
                         [
                             'name' => 'Not Covered',
                             'y' => (100.0 - $trends['coverage']),
-                            'z' => ($trends['total_patients'] - $trends['unique_patients']),
+                            'z' => number_format($trends['total_patients'] - $trends['unique_patients']),
                             'color' => '#F2784B',
                         ],
                     ],
