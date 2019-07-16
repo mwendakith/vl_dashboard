@@ -81,15 +81,24 @@ class Pmtct_model extends MY_Model
 			$national = $default;
 		}
 		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
+			if($this->session->userdata('county_filter'))
+				$county = $this->session->userdata('county_filter');
+			else
+				$county = 0;
 		}
 		if ($subcounty==null || $subcounty=='null') {
-			$subcounty = $this->session->userdata('sub_county_filter');
+			if($this->session->userdata('sub_county_filter'))
+				$subcounty = $this->session->userdata('sub_county_filter');
+			else
+				$subcounty = 0;
 		}
 		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
+			if($this->session->userdata('site_filter'))
+				$site = $this->session->userdata('site_filter');
+			else
+				$site = 0;
 		}
-		$sql = "CALL `proc_get_vl_pmtct_suppression`('".$pmtcttype."','".$year."','".$default."','".$to_year."','".$default."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
+		$sql = "CALL `proc_get_vl_pmtct_suppression`('".$pmtcttype."','".$year."','".$default."','".$to_month."','".$default."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result();
 		// echo "<pre>";print_r($result);die();
