@@ -100,9 +100,9 @@ class Pmtct_model extends MY_Model
 				$site = $this->session->userdata('site_filter');
 		}
 		$sql = "CALL `proc_get_vl_pmtct_suppression`('".$pmtcttype."','".$year."','".$default."','".$to_month."','".$default."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
-		echo "<pre>";print_r($sql);die();
+		
 		$result = $this->db->query($sql)->result();
-		// echo "<pre>";print_r($result);die();
+		
 		$data['outcomes'][0]['name'] = "Not Suppressed";
 		$data['outcomes'][1]['name'] = "Suppressed";
 		$data['outcomes'][2]['name'] = "Suppression";
