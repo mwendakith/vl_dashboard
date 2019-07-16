@@ -69,7 +69,7 @@ class Pmtct_model extends MY_Model
 		$default = $pmtcttype = $partner = $national = $county = $subcounty = $site = 0;
 		$d = $this->extract_variables($year, $month, $to_year, $to_month);
 		extract($d);
-		echo "<pre>";print_r($d);die();
+		
 		if ($pmtcttype==null || $pmtcttype=='null') {
 			if($this->session->userdata('pmtct_filter'))
 				$pmtcttype = $this->session->userdata('pmtct_filter');
@@ -95,7 +95,7 @@ class Pmtct_model extends MY_Model
 				$site = $this->session->userdata('site_filter');
 		}
 		$sql = "CALL `proc_get_vl_pmtct_suppression`('".$pmtcttype."','".$year."','".$default."','".$to_month."','".$default."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result();
 		// echo "<pre>";print_r($result);die();
 		$data['outcomes'][0]['name'] = "Not Suppressed";
