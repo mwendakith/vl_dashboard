@@ -66,16 +66,18 @@ class Pmtct_model extends MY_Model
 
 	public function suppression($year=null,$month=null,$pmtcttype=null,$to_year=null,$to_month=null,$partner=null,$national=null,$county=null,$subcounty=null,$site=null)
 	{
-		$default = $pmtcttype = $partner = $national = $county = $subcounty = $site = 0;
+		$default = 0;
 		$d = $this->extract_variables($year, $month, $to_year, $to_month);
 		extract($d);
-		
+
 		if ($pmtcttype==null || $pmtcttype=='null') {
+			$pmtcttype = $default;
 			if($this->session->userdata('pmtct_filter'))
 				$pmtcttype = $this->session->userdata('pmtct_filter');
 		}
 
 		if ($partner==null || $partner=='null') {
+			$partner = $default;
 			if($this->session->userdata('partner_filter'))
 				$partner = $this->session->userdata('partner_filter');
 		}
@@ -83,14 +85,17 @@ class Pmtct_model extends MY_Model
 			$national = $default;
 		}
 		if ($county==null || $county=='null') {
+			$county = $default;
 			if($this->session->userdata('county_filter'))
 				$county = $this->session->userdata('county_filter');
 		}
 		if ($subcounty==null || $subcounty=='null') {
+			$subcounty = $default;
 			if($this->session->userdata('sub_county_filter'))
 				$subcounty = $this->session->userdata('sub_county_filter');
 		}
 		if ($site==null || $site=='null') {
+			$site = $default;
 			if($this->session->userdata('site_filter'))
 				$site = $this->session->userdata('site_filter');
 		}
