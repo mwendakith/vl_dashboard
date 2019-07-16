@@ -29,7 +29,7 @@ class Ages_model extends MY_Model
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
 		extract($d);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_age_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_age_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -120,7 +120,7 @@ class Ages_model extends MY_Model
 		
 		$age_cat = $this->build_Inarray($age_cat);
 		
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_age_vl_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_age_vl_outcomes`('".$partner."','".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -231,7 +231,7 @@ class Ages_model extends MY_Model
 
 		$age_cat = $this->build_Inarray($age_cat);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_age_gender`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_age_gender`('".$partner."','".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
@@ -484,7 +484,7 @@ class Ages_model extends MY_Model
 
 		$age_cat = $this->build_Inarray($age_cat);
 
-		if (!isset($partner)) {
+		if (!$partner) {
 			$sql = "CALL `proc_get_vl_county_age_outcomes`('".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_county_age_outcomes`('".$partner."','".$age_cat."','".$year."','".$month."','".$to_year."','".$to_month."')";
