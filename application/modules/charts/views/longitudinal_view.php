@@ -5,7 +5,7 @@
 
         <?php  
             for ($i=0; $i < $trends['size']; $i++) { 
-                echo "No of patients with " . $trends['categories'][$i] . " tests - " . number_format($trends['outcomes'][0]['data'][$i]) . "<br />";
+                "No of patients with " . $trends['categories'][$i] . " tests - " . number_format($trends['outcomes'][0]['data'][$i]) . "<br />";
             }
 
         ?>
@@ -13,7 +13,7 @@
     Coverage - <?php echo number_format($trends['coverage']) ; ?>% <br />
     </p>
 
-    <div id="<?php echo $div_name; ?>">
+    <div id="<?php echo $div_name; ?>abc">
 
     </div>
 </div>
