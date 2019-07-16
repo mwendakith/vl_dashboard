@@ -14,5 +14,7 @@
 		$("#second").hide();
 		$("#third").hide();
 		$("#fourth").hide();
+
+		$("#subcounty_div").load("<?= @base_url('charts/subcounties/subcounty_outcomes'); ?>");
 	});
 </script>

@@ -27,9 +27,9 @@
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		  	Counties Outcomes (Routine VL) <div class="display_date"></div>
+		  	Sub-Counties Outcomes (Routine VL) <div class="display_date"></div>
 		  </div>
-		  <div class="panel-body" id="partner_div">
+		  <div class="panel-body" id="subcounty_div">
 		    <center><div class="loader"></div></center>
 		  </div>
 		</div>
@@ -78,40 +78,10 @@
 		  </div>
 		</div>
 	</div>
-	<!-- <div class="col-md-4 col-sm-12 col-xs-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		  	Counties <div class="display_date"></div>
-		  </div>
-		  <div class="panel-body" id="pmtct_counties_listing_div">
-		    <center><div class="loader"></div></center>
-		  </div>
-		</div>
-	</div>
-	<div class="col-md-4 col-sm-12 col-xs-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		  	Partners <div class="display_date"></div>
-		  </div>
-		  <div class="panel-body" id="pmtct_partners_listing_div">
-		    <center><div class="loader"></div></center>
-		  </div>
-		</div>
-	</div>
-	<div class="col-md-4 col-sm-12 col-xs-12">
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-		  	Sites <div class="display_date"></div>
-		  </div>
-		  <div class="panel-body" id="pmtct_sites_listing_div">
-		    <center><div class="loader"></div></center>
-		  </div>
-		</div>
-	</div> -->
 	<div class="col-md-12 col-sm-12 col-xs-12">
 		<div class="panel panel-default">
 		  <div class="panel-heading">
-		  	Counties PMTCT Outcomes (Routine VL) <div class="display_date"></div>
+		  	Sub-Counties PMTCT Outcomes (Routine VL) <div class="display_date"></div>
 		  </div>
 		  <div class="panel-body" id="pmtct_counties_outcomes_div">
 		    <center><div class="loader"></div></center>
