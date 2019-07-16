@@ -62,7 +62,7 @@
 		// PMTCT dropdown select event habdler
 		$("#sub_county_pmtct").change(function(){
 			em = $(this).val();
-
+			console.log(em);
 			localStorage.setItem("subcounty_pmtct", em);
 			$.get("<?= @base_url('county/check_subcounty_select');?>", function(data){
 				subCounty = JSON.parse(data);
@@ -73,7 +73,7 @@
 						$("#first").hide();
 						$("#second").show();
 						$("#third").hide();
-						$("#fourth").show();
+						$("#fourth").hide();
 
 						$("#pmtct_outcomes_div").html("<center><div class='loader'></div></center>");
 						$("#pmtct_sup_outcomes_div").html("<center><div class='loader'></div></center>");
@@ -82,6 +82,8 @@
 
 						$("#pmtct_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+1+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+subCounty);
 						$("#pmtct_sup_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct_outcomes'); ?>/"+null+"/"+null+"/"+2+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+subCounty);
+
+						// Should be showing removed temporarily
 						$("#pmtct_suppression_all_div").load("<?= @base_url('charts/pmtct/pmtct_suppression');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+subCounty);
 						$("#pmtct_vl_outcomes_all_div").load("<?= @base_url('charts/pmtct/pmtct_vl_outcomes');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+subCounty);
 					} else {
