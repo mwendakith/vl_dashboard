@@ -594,43 +594,43 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function get_sampletypesData($year=null,$county=null,$partner=null)
+	function get_sampletypesData($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$id=NULL,$all=NULL)
 	{
 		$array1 = array();
-		$array2 = array();
-		$sql2 = NULL;
- 
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
-		}
- 
- 
-		if ($year==null || $year=='null') {
-			$to = $this->session->userdata('filter_year');
-		}else {
-			$to = $year;
-		}
-		$from = $to-1;
- 
-		if (!is_null($partner)) {
-			$sql = "CALL `proc_get_partner_sample_types`('".$partner."','".$from."','".$to."')";
-		} else {
-			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_sample_types`('".$from."','".$to."')";
-			} else {
-				$sql = "CALL `proc_get_regional_sample_types`('".$county."','".$from."','".$to."')";
-			}
-		}
-		// echo "<pre>";print_r($sql);die();
+		$type = (int) $type;
+		$sessionFiltersArray = ['county' => NULL, 'subcounty' => NULL, 'facility' => NULL, 'partner' => NULL, 'lab' => NULL];
+		
+		if ($type == 1)
+			$sessionFiltersArray = ['county' => $id];
+		else if ($type == 2)
+			$sessionFiltersArray = ['subcounty' => $id];
+		if ($type == 3)
+			$sessionFiltersArray = ['facility' => $id];
+		else if ($type == 4)
+			$sessionFiltersArray = ['partner' => $id];
+		else if ($type == 5)
+			$sessionFiltersArray = ['lab' => $id];
+		
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, $sessionFiltersArray);
+		// echo "<pre>";print_r($d);die();
+		extract($d);
+		
+		$type = $id = 0;
+
+ 		if (isset($county)){$type = 1; $id = $county;}
+ 		else if(isset($subcounty)){$type = 2; $id = $subcounty;}
+ 		else if(isset($facility)){$type = 3; $id = $facility;}
+ 		else if(isset($partner)){$type = 4; $id = $partner;}
+ 		else if(isset($lab)){$type = 5; $id = $lab;}
+
+		$sql = "CALL `proc_get_vl_sample_types_trends`('".$type."','".$id."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		
 		$array1 = $this->db->query($sql)->result_array();
 		return $array1;
 	}
  
-	function sample_types($year=null,$county=null,$partner=null, $all=null) {
-		$result = $this->get_sampletypesData($year,$county,$partner);
+	function sample_types($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$id=NULL,$all=NULL) {
+		$result = $this->get_sampletypesData($year,$month,$to_year,$to_month,$type,$id,$all);
 		
 		$data['sample_types'][0]['name'] = 'Plasma';
 		$data['sample_types'][1]['name'] = 'DBS';
