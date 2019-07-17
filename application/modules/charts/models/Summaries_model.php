@@ -599,7 +599,7 @@ class Summaries_model extends MY_Model
 		$array1 = array();
 		$type = (int) $type;
 		$sessionFiltersArray = NULL;
-		echo "<pre>";print_r($type);die();
+		
 		if ($type == 1)
 			$sessionFiltersArray = ['county' => $id];
 		else if ($type == 2)
@@ -610,7 +610,7 @@ class Summaries_model extends MY_Model
 			$sessionFiltersArray = ['partner' => $id];
 		else if ($type == 5)
 			$sessionFiltersArray = ['lab' => $id];
-		echo "<pre>";print_r($sessionFiltersArray);die();
+		
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, $sessionFiltersArray);
 		extract($d);
 		echo "<pre>";print_r($d);die();
