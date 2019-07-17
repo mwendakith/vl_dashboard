@@ -34,7 +34,6 @@
 	        		data = JSON.parse(data);
 	        	}
 	        	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
-	        		console.log('County'+data);
 	        		$("#breadcrum").html(data);
 	        	});
 	        	$.get("<?php echo base_url();?>template/dates", function(data){
