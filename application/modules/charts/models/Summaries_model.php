@@ -599,15 +599,15 @@ class Summaries_model extends MY_Model
 		$array1 = array();
 		$type = (int) $type;
 		$sessionFiltersArray = NULL;
-		if ($type = 1)
+		if ($type == 1)
 			$sessionFiltersArray = ['county' => $id];
-		else if ($type = 2)
+		else if ($type == 2)
 			$sessionFiltersArray = ['subcounty' => $id];
-		if ($type = 3)
+		if ($type == 3)
 			$sessionFiltersArray = ['facility' => $id];
-		else if ($type = 4)
+		else if ($type == 4)
 			$sessionFiltersArray = ['partner' => $id];
-		else if ($type = 5)
+		else if ($type == 5)
 			$sessionFiltersArray = ['lab' => $id];
 
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, $sessionFiltersArray);
