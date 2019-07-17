@@ -612,6 +612,7 @@ class Summaries_model extends MY_Model
 			$sessionFiltersArray = ['lab' => $id];
 		
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, $sessionFiltersArray);
+		echo "<pre>";print_r($d);die();
 		extract($d);
 		
 		$type = $id = 0;
