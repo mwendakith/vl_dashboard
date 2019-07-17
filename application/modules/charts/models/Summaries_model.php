@@ -594,11 +594,12 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function get_sampletypesData($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=1,$id=1,$all=NULL)
+	function get_sampletypesData($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$id=NULL,$all=NULL)
 	{
 		$array1 = array();
 		$type = (int) $type;
 		$sessionFiltersArray = NULL;
+		echo "<pre>";print_r($type);die();
 		if ($type == 1)
 			$sessionFiltersArray = ['county' => $id];
 		else if ($type == 2)
