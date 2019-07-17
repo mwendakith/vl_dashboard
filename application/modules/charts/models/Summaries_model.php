@@ -616,11 +616,11 @@ class Summaries_model extends MY_Model
 		
 		$type = $id = 0;
 
- 		if (isset($county)){$type = 1; $id = $county}
- 		else if(isset($subcounty)){$type = 2; $id = $subcounty}
- 		else if(isset($facility)){$type = 3; $id = $facility}
- 		else if(isset($partner)){$type = 4; $id = $partner}
- 		else if(isset($lab)){$type = 5; $id = $lab}
+ 		if (isset($county)){$type = 1; $id = $county;}
+ 		else if(isset($subcounty)){$type = 2; $id = $subcounty;}
+ 		else if(isset($facility)){$type = 3; $id = $facility;}
+ 		else if(isset($partner)){$type = 4; $id = $partner;}
+ 		else if(isset($lab)){$type = 5; $id = $lab;}
 
 		$sql = "CALL `proc_get_vl_sample_types_trends`('".$type."','".$id."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		echo "<pre>";print_r($sql);die();
