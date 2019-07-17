@@ -90,6 +90,10 @@
 		    var error_check = check_error_date_range(from, to);
 		    
 		    if (!error_check) {
+		    	$.get("<?php echo base_url();?>county/check_county_select", function (data) {
+		    		county = data;
+		    		console.log(county);
+		    	});
 			    $("#nattat").html("<div>Loading...</div>");
 		 		$("#samples").html("<center><div class='loader'></div></center>"); 
 				$("#vlOutcomes").html("<center><div class='loader'></div></center>");
