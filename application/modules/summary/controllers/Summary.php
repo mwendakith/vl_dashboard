@@ -22,8 +22,4 @@ class Summary extends MY_Controller {
 		// echo "<pre>";print_r($this->data);die();
 		$this -> template($this->data);
 	}
-
-	// public function check_county_select(){
-
-	// }
 }
