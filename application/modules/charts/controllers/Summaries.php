@@ -78,9 +78,10 @@ class Summaries extends MY_Controller {
 	function sample_types($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$id=NULL,$all=NULL)
 	{
 		$data['outcomes'] = $this->summaries_model->sample_types($year,$month,$to_year,$to_month,$type,$id,$all);
-		$link = $year . '/' . $county . '/' . $partner;
+		// $link = $year . '/' . $county . '/' . $partner;
 
-		$data['link'] = base_url('charts/summaries/download_sampletypes/' . $link);
+		// $data['link'] = base_url('charts/summaries/download_sampletypes/' . $link);
+		$data['link'] = "#";
 
     	$this->load->view('national_sample_types',$data);
 	}
