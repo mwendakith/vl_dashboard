@@ -12,6 +12,7 @@ class Summary extends MY_Controller {
 		$this->session->set_userdata('partner_filter', NULL);
 		$this->load->module('charts/summaries');
 		$this->data['cout'] = TRUE;
+		$this->clear_all_session_data();
 	}
 
 	public function index()
@@ -21,4 +22,8 @@ class Summary extends MY_Controller {
 		// echo "<pre>";print_r($this->data);die();
 		$this -> template($this->data);
 	}
+
+	// public function check_county_select(){
+
+	// }
 }

@@ -64,7 +64,7 @@
 					$("#coverage").load("<?php echo base_url('charts/summaries/vl_coverage'); ?>");
 				}
 				
-				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+data+"/"+null+"/"+all);
+				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+1+"/"+data+"/"+all);
 				$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+null+"/"+null+"/"+data); 
 				$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+null+"/"+null+"/"+data); 
 				$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+null+"/"+null+"/"+data); 
@@ -100,7 +100,7 @@
 		 		$("#county").html("<center><div class='loader'></div></center>");
 
 				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
-				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+from[1]+"/"+null+"/"+null+"/"+all);
+				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+null+"/"+null+"/"+all);
 		 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
 				$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]); 
 				$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]); 
@@ -143,7 +143,7 @@
 	 		$("#county").html("<center><div class='loader'></div></center>");
 
 			$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+year+"/"+month);
-			$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year+"/"+null+"/"+null+"/"+all);
+			$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+null+"/"+all);
 	 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+year+"/"+month);
 			$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+year+"/"+month); 
 			$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+year+"/"+month); 
@@ -168,7 +168,7 @@
 			$("#samples_heading").html('Testing Trends for Routine VL');
 			$("#switchButton").val('Click to Switch to All Tests');
 		}
-		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+all);
+		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+all);
 
 	}
 

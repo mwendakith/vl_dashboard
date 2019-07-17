@@ -598,7 +598,7 @@ class Summaries_model extends MY_Model
 	{
 		$array1 = array();
 		$type = (int) $type;
-		$sessionFiltersArray = NULL;
+		$sessionFiltersArray = ['county' => NULL, 'subcounty' => NULL, 'facility' => NULL, 'partner' => NULL, 'lab' => NULL];
 		
 		if ($type == 1)
 			$sessionFiltersArray = ['county' => $id];
