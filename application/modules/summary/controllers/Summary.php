@@ -12,11 +12,11 @@ class Summary extends MY_Controller {
 		$this->session->set_userdata('partner_filter', NULL);
 		$this->load->module('charts/summaries');
 		$this->data['cout'] = TRUE;
-		$this->clear_all_session_data();
 	}
 
 	public function index()
 	{
+		$this->clear_all_session_data();
 		// echo $_SERVER['SERVER_PORT'],"<___>".base_url();die();
 		$this->data['content_view'] = 'summary/summary_view';
 		// echo "<pre>";print_r($this->data);die();
