@@ -594,12 +594,27 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function get_sampletypesData($year=null,$county=null,$partner=null)
+	function get_sampletypesData($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$id=NULL,$all=NULL)
 	{
 		$array1 = array();
-		$array2 = array();
-		$sql2 = NULL;
- 
+		$type = (int) $type;
+		$sessionFiltersArray = NULL;
+		if ($type = 1)
+			$sessionFiltersArray = ['county' => $id];
+		else if ($type = 2)
+			$sessionFiltersArray = ['subcounty' => $id];
+		if ($type = 3)
+			$sessionFiltersArray = ['facility' => $id];
+		else if ($type = 4)
+			$sessionFiltersArray = ['partner' => $id];
+		else if ($type = 5)
+			$sessionFiltersArray = ['lab' => $id];
+
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, $sessionFiltersArray);
+		extract($d);
+		echo "<pre>";print_r($d);die();
+
+ 		
 		if ($county==null || $county=='null') {
 			$county = $this->session->userdata('county_filter');
 		}
@@ -629,8 +644,8 @@ class Summaries_model extends MY_Model
 		return $array1;
 	}
  
-	function sample_types($year=null,$county=null,$partner=null, $all=null) {
-		$result = $this->get_sampletypesData($year,$county,$partner);
+	function sample_types($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$id=NULL,$all=NULL) {
+		$result = $this->get_sampletypesData($year,$month,$to_year,$to_month,$type,$id,$all);
 		
 		$data['sample_types'][0]['name'] = 'Plasma';
 		$data['sample_types'][1]['name'] = 'DBS';
