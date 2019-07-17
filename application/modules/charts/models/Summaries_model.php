@@ -609,7 +609,7 @@ class Summaries_model extends MY_Model
 			$sessionFiltersArray = ['partner' => $id];
 		else if ($type == 5)
 			$sessionFiltersArray = ['lab' => $id];
-
+		echo "<pre>";print_r($sessionFiltersArray);die();
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, $sessionFiltersArray);
 		extract($d);
 		echo "<pre>";print_r($d);die();
