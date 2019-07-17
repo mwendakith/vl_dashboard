@@ -16,7 +16,7 @@ BEGIN
 					SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`) AS `tests`,
 					(SUM(`Undetected`)+SUM(`less1000`))*100/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `suppression`";
 
-    IF (type = 0) THEN # fOR THE NATIONAL
+    IF (type = 0 || type = '') THEN # fOR THE NATIONAL
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_summary` WHERE 1 ");
     END IF;
     IF (type = 1) THEN # For the county

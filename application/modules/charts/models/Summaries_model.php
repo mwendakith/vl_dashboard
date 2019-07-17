@@ -613,34 +613,17 @@ class Summaries_model extends MY_Model
 		
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, $sessionFiltersArray);
 		extract($d);
-		echo "<pre>";print_r($d);die();
+		
+		$type = $id = 0;
 
- 		
-		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
-		}
-		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
-		}
- 
- 
-		if ($year==null || $year=='null') {
-			$to = $this->session->userdata('filter_year');
-		}else {
-			$to = $year;
-		}
-		$from = $to-1;
- 
-		if (!is_null($partner)) {
-			$sql = "CALL `proc_get_partner_sample_types`('".$partner."','".$from."','".$to."')";
-		} else {
-			if ($county==null || $county=='null') {
-				$sql = "CALL `proc_get_national_sample_types`('".$from."','".$to."')";
-			} else {
-				$sql = "CALL `proc_get_regional_sample_types`('".$county."','".$from."','".$to."')";
-			}
-		}
-		// echo "<pre>";print_r($sql);die();
+ 		if (isset($county)){$type = 1; $id = $county}
+ 		else if(isset($subcounty)){$type = 2; $id = $subcounty}
+ 		else if(isset($facility)){$type = 3; $id = $facility}
+ 		else if(isset($partner)){$type = 4; $id = $partner}
+ 		else if(isset($lab)){$type = 5; $id = $lab}
+
+		$sql = "CALL `proc_get_vl_sample_types_trends`('".$type."','".$id."','".$year."','".$month."','".$to_year."','".$to_month."')";
+		echo "<pre>";print_r($sql);die();
 		$array1 = $this->db->query($sql)->result_array();
 		return $array1;
 	}
