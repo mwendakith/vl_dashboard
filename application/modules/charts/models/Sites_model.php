@@ -301,23 +301,20 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($result);die();
 		$months = array(1,2,3,4,5,6,7,8,9,10,11,12);
 
-		$data['sample_types'][0]['name'] = 'EDTA';
-		$data['sample_types'][1]['name'] = 'DBS';
-		$data['sample_types'][2]['name'] = 'Plasma';
+		$data['sample_types'][0]['name'] = 'DBS';
+		$data['sample_types'][1]['name'] = 'Plasma';
 
 		$count = 0;
 		
 		$data['categories'] = array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
 		$data["sample_types"][0]["data"][0]	= $count;
 		$data["sample_types"][1]["data"][0]	= $count;
-		$data["sample_types"][2]["data"][0]	= $count;
 
 		foreach ($months as $key => $value) {
 			foreach ($result as $key1 => $value1) {
 				if ((int) $value == (int) $value1['month']) {
-					$data["sample_types"][0]["data"][$key]	= (int) $value1['edta'];
-					$data["sample_types"][1]["data"][$key]	= (int) $value1['dbs'];
-					$data["sample_types"][2]["data"][$key]	= (int) $value1['plasma'];
+					$data["sample_types"][0]["data"][$key]	= (int) $value1['dbs'];
+					$data["sample_types"][1]["data"][$key]	= (int) ($value1['plasma'] + $value1['edta']);
 
 					$count++;
 				}

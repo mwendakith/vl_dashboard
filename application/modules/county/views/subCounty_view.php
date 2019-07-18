@@ -38,7 +38,7 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading" onclick="switch_source()">
-			    <div id="samples_heading">Testing Trends for Routine VL</div> (Click to switch)<div class="display_range"></div>
+			    <div id="samples_heading">Testing Trends for Routine VL</div> (Click to switch)<div class="display_date"></div>
 			  </div>
 			  <div class="panel-body" id="samples">
 			    <center><div class="loader"></div></center>

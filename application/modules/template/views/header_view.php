@@ -131,6 +131,7 @@
 								<li><a href="<?php echo base_url();?>county/pmtct">County PMTCT</a></li>
 								<li><a href="<?php echo base_url();?>county/tat">County TAT</a></li>
 								<li><a href="<?php echo base_url();?>county/subCounty">Sub-County</a></li>
+								<li><a href="<?php echo base_url();?>county/subcountypmtct">Sub-County PMTCT</a></li>
 								<li><a href="<?php echo base_url();?>county/subCountytat">Sub-County TAT</a></li>
 							</ul>
 						</li>

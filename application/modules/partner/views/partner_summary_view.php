@@ -14,7 +14,7 @@
 		<div class="panel panel-default">
 		  <div class="panel-heading" style="min-height: 4em;">
 		  	<div class="col-sm-3">
-		  		<div id="samples_heading">Testing Trends for Routine VL</div> <div class="display_range"></div>
+		  		<div id="samples_heading">Testing Trends for Routine VL</div> <div class="display_date"></div>
 		  	</div>
 		    <div class="col-sm-3">
 		    	<input type="submit" class="btn btn-primary" id="switchButton" onclick="switch_source()" value="Click to Switch to All Tests">

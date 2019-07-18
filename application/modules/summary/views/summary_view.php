@@ -78,7 +78,7 @@
 		<div class="panel panel-default">
 		  <div class="panel-heading" style="min-height: 4em;">
 		  	<div class="col-sm-3">
-		  		<div id="samples_heading">Testing Trends for Routine VL</div> <div class="display_range"></div>
+		  		<div id="samples_heading">Testing Trends for Routine VL</div> <div class="display_date"></div>
 		  	</div>
 		    <div class="col-sm-3">
 		    	<input type="submit" class="btn btn-primary" id="switchButton" onclick="switch_source()" value="Click to Switch to All Tests">
@@ -123,7 +123,7 @@
 		    <center><div class="loader"></div></center>
 		  </div>
 		  <div>
-		  	<center><button class="btn btn-default" onclick="ageModal();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">Click here for breakdown</button></center>
+		  	<!-- <center><button class="btn btn-default" onclick="ageModal();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">Click here for breakdown</button></center> -->
 		  </div>
 		</div>
 	</div>

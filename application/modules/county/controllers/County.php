@@ -57,6 +57,14 @@ class County extends MY_Controller {
 		$this->template($this->data);
 	}
 
+	public function subcountypmtct() {
+		$this->clear_all_session_data();
+		$this->data['sub_county'] = TRUE;
+		$this->data['content_view'] = 'county/subcounty_pmtct_view';
+
+		$this->template($this->data);
+	}
+
 	function countyMap()
 	{
 		$this->data['county'] = TRUE;
