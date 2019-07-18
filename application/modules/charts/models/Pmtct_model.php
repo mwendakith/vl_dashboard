@@ -71,28 +71,38 @@ class Pmtct_model extends MY_Model
 		extract($d);
 
 		if ($pmtcttype==null || $pmtcttype=='null') {
-			$pmtcttype = $this->session->userdata('pmtct_filter');
+			$pmtcttype = $default;
+			if($this->session->userdata('pmtct_filter'))
+				$pmtcttype = $this->session->userdata('pmtct_filter');
 		}
 
 		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
+			$partner = $default;
+			if($this->session->userdata('partner_filter'))
+				$partner = $this->session->userdata('partner_filter');
 		}
 		if ($national==null || $national=='null') {
 			$national = $default;
 		}
 		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
+			$county = $default;
+			if($this->session->userdata('county_filter'))
+				$county = $this->session->userdata('county_filter');
 		}
 		if ($subcounty==null || $subcounty=='null') {
-			$subcounty = $this->session->userdata('sub_county_filter');
+			$subcounty = $default;
+			if($this->session->userdata('sub_county_filter'))
+				$subcounty = $this->session->userdata('sub_county_filter');
 		}
 		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
+			$site = $default;
+			if($this->session->userdata('site_filter'))
+				$site = $this->session->userdata('site_filter');
 		}
-		$sql = "CALL `proc_get_vl_pmtct_suppression`('".$pmtcttype."','".$year."','".$default."','".$to_year."','".$default."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
-		// echo "<pre>";print_r($sql);die();
+		$sql = "CALL `proc_get_vl_pmtct_suppression`('".$pmtcttype."','".$year."','".$default."','".$to_month."','".$default."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
+		
 		$result = $this->db->query($sql)->result();
-		// echo "<pre>";print_r($result);die();
+		
 		$data['outcomes'][0]['name'] = "Not Suppressed";
 		$data['outcomes'][1]['name'] = "Suppressed";
 		$data['outcomes'][2]['name'] = "Suppression";

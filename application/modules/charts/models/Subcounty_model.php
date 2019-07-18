@@ -369,98 +369,98 @@ class Subcounty_model extends MY_Model
 		return $data;
 	}
 
-	function get_sampletypesData($year=null,$subcounty=null)
-	{
-		$array1 = array();
-		$array2 = array();
-		$sql2 = NULL;
+	// function get_sampletypesData($year=null,$subcounty=null)
+	// {
+	// 	$array1 = array();
+	// 	$array2 = array();
+	// 	$sql2 = NULL;
 
-		if ($subcounty==null || $subcounty=='null') {
-			$subcounty = $this->session->userdata('sub_county_filter');
-		}
+	// 	if ($subcounty==null || $subcounty=='null') {
+	// 		$subcounty = $this->session->userdata('sub_county_filter');
+	// 	}
 		
-		if ($year==null || $year=='null') {
-			$to = $this->session->userdata('filter_year');
-		}else {
-			$to = $year;
-		}
-		$from = $to-1;
+	// 	if ($year==null || $year=='null') {
+	// 		$to = $this->session->userdata('filter_year');
+	// 	}else {
+	// 		$to = $year;
+	// 	}
+	// 	$from = $to-1;
 
-		$sql = "CALL `proc_get_vl_subcounty_sample_types`('".$subcounty."','".$from."','".$to."')";
-		// echo "<pre>";print_r($sql);die();
-		$array1 = $this->db->query($sql)->result_array();
-		return $array1;
+	// 	$sql = "CALL `proc_get_vl_subcounty_sample_types`('".$subcounty."','".$from."','".$to."')";
+	// 	// echo "<pre>";print_r($sql);die();
+	// 	$array1 = $this->db->query($sql)->result_array();
+	// 	return $array1;
 		
-		// if ($sql2) {
-		// 	$this->db->close();
-		// 	$array2 = $this->db->query($sql2)->result_array();
-		// }
+	// 	// if ($sql2) {
+	// 	// 	$this->db->close();
+	// 	// 	$array2 = $this->db->query($sql2)->result_array();
+	// 	// }
  
-		// return array_merge($array1,$array2);
-	}
+	// 	// return array_merge($array1,$array2);
+	// }
 
-	function subcounty_samples($year=NULL,$subcounty=NULL, $all=null)
-	{
-		$result = $this->get_sampletypesData($year,$subcounty);
+	// function subcounty_samples($year=NULL,$subcounty=NULL, $all=null)
+	// {
+	// 	$result = $this->get_sampletypesData($year,$subcounty);
 
-		$data['sample_types'][0]['name'] = 'Plasma';
-		$data['sample_types'][1]['name'] = 'DBS';
+	// 	$data['sample_types'][0]['name'] = 'Plasma';
+	// 	$data['sample_types'][1]['name'] = 'DBS';
 
-		$data['sample_types'][0]['tooltip'] = array("valueSuffix" => ' ');
-		$data['sample_types'][1]['tooltip'] = array("valueSuffix" => ' ');
+	// 	$data['sample_types'][0]['tooltip'] = array("valueSuffix" => ' ');
+	// 	$data['sample_types'][1]['tooltip'] = array("valueSuffix" => ' ');
  
-		$count = 0;
+	// 	$count = 0;
 		
-		$data['categories'][0] = 'No Data';
-		$data["sample_types"][0]["data"][0]	= $count;
-		$data["sample_types"][1]["data"][0]	= $count;
+	// 	$data['categories'][0] = 'No Data';
+	// 	$data["sample_types"][0]["data"][0]	= $count;
+	// 	$data["sample_types"][1]["data"][0]	= $count;
  
-		foreach ($result as $key => $value) {
+	// 	foreach ($result as $key => $value) {
 			
-			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
+	// 		$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
 
-			if ($all == 1) {
-				$data["sample_types"][0]["data"][$key]	= (int) ($value['alledta'] + $value['allplasma']);
-				$data["sample_types"][1]["data"][$key]	= (int) $value['alldbs'];
-			}else{
-				$data["sample_types"][0]["data"][$key]	= (int) ($value['edta'] + $value['plasma']);
-				$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
-			}
+	// 		if ($all == 1) {
+	// 			$data["sample_types"][0]["data"][$key]	= (int) ($value['alledta'] + $value['allplasma']);
+	// 			$data["sample_types"][1]["data"][$key]	= (int) $value['alldbs'];
+	// 		}else{
+	// 			$data["sample_types"][0]["data"][$key]	= (int) ($value['edta'] + $value['plasma']);
+	// 			$data["sample_types"][1]["data"][$key]	= (int) $value['dbs'];
+	// 		}
 			
-		}
+	// 	}
 		
-		return $data;
-	}
+	// 	return $data;
+	// }
 
-	function download_sampletypes($year=null,$subcounty=null)
-	{
-		$data = $this->get_sampletypesData($year,$subcounty);
-		// echo "<pre>";print_r($result);die();
-		$this->load->helper('file');
-        $this->load->helper('download');
-        $delimiter = ",";
-        $newline = "\r\n";
+	// function download_sampletypes($year=null,$subcounty=null)
+	// {
+	// 	$data = $this->get_sampletypesData($year,$subcounty);
+	// 	// echo "<pre>";print_r($result);die();
+	// 	$this->load->helper('file');
+ //        $this->load->helper('download');
+ //        $delimiter = ",";
+ //        $newline = "\r\n";
 
-	    /** open raw memory as file, no need for temp files, be careful not to run out of memory thought */
-	    $f = fopen('php://memory', 'w');
-	    /** loop through array  */
+	//     /** open raw memory as file, no need for temp files, be careful not to run out of memory thought */
+	//     $f = fopen('php://memory', 'w');
+	//     /** loop through array  */
 
-	    $b = array('Month', 'Year', 'EDTA', 'DBS', 'Plasma', 'ALL EDTA', 'ALL DBS', 'ALL Plasma', 'Suppressed', 'Tests', 'Suppression');
+	//     $b = array('Month', 'Year', 'EDTA', 'DBS', 'Plasma', 'ALL EDTA', 'ALL DBS', 'ALL Plasma', 'Suppressed', 'Tests', 'Suppression');
 
-	    fputcsv($f, $b, $delimiter);
+	//     fputcsv($f, $b, $delimiter);
 
-	    foreach ($data as $line) {
-	        /** default php csv handler **/
-	        fputcsv($f, $line, $delimiter);
-	    }
-	    /** rewrind the "file" with the csv lines **/
-	    fseek($f, 0);
-	    /** modify header to be downloadable csv file **/
-	    header('Content-Type: application/csv');
-	    header('Content-Disposition: attachement; filename="'.Date('YmdH:i:s').'vl_subcountysampleTypes.csv";');
-	    /** Send file to browser for download */
-	    fpassthru($f);
-	}
+	//     foreach ($data as $line) {
+	//         /** default php csv handler **/
+	//         fputcsv($f, $line, $delimiter);
+	//     }
+	//     /** rewrind the "file" with the csv lines **/
+	//     fseek($f, 0);
+	//     /** modify header to be downloadable csv file **/
+	//     header('Content-Type: application/csv');
+	//     header('Content-Disposition: attachement; filename="'.Date('YmdH:i:s').'vl_subcountysampleTypes.csv";');
+	//     /** Send file to browser for download */
+	//     fpassthru($f);
+	// }
 
 	function subcounty_sites($year=NULL,$month=NULL,$subcounty=NULL,$to_year=null,$to_month=null)
 	{
