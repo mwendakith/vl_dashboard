@@ -116,7 +116,7 @@ class MY_Model extends CI_Model
 			if ($partner==null || $partner=='null') {
 				$partner = $this->session->userdata('partner_filter');
 			}
-			if($partner) $data['partner'] = $partner;
+			$data['partner'] = $partner;
 		}
 
 		if(isset($others['county'])){
@@ -124,7 +124,7 @@ class MY_Model extends CI_Model
 			if ($county==null || $county=='null') {
 				$county = $this->session->userdata('county_filter');
 			}
-			if($county) $data['county'] = $county;
+			$data['county'] = $county;
 		}
 
 		if(isset($others['subcounty'])){
@@ -132,7 +132,7 @@ class MY_Model extends CI_Model
 			if ($subcounty==null || $subcounty=='null') {
 				$subcounty = $this->session->userdata('sub_county_filter');
 			}
-			if($subcounty) $data['subcounty'] = $subcounty;
+			$data['subcounty'] = $subcounty;
 		}
 
 		if(isset($others['site'])){
@@ -140,7 +140,7 @@ class MY_Model extends CI_Model
 			if ($site==null || $site=='null') {
 				$site = $this->session->userdata('site_filter');
 			}
-			if($site) $data['site'] = $site;
+			$data['site'] = $site;
 		}
 
 		if(isset($others['agency_id'])){
@@ -148,7 +148,7 @@ class MY_Model extends CI_Model
 			if ($agency_id==null || $agency_id=='null') {
 				$agency_id = $this->session->userdata('funding_agency_filter');
 			}
-			if($agency_id) $data['agency_id'] = $agency_id;
+			$data['agency_id'] = $agency_id;
 		}
 
 		if(isset($others['age_cat'])){
@@ -156,7 +156,7 @@ class MY_Model extends CI_Model
 			if ($age_cat==null || $age_cat=='null') {
 				$age_cat = $this->session->userdata('age_category_filter');
 			}
-			if($age_cat) $data['age_cat'] = $age_cat;
+			$data['age_cat'] = $age_cat;
 		}
 
 		if(isset($others['regimen'])){
@@ -164,7 +164,7 @@ class MY_Model extends CI_Model
 			if ($regimen==null || $regimen=='null') {
 				$regimen = $this->session->userdata('regimen_filter');
 			}
-			if($regimen) $data['regimen'] = $regimen;
+			$data['regimen'] = $regimen;
 		}
 
 		if(isset($others['sample'])){
@@ -172,7 +172,7 @@ class MY_Model extends CI_Model
 			if ($sample==null || $sample=='null') {
 				$sample = $this->session->userdata('sample_filter');
 			}
-			if($sample) $data['sample'] = $sample;
+			$data['sample'] = $sample;
 		}
 
 		return $data;

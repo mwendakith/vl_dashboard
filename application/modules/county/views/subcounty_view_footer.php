@@ -61,11 +61,13 @@
 					$("#samples").html("<center><div class='loader'></div></center>");
 					$("#sub_counties").html("<center><div class='loader'></div></center>");
 					
-					$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/subcounty_vl_outcomes'); ?>");
+					$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/subcounty_vl_outcomes'); ?>/"+null+"/"+null+"/"+subcounty);
 					$("#gender").load("<?php echo base_url('charts/subcounties/subcounty_gender'); ?>/"+null+"/"+null+"/"+subcounty);
 					$("#age").load("<?php echo base_url('charts/subcounties/subcounty_age'); ?>/"+null+"/"+null+"/"+subcounty); 
 					$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+null+"/"+subcounty+"/"+all);
 					$("#sub_counties").load("<?php echo base_url('charts/subcounties/subcounty_sites'); ?>/"+null+"/"+null+"/"+subcounty);
+					$("#long_tracking").load("<?php echo base_url('charts/subcounties/get_patients'); ?>/"+null+"/"+null+"/"+subcounty);
+					$("#current_sup_dynamic").load("<?php echo base_url('charts/subcounties/get_current_suppresion'); ?>/"+null+"/"+null+"/"+subcounty);
 
 	        	}      	
 	        });
@@ -112,6 +114,8 @@
 						$("#age").load("<?php echo base_url('charts/subcounties/subcounty_age'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
 						$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+from[1]+"/"+data+"/"+all);
 						$("#subcounties").load("<?php echo base_url('charts/subcounties/subcounty_sites'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
+						$("#long_tracking").load("<?php echo base_url('charts/subcounties/get_patients'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
+						$("#current_sup_dynamic").load("<?php echo base_url('charts/subcounties/get_current_suppresion'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
 					}
 				});
 			}
@@ -165,6 +169,8 @@
 					$("#age").load("<?php echo base_url('charts/subcounties/subcounty_age'); ?>/"+year+"/"+month+"/"+data); 
 					$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+year+"/"+data+"/"+all);
 					$("#subcounties").load("<?php echo base_url('charts/subcounties/subcounty_sites'); ?>/"+year+"/"+month+"/"+data); 
+					$("#long_tracking").load("<?php echo base_url('charts/subcounties/get_patients'); ?>/"+year+"/"+month+"/"+data); 
+					$("#current_sup_dynamic").load("<?php echo base_url('charts/subcounties/get_current_suppresion'); ?>/"+year+"/"+month+"/"+data); 
 				}
 			});
 			
