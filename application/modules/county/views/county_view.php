@@ -25,6 +25,16 @@
 			  	</div>
 			</div>
 		</div>
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				Counties Outcome by Age and Gender <div class="display_date"></div>
+				</div>
+			  	<div class="panel-body" id="county_outcome_age_gender">
+			  		<center><div class="loader"></div></center>
+			  	</div>
+			</div>
+		</div>
 	</div>
 </div>
 
