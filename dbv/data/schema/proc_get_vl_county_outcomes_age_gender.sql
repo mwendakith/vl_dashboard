@@ -4,7 +4,7 @@ CREATE PROCEDURE `proc_get_vl_county_outcomes_age_gender`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
-                `c`.`name` AS `county`, 
+                `c`.`name` AS `region`, 
                      `vcag`.`gender`, 
                      `vcag`.`age` AS `age`,  
                      SUM(`vcag`.`undetected` + `vcag`.`less1000` + `vcag`.`less5000` + `vcag`.`above5000`) AS `tests`, 

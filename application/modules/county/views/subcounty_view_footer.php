@@ -17,6 +17,7 @@
 	       });
 		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>");
 		$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>");
+		$("#subcounty_outcome_age_gender").load("<?php echo base_url('charts/subcounties/subcounty_outcome_table');?>");
 
 
 		$("select").change(function(){
