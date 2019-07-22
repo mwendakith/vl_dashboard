@@ -183,7 +183,6 @@ class MY_Model extends CI_Model
 	{
 		$letters = array_merge(range('a', 'z'), range('A', 'Z'));
 		$max = count($letters) - 1;
-
 		$str = '';
 
 		for ($i=0; $i < $length; $i++) { 
