@@ -1,16 +1,16 @@
-DROP PROCEDURE IF EXISTS `proc_get_vl_county_outcomes_age_gender`;
+DROP PROCEDURE IF EXISTS `proc_get_vl_subcounty_outcomes_age_gender`;
 DELIMITER //
-CREATE PROCEDURE `proc_get_vl_county_outcomes_age_gender`
+CREATE PROCEDURE `proc_get_vl_subcounty_outcomes_age_gender`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
-                `c`.`name` AS `county`, 
+                `c`.`name` AS `region`, 
                      `vcag`.`gender`, 
                      `vcag`.`age` AS `age`,  
                      SUM(`vcag`.`undetected` + `vcag`.`less1000` + `vcag`.`less5000` + `vcag`.`above5000`) AS `tests`, 
                      SUM(`vcag`.`less5000` + `vcag`.`above5000`) AS `nonsup`
-                FROM `vl_county_age_gender` `vcag`
-                LEFT JOIN `countys` `c` ON `c`.`id` = `vcag`.`county`
+                FROM `vl_subcounty_age_gender` `vcag`
+                LEFT JOIN `districts` `c` ON `c`.`id` = `vcag`.`subcounty`
                 LEFT JOIN `agecategory` `ac` ON `ac`.`id` = `vcag`.`age`
                 WHERE 1
                 ";
