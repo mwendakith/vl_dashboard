@@ -11,6 +11,7 @@ class Subcounties extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->model('subcounty_model');
+		$this->load->model('county_model');
 	}
 
 	function subcounty_outcomes($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
@@ -103,8 +104,9 @@ class Subcounties extends MY_Controller
 	}
 
 	function subcounty_outcome_table($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
-		{	$data['subcountyListing'] = TRUE;
-			// $data['outcomes']= $this->county_model->county_outcome_table($year,$month,$to_year,$to_month);
+		{
+			$data['subcountyListing'] = TRUE;
+			$data['outcomes']= $this->county_model->county_outcome_table($year,$month,$to_year,$to_month,$data);
 					
 
 			$link = $year . '/' . $month . '/' . $to_year . '/' . $to_month;
