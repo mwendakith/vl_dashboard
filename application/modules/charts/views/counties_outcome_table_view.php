@@ -2,6 +2,7 @@
 	<thead>
 		<tr class="colhead">
 			<th rowspan="3">No</th>
+			<?php if(isset($subcountyListing)){?><th rowspan="3">Sub-County</th><?php } ?>
 			<th rowspan="3">County</th>
 			<th colspan="12">Male</th>
 			<th colspan="12">Female</th>
