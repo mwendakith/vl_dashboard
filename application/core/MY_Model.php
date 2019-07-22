@@ -181,18 +181,13 @@ class MY_Model extends CI_Model
 
 	public function str_random($length=15)
 	{
-		$a = range('a', 'z');
-		$b = range('A', 'Z');
-		$letters = array_merge($a, $b);
+		$letters = array_merge(range('a', 'z'), range('A', 'Z'));
 		$max = count($letters) - 1;
-
-		$length++;
 
 		$str = '';
 
 		for ($i=0; $i < $length; $i++) { 
-			$index = rand(0, $max);
-			$str .= $letters[$index];
+			$str .= $letters[mt_rand(0, $max)];
 		}
 		return $str;
 	}
