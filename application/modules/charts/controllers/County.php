@@ -97,5 +97,18 @@ class County extends MY_Controller
 
     	$this->load->view('counties_table_view',$data);
 	}
+
+		function county_outcome_table($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+		{
+			$data['sites'] = TRUE;
+			$data['outcomes']= $this->county_model->county_outcome_table($year,$month,$to_year,$to_month,$data);
+					
+
+			$link = $year . '/' . $month . '/' . $to_year . '/' . $to_month;
+
+			// $data['link'] =  base_url('charts/county/download_county_table/' . $link);
+
+	    	$this->load->view('counties_outcome_table_view', $data);
+		}
 }
 ?>

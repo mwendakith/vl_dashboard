@@ -17,6 +17,7 @@
 	       });
 		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>");
 		$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>");
+		$("#subcounty_outcome_age_gender").load("<?php echo base_url('charts/subcounties/subcounty_outcome_table');?>");
 
 
 		$("select").change(function(){
@@ -50,6 +51,7 @@
 
 	        		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>");
 					$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>");
+					$("#subcounty_outcome_age_gender").load("<?php echo base_url('charts/subcounties/subcounty_outcome_table');?>");
 	        	} else {
 	        		subcounty = JSON.parse(subcounty);
 	        		$("#first").hide();
@@ -99,6 +101,7 @@
 
 		        		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 						$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+						$("#subcounty_outcome_age_gender").load("<?php echo base_url('charts/subcounties/subcounty_outcome_table');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 					} else {
 						$("#first").hide();
 		        		$("#second").show();
@@ -154,6 +157,7 @@
 
 	        		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>/"+year+"/"+month);
 					$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>/"+year+"/"+month);
+					$("#subcounty_outcome_age_gender").load("<?php echo base_url('charts/subcounties/subcounty_outcome_table');?>/"+year+"/"+month);
 				} else {
 					$("#first").hide();
 	        		$("#second").show();
