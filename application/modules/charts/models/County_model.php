@@ -755,84 +755,98 @@ class County_model extends MY_Model
 		
 	}
 
-	function county_outcome_table($year=NULL,$month=NULL,$to_year=null,$to_month=null)
+	function county_outcome_table($year=NULL,$month=NULL,$to_year=null,$to_month=null,$data)
 	{
-		// $table = '';
+		$table = '';
 		$d = $this->extract_variables($year, $month, $to_year, $to_month);
 		extract($d);
+		if(isset($data['subcountyListing'])){
+			$sql = "CALL `proc_get_vl_subcounty_outcomes_age_gender`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
+		else{
+			$sql = "CALL `proc_get_vl_county_outcomes_age_gender`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
 		
-		$sql = "CALL `proc_get_vl_county_outcomes_age_gender`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		
 		// echo "<pre>";print_r($sql);die();
 		$records = $this->db->query($sql)->result();
 		$this->db->close();
 		// echo "<pre>";print_r($records);die();
+		$region = [];
 		$county = [];
-
+		
 		foreach ($records as $key => $value) {
-				if (!in_array($value->county, $county))
+				if (!in_array($value->region, $region))
 				{
-					$county[] = $value->county;
+					$region[] = $value->region;
+					if(isset($data['subcountyListing'])){
+						$county[$value->region] = $value->county;
+					}
 				}
 
 				if ($value->gender == 1) {
 					if ($value->age == 6) {
-						$mTestUnder2[$value->county] = $value->tests;
-						$mNonSupUnder2[$value->county] = $value->nonsup;
+						$mTestUnder2[$value->region] = $value->tests;
+						$mNonSupUnder2[$value->region] = $value->nonsup;
 					}
 					if ($value->age == 7) { 
-						$mTest2To9[$value->county] = $value->tests;
-						$mNonSup2To9[$value->county] = $value->nonsup;
+						$mTest2To9[$value->region] = $value->tests;
+						$mNonSup2To9[$value->region] = $value->nonsup;
 					}
 					if ($value->age == 8) { 
-						$mTest10To14[$value->county] = $value->tests;
-						$mNonSup10To14[$value->county] = $value->nonsup;
+						$mTest10To14[$value->region] = $value->tests;
+						$mNonSup10To14[$value->region] = $value->nonsup;
 					}
 					if ($value->age == 9) { 
-						$mTest15To19[$value->county] = $value->tests;
+						$mTest15To19[$value->region] = $value->tests;
 						$mNonSup15To19[$value->count] = $value->nonsup;
 					}
 					if ($value->age == 10) { 
-						$mTest20To24[$value->county] = $value->tests;
-						$mNonSup20To24[$value->county] = $value->nonsup;
+						$mTest20To24[$value->region] = $value->tests;
+						$mNonSup20To24[$value->region] = $value->nonsup;
 					}
 					if ($value->age == 11) { 
-						$mTestAbove25[$value->county] = $value->tests;
-						$mNonSupAbove25[$value->county] = $value->nonsup;
+						$mTestAbove25[$value->region] = $value->tests;
+						$mNonSupAbove25[$value->region] = $value->nonsup;
 					}
 				}
 			 if ($value->gender == 2) {
 				if ($value->age == 6) {
-					$fTestUnder2[$value->county] = $value->tests;
-					$fNonSupUnder2[$value->county] = $value->nonsup;
+					$fTestUnder2[$value->region] = $value->tests;
+					$fNonSupUnder2[$value->region] = $value->nonsup;
 				}
 				if ($value->age == 7) {
-					$fTest2To9[$value->county] = $value->tests;
-					$fNonSup2To9[$value->county] = $value->nonsup;
+					$fTest2To9[$value->region] = $value->tests;
+					$fNonSup2To9[$value->region] = $value->nonsup;
 				}
 				if ($value->age == 8) {
-					$fTest10To14[$value->county] = $value->tests;
-					$fNonSup10To14[$value->county] = $value->nonsup;
+					$fTest10To14[$value->region] = $value->tests;
+					$fNonSup10To14[$value->region] = $value->nonsup;
 				}
 				if ($value->age == 9) {
-					$fTest15To19[$value->county] = $value->tests;
-					$fNonSup15To19[$value->county] = $value->nonsup;
+					$fTest15To19[$value->region] = $value->tests;
+					$fNonSup15To19[$value->region] = $value->nonsup;
 				}
 				if ($value->age == 10) {
-					$fTest20To24[$value->county] = $value->tests;
-					$fNonSup20To24[$value->county] = $value->nonsup;
+					$fTest20To24[$value->region] = $value->tests;
+					$fNonSup20To24[$value->region] = $value->nonsup;
 				}
 				if ($value->age == 11) {
-					$fTestAbove25[$value->county] = $value->tests;
-					$fNonSupAbove25[$value->county] = $value->nonsup;
+					$fTestAbove25[$value->region] = $value->tests;
+					$fNonSupAbove25[$value->region] = $value->nonsup;
 				}
 			}
 		}
-		// echo "<pre>";print_r($data['mTestUnder2']);die();
-		foreach ($county as $key => $value) {
+		// echo "<pre>";print_r($county);die();
+		foreach ($region as $key => $value) {
 			$table .= "<tr>
 						<td>".($key+1)."</td>
-						<td>".$value."</td>
-						<td>".number_format((int) $mTestUnder2[$value])."</td>
+						<td>".$value."</td>";
+						// ((isset($data['subcountyListing'])) ? "<td>".$county[$value]."</td>" : "")
+						if(isset($data['subcountyListing'])){
+							$table .= "<td>".$county[$value]."</td>";
+						}
+			$table .=	"<td>".number_format((int) $mTestUnder2[$value])."</td>
 						<td>".number_format((int) $mNonSupUnder2[$value])."</td>
 						<td>".number_format((int) $mTest2To9[$value]) ."</td>
 						<td>".number_format((int) $mNonSup2To9[$value])."</td>
@@ -861,7 +875,7 @@ class County_model extends MY_Model
 			
 		}
 		// echo $table;die();
-		// echo "<pre>";print_r($county);die();
+		// echo "<pre>";print_r($region);die();
 		return $table;		
 				
 	}
