@@ -59,8 +59,10 @@
 				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
 				if (data!="") {
 					$("#coverage").load("<?php echo base_url('charts/summaries/vl_coverage'); ?>/"+1+"/"+data);
+					type = 1;
 				} else {
 					$("#coverage").load("<?php echo base_url('charts/summaries/vl_coverage'); ?>");
+					type = 0;
 				}
 				console.log(data);
 				
