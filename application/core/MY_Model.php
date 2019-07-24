@@ -178,5 +178,17 @@ class MY_Model extends CI_Model
 		return $data;
 		// call extract() to the data that returns
 	}
+
+	public function str_random($length=15)
+	{
+		$letters = array_merge(range('a', 'z'), range('A', 'Z'));
+		$max = count($letters) - 1;
+		$str = '';
+
+		for ($i=0; $i < $length; $i++) { 
+			$str .= $letters[mt_rand(0, $max)];
+		}
+		return $str;
+	}
 }
 ?>
