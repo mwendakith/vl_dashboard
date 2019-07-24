@@ -59,11 +59,13 @@
 				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
 				if (data!="") {
 					$("#coverage").load("<?php echo base_url('charts/summaries/vl_coverage'); ?>/"+1+"/"+data);
+					type = 1;
 				} else {
 					$("#coverage").load("<?php echo base_url('charts/summaries/vl_coverage'); ?>");
+					type = 0;
 				}
 				
-				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+1+"/"+data+"/"+all);
+				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+type+"/"+data+"/"+all);
 				$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+null+"/"+null+"/"+data); 
 				$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+null+"/"+null+"/"+data); 
 				$("#ageGroups").load("<?php echo base_url('charts/summaries/age'); ?>/"+null+"/"+null+"/"+data); 
