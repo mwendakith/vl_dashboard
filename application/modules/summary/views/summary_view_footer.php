@@ -64,8 +64,7 @@
 					$("#coverage").load("<?php echo base_url('charts/summaries/vl_coverage'); ?>");
 					type = 0;
 				}
-				console.log(data);
-				
+								
 				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+type+"/"+data+"/"+all);
 				$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+null+"/"+null+"/"+data); 
 				$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+null+"/"+null+"/"+data); 
