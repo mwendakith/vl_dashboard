@@ -52,24 +52,30 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function vl_coverage($type=null,$ID=null)
+	function vl_coverage($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$id=null)
 	{
-		$sql = "CALL `proc_get_vl_current_suppression`('".$type."','".$ID."')";
-		// echo "<pre>";print_r($sql);die();
-		$result = $this->db->query($sql)->result_array();
-		$uniquepts = 0;
-		$totalasatmar = 0;
-		$vl_coverage = 0;
+		$county = $partner = null;
+		if ($type == 1)
+			$county = $id;
+		else if ($type == 2)
+			$partner == $id;
 
-		foreach ($result as $key => $value) {
-			$data['coverage'] = @(int) ((($value['suppressed']+$value['nonsuppressed'])/$value['totallstrpt'])*100);
-			if ($data['coverage'] < 51) {
-				$data['color'] = 'rgba(255,0,0,0.5)';
-			} else if ($data['coverage'] > 50 && $data['coverage'] < 71) {
-				$data['color'] = 'rgba(255,255,0,0.5)';
-			} else if ($data['coverage'] > 70) {
-				$data['color'] = 'rgba(0,255,0,0.5)';
-			}
+		$current_suppression = $this->get_patients($year,$month,$county,$partner,$to_year,$to_month);
+		// echo "<pre>";print_r($current_suppression);die();
+		// $sql = "CALL `proc_get_vl_current_suppression`('".$type."','".$ID."')";
+		// echo "<pre>";print_r($sql);die();
+		// $result = $this->db->query($sql)->result_array();
+		// $uniquepts = 0;
+		// $totalasatmar = 0;
+		// $vl_coverage = 0;
+
+		$data['coverage'] = round($current_suppression['coverage']);
+		if ($data['coverage'] < 51) {
+			$data['color'] = 'rgba(255,0,0,0.5)';
+		} else if ($data['coverage'] > 50 && $data['coverage'] < 71) {
+			$data['color'] = 'rgba(255,255,0,0.5)';
+		} else if ($data['coverage'] > 70) {
+			$data['color'] = 'rgba(0,255,0,0.5)';
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
@@ -624,7 +630,7 @@ class Summaries_model extends MY_Model
  		else if(isset($lab)){$type = 5; $id = $lab;}
 
 		$sql = "CALL `proc_get_vl_sample_types_trends`('".$type."','".$id."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		
+		// echo "<pre>";print_r($sql);die();
 		$array1 = $this->db->query($sql)->result_array();
 		return $array1;
 	}
