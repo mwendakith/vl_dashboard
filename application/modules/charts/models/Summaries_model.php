@@ -69,7 +69,7 @@ class Summaries_model extends MY_Model
 		// $totalasatmar = 0;
 		// $vl_coverage = 0;
 
-		$data['coverage'] = $current_suppression['coverage'];
+		$data['coverage'] = round($current_suppression['coverage']);
 		if ($data['coverage'] < 51) {
 			$data['color'] = 'rgba(255,0,0,0.5)';
 		} else if ($data['coverage'] > 50 && $data['coverage'] < 71) {
