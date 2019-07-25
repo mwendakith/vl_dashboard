@@ -16,9 +16,9 @@ class Summaries extends MY_Controller {
 		$this->load->view('turnaroundtime_view',$data);
 	}
 
-	function vl_coverage($type=NULL,$ID=NULL)
+	function vl_coverage($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$id=null)
 	{
-		$data['outcomes'] = $this->summaries_model->vl_coverage($type,$ID);
+		$data['outcomes'] = $this->summaries_model->vl_coverage($year,$month,$to_year,$to_month,$type,$id);
 
 		$this->load->view('vl_coverage_view',$data);
 	}
