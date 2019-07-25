@@ -122,7 +122,6 @@
 					</form> -->
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="<?php echo base_url();?>">Summary</a></li>
-						<li><a href="<?php echo base_url();?>trends">Trends</a></li>
 						<li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">County/Sub-County
 							<b class="caret"></b></a>
@@ -133,6 +132,22 @@
 								<li><a href="<?php echo base_url();?>county/subCounty">Sub-County</a></li>
 								<li><a href="<?php echo base_url();?>county/subcountypmtct">Sub-County PMTCT</a></li>
 								<li><a href="<?php echo base_url();?>county/subCountytat">Sub-County TAT</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Facilities
+							<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
+								<li><a href="<?php echo base_url();?>sites/pmtct">Facilities PMTCT</a></li>
+							</ul>
+						</li>
+						<li class="dropdown">
+							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Labs
+							<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
+								<li><a href="<?php echo base_url();?>labs/poc">POC</a></li>
 							</ul>
 						</li>
 						<li class="dropdown">
@@ -151,43 +166,29 @@
 								<li><a href="<?php echo base_url();?>partner/agencies">Funding Agencies</a></li>
 							</ul>
 						</li>
-						<li class="dropdown">
-							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Labs
-							<b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
-								<li><a href="<?php echo base_url();?>labs/poc">POC</a></li>
-							</ul>
-						</li>
 						
 						<li class="dropdown">
-							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Facilities
+							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Current Suppression
 							<b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
-								<li><a href="<?php echo base_url();?>sites/pmtct">Facilities PMTCT</a></li>
-							</ul>
-						</li>
-						<li class="dropdown">
-							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Non-Suppression
-							<b class="caret"></b></a>
-							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url();?>current">Current Suppression</a></li>
 								<li><a href="<?php echo base_url();?>suppression/nosuppression">Non-suppression</a></li>
 								<li><a href="<?php echo base_url();?>regimen">Regimen Analysis</a></li>
 								<li><a href="<?php echo base_url();?>age">Age Analysis</a></li>
 								<li><a href="<?php echo base_url();?>sample">Sample Analysis</a></li>
-								<li><a href="<?php echo base_url();?>current">Current Suppression</a></li>
 								<li><a href="<?php echo base_url();?>pmtct">PMTCT Analysis</a></li>
 							</ul>
 						</li>
+						<li><a href="<?php echo base_url();?>trends">Trends</a></li>
+						<li><a href="https://nascop.org">Resources</a></li>
+						<li><a href="https://eid.nascop.org">EID View</a></li>
 						<!-- <li><a href="<?php echo base_url();?>live">Live Data</a></li> -->
-						<li><a href="https://api.nascop.org/">API Documentation</a></li>
+						<!-- <li><a href="https://api.nascop.org/">API Documentation</a></li> -->
 						<li><a href="<?php echo base_url();?>contacts">Contact Us</a></li>
 						<!-- <li><a href="<?php echo base_url();?>county">County View</a></li> -->
 						<li><a href="https://eiddash.nascop.org/">Login</a></li>
-						<li><a href="https://eid.nascop.org">EID View</a></li>
 						<!-- <li><a href="javascript:void(0)">Link</a></li> -->
-						<li class="dropdown">
+						<!-- <li class="dropdown"> -->
 							<!-- <a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown
 							<b class="caret"></b></a>
 							<ul class="dropdown-menu">
@@ -197,7 +198,7 @@
 								<li class="divider"></li>
 								<li><a href="javascript:void(0)">Separated link</a></li>
 							</ul> -->
-						</li>
+						<!-- </li> -->
 					</ul>
 				</div>
 			</div>

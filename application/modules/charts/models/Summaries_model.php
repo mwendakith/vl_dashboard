@@ -52,9 +52,17 @@ class Summaries_model extends MY_Model
 		return $data;
 	}
 
-	function vl_coverage($type=null,$ID=null)
+	function vl_coverage($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$id=null)
 	{
-		$sql = "CALL `proc_get_vl_current_suppression`('".$type."','".$ID."')";
+		$county = $partner = null;
+		if ($type == 1)
+			$county = $id;
+		else if ($type == 2)
+			$partner == $id;
+
+		$current_suppression = $this->get_patients($year,$month,$county,$partner,$to_year,$to_month);
+		echo "<pre>";print_r($current_suppression);die();
+		// $sql = "CALL `proc_get_vl_current_suppression`('".$type."','".$ID."')";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		$uniquepts = 0;
