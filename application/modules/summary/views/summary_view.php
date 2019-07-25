@@ -47,7 +47,7 @@
 				<center>VL Coverage (%) </center>
 			</div>
 			<div class="col-md-8">
-				<div id="coverage"></div>
+				<div id="coverage"><div style="padding-top: 2em;">Loading...</div></div>
 			</div>
 		</div>
 		<div class="col-md-5">

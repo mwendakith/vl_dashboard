@@ -61,23 +61,21 @@ class Summaries_model extends MY_Model
 			$partner == $id;
 
 		$current_suppression = $this->get_patients($year,$month,$county,$partner,$to_year,$to_month);
-		echo "<pre>";print_r($current_suppression);die();
+		// echo "<pre>";print_r($current_suppression);die();
 		// $sql = "CALL `proc_get_vl_current_suppression`('".$type."','".$ID."')";
 		// echo "<pre>";print_r($sql);die();
-		$result = $this->db->query($sql)->result_array();
-		$uniquepts = 0;
-		$totalasatmar = 0;
-		$vl_coverage = 0;
+		// $result = $this->db->query($sql)->result_array();
+		// $uniquepts = 0;
+		// $totalasatmar = 0;
+		// $vl_coverage = 0;
 
-		foreach ($result as $key => $value) {
-			$data['coverage'] = @(int) ((($value['suppressed']+$value['nonsuppressed'])/$value['totallstrpt'])*100);
-			if ($data['coverage'] < 51) {
-				$data['color'] = 'rgba(255,0,0,0.5)';
-			} else if ($data['coverage'] > 50 && $data['coverage'] < 71) {
-				$data['color'] = 'rgba(255,255,0,0.5)';
-			} else if ($data['coverage'] > 70) {
-				$data['color'] = 'rgba(0,255,0,0.5)';
-			}
+		$data['coverage'] = $current_suppression['coverage'];
+		if ($data['coverage'] < 51) {
+			$data['color'] = 'rgba(255,0,0,0.5)';
+		} else if ($data['coverage'] > 50 && $data['coverage'] < 71) {
+			$data['color'] = 'rgba(255,255,0,0.5)';
+		} else if ($data['coverage'] > 70) {
+			$data['color'] = 'rgba(0,255,0,0.5)';
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
