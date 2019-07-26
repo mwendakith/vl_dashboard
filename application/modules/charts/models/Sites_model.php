@@ -15,11 +15,11 @@ class Sites_model extends MY_Model
 
 	function sites_outcomes($year=null,$month=null,$partner=null,$county=null,$to_year=null,$to_month=null,$data)
 	{
-		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'county' => $county]);
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'cuonty' => $county]);
 		extract($d);
 
 		if (isset($data['partners'])) {
-			echo "Hello partner";
+			$county = $data['county'];
 			if ($county) {
 				$sql = "CALL `proc_get_county_partner_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			}  else {

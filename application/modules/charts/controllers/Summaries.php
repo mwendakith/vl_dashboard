@@ -297,9 +297,9 @@ class Summaries extends MY_Controller {
 	function county_partner_outcomes($year=null,$month=null,$partner=null,$county=null,$to_year=null,$to_month=null)
 	{
 		$data['partners'] = true;
+		$data['county'] = $county;
 		$data['trends'] = $this->sites_model->sites_outcomes($year,$month,$partner,$county,$to_year,$to_month,$data);
-		$data['div_name'] = "county_partner_outcomes";		
-
+		$data['div_name'] = "county_partner_outcomes";
 		$this->load->view('trends_outcomes_view', $data);
 	}
 
