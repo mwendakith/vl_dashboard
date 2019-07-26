@@ -15,7 +15,7 @@ class Sites extends MY_Controller
 
 	function site_outcomes($year=NULL,$month=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['trends'] = $this->sites_model->sites_outcomes($year,$month,$partner,$to_year,$to_month);
+		$data['trends'] = $this->sites_model->sites_outcomes($year,$month,$partner,$county,$to_year,$to_month,$data);
 		$data['div_name'] = "site_sites_outcomes";		
 
 		$this->load->view('trends_outcomes_view', $data);

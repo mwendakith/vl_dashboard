@@ -7,6 +7,7 @@ class Summaries extends MY_Controller {
 	{
 		parent:: __construct();
 		$this->load->model('summaries_model');
+		$this->load->model('sites_model');
 	}
 
 	function turnaroundtime($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
@@ -291,6 +292,15 @@ class Summaries extends MY_Controller {
 	function display_range()
 	{
 		echo "(".($this->session->userdata('filter_year')-1)." - ".$this->session->userdata('filter_year').")";
+	}
+
+	function county_partner_outcomes($year=null,$month=null,$partner=null,$county=null,$to_year=null,$to_month=null)
+	{
+		$data['partners'] = true;
+		$data['trends'] = $this->sites_model->sites_outcomes($year,$month,$partner,$county,$to_year,$to_month,$data);
+		$data['div_name'] = "county_partner_outcomes";		
+
+		$this->load->view('trends_outcomes_view', $data);
 	}
 
 }
