@@ -13,16 +13,28 @@ class Sites_model extends MY_Model
 	}
 
 
-	function sites_outcomes($year=null,$month=null,$partner=null,$to_year=null,$to_month=null)
+	function sites_outcomes($year=null,$month=null,$partner=null,$county=null,$to_year=null,$to_month=null,$data)
 	{
-		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'cuonty' => $county]);
 		extract($d);
 
-		if ($partner) {
-			$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		}  else {
-			$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		if (isset($data['partners'])) {
+			$county = $data['county'];
+			if ($county) {
+				$sql = "CALL `proc_get_vl_county_partner_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+			}  else {
+				$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+			}
+		} else {
+			
+			if ($partner) {
+				$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+			}  else {
+				$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+			}
 		}
+		
+
 		// $sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."')";
 		
 		// echo "<pre>";print_r($sql);die();
