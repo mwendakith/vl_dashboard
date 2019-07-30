@@ -91,22 +91,5 @@ class Ages extends MY_Controller
 		$age = $this->split_ages($age);
 		$this->ages_model->download_sampletypes($year,$age,$partner);
 	}
-
-	function split_ages($ages=null)
-	{
-		if ($ages == null) return null;
-
-		$ages =  explode(".", $ages);
-		$selected = sizeof($ages);
-		$returnAges = array();
-		for ($i=0; $i < $selected; $i++) { 
-			if ($i != 0) {
-				$returnAges[] = $ages[$i];
-			}
-		}
-		return $returnAges;
-	}
-
-
 }
 ?>

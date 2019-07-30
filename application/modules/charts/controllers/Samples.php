@@ -44,21 +44,22 @@ class Samples extends MY_Controller
 	{
 		$data['outcomes'] = $this->samples_model->samples_gender($year,$month,$sample,$to_year,$to_month);
 		
+		$data['div_name'] = "sample_outcome_gender";
     	// $this->load->view('gender_view',$data);
-    	$this->load->view('age_regimen_gender_view',$data);
+    	$this->load->view('regimen_agegroup_view',$data);
 	}
 
 	function samples_age($year=NULL,$month=NULL,$sample=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes'] = $this->samples_model->samples_age($year,$month,$sample,$to_year,$to_month);
-		
+		$data['div_name'] = "sample_outcome_age";
     	// $this->load->view('agegroup_view',$data);
     	$this->load->view('regimen_agegroup_view',$data);
 	}
 
-	function suppression($year=NULL,$sample=NULL)
+	function suppression($year=NULL,$month=NULL,$sample=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['trends'] = $this->samples_model->samples_suppression($year,$sample);
+		$data['trends'] = $this->samples_model->samples_suppression($year,$month,$sample,$to_year,$to_month);
 
 		$data['div_name'] = "sample_outcome_suppression";
 

@@ -40,9 +40,8 @@ class Template extends MY_Controller
 			);
 
 		$this->filter_regions($data);
-
 		echo $this->session->userdata('county_filter');
-		
+		// echo json_encode($this->session->all_userdata());
 	}
 
 	function filter_sub_county_data()
