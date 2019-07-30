@@ -232,13 +232,13 @@ class Samples_model extends MY_Model
 		extract($d);
 
 		//if ($partner==null || $partner=='null') {
-		$sql = "CALL `proc_get_vl_sample_summary`('".$sample."','".$from."','".$month."','".$to_year."','".$to_month."')";
+		$sql = "CALL `proc_get_vl_sample_summary`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		/*} else {
 			$sql = "CALL `proc_get_vl_partner_samples_sample_types`('".$partner."','".$sample."','".$from."')";
 			$sql2 = "CALL `proc_get_vl_partner_samples_sample_types`('".$partner."','".$sample."','".$to."')";
 		}*/
 		
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
 		$data['outcomes'][0]['name'] = "Nonsuppressed";
