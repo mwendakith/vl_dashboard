@@ -16,24 +16,7 @@
                     xAxis: {
                         categories: <?php echo json_encode($outcomes['categories']);?>
                     },
-                    yAxis: [{ // Primary yAxis
-                        labels: {
-                            formatter: function() {
-                                return this.value +'%';
-                            },
-                            style: {
-                                color: '#89A54E'
-                            }
-                        },
-                        title: {
-                            text: 'Percentage',
-                            style: {
-                                color: '#89A54E'
-                            }
-                        },
-                       opposite: true
-            
-                    }, { // Secondary yAxis
+                    yAxis: {
                         gridLineWidth: 0,
                         title: {
                             text: 'Tests',
@@ -52,7 +35,7 @@
                         // min: 0, 
                         // max: 70000,
                         // tickInterval: 1
-                    }],
+                    },
 
                     legend: {
                         align: 'right',
