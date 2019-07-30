@@ -266,10 +266,10 @@ class Samples_model extends MY_Model
 		foreach ($result as $key => $value) {
 			
 			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
-			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][0]['data'][$key] = (int) ($value['tests'] - $value['suppressed']);
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
 
-			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
+			$data['outcomes'][2]['data'][$key] = round(@$value['suppression'],1);
 			//$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
 			
 		}
