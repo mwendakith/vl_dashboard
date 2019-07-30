@@ -626,6 +626,7 @@ class Summaries_model extends MY_Model
 		extract($d);
 		
 		$type = $id = 0;
+		$$multipleID = '';
 
  		if (isset($county)){$type = 1; $id = $county;}
  		else if(isset($subcounty)){$type = 2; $id = $subcounty;}
@@ -633,9 +634,9 @@ class Summaries_model extends MY_Model
  		else if(isset($partner)){$type = 4; $id = $partner;}
  		else if(isset($lab)){$type = 5; $id = $lab;}
  		else if(isset($regimen)){$type = 6; $id = $regimen;}
- 		else if(isset($age_cat)){$type = 7; $id = $this->build_Inarray($age_cat);}
- 		
-		$sql = "CALL `proc_get_vl_sample_types_trends`('".$type."','".$id."','".$year."','".$month."','".$to_year."','".$to_month."')";
+ 		else if(isset($age_cat)){$type = 7; $multipleID = $this->build_Inarray($age_cat);}
+
+		$sql = "CALL `proc_get_vl_sample_types_trends`('".$type."','".$id."','".$year."','".$month."','".$to_year."','".$to_month."','".$multipleID."')";
 		// echo "<pre>";print_r($sql);die();
 		$array1 = $this->db->query($sql)->result_array();
 		return $array1;
