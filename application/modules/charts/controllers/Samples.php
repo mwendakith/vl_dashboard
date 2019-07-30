@@ -56,9 +56,9 @@ class Samples extends MY_Controller
     	$this->load->view('regimen_agegroup_view',$data);
 	}
 
-	function suppression($year=NULL,$sample=NULL)
+	function suppression($year=NULL,$month=NULL,$sample=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['trends'] = $this->samples_model->samples_suppression($year,$sample);
+		$data['trends'] = $this->samples_model->samples_suppression($year,$month,$sample,$to_year,$to_month);
 
 		$data['div_name'] = "sample_outcome_suppression";
 

@@ -225,22 +225,14 @@ class Samples_model extends MY_Model
 		return $data;
 	}
 
-	function samples_suppression($year=NULL,$sample=NULL)
+	function samples_suppression($year=NULL,$month=NULL,$sample=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		
-		if ($sample==null || $sample=='null') {
-			$sample = $this->session->userdata('sample_filter');
-		}
-		
-		if ($year==null || $year=='null') {
-			$to = $this->session->userdata('filter_year');
-		}else {
-			$to = $year;
-		}
-		$from = $to-1;
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['sample' => $sample]);
+		extract($d);
 
 		//if ($partner==null || $partner=='null') {
-			$sql = "CALL `proc_get_vl_sample_summary`('".$sample."','".$from."','".$to."')";
+		$sql = "CALL `proc_get_vl_sample_summary`('".$sample."','".$from."','".$month."','".$to_year."','".$to_month."')";
 		/*} else {
 			$sql = "CALL `proc_get_vl_partner_samples_sample_types`('".$partner."','".$sample."','".$from."')";
 			$sql2 = "CALL `proc_get_vl_partner_samples_sample_types`('".$partner."','".$sample."','".$to."')";

@@ -41,7 +41,7 @@ BEGIN
     IF (type = 6) THEN # For the Regimen
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_regimen` WHERE `regimen` = '",id,"' ");
     END IF;
-    IF (type = 7) THEN # For the Regimen
+    IF (type = 7) THEN # For the Age
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_age` WHERE `age` ",multpileID," ");
     END IF;
 
