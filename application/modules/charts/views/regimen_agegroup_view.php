@@ -1,4 +1,4 @@
-<div id="<?= (isset($div_name) ? @$div_name: @'ageGroups_pie') ?>" style="height:450px;">
+<div id="<?php echo $div_name; ?>" style="height:450px;">
 	
 </div>
 <script type="text/javascript">
