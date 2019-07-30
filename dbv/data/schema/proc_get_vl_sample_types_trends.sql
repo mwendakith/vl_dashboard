@@ -8,13 +8,17 @@ BEGIN
 					`year`,
 					SUM(`edta`) AS `edta`,
 					SUM(`dbs`) AS `dbs`,
-					SUM(`plasma`) AS `plasma`,
-					SUM(`alledta`) AS `alledta`,
-					SUM(`alldbs`) AS `alldbs`,
-					SUM(`allplasma`) AS `allplasma`,
-					SUM(`Undetected`)+SUM(`less1000`) AS `suppressed`,
+					SUM(`plasma`) AS `plasma`,";
+
+    IF (type != 6) THEN # For the labs
+      SET @QUERY = CONCAT(@QUERY, " SUM(`alledta`) AS `alledta`,
+          SUM(`alldbs`) AS `alldbs`,
+          SUM(`allplasma`) AS `allplasma`, ");
+    END IF;  
+					
+    SET @QUERY = CONCAT(@QUERY, "SUM(`Undetected`)+SUM(`less1000`) AS `suppressed`,
 					SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`) AS `tests`,
-					(SUM(`Undetected`)+SUM(`less1000`))*100/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `suppression`";
+					(SUM(`Undetected`)+SUM(`less1000`))*100/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `suppression`");
 
     IF (type = 0 || type = '') THEN # fOR THE NATIONAL
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_summary` WHERE 1 ");
@@ -33,6 +37,9 @@ BEGIN
     END IF;
     IF (type = 5) THEN # For the labs
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_lab_summary` WHERE `lab` = '",id,"' ");
+    END IF;
+    IF (type = 6) THEN # For the Regimen
+      SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_regimen` WHERE `regimen` = '",id,"' ");
     END IF;
 
     IF (from_month != 0 && from_month != '') THEN
