@@ -158,10 +158,10 @@ class Samples_model extends MY_Model
 		} else {
 			$sql = "CALL `proc_get_vl_partner_samples_gender`('".$partner."','".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		}
-		echo "<pre>";print_r($sql);die();
+		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Test';
+		$data['outcomes'][0]['name'] = 'Test';
 
 		$count = 0;
 		
@@ -172,8 +172,8 @@ class Samples_model extends MY_Model
 		foreach ($result as $key => $value) {
 			$data['categories'][0] 			= 'Male';
 			$data['categories'][1] 			= 'Female';
-			$data["gender"][0]["data"][0]	=  (int) $value['maletest'];
-			$data["gender"][0]["data"][1]	=  (int) $value['femaletest'];
+			$data["outcomes"][0]["data"][0]	=  (int) $value['maletest'];
+			$data["outcomes"][0]["data"][1]	=  (int) $value['femaletest'];
 		}
 
 		// $data['gender'][0]['drilldown']['color'] = '#913D88';
