@@ -634,7 +634,7 @@ class Summaries_model extends MY_Model
  		else if(isset($lab)){$type = 5; $id = $lab;}
  		else if(isset($regimen)){$type = 6; $id = $regimen;}
  		else if(isset($age_cat)){$type = 7; $id = $this->build_Inarray($age_cat);}
- 		echo "<pre>";print_r($id);die();
+ 		
 		$sql = "CALL `proc_get_vl_sample_types_trends`('".$type."','".$id."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
 		$array1 = $this->db->query($sql)->result_array();
