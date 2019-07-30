@@ -313,7 +313,7 @@ class Ages_model extends MY_Model
 			$age_cat = $this->session->userdata('age_category_filter');
 		}
 		$age_cat = $this->build_Inarray($age_cat);
-		dd($age_cat);
+		echo "<pre>";print_r($age_cat);die();
 		if ($year==null || $year=='null') {
 			$to = $this->session->userdata('filter_year');
 		}else {
