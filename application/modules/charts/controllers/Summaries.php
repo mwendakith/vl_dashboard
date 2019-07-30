@@ -78,6 +78,9 @@ class Summaries extends MY_Controller {
 
 	function sample_types($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$id=NULL,$all=NULL)
 	{
+		if ($type == 7)
+			$id = $this->split_ages($id);
+		
 		$data['outcomes'] = $this->summaries_model->sample_types($year,$month,$to_year,$to_month,$type,$id,$all);
 		// $link = $year . '/' . $county . '/' . $partner;
 

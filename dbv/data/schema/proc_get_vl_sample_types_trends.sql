@@ -10,7 +10,7 @@ BEGIN
 					SUM(`dbs`) AS `dbs`,
 					SUM(`plasma`) AS `plasma`,";
 
-    IF (type != 6) THEN # For the labs
+    IF (!(type == 6 || type == 7)) THEN # For the labs
       SET @QUERY = CONCAT(@QUERY, " SUM(`alledta`) AS `alledta`,
           SUM(`alldbs`) AS `alldbs`,
           SUM(`allplasma`) AS `allplasma`, ");
@@ -40,6 +40,9 @@ BEGIN
     END IF;
     IF (type = 6) THEN # For the Regimen
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_regimen` WHERE `regimen` = '",id,"' ");
+    END IF;
+    IF (type = 7) THEN # For the Regimen
+      SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_age` WHERE `age` ",id," ");
     END IF;
 
     IF (from_month != 0 && from_month != '') THEN
