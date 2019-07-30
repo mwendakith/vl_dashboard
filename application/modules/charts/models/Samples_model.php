@@ -161,23 +161,19 @@ class Samples_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['outcomes'][0]['name'] = 'Test';
+		$data['ageGnd'][0]['name'] = 'Test';
 
 		$count = 0;
 		
-		$data["outcomes"][0]["data"][0]	= $count;
-		$data["outcomes"][0]["data"][1]	= $count;
+		$data["ageGnd"][0]["data"][0]	= $count;
+		$data["ageGnd"][0]["data"][1]	= $count;
 		$data['categories'][0] = 'No Data';
 
 		foreach ($result as $key => $value) {
 			$data['categories'][0] 			= 'Male';
 			$data['categories'][1] 			= 'Female';
-			$data["outcomes"][0]["data"][0]	=  (int) $value['maletest'];
-			$data["outcomes"][0]["data"][1]	=  (int) $value['femaletest'];
-			$data["outcomes"][1]["data"][0]	=  (int) $value['maletest'];
-			$data["outcomes"][1]["data"][1]	=  (int) $value['femaletest'];
-			$data["outcomes"][2]["data"][0]	=  (int) $value['maletest'];
-			$data["outcomes"][2]["data"][1]	=  (int) $value['femaletest'];
+			$data["ageGnd"][0]["data"][0]	=  (int) $value['maletest'];
+			$data["ageGnd"][0]["data"][1]	=  (int) $value['femaletest'];
 		}
 
 		// $data['gender'][0]['drilldown']['color'] = '#913D88';
