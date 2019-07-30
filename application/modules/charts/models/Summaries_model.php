@@ -604,7 +604,7 @@ class Summaries_model extends MY_Model
 	{
 		$array1 = array();
 		$type = (int) $type;
-		$sessionFiltersArray = ['county' => NULL, 'subcounty' => NULL, 'facility' => NULL, 'partner' => NULL, 'lab' => NULL];
+		$sessionFiltersArray = ['county' => NULL, 'subcounty' => NULL, 'facility' => NULL, 'partner' => NULL, 'lab' => NULL, 'regimen' => NULL];
 		
 		if ($type == 1)
 			$sessionFiltersArray = ['county' => $id];
@@ -616,6 +616,8 @@ class Summaries_model extends MY_Model
 			$sessionFiltersArray = ['partner' => $id];
 		else if ($type == 5)
 			$sessionFiltersArray = ['lab' => $id];
+		else if ($type == 6)
+			$sessionFiltersArray = ['regimen' => $id];
 		
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, $sessionFiltersArray);
 		// echo "<pre>";print_r($d);die();
@@ -628,6 +630,7 @@ class Summaries_model extends MY_Model
  		else if(isset($facility)){$type = 3; $id = $facility;}
  		else if(isset($partner)){$type = 4; $id = $partner;}
  		else if(isset($lab)){$type = 5; $id = $lab;}
+ 		else if(isset($regimen)){$type = 6; $id = $regimen;}
 
 		$sql = "CALL `proc_get_vl_sample_types_trends`('".$type."','".$id."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		// echo "<pre>";print_r($sql);die();
