@@ -158,7 +158,7 @@ class Samples_model extends MY_Model
 		} else {
 			$sql = "CALL `proc_get_vl_partner_samples_gender`('".$partner."','".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		}
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$data['gender'][0]['name'] = 'Test';
