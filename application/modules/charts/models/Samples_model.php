@@ -238,7 +238,7 @@ class Samples_model extends MY_Model
 			$sql2 = "CALL `proc_get_vl_partner_samples_sample_types`('".$partner."','".$sample."','".$to."')";
 		}*/
 		
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 
 		$data['outcomes'][0]['name'] = "Nonsuppressed";
