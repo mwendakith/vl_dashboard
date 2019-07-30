@@ -118,20 +118,6 @@ class MY_Controller extends MX_Controller
 			$this->session->set_userdata($filter_data);
 		}
 	}
-
-<<<<<<< HEAD
-		function initialize_filter()
-		{
-			if(null === $this->session->userdata('filter_year'))
-			{
-				$filter_data = array(
-								'county_filter' => null,
-								'partner_filter' => null,
-								'filter_year' => Date('Y'),
-								'filter_month' => null
-								);
-				$this->session->set_userdata($filter_data);
-=======
 	function set_filter_date($data=null)
 	{
 		$year = $data['year'];
@@ -145,7 +131,6 @@ class MY_Controller extends MX_Controller
 				$this->session->unset_userdata('filter_month');
 			}else {
 				$this->session->set_userdata('filter_month', $month);
->>>>>>> ca46d6fa257dc05a92de0f16590a4d12382521b6
 			}
 		}
 		$this->load->model('template/template_model');
