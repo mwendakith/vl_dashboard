@@ -54,8 +54,7 @@
 					$("#vlOutcomes").load("<?php echo base_url('charts/samples/samples_vl_outcome'); ?>");
 					$("#gender").load("<?php echo base_url('charts/samples/samples_gender'); ?>/"+null+"/"+null+"/"+data);
 					$("#age").load("<?php echo base_url('charts/samples/samples_age'); ?>/"+null+"/"+null+"/"+data); 
-					$("#samples").load("<?php echo base_url('charts/samples/suppression'); ?>/"+null+"/"+data);
-
+					$("#samples").load("<?php echo base_url('charts/samples/suppression'); ?>/"+null+"/"+null+"/"+data);
 					$("#county").load("<?php echo base_url('charts/samples/samples_county_outcomes'); ?>/"+null+"/"+null+"/"+data);
 	        	}      	
 	        });
@@ -98,8 +97,8 @@
 						
 						$("#vlOutcomes").load("<?php echo base_url('charts/samples/samples_vl_outcome'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
 						$("#gender").load("<?php echo base_url('charts/samples/samples_gender'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
-						$("#age").load("<?php echo base_url('charts/samples/samples_age'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
-						$("#samples").load("<?php echo base_url('charts/samples/suppression'); ?>/"+from[1]+"/"+data);
+						$("#age").load("<?php echo base_url('charts/samples/samples_age'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
+						$("#samples").load("<?php echo base_url('charts/samples/suppression'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
 						$("#county").load("<?php echo base_url('charts/samples/samples_county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
 					}
 				});
@@ -150,7 +149,7 @@
 					$("#vlOutcomes").load("<?php echo base_url('charts/samples/samples_vl_outcome'); ?>/"+year+"/"+month+"/"+data);
 					$("#gender").load("<?php echo base_url('charts/samples/samples_gender'); ?>/"+year+"/"+month+"/"+data);
 					$("#age").load("<?php echo base_url('charts/samples/samples_age'); ?>/"+year+"/"+month+"/"+data); 
-					$("#samples").load("<?php echo base_url('charts/samples/suppression'); ?>/"+year+"/"+data);
+					$("#samples").load("<?php echo base_url('charts/samples/suppression'); ?>/"+year+"/"+month+"/"+data);
 					$("#county").load("<?php echo base_url('charts/samples/samples_county_outcomes'); ?>/"+year+"/"+month+"/"+data);
 				}
 			});

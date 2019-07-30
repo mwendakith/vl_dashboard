@@ -161,19 +161,19 @@ class Samples_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Test';
+		$data['ageGnd'][0]['name'] = 'Test';
 
 		$count = 0;
 		
-		$data["gender"][0]["data"][0]	= $count;
-		$data["gender"][0]["data"][1]	= $count;
-		$data['categories'][0]			= 'No Data';
+		$data["ageGnd"][0]["data"][0]	= $count;
+		$data["ageGnd"][0]["data"][1]	= $count;
+		$data['categories'][0] = 'No Data';
 
 		foreach ($result as $key => $value) {
 			$data['categories'][0] 			= 'Male';
 			$data['categories'][1] 			= 'Female';
-			$data["gender"][0]["data"][0]	=  (int) $value['maletest'];
-			$data["gender"][0]["data"][1]	=  (int) $value['femaletest'];
+			$data["ageGnd"][0]["data"][0]	=  (int) $value['maletest'];
+			$data["ageGnd"][0]["data"][1]	=  (int) $value['femaletest'];
 		}
 
 		// $data['gender'][0]['drilldown']['color'] = '#913D88';
@@ -225,22 +225,14 @@ class Samples_model extends MY_Model
 		return $data;
 	}
 
-	function samples_suppression($year=NULL,$sample=NULL)
+	function samples_suppression($year=NULL,$month=NULL,$sample=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		
-		if ($sample==null || $sample=='null') {
-			$sample = $this->session->userdata('sample_filter');
-		}
-		
-		if ($year==null || $year=='null') {
-			$to = $this->session->userdata('filter_year');
-		}else {
-			$to = $year;
-		}
-		$from = $to-1;
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['sample' => $sample]);
+		extract($d);
 
 		//if ($partner==null || $partner=='null') {
-			$sql = "CALL `proc_get_vl_sample_summary`('".$sample."','".$from."','".$to."')";
+		$sql = "CALL `proc_get_vl_sample_summary`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		/*} else {
 			$sql = "CALL `proc_get_vl_partner_samples_sample_types`('".$partner."','".$sample."','".$from."')";
 			$sql2 = "CALL `proc_get_vl_partner_samples_sample_types`('".$partner."','".$sample."','".$to."')";
@@ -274,10 +266,10 @@ class Samples_model extends MY_Model
 		foreach ($result as $key => $value) {
 			
 			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
-			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][0]['data'][$key] = (int) ($value['tests'] - $value['suppressed']);
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
 
-			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
+			$data['outcomes'][2]['data'][$key] = round(@$value['suppression'],1);
 			//$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
 			
 		}
