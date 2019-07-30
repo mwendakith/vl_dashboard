@@ -3,7 +3,7 @@
 </div>
 <script type="text/javascript">
 	$(function () {
-                $('#ageGroups_pie').highcharts({
+                $('#<?php echo $div_name; ?>').highcharts({
                     chart: {
                         type: 'column'
                     },
