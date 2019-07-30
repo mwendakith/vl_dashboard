@@ -15,9 +15,10 @@ BEGIN
     FROM `vl_national_age`
     WHERE 1";
 
-    SET @QUERY = CONCAT(@QUERY, " AND `age` = ",A_id," AND `year` = '",filter_year,"' GROUP BY `month` ORDER BY `year` ASC, `month` ");
+    SET @QUERY = CONCAT(@QUERY, " AND `age` ",A_id," AND `year` = '",filter_year,"' GROUP BY `month` ORDER BY `year` ASC, `month` ");
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
 END //
 DELIMITER ;
+
