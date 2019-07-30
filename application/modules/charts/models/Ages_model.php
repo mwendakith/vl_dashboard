@@ -12,18 +12,6 @@ class Ages_model extends MY_Model
 		parent::__construct();
 	}
 
-	function build_Inarray($array = null)
-	{
-		if (is_null($array)) return null;
-		$query = "IN (";
-		$elements = sizeof($array);
-		foreach ($array as $key => $value) {
-			($key+1 == $elements) ? $query .= $value : $query .= $value . ",";
-		}
-		$query .= ")";
-		return $query;
-	}
-
 	function ages_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
