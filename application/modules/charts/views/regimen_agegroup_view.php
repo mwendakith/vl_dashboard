@@ -2,46 +2,36 @@
 	
 </div>
 <script type="text/javascript">
-	$(function () {
+    $(function () {
                 $('#<?php echo $div_name; ?>').highcharts({
                     chart: {
                         type: 'column'
-                    },
-                    chart: {
-                        zoomType: 'xy'
                     },
                     title: {
                         text: ''
                     },
                     xAxis: {
-                        categories: <?php echo json_encode($outcomes['categories']);?>
+                        categories: <?php echo json_encode($outcomes['categories']);?>,
+                        crosshair: true
                     },
                     yAxis: {
-                        gridLineWidth: 0,
+                        min: 0,
                         title: {
-                            text: 'Tests',
-                            style: {
-                                color: '#4572A7'
-                            }
+                            text: 'Tests'
                         },
-                        labels: {
-                            formatter: function() {
-                                return this.value +'';
-                            },
+                        stackLabels: {
+                            rotation: 0,
+                            enabled: true,
                             style: {
-                                color: '#4572A7'
-                            }
+                                fontWeight: 'bold',
+                                color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                            },
+                            y:-10
                         }
-                        // min: 0, 
-                        // max: 70000,
-                        // tickInterval: 1
                     },
-
                     legend: {
                         align: 'right',
-                        x: -30,
                         verticalAlign: 'bottom',
-                        y: 0,
                         floating: false,
                         backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
                         borderColor: '#CCC',
@@ -49,15 +39,38 @@
                         shadow: true
                     },
                     tooltip: {
+                        borderRadius: 2,
+                        borderWidth: 1,
+                        borderColor: '#999',
+                        shadow: false,
                         shared: true,
-                        headerFormat: '<b>{point.x}</b><br/>',
-                        pointFormat: '{series.name}: {point.y}<br/> contribution: {point.percentage:.1f}%'
+                        useHTML: true,
+                        yDecimals: 0,
+                        valueDecimale: 0,
+                        headerFormat: '<table class="tip"><caption>{point.key}</caption>'+'<tbody>',
+                        pointFormat: '<tr><th style="color:{series.color}">{series.name}:</th>'+'<td style="text-align:right">{point.y}</td></tr>',
+                        footerFormat: '<tr><th>Total:</th>'+'<td style="text-align:right"><b>{point.total}</b></td></tr>'+'</tbody></table>'
+                        // formatter: function() {
+                        //  return this.value;
+                        // }
+                    },
+                    plotOptions: {
+                        column: {
+                            stacking: 'normal',
+                            dataLabels: {
+                                enabled: false,
+                                color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                                style: {
+                                    textShadow: '0 0 3px black'
+                                }
+                            }
+                        }
                     },colors: [
-                        '#F2784B',
-                        '#1BA39C',
-                        '#257766'
+                        '#52B3D9',
+                        '#E26A6A',
+                        '#913D88'
                     ],
-                    series: <?php echo json_encode($outcomes['ageGnd']);?>
+                    series: <?php echo json_encode($outcomes['sample_types']);?>
                 });
             });
 </script>
