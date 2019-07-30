@@ -5,12 +5,14 @@ CREATE PROCEDURE `proc_get_vl_subcounty_outcomes_age_gender`
 BEGIN
   SET @QUERY =    "SELECT 
                 `c`.`name` AS `region`, 
+                `d`.`name` AS `county`,
                      `vcag`.`gender`, 
                      `vcag`.`age` AS `age`,  
                      SUM(`vcag`.`undetected` + `vcag`.`less1000` + `vcag`.`less5000` + `vcag`.`above5000`) AS `tests`, 
                      SUM(`vcag`.`less5000` + `vcag`.`above5000`) AS `nonsup`
                 FROM `vl_subcounty_age_gender` `vcag`
                 LEFT JOIN `districts` `c` ON `c`.`id` = `vcag`.`subcounty`
+                LEFT JOIN `countys` `d` ON `d`.`id` = `c`.`county`
                 LEFT JOIN `agecategory` `ac` ON `ac`.`id` = `vcag`.`age`
                 WHERE 1
                 ";
@@ -28,7 +30,7 @@ BEGIN
     ELSE
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
-    SET @QUERY = CONCAT(@QUERY,"GROUP BY c.`name`, `gender`, age");
+    SET @QUERY = CONCAT(@QUERY,"GROUP BY c.`name`, d.`name`, `gender`, age");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
