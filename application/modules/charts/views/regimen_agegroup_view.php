@@ -70,7 +70,7 @@
                         '#E26A6A',
                         '#913D88'
                     ],
-                    series: <?php echo json_encode($outcomes['sample_types']);?>
+                    series: <?php echo json_encode($outcomes['ageGnd']);?>
                 });
             });
 </script>
