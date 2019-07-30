@@ -44,6 +44,7 @@ class Samples extends MY_Controller
 	{
 		$data['outcomes'] = $this->samples_model->samples_gender($year,$month,$sample,$to_year,$to_month);
 		
+		$data['div_name'] = "sample_outcome_gender";
     	// $this->load->view('gender_view',$data);
     	$this->load->view('regimen_agegroup_view',$data);
 	}
@@ -51,7 +52,7 @@ class Samples extends MY_Controller
 	function samples_age($year=NULL,$month=NULL,$sample=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		$data['outcomes'] = $this->samples_model->samples_age($year,$month,$sample,$to_year,$to_month);
-		
+		$data['div_name'] = "sample_outcome_age";
     	// $this->load->view('agegroup_view',$data);
     	$this->load->view('regimen_agegroup_view',$data);
 	}
