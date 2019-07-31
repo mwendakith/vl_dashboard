@@ -306,10 +306,11 @@ class Summaries extends MY_Controller {
 		$this->load->view('trends_outcomes_view', $data);
 	}
 
-	function county_partner_table($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	function county_partner_table($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$county=null)
 	{
-		$data['outcomes']= $this->county_model->county_table($year,$month,$to_year,$to_month);
-		$data['sites'] = TRUE;		
+		$data['county'] = $county;
+		$data['outcomes']= $this->summaries_model->county_partner_table($year,$month,$to_year,$to_month,$county,$data);
+		$data['partner'] = TRUE;		
 
 		$link = $year . '/' . $month . '/' . $to_year . '/' . $to_month;
 

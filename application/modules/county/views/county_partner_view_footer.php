@@ -62,8 +62,8 @@
 					$("#county_partners").html("<center><div class='loader'></div></center>");
 					$("#county_partners").load("<?php echo base_url('charts/summaries/county_partner_outcomes');?>/"+null+"/"+null+"/"+null+"/"+county);
 
-					$("#subcountypos").html("<center><div class='loader'></div></center>");
-					$("#subcountypos").load("<?php echo base_url('charts/county/subcounty_outcomes_positivity');?>/"+null+"/"+null+"/"+county);
+					$("#partners").html("<center><div class='loader'></div></center>");
+					$("#partners").load("<?php echo base_url('charts/summaries/county_partner_table');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+county);
 					
 
 	        	}
@@ -105,8 +105,8 @@
 						$("#county_partners").html("<center><div class='loader'></div></center>"); 
 		 				$("#county_partners").load("<?php echo base_url('charts/summaries/county_partner_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+county+"/"+to[1]+"/"+to[0]);
 
-		 				$("#subcountypos").html("<center><div class='loader'></div></center>"); 
-		 				$("#subcountypos").load("<?php echo base_url('charts/summaries/county_partner_outcomes_positivity'); ?>/"+from[1]+"/"+from[0]+"/"+county+"/"+to[1]+"/"+to[0]);
+		 				$("#partners").html("<center><div class='loader'></div></center>"); 
+		 				$("#partners").load("<?php echo base_url('charts/summaries/county_partner_table'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+county);
 				
 					}
 			}
@@ -155,8 +155,8 @@
 						$("#county_partners").html("<center><div class='loader'></div></center>"); 
 		 				$("#county_partners").load("<?php echo base_url('charts/summaries/county_partner_outcomes'); ?>/"+year+"/"+month+"/"+null+"/"+county);
 
-		 				$("#subcountypos").html("<center><div class='loader'></div></center>"); 
-		 				$("#subcountypos").load("<?php echo base_url('charts/county/subcounty_outcomes_positivity'); ?>/"+year+"/"+month+"/"+null+"/"+county);
+		 				$("#partners").html("<center><div class='loader'></div></center>"); 
+		 				$("#partners").load("<?php echo base_url('charts/summaries/county_partner_table'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+county);
 					}
 			});
 		}
