@@ -630,7 +630,7 @@ class Summaries_model extends MY_Model
 		extract($d);
 		
 		$type = $id = 0;
-		$$multipleID = '';
+		$multipleID = '';
 
  		if (isset($county)){$type = 1; $id = $county;}
  		else if(isset($subcounty)){$type = 2; $id = $subcounty;}
@@ -773,7 +773,10 @@ class Summaries_model extends MY_Model
 
 		}
 
-		$data['coverage'] = round(($data['unique_patients'] / $data['total_patients'] * 100), 2);
+		$data['coverage'] = round(@($data['unique_patients'] / $data['total_patients'] * 100), 2);
+		if ($data['coverage'] ==INF) {
+			$data['coverage'] = 0;
+		}
 
 		return $data;
 	}
@@ -1318,7 +1321,7 @@ class Summaries_model extends MY_Model
 		$count = 0;
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county]);
 		extract($d);
-		$type = 1;
+		$type = 4;
 		$default = $data['county'];
 		$sql = "CALL `proc_get_vl_site_summary`('".$year."','".$month."','".$to_year."','".$to_month."')";
 		$sqlAge = "CALL `proc_get_vl_county_agecategories_details`('".$year."','".$month."','".$to_year."','".$to_month."','".$type."','".$default."');";
