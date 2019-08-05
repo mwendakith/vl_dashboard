@@ -35,7 +35,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `facilitys`.`name` ORDER BY `alltests` DESC ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `partners`.`name` ORDER BY `alltests` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
