@@ -65,7 +65,7 @@ class Summaries_model extends MY_Model
 			$partner == $id;
 
 		$current_suppression = $this->get_patients($year,$month,$county,$partner,$to_year,$to_month);
-		// echo "<pre>";print_r($current_suppression);die();
+		echo "<pre>";print_r($current_suppression);die();
 		// $sql = "CALL `proc_get_vl_current_suppression`('".$type."','".$ID."')";
 		// echo "<pre>";print_r($sql);die();
 		// $result = $this->db->query($sql)->result_array();
