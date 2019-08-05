@@ -736,7 +736,7 @@ class Summaries_model extends MY_Model
 			}
 		}
 		$this->db->close();
-		echo "<pre>";print_r($params);die();
+		// echo "<pre>";print_r($params);die();
 		$result = $this->req($params);	
 
 		// $res = $this->db->query($sql)->row();
