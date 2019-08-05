@@ -19,9 +19,9 @@ class Sites_model extends MY_Model
 		extract($d);
 
 		if (isset($data['partners'])) {
-			echo "Hello partner";
+			$county = $data['county'];
 			if ($county) {
-				$sql = "CALL `proc_get_county_partner_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+				$sql = "CALL `proc_get_vl_county_partner_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			}  else {
 				$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			}

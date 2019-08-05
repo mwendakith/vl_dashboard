@@ -82,13 +82,13 @@ class County extends MY_Controller {
 
 	public function check_county_select()
 	{
-		echo json_encode($this->session->all_userdata());
-		// if ($this->session->userdata('county_filter')) {
-		// 	$county = $this->session->userdata('county_filter');
-		// } else {
-		// 	$county = 0;
-		// }
-		// echo json_encode($county);
+		// echo json_encode($this->session->all_userdata());
+		if ($this->session->userdata('county_filter')) {
+			$county = $this->session->userdata('county_filter');
+		} else {
+			$county = 0;
+		}
+		echo json_encode($county);
 	}
 
 	public function check_subcounty_select()
