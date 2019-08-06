@@ -1,52 +1,35 @@
 <table cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered counties-tables" style="background:#CCC;" id="age_gender">
 	<thead>
 		<tr class="colhead">
-			<th rowspan="3">No</th>
-			<?php if(isset($subcountyListing)){?><th rowspan="3">Sub-County</th><?php } ?>
-			<th rowspan="3">County</th>
-			<th colspan="12">Male</th>
-			<th colspan="12">Female</th>
+			<th>No</th>
+			<?php if(isset($subcountyListing)){?><th>Sub-County</th><?php } ?>
+			<th >County</th>
+			<th>Male Less than 2yrs-Tests</th>
+			<th>Male Less than 2yrs &gt; 1000</th>
+			<th>Male 2-9yrs-Tests</th>
+			<th>Male 2-9yrs &gt; 1000</th>
+			<th>Male 10-14yrs-Tests</th>
+			<th>Male 10-14yrs &gt; 1000</th>
+			<th>Male 15-19yrs-Tests</th>
+			<th>Male 15-19yrs &gt; 1000</th>
+			<th>Male 20-24yrs-Tests</th>
+			<th>Male 20-24yrs &gt; 1000</th>
+			<th>Male Above 25yrs-Tests</th>
+			<th>Male Above 25yrs &gt; 1000</th>
+			<th>Female Less than 2yrs-Tests</th>
+			<th>Female Less than 2yrs &gt; 1000</th>
+			<th>Female 2-9yrs-Tests</th>
+			<th>Female 2-9yrs &gt; 1000</th>
+			<th>Female 10-14yrs-Tests</th>
+			<th>Female 10-14yrs &gt; 1000</th>
+			<th>Female 15-19yrs-Tests</th>
+			<th>Female 15-19yrs &gt; 1000</th>
+			<th>Female 20-24yrs-Tests</th>
+			<th>Female 20-24yrs &gt; 1000</th>
+			<th>Female Above 25yrs-Tests</th>
+			<th>Female Above 25yrs &gt; 1000</th>
 		</tr>
-		<tr>
-			<th colspan="2">Less than 2yrs</th>
-			<th colspan="2">2-9yrs</th>
-			<th colspan="2">10-14yrs</th>
-			<th colspan="2">15-19yrs</th>
-			<th colspan="2">20-24yrs</th>
-			<th colspan="2">Above 25yrs</th>
-			<th colspan="2">Less than 2yrs</th>
-			<th colspan="2">2-9yrs</th>
-			<th colspan="2">10-14yrs</th>
-			<th colspan="2">15-19yrs</th>
-			<th colspan="2">20-24yrs</th>
-			<th colspan="2">Above 25yrs</th>
-		</tr>
-		<tr>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-		</tr>
+	
 	</thead>
 	<tbody>
 		<?php echo $outcomes;?>
