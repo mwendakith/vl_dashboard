@@ -8,10 +8,6 @@
 			<th>Rejected Samples (on receipt at lab)</th>
 			<th>All Test (plus reruns) Done at Lab</th>
 			<th>Redraw (after testing)</th>
-			<th>Received Samples at Lab</th>
-			<th>Rejected Samples (on receipt at lab)</th>
-			<th>All Test (plus reruns) Done at Lab</th>
-			<th>Redraw (after testing)</th>
 			<th>Routine VL-Tests</th>
 			<th>Routine VL Tests &gt; 1000</th>
 			<th>Baseline VL-Tests</th>
@@ -39,34 +35,7 @@
 			<th>Above 25 yrs-Tests</th>
 			<th>Above 25 yrs &gt; 1000</th>
 		</tr>
-		<tr>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-			<th>Tests</th>
-			<th>&gt; 1000</th>
-		</tr>
+		
 	</thead>
 	<tbody>
 		<?php echo $outcomes;?>
