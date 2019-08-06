@@ -1,43 +1,54 @@
 <table id="example" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="background:#CCC;">
 	<thead>
 		<tr class="colhead">
-			<th>No</th>
-			<th>County</th>
-			<th>Facilities Sending Samples</th>
-			<th>Received Samples at Lab</th>
-			<th>Rejected Samples (on receipt at lab)</th>
-			<th>All Test (plus reruns) Done at Lab</th>
-			<th>Redraw (after testing)</th>
-			<th>Received Samples at Lab</th>
-			<th>Rejected Samples (on receipt at lab)</th>
-			<th>All Test (plus reruns) Done at Lab</th>
-			<th>Redraw (after testing)</th>
-			<th>Routine VL-Tests</th>
-			<th>Routine VL Tests &gt; 1000</th>
-			<th>Baseline VL-Tests</th>
-			<th>Baseline VL Tests &gt; 1000</th>
-			<th>Confirmatory Repeat-Tests</th>
-			<th>Confirmatory Repeat &gt; 1000</th>
-			<th>Total Tests with Valid Outcomes-Tests</th>
-			<th>Total Tests with Valid Outcomes &gt; 1000</th>
-			<th>Female-Tests</th>
-			<th>Female &gt; 1000</th>
-			<th>Male-Tests</th>
-			<th>Male &gt; 1000</th>
-			<th>No Data-Tests</th>
-			<th>No Data &gt; 1000</th>
-			<th>Less 2 Yrs-Tests</th>
-			<th>Less 2 Yrs &gt; 1000</th>
-			<th>2 - 9 Yrs-Tests</th>
-			<th>2 - 9 Yrs &gt; 1000</th>
-			<th>10 - 14 yrs-Tests</th>
-			<th>10 - 14 yrs &gt; 1000</th>
-			<th>15 - 19 yrs-Tests</th>
-			<th>15 - 19 yrs &gt; 1000</th>
-			<th>20- 24 yrs-Tests</th>
-			<th>20- 24 yrs &gt; 1000</th>
-			<th>Above 25 yrs-Tests</th>
-			<th>Above 25 yrs &gt; 1000</th>
+			<th rowspan="2">No</th>
+			<th rowspan="2">County</th>
+			<th rowspan="2">Facilities Sending Samples</th>
+			<th rowspan="2">Received Samples at Lab</th>
+			<th rowspan="2">Rejected Samples (on receipt at lab)</th>
+			<th rowspan="2">All Test (plus reruns) Done at Lab</th>
+			<th rowspan="2">Redraw (after testing)</th>
+			<th colspan="2">Routine VL Tests</th>
+			<th colspan="2">Baseline VL Tests</th>
+			<th colspan="2">Confirmatory Repeat Tests</th>
+			<th colspan="2">Total Tests with Valid Outcomes</th>
+			<th colspan="2">Female</th>
+			<th colspan="2">Male</th>
+			<th colspan="2">No Data</th>
+			<th colspan="2">Less 2 Yrs</th>
+			<th colspan="2">2 - 9 Yrs</th>
+			<th colspan="2">10 - 14 yrs</th>
+			<th colspan="2">15 - 19 yrs</th>
+			<th colspan="2">20- 24 yrs</th>
+			<th colspan="2">Above 25 yrs</th>
+		</tr>
+		<tr>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
+			<th>Tests</th>
+			<th>&gt; 1000</th>
 		</tr>
 	</thead>
 	<tbody>
