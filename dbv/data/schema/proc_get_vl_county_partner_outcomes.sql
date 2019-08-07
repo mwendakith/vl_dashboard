@@ -4,7 +4,7 @@ CREATE PROCEDURE `proc_get_vl_county_partner_outcomes`
 (IN `C_id` INT(11), IN `filter_year` INT(11), IN `from_month` INT(11), IN `to_year` INT(11), IN `to_month` INT(11))
 BEGIN
   SET @QUERY =    "SELECT                  
-                  `vf`.`name`, 
+                  `vf`.`partnername`, 
                   SUM(`vs`.`undetected`) AS `undetected`, 
                   SUM(`vs`.`less1000`) AS `less1000`, 
                   (SUM(`vs`.`undetected`)+SUM(`vs`.`less1000`)) AS `suppressed`, 
@@ -28,7 +28,7 @@ BEGIN
     END IF;
 
 
-    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",C_id,"' GROUP BY vf.`name` ORDER BY `total` DESC LIMIT 0, 50 ");
+    SET @QUERY = CONCAT(@QUERY, " AND `vf`.`county` = '",C_id,"' GROUP BY vf.`partnername` ORDER BY `total` DESC LIMIT 0, 50 ");
 
    PREPARE stmt FROM @QUERY;
    EXECUTE stmt;
