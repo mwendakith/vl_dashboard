@@ -22,6 +22,9 @@ BEGIN
    IF (type=3 OR type='3') THEN
       SET @QUERY = CONCAT(@QUERY, " `jt`.`ID` as `selection` FROM `vl_site_gender` `vg` JOIN `gender` `g` ON `g`.`ID` = `vg`.`gender` JOIN `view_facilitys` `jt` ON `jt`.`ID` = `vg`.`facility` WHERE `jt`.`county` = '",ID,"' ");
    END IF;
+   IF (type=4 OR type='4') THEN
+      SET @QUERY = CONCAT(@QUERY, " `jt`.`partnername` as `selection` FROM `vl_site_gender` `vg` JOIN `gender` `g` ON `g`.`ID` = `vg`.`gender` JOIN `view_facilitys` `jt` ON `jt`.`ID` = `vg`.`facility` WHERE `jt`.`county` = '",ID,"' ");
+   END IF;
                         
    IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN

@@ -62,9 +62,9 @@
 					  <div class="panel-body" id="ageGroups">
 					    <center><div class="loader"></div></center>
 					  </div>
-					  <div>
+					  <!-- <div>
 					  	<center><button class="btn btn-default" onclick="ageModal();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">Click here for breakdown</button></center>
-					  </div>
+					  </div> -->
 					</div>
 		</div>
 		<div class="col-md-6 col-sm-6 col-xs-12">
@@ -75,9 +75,9 @@
 				<div class="panel-body" id="justification">
 				    <center><div class="loader"></div></center>
 				</div>
-			  	<div>
+			  	<!-- <div>
 			  		<center><button class="btn btn-default" onclick="justificationModal();" style="background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;">Click here for breakdown</button></center>
-			  	</div>
+			  	</div> -->
 			</div>
 		</div>
 	</div>

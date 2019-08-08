@@ -34,13 +34,13 @@
                         color: '#89A54E'
                     }
                 },
-                <?= ($interval) ? "tickInterval: $interval," : ''; ?>
+                <?= (isset($interval)) ? "tickInterval: $interval," : ''; ?>
                 opposite: true
     
             }, { // Secondary yAxis
                 gridLineWidth: 0,
                 title: {
-                    text: "<?= ($tat) ? 'Days' : 'Tests'; ?>",
+                    text: "<?= (isset($tat)) ? 'Days' : 'Tests'; ?>",
                     style: {
                         color: '#4572A7'
                     }

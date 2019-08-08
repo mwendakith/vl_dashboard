@@ -19,9 +19,9 @@ class Sites_model extends MY_Model
 		extract($d);
 
 		if (isset($data['partners'])) {
-			echo "Hello partner";
+			$county = $data['county'];
 			if ($county) {
-				$sql = "CALL `proc_get_county_partner_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+				$sql = "CALL `proc_get_vl_county_partner_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
 			}  else {
 				$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
 			}
@@ -75,7 +75,7 @@ class Sites_model extends MY_Model
 		$data['outcomes'][2]['data'][0] = 0;
 		$data['outcomes'][3]['data'][0] = 0;
 		foreach ($result as $key => $value) {
-			$data['categories'][$key] 					= $value['name'];
+			$data['categories'][$key] 					= $value['partnername'];
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['less1000'];
 			$data['outcomes'][2]['data'][$key] = (int) $value['undetected'];
