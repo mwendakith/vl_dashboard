@@ -268,6 +268,7 @@ class Ages_model extends MY_Model
 			}
 		} else {
 			$count;
+			echo "<pre>";print_r($result);die();
 			foreach ($result as $key => $value) {
 				$suppressed = (int) ($value['Undetected']+$value['less1000']);
 				$nonsuppressed = (int) ($value['less5000']+$value['above5000']);
