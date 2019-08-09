@@ -267,8 +267,7 @@ class Ages_model extends MY_Model
 				$data["outcomes"][2]["data"][2]	=  round(((int) $value['nodatasuppressed']/$nodata)*100,1);
 			}
 		} else {
-			$count;
-			echo "<pre>";print_r($result);die();
+			$count = 0;
 			foreach ($result as $key => $value) {
 				$suppressed = (int) ($value['Undetected']+$value['less1000']);
 				$nonsuppressed = (int) ($value['less5000']+$value['above5000']);
@@ -279,6 +278,7 @@ class Ages_model extends MY_Model
 				$data["outcomes"][2]["data"][$count]	=  round(((int) $suppressed/$totalValidTests)*100,1);
 				$count++;
 			}
+			echo "<pre>";print_r($data);die();
 		}
 		
 		// $data['gender'][0]['drilldown']['color'] = ;
