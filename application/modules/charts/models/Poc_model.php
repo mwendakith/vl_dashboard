@@ -24,7 +24,7 @@ class Poc_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 
 		$data['outcomes'][0]['name'] = "Not Suppressed";
-		$data['outcomes'][1]['name'] = "&lt; 1000";
+		$data['outcomes'][1]['name'] = "LLV";
 		$data['outcomes'][2]['name'] = "LDL";
 		$data['outcomes'][3]['name'] = "Suppression";
 		$data['outcomes'][4]['name'] = "90% Target";
@@ -36,8 +36,8 @@ class Poc_model extends MY_Model
 		$data['outcomes'][4]['type'] = "spline"; 
 
 		$data['outcomes'][0]['color'] = '#F2784B';
-		$data['outcomes'][1]['color'] = '#1BA39C';
-		$data['outcomes'][2]['color'] = '#66ff66';
+		$data['outcomes'][1]['color'] = '#66ff66';
+		$data['outcomes'][2]['color'] = '#1BA39C';
 		
 
 		$data['outcomes'][0]['yAxis'] = 1;
@@ -266,8 +266,8 @@ class Poc_model extends MY_Model
 		$result = $this->db->query($sql)->result_array();
 
 		$data['outcomes'][0]['name'] = "Not Suppressed";
-		$data['outcomes'][1]['name'] = "&lt; 1000";
-		$data['outcomes'][2]['name'] = "&lt; LDL";
+		$data['outcomes'][1]['name'] = "LLV";
+		$data['outcomes'][2]['name'] = "LDL";
 		$data['outcomes'][3]['name'] = "Suppression";
 		$data['outcomes'][4]['name'] = "90% Target";
 
@@ -278,8 +278,8 @@ class Poc_model extends MY_Model
 		$data['outcomes'][4]['type'] = "spline"; 
 
 		$data['outcomes'][0]['color'] = '#F2784B';
-		$data['outcomes'][1]['color'] = '#1BA39C';
-		$data['outcomes'][2]['color'] = '#66ff66';
+		$data['outcomes'][1]['color'] = '#66ff66';
+		$data['outcomes'][2]['color'] = '#1BA39C';
 		
 
 		$data['outcomes'][0]['yAxis'] = 1;
