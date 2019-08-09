@@ -227,31 +227,30 @@ class Ages_model extends MY_Model
 		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
+		
+
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+		$data['categories'][0] = 'No Data';
 		
 		if ($partner==null) {
-			// echo "<pre>";print_r($result);die();
-			$data['outcomes'][0]['name'] = "Not Suppressed";
-			$data['outcomes'][1]['name'] = "Suppressed";
-			$data['outcomes'][2]['name'] = "Suppression";
-
-			$data['outcomes'][0]['type'] = "column";
-			$data['outcomes'][1]['type'] = "column";
-			$data['outcomes'][2]['type'] = "spline";
-			
-
-			$data['outcomes'][0]['yAxis'] = 1;
-			$data['outcomes'][1]['yAxis'] = 1;
-
-			$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
-			$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
-			$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
-
-			$data['title'] = "";
-
 			$data['categories'][0] 			= 'Male';
 			$data['categories'][1] 			= 'Female';
 			$data['categories'][2] 			= 'No Data';
-
 			foreach ($result as $key => $value) {
 				$nodata = (int) $value['nodatanonsuppressed'] + (int) $value['nodatasuppressed'];
 				$male = (int) $value['malenonsuppressed'] + (int) $value['malesuppressed'];
@@ -268,19 +267,16 @@ class Ages_model extends MY_Model
 				$data["outcomes"][2]["data"][2]	=  round(((int) $value['nodatasuppressed']/$nodata)*100,1);
 			}
 		} else {
-			// echo "<pre>";print_r($result);die();
-			$data['outcomes'][0]['name'] = "Tests";
-
-			$data['title'] = "";
-
-			$data['categories'][0] 			= 'Male';
-			$data['categories'][1] 			= 'Female';
-			$data['categories'][2] 			= 'No Data';
-
+			$count;
 			foreach ($result as $key => $value) {
-				$data["outcomes"][0]["data"][0]	=  (int) $value['maletest'];
-				$data["outcomes"][0]["data"][1]	=  (int) $value['femaletest'];
-				$data["outcomes"][0]["data"][2]	=  (int) $value['nodata'];
+				$suppressed = (int) ($value['Undetected']+$value['less1000']);
+				$nonsuppressed = (int) ($value['less5000']+$value['above5000']);
+				$totalValidTests = (int) ($suppressed+$nonsuppressed);
+				$data['categories'] = $value['name'];
+				$data["outcomes"][0]["data"][$count]	=  (int) ($nonsuppressed);
+				$data["outcomes"][1]["data"][$count]	=  (int) ($suppressed);
+				$data["outcomes"][2]["data"][$count]	=  round(((int) $suppressed/$totalValidTests)*100,1);
+				$count++;
 			}
 		}
 		
