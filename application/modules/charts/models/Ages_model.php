@@ -278,7 +278,7 @@ class Ages_model extends MY_Model
 				$data["outcomes"][2]["data"][$count]	=  round(((int) $suppressed/$totalValidTests)*100,1);
 				$count++;
 			}
-			echo "<pre>";print_r($data);die();
+			// echo "<pre>";print_r($data);die();
 		}
 		
 		// $data['gender'][0]['drilldown']['color'] = ;
