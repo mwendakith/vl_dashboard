@@ -88,7 +88,7 @@ class Poc_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
  
-		$data['vl_outcomes']['data'][0]['name'] = '&lt; 1000';
+		$data['vl_outcomes']['data'][0]['name'] = 'LLV';
 		$data['vl_outcomes']['data'][1]['name'] = 'LDL';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
  
@@ -122,21 +122,21 @@ class Poc_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml (HVL):</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
 	    		<td>'.round((@($greater/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 1000 copies/ml (LLV):</td>
 	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests LDL:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt;= 400 (LDL):</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Undetectable</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
@@ -166,8 +166,8 @@ class Poc_model extends MY_Model
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['undetected'];
 			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
  
-			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
-			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+			$data['vl_outcomes']['data'][0]['color'] = '#66ff66';
+			$data['vl_outcomes']['data'][1]['color'] = '#1BA39C';
 			$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 		}
 

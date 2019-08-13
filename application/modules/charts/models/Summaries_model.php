@@ -331,7 +331,7 @@ class Summaries_model extends MY_Model
  
 		foreach ($result as $key => $value) {
 			if($value['name'] == 'Routine VL'){
-				$data['justification']['data'][$key]['color'] = '#5C97BF';
+				$data['justification']['data'][$key]['color'] = '#1BA39C';
 			}
 			$data['justification']['data'][$key]['y'] = $count;
 			
