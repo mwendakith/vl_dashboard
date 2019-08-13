@@ -98,7 +98,7 @@
                             'name' => 'Covered',
                             'y' => $trends['coverage'],
                             'z' => number_format($trends['unique_patients']),
-                            'color' => '#66ff66',
+                            'color' => '#1BA39C',
                         ],
                         [
                             'name' => 'Not Covered',
