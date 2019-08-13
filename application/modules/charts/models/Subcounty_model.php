@@ -227,7 +227,7 @@ class Subcounty_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '&lt;= 1000';
+		$data['vl_outcomes']['data'][0]['name'] = 'LLV';
 		$data['vl_outcomes']['data'][1]['name'] = 'LDL';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 
@@ -300,8 +300,8 @@ class Subcounty_model extends MY_Model
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['undetected'];
 			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
 
-			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
-			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+			$data['vl_outcomes']['data'][0]['color'] = '#66ff66';
+			$data['vl_outcomes']['data'][1]['color'] = '#1BA39C';
 			$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 		}
 		$data['vl_outcomes']['data'][2]['sliced'] = true;
