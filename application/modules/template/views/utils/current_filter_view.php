@@ -55,7 +55,7 @@
 	</div>
 </div>
 <div class="row filter-div">
-	<div class="col-md-2">
+	<div class="col-md-3">
 		<div id="breadcrum" class="alert" style="background-color: #1BA39C;/*display:none;"></div>
 	</div>
 	<div class="col-md-5" id="year-month-filter">
@@ -87,7 +87,7 @@
 			<a href='javascript:void(0)' onclick='date_filter("monthly", 12)' class='alert-link'> Dec</a>
 		</div>
 	</div>
-	<div class="col-md-5">
+	<div class="col-md-4">
 		<div class="row" id="range">
 			<div class="col-md-4">
 				<input name="startDate" id="startDate" class="date-picker" placeholder="From:" />
