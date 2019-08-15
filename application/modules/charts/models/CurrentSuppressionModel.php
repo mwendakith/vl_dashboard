@@ -15,7 +15,7 @@ class CurrentSuppressionModel extends MY_Model
 	public function current_age($type = NULL, $id = NULL)
 	{
 		$result = $this->getCurrentAgeData($type, $id);
-		
+
 		$data['justification']['name'] = 'Tests';
 		$data['justification']['colorByPoint'] = true;
  		
@@ -50,6 +50,14 @@ class CurrentSuppressionModel extends MY_Model
  		$data['justification']['data'][6]['name'] = 'No Data';
 		$data['justification']['data'][6]['y'] = (int) ($result['noage_suppressed'] + $result['noage_nonsuppressed']);
 		return $data;
+	}
+
+	public function current_age_breakdown($type=null,$id=null) {
+		$data = $this->getCurrentAgeData($type,$id);
+		return [
+				'less25' => (int) ($result['less2_suppressed'] + $result['less2_nonsuppressed'] + $result['less9_suppressed'] + $result['less9_nonsuppressed'] + $result['less14_suppressed'] + $result['less14_nonsuppressed'] + $result['less19_suppressed'] + $result['less19_nonsuppressed'] + $result['less24_suppressed'] + $result['less24_nonsuppressed']),
+				'above25' => (int) ($result['over25_suppressed'] + $result['over25_nonsuppressed'])
+			];
 	}
 
 	private function getCurrentAgeData($type=0,$id=0)
