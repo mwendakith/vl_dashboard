@@ -28,7 +28,7 @@ class Template extends MY_Controller
 		$data['pmtcts'] = $this->template_model->pmtct_dropdown();
 		$data['agencies'] = $this->template_model->funding_agencies_dropdown();
 		// $data['breadcrum'] = $this->breadcrum();
-		echo "<pre>";print_r($data);die();
+		// echo "<pre>";print_r($data);die();
 		$this->load->view('template_view',$data);
 	}
 
