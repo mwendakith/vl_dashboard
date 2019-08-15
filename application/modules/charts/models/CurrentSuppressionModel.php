@@ -15,7 +15,7 @@ class CurrentSuppressionModel extends MY_Model
 	public function current_age($type = NULL, $id = NULL)
 	{
 		$result = $this->getCurrentAgeData($type, $id);
-		echo "<pre>";print_r($result);die();
+		
 		$data['justification']['name'] = 'Tests';
 		$data['justification']['colorByPoint'] = true;
  		
