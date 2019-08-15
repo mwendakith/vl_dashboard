@@ -25,7 +25,11 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",from_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `sampletype` = '",S_id,"' ");
+    IF (S_id = 1) THEN
+        SET @QUERY = CONCAT(@QUERY, " AND `sampletype` IN (1, 3) ");
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `sampletype` = '",S_id,"' ");
+    END IF;
 
     SET @QUERY = CONCAT(@QUERY, " GROUP BY `year`, `month` ORDER BY `year` ASC, `month` ");
     

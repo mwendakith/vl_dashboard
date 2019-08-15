@@ -240,7 +240,6 @@ class Samples_model extends MY_Model
 		
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['sample' => $sample]);
 		extract($d);
-
 		//if ($partner==null || $partner=='null') {
 		$sql = "CALL `proc_get_vl_sample_summary`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		/*} else {
