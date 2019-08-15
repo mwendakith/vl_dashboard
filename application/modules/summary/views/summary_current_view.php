@@ -27,75 +27,150 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="col-md-4 col-sm-12 col-xs-12">
 			<div class="panel panel-default">
-			  <div class="panel-heading" style="min-height: 4em;">
-			  	<div class="col-sm-3">
-			  		<div id="samples_heading">Testing Trends for Routine VL</div> <div class="display_date"></div>
+				<div class="panel-heading" style="min-height: 4em;">
+				  	Total on ART<div class="display_date"></div>
+				</div>
+			  	<div class="panel-body" id="total-art">
+			   	<center><div class="loader"></div></center>
 			  	</div>
-			  </div>
-			  <div class="panel-body" id="samples">
-			    <center><div class="loader"></div></center>
-			  </div>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="min-height: 4em;">
+				  	Total VLs Done<div class="display_date"></div>
+				</div>
+			  	<div class="panel-body" id="total-vl-done">
+			   	<center><div class="loader"></div></center>
+			  	</div>
+			</div>
+		</div>
+		<div class="col-md-4 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="min-height: 4em;">
+				  	Current Suppression<div class="display_date"></div>
+				</div>
+			  	<div class="panel-body" id="current-suppression">
+			   	<center><div class="loader"></div></center>
+			  	</div>
 			</div>
 		</div>
 	</div>
 	<div class="row">
-		<!-- Map of the country -->
-		<div class="col-md-7 col-sm-3 col-xs-12">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			  	VL Outcomes <div class="display_date" ></div>
-			  </div>
-			  <div class="panel-body" id="vlOutcomes">
-			  	<center><div class="loader"></div></center>
-			  </div>
-			  
-			</div>
-		</div>
-		<div class="col-md-5">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			    Routine VLs Outcomes by Gender <div class="display_date"></div>
-			  </div>
-			  <div class="panel-body" id="gender" style="height:650px;padding-bottom:0px;">
-			    <center><div class="loader"></div></center>
-			  </div>
-			</div>
-		</div>
-		
-		<div class="col-md-6">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			    Routine VLs Outcomes by Age <div class="display_date"></div>
-			  </div>
-			  <div class="panel-body" id="ageGroups">
-			    <center><div class="loader"></div></center>
-			  </div>
-			</div>
-		</div>
-		<!-- Map of the country -->
-		<div class="col-md-6 col-sm-4 col-xs-12">
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-				  Justification for tests <div class="display_date"></div>
-			  </div>
-			  <div class="panel-body" id="justification" style="height:500px;">
-			    <center><div class="loader"></div></center>
-			  </div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<!-- Map of the country -->
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="panel panel-default">
-			  <div class="panel-heading" id="heading">
-			  	County Outcomes <div class="display_date"></div>
-			  </div>
-			  <div class="panel-body" id="county">
-			    <center><div class="loader"></div></center>
-			  </div>
+				<div class="panel-heading">
+					Age Cascade <div class="display_date" ></div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-4" id="age-pie">
+							<center><div class="loader"></div></center>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-8" id="age-breakdown">
+							<center><div class="loader"></div></center>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Current Suppression <div class="display_date" ></div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-4" id="current-age-pie-less-25">
+							<center><div class="loader"></div></center>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-4" id="current-age-pie-over-25">
+							<center><div class="loader"></div></center>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-4" id="current-age-pie-chart">
+							<center><div class="loader"></div></center>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Adolescents <div class="display_date" ></div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<center>Loading...</center>
+					</div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-4" id="current-age-pie-less-25">
+							<center><div class="loader"></div></center>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-4" id="current-age-pie-over-25">
+							<center><div class="loader"></div></center>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-4" id="current-age-pie-chart">
+							<center><div class="loader"></div></center>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Current Suppression <div class="display_date" ></div>
+				</div>
+				<div class="panel-body">
+					<div id="current-suppression-adolescents">
+						<center><div class="loader"></div></center>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					PMTCT <div class="display_date" ></div>
+				</div>
+				<div class="panel-body">
+					<div id="pmtct">
+						<center><div class="loader"></div></center>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Linkage to Care & Treatment <div class="display_date" ></div>
+				</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-4" id="linkage-breakdown">
+							<center><div class="loader"></div></center>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-4" id="linkage-chart">
+							<center><div class="loader"></div></center>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-4" id="linkage-pie">
+							<center><div class="loader"></div></center>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>	
