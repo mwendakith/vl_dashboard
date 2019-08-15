@@ -70,6 +70,7 @@ class CurrentSuppressionModel extends MY_Model
 		
 		$sql = "CALL `proc_get_vl_current_age_suppression`('".$type."','".$id."')";
 		$data = $this->db->query($sql)->result_array()[0];
+		echo "<pre>";print_r( $result['less2_suppressed'] + (int) $result['less2_nonsuppressed']);die();
 		$data['less2'] = ((int) $result['less2_suppressed'] + (int) $result['less2_nonsuppressed']);
 		$data['less9'] = ($result['less9_suppressed'] + $result['less9_nonsuppressed']);
 		$data['less14'] = ($result['less14_suppressed'] + $result['less14_nonsuppressed']);
