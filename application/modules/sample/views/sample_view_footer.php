@@ -49,7 +49,7 @@
 					$("#samples").html("<center><div class='loader'></div></center>");
 					$("#county").html("<center><div class='loader'></div></center>");
 					
-					$("#vlOutcomes").load("<?php echo base_url('charts/samples/samples_vl_outcome'); ?>");
+					$("#vlOutcomes").load("<?php echo base_url('charts/samples/samples_vl_outcome'); ?>/"+null+"/"+null+"/"+data);
 					$("#gender").load("<?php echo base_url('charts/samples/samples_gender'); ?>/"+null+"/"+null+"/"+data);
 					$("#age").load("<?php echo base_url('charts/samples/samples_age'); ?>/"+null+"/"+null+"/"+data); 
 					$("#samples").load("<?php echo base_url('charts/samples/suppression'); ?>/"+null+"/"+null+"/"+data);
