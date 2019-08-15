@@ -15,6 +15,7 @@ class CurrentSuppressionModel extends MY_Model
 	public function current_age($type = NULL, $id = NULL)
 	{
 		$result = $this->getCurrentAgeData($type, $id);
+		echo "<pre>";print_r($result);die();
 		$data['justification']['name'] = 'Tests';
 		$data['justification']['colorByPoint'] = true;
  		
@@ -58,7 +59,6 @@ class CurrentSuppressionModel extends MY_Model
 		}
 		
 		$sql = "CALL `proc_get_vl_current_age_suppression`('".$type."','".$id."')";
-		echo "<pre>";print_r($sql);die();
 		return $this->db->query($sql)->result_array();
 	}
 }
