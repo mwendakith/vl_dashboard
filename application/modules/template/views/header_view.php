@@ -90,6 +90,13 @@
 				padding-top: 0.5em;
 				padding-bottom: 0.5em;
 			}
+			.div-spacing {
+				margin-bottom: 1.2em;
+				margin-right: 0.1em;
+				margin-left: 0.1em;
+				padding-top: 0.5em;
+				padding-bottom: 0.5em;
+			}
 			#filter {
 				background-color: white;
 				margin-bottom: 1.2em;
