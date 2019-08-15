@@ -54,7 +54,7 @@
 		</select>
 	</div>
 </div>
-<div class="row">
+<div class="row filter-div">
 	<div class="col-md-2">
 		<div id="breadcrum" class="alert" style="background-color: #1BA39C;/*display:none;"></div>
 	</div>
