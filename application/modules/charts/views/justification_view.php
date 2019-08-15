@@ -1,10 +1,10 @@
 
-<div id="jstification_pie">
+<div id="<?= (isset($current_age_pie)) ? $current_age_pie : 'jstification_pie'; ?>">
 
 </div>
 <script type="text/javascript">
 	$(function(){
-	    $("#<?= ($current_age_pie) ? @$current_age_pie : @'jstification_pie'; ?>").highcharts({
+	    $("#<?= (isset($current_age_pie)) ? $current_age_pie : 'jstification_pie'; ?>").highcharts({
 	        chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
