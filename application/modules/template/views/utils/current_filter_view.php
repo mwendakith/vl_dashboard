@@ -26,28 +26,28 @@
 </style>
 <div class="row" id="filter">
 	<div class="col-md-3">
-		<select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;width: 100%;" name="county" id="countydrp">
+		<select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;width: 100%;" name="county" id="county">
 			<option value="0" disabled="true" selected="true">Select County:</option>
 			<option value="all">National</option>
 			<?php echo $filter; ?>
 		</select>
 	</div>
 	<div class="col-md-3">
-		<select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;width: 100%;" name="subcounty" id="subcountydrp">
+		<select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;width: 100%;" name="subcounty" id="subcounty">
 			<option value="0" disabled="true" selected="true">Select Sub-County:</option>
 			<option value="all">All Sub-Counties</option>
 			<?php echo $subCounty; ?>
 		</select>
 	</div>
 	<div class="col-md-3">
-		<select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;width: 100%;" name="facility" id="facilitydrp">
+		<select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;width: 100%;" name="facility" id="facility">
 			<option value="0" disabled="true" selected="true">Select Facility:</option>
 			<option value="all">All Facilities</option>
 			<?php echo $sites; ?>
 		</select>
 	</div>
 	<div class="col-md-3">
-		<select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;width: 100%;" name="partner" id="partnerdrp">
+		<select class="btn btn-primary js-example-basic-single" style="background-color: #C5EFF7;width: 100%;" name="partner" id="partner">
 			<option value="0" disabled="true" selected="true">Select Partner:</option>
 			<option value="all">All Partners</option>
 			<?php echo $partner; ?>

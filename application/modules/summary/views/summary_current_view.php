@@ -97,7 +97,10 @@
 	// Events listeners when the document is ready
 	$().ready(function(){
 		$("select").change(function(){
-			console.log($(this));
+			dropDowns = {county:1,subcounty:2,facility:3,partner:4};
+			elementID = $(this).attr('id');
+
+			console.log(dropDowns[elementID]);
 		});
 	});
 </script>
