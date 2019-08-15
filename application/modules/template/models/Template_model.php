@@ -72,9 +72,8 @@ class Template_model extends MY_Model
 		$this->db->order_by("name","asc");
 		$lab_data = $this->db->get('viralsampletypedetails')->result_array();
 
-		foreach ($lab_data as $key => $value) {
-			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
-		}
+			$dropdown .= '<option value=1>Plasma</option>
+						  <option value=2>DBS</option>';
 		
 		return $dropdown;
 	}

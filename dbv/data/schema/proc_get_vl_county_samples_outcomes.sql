@@ -25,7 +25,13 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `sampletype` = '",filter_sampletype,"' GROUP BY `vcs`.`county` ORDER BY `suppressed` DESC ");
+    IF (S_id = 1) THEN
+        SET @QUERY = CONCAT(@QUERY, " AND `sampletype` IN (1, 3) ");
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `sampletype` = '",filter_sampletype,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `vcs`.`county` ORDER BY `suppressed` DESC ");
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;
