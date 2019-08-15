@@ -55,10 +55,11 @@ class CurrentSuppressionModel extends MY_Model
 	public function current_age_breakdown($type=null,$id=null) {
 		$data = $this->getCurrentAgeData($type,$id);
 		echo "<pre>";print_r($data);die();
-		return [
-				'less25' =>  $result['less14_suppressed'] + $result['less14_nonsuppressed'] + $result['less19_suppressed'] + $result['less19_nonsuppressed'] + $result['less24_suppressed'] + $result['less24_nonsuppressed']),
-				['above25'] => (int) ($result['over25_suppressed'] + $result['over25_nonsuppressed'])
-			];
+		return [];
+		// return [
+		// 		'less25' =>  $result['less14_suppressed'] + $result['less14_nonsuppressed'] + $result['less19_suppressed'] + $result['less19_nonsuppressed'] + $result['less24_suppressed'] + $result['less24_nonsuppressed']),
+		// 		['above25'] => (int) ($result['over25_suppressed'] + $result['over25_nonsuppressed'])
+		// 	];
 	}
 
 	private function getCurrentAgeData($type=0,$id=0)
