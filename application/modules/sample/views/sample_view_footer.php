@@ -18,7 +18,7 @@
 		$("select").change(function(){
 			em = $(this).val();
 			if(em == "NA")
-				sessionStorage.setItem("data", "0");
+				sessionStorage.setItem("data", "");
 			else
 				sessionStorage.setItem("data", em);
 			var data = sessionStorage.getItem("data");
