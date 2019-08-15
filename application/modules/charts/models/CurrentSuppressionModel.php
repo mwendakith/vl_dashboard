@@ -19,7 +19,7 @@ class CurrentSuppressionModel extends MY_Model
 		$data['justification']['colorByPoint'] = true;
  		
  		// Less 2
- 		$data['justification']['data'][0]['name'] = '&glt; 2';
+ 		$data['justification']['data'][0]['name'] = '&lt; 2';
 		$data['justification']['data'][0]['y'] = (int) ($result['less2_suppressed'] + $result['less2_nonsuppressed']);
 
  		// 2-9

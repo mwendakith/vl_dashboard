@@ -324,6 +324,7 @@ class Summaries extends MY_Controller {
 	function current_summary_age($type=null,$id=null) {
 		$data['outcomes'] = $this->currentSuppressionModel->current_age($type,$id);
 		$data['div_name'] = 'current_age_pie';
+		dd($data);
     	$this->load->view('justification_view',$data);
 	}
 
