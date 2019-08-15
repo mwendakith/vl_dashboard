@@ -93,3 +93,11 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+	// Events listeners when the document is ready
+	$().ready(function(){
+		$("select").change(function(){
+			console.log($(this));
+		});
+	});
+</script>
