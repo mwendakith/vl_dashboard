@@ -23,7 +23,7 @@
 <div class="div-spacing">
 	<div class="row">
 		<div class="col-md-12 col-sm-12 col-xs-12">
-			<h5>*All Stats based on Unique Patients` last VL result in the selected time period*</h5>
+			<center><h4 style="color: ##f03434;">*All Stats based on Unique Patients` last VL result in the selected time period*</h4></center>
 		</div>
 	</div>
 	<div class="row">
@@ -178,10 +178,22 @@
 <script type="text/javascript">
 	// Events listeners when the document is ready
 	$().ready(function(){
+		// Load the initail charts
+		loadCharts();
+
 		$("select").change(function(){
 			types = {county:1,subcounty:2,facility:3,partner:4};
 			elementID = $(this).attr('id');
 			elementValue = $(this).val();
 		});
 	});
+
+	function loadCharts() {
+		// Load from the procedures
+		$("#total-vl-done").load("<?php echo base_url('charts/summaries/justification'); ?>");
+
+		// Load from the API takes longer to load
+		$("#total-art").load("<?php echo base_url('charts/summaries/get_patients'); ?>");
+		$("#current-suppression").load("<?php echo base_url('charts/summaries/get_current_suppresion'); ?>");
+	}
 </script>
