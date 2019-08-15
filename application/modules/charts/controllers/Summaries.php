@@ -329,6 +329,7 @@ class Summaries extends MY_Controller {
 
 	function current_summary_age_breakdown($type=null,$id=null) {
 		$data = $this->currentSuppressionModel->current_age_breakdown($type,$id);
+		echo "<pre>";print_r($data);die();
     	$this->load->view('currentAgeBreakdown',$data);
 	}
 
