@@ -4,7 +4,7 @@
 </div>
 <script type="text/javascript">
 	$(function(){
-	    $('#jstification_pie').highcharts({
+	    $("#<?= ($current_age_pie) ? @$current_age_pie : @'jstification_pie'; ?>").highcharts({
 	        chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
