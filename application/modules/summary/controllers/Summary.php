@@ -28,7 +28,7 @@ class Summary extends MY_Controller {
 		$this->clear_all_session_data();
 		$this->data['current_summary'] = TRUE;
 		$this->data['content_view'] = 'summary/summary_current_view';
-		// echo "<pre>";print_r($this->data);die();
+		echo "<pre>";print_r($this->data);die();
 		$this -> template($this->data);
 	}
 }
