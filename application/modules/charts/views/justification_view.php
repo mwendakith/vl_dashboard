@@ -1,9 +1,9 @@
-<div id="<?= (isset($div_name)) ? $div_name : 'jstification_pie'; ?>">
+<div id="<?= (isset($div_name)) ? @$div_name : @'jstification_pie'; ?>">
 
 </div>
 <script type="text/javascript">
 	$(function(){
-	    $("#<?= (isset($div_name)) ? $div_name : 'jstification_pie'; ?>").highcharts({
+	    $("#<?= (isset($div_name)) ? @$div_name : @'jstification_pie'; ?>").highcharts({
 	        chart: {
         plotBackgroundColor: null,
         plotBorderWidth: null,
