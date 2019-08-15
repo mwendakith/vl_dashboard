@@ -7,7 +7,7 @@ defined("BASEPATH") or exit("No direct script access allowed!");
 class CurrentSuppressionModel extends MY_Model
 {
 	
-	function __construct(argument)
+	function __construct()
 	{
 		parent::__construct();
 	}
