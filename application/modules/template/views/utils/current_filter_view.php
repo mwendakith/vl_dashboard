@@ -133,10 +133,12 @@ $(function() {
 	});
 });
 
+// On document ready
 $().ready(function(){
 	$('#errorAlertDateRange').hide();
 	$(".js-example-basic-single").select2({
-		placeholder: 'Select an option'
+		placeholder: 'Select an option',
+		width: '300'
 	});
 	//Getting the URL dynamically
 	var url = $(location).attr('href');
