@@ -110,7 +110,7 @@ class Summaries_model extends MY_Model
 		// echo "<pre>";print_r($result);die();
 
 		$data['outcomes'][0]['name'] = "Not Suppressed";
-		$data['outcomes'][1]['name'] = "&lt; 1000";
+		$data['outcomes'][1]['name'] = "LLV";
 		$data['outcomes'][2]['name'] = "LDL";
 		$data['outcomes'][3]['name'] = "Suppression";
 		$data['outcomes'][4]['name'] = "90% Target";
@@ -122,8 +122,8 @@ class Summaries_model extends MY_Model
 		$data['outcomes'][4]['type'] = "spline"; 
 
 		$data['outcomes'][0]['color'] = '#F2784B';
-		$data['outcomes'][1]['color'] = '#1BA39C';
-		$data['outcomes'][2]['color'] = '#66ff66';
+		$data['outcomes'][1]['color'] = '#66ff66';
+		$data['outcomes'][2]['color'] = '#1BA39C';
 		
 
 		$data['outcomes'][0]['yAxis'] = 1;
@@ -229,21 +229,21 @@ class Summaries_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml (HVL):</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
 	    		<td>'.round((@($greater/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt= 400 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt= 400 copies/ml (LDL):</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml (LLV):</td>
 	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
@@ -331,7 +331,7 @@ class Summaries_model extends MY_Model
  
 		foreach ($result as $key => $value) {
 			if($value['name'] == 'Routine VL'){
-				$data['justification']['data'][$key]['color'] = '#5C97BF';
+				$data['justification']['data'][$key]['color'] = '#1BA39C';
 			}
 			$data['justification']['data'][$key]['y'] = $count;
 			
@@ -807,9 +807,9 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '<= 400 copies/ml';
-		$data['vl_outcomes']['data'][1]['name'] = '401 - 999 copies/ml';
-		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml';
+		$data['vl_outcomes']['data'][0]['name'] = '<= 400 copies/ml (LDL)';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 999 copies/ml (LLV)';
+		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml (HVL)';
 		
 		$data['vl_outcomes']['data'][0]['y'] = (int) $result->rcategory1;
 		$data['vl_outcomes']['data'][1]['y'] = (int) $result->rcategory2;
@@ -819,8 +819,8 @@ class Summaries_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['z'] = number_format($result->rcategory2);
 		$data['vl_outcomes']['data'][2]['z'] = number_format($result->rcategory3 + $result->rcategory4);
 
-		$data['vl_outcomes']['data'][0]['color'] = '#66ff66';
-		$data['vl_outcomes']['data'][1]['color'] = '#1BA39C';
+		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
+		$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
 		$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 
 		$data['vl_outcomes']['data'][0]['sliced'] = true;
@@ -867,9 +867,9 @@ class Summaries_model extends MY_Model
 
 		$this->db->close();
 		
-		$data['vl_outcomes']['data'][0]['name'] = '<= 400 copies/ml';
-		$data['vl_outcomes']['data'][1]['name'] = '401 - 999 copies/ml';
-		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml';
+		$data['vl_outcomes']['data'][0]['name'] = '<= 400 copies/ml (LDL)';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 999 copies/ml (LLV)';
+		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml (HVL)';
 
 		$data['vl_outcomes']['data'][0]['y'] = (int) $result->undetected;
 		$data['vl_outcomes']['data'][1]['y'] = (int) $result->less1000;
