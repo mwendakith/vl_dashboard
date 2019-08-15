@@ -25,6 +25,7 @@ class Summary extends MY_Controller {
 
 	public function current()
 	{
+		echo "<pre>";print_r("Kill it here");die();
 		$this->clear_all_session_data();
 		$this->data['current_summary'] = TRUE;
 		$this->data['content_view'] = 'summary/summary_current_view';
