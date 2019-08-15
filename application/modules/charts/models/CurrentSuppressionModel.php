@@ -58,6 +58,7 @@ class CurrentSuppressionModel extends MY_Model
 		}
 		
 		$sql = "CALL `proc_get_vl_current_age_suppression`('".$type."','".$id."')";
+		echo "<pre>";print_r($sql);die();
 		return $this->db->query($sql)->result_array();
 	}
 }
