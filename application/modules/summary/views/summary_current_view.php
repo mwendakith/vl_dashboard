@@ -192,6 +192,7 @@
 		// Load from the procedures
 		$("#total-vl-done").load("<?php echo base_url('charts/summaries/justification'); ?>");
 		$("#age-pie").load("<?php echo base_url('charts/summaries/current_summary_age'); ?>");
+		$("#age-breakdown").load("<?php echo base_url('charts/summaries/current_summary_age_breakdown'); ?>");
 
 		// Load from the API takes longer to load
 		$("#total-art").load("<?php echo base_url('charts/summaries/get_patients'); ?>");
