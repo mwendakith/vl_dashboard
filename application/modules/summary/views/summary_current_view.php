@@ -193,6 +193,8 @@
 		$("#total-vl-done").load("<?php echo base_url('charts/summaries/justification'); ?>");
 		$("#age-pie").load("<?php echo base_url('charts/summaries/current_summary_age'); ?>");
 		$("#age-breakdown").load("<?php echo base_url('charts/summaries/current_summary_age_breakdown'); ?>");
+		$("#current-age-pie-less-25").load("<?php echo base_url('charts/summaries/current_summary_suppression_age'); ?>");
+		$("#current-age-pie-over-25").load("<?php echo base_url('charts/summaries/current_summary_suppression_age/null/null/false'); ?>");
 
 		// Load from the API takes longer to load
 		$("#total-art").load("<?php echo base_url('charts/summaries/get_patients'); ?>");
