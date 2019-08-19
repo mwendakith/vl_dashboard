@@ -5,6 +5,7 @@
 				<th>No</th>
 				<th>Hub</th>
 				<th>MFL</th>
+				<th>County</th>
 				<th>Facilities Sending Samples</th>
 				<th>Received Samples at Hub</th>
 				<th>Rejected Samples (on receipt at Hub)</th>

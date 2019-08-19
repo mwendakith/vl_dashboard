@@ -68,6 +68,7 @@ class Labs_model extends MY_Model
 						<td>".($key+1)."</td>
 						<td>".$name."</td>
 						<td>".$value['facilitycode']."</td>
+						<td>".$value['county']."</td>
 						<td>".number_format((int) $value['sitesending'])."</td>
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
