@@ -7,6 +7,7 @@ BEGIN
                     `f`.`id`, 
                     `f`.`name`, 
                     `f`.`facilitycode`, 
+                    `c`.`name` AS `county`,
                     AVG(`vps`.`sitessending`) AS `sitesending`, 
                     SUM(`vps`.`received`) AS `received`, 
                     SUM(`vps`.`rejected`) AS `rejected`,  
@@ -23,7 +24,10 @@ BEGIN
                     SUM(`vps`.`fake_confirmatory`) AS `fake_confirmatory`,
                     SUM(`vps`.`baseline`) AS `baseline`,
                     SUM(`vps`.`baselinesustxfail`) AS `baselinesustxfail`
-                  FROM `vl_poc_summary` `vps` LEFT JOIN `facilitys` `f` ON `vps`.`facility` = `f`.`ID` 
+                  FROM `vl_poc_summary` `vps` 
+                        LEFT JOIN `facilitys` `f` ON `vps`.`facility` = `f`.`ID`
+                        LEFT JOIN `districts` `d` ON `f`.`district` = `d`.`id`
+                        LEFT JOIN `countys` `c` ON `d`.`county` = `c`.`ID`
                 WHERE 1 ";
 
     IF (from_month != 0 && from_month != '') THEN
