@@ -29,7 +29,7 @@ class Labs_model extends MY_Model
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
 							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
-						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx']) + (int) $value['invalids']."</td>
+						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'] + (int) $value['invalids']) ."</td>
 						<td>".number_format((int) $value['invalids'])."</td>
 						<td>".number_format((int) $value['eqa'])."</td>
 						<td>".number_format((int) $value['controls'])."</td>
