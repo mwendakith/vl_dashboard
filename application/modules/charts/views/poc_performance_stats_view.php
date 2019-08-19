@@ -3,12 +3,12 @@
 		<thead>
 			<tr class="colhead">
 				<th>No</th>
-				<th>Facility</th>
+				<th>Hub</th>
 				<th>MFL</th>
 				<th>Facilities Sending Samples</th>
-				<th>Received Samples at Lab</th>
-				<th>Rejected Samples (on receipt at lab)</th>
-				<th>All Test (plus reruns) Done at Lab</th>
+				<th>Received Samples at Hub</th>
+				<th>Rejected Samples (on receipt at Hub)</th>
+				<th>All Test Done at Hub</th>
 				<th>Redraw (after testing)</th>
 				<th>Routine VL Tests</th>
 				<th>Routine VL Tests &gt; 1000</th>
@@ -18,7 +18,7 @@
 				<th>Confirmatory Repeat Tests &gt; 1000</th>
 				<th>Total Tests with Valid Outcomes</th>
 				<th>Total Tests &gt; 1000 with Valid Outcomes</th>
-				<th>View Details</th>
+				<th>View Spoke Details</th>
 			</tr>
 		</thead>
 		<tbody>
