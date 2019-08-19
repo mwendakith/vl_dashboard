@@ -7,7 +7,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title"> POC Site Details </h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="overflow-x: scroll;">
         <table id="poc_site_table_details" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="max-width: 100%;">
         	<thead>
         		<tr>
