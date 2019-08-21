@@ -29,7 +29,7 @@ class Labs_model extends MY_Model
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
 							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
-						<td>".number_format((int) $value['alltests'])."</td>
+						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'] + (int) $value['invalids']) ."</td>
 						<td>".number_format((int) $value['invalids'])."</td>
 						<td>".number_format((int) $value['eqa'])."</td>
 						<td>".number_format((int) $value['controls'])."</td>
@@ -68,11 +68,12 @@ class Labs_model extends MY_Model
 						<td>".($key+1)."</td>
 						<td>".$name."</td>
 						<td>".$value['facilitycode']."</td>
+						<td>".$value['county']."</td>
 						<td>".number_format((int) $value['sitesending'])."</td>
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
 							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
-						<td>".number_format((int) $value['alltests'])."</td>
+						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'] + (int) $value['invalids'])."</td>
 						<td>".number_format((int) $value['invalids'])."</td>
 						<td>".number_format($routine)."</td>
 						<td>".number_format($routinesus)."</td>
@@ -82,7 +83,7 @@ class Labs_model extends MY_Model
 						<td>".number_format((int) $value['confirm2vl'])."</td>
 						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
 						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>
-						<td> <button class='btn btn-primary'  onclick='expand_poc(" . $value['id'] . ");' style='background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;'>View</button> </td>						
+						<td> <button class='btn btn-primary'  onclick='expand_poc(" . $value['id'] . ");' style='background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;'>View Spokes</button> </td>						
 					</tr>";
 		}
 
@@ -100,6 +101,7 @@ class Labs_model extends MY_Model
 		// echo "<pre>";print_r($result);echo "</pre>";die();
 		$ul = '';
 		foreach ($result as $key => $value) {
+			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesup = ((int) $value['undetected'] + (int) $value['less1000']);
 			$name = "POC Sites";
@@ -108,7 +110,20 @@ class Labs_model extends MY_Model
 						<td>".($key+1)."</td>
 						<td>".$value['name']."</td>
 						<td>".$value['facilitycode']."</td>
+						<td>".$value['county']."</td>
+						<td>".number_format((int) $value['received'])."</td>
+						<td>".number_format((int) $value['rejected']) . " (" . 
+							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>
+						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'] + (int) $value['invalids'])."</td>
+						<td>".number_format((int) $value['invalids'])."</td>
 						<td>".number_format($routine)."</td>
+						<td>".number_format($routinesus)."</td>
+						<td>".number_format((int) $value['baseline'])."</td>
+						<td>".number_format((int) $value['baselinesustxfail'])."</td>
+						<td>".number_format((int) $value['confirmtx'])."</td>
+						<td>".number_format((int) $value['confirm2vl'])."</td>
+						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
+						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>
 						<td>".number_format($routinesup)."</td>
 						<td>".round((($routinesup*100)/$routine), 1, PHP_ROUND_HALF_UP)."</td>
 
