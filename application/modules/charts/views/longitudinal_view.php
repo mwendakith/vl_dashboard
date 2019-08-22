@@ -15,7 +15,7 @@
 
         ?>
     Total tests - <?php echo number_format($trends['total_tests']) ; ?> <br />
-    Coverage - <?php echo number_format($trends['coverage']) ; ?>% <br />
+    VL Uptake - <?php echo number_format($trends['coverage']) ; ?>% <br />
     </p>
 </div>
 

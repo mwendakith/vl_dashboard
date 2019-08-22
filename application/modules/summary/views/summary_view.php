@@ -44,7 +44,7 @@
 	<div class="col-md-12" id="nattatdiv">
 		<div class="col-md-4">
 			<div class="col-md-4 title-name" id="title">
-				<center>VL Coverage (%) </center>
+				<center>VL Uptake (%) </center>
 			</div>
 			<div class="col-md-8">
 				<div id="coverage"><div style="padding-top: 2em;">Loading...</div></div>
