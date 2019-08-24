@@ -7,6 +7,7 @@ BEGIN
                     `f`.`id`, 
                     `f`.`name`, 
                     `f`.`facilitycode`, 
+                    `c`.`name` AS `county`,
                     SUM(`vps`.`received`) AS `received`, 
                     SUM(`vps`.`rejected`) AS `rejected`,  
                     SUM(`vps`.`invalids`) AS `invalids`,
@@ -23,7 +24,9 @@ BEGIN
                     SUM(`vps`.`baseline`) AS `baseline`,
                     SUM(`vps`.`baselinesustxfail`) AS `baselinesustxfail`
                   FROM `vl_site_summary_poc` `vps` 
-                  LEFT JOIN `facilitys` `f` ON `vps`.`facility` = `f`.`ID` 
+                  LEFT JOIN `facilitys` `f` ON `vps`.`facility` = `f`.`ID`
+                        LEFT JOIN `districts` `d` ON `f`.`district` = `d`.`id`
+                        LEFT JOIN `countys` `c` ON `d`.`county` = `c`.`ID`  
                 WHERE 1 ";
 
     SET @QUERY = CONCAT(@QUERY, " AND `facility_tested_in` = '",filter_lab,"' ");
