@@ -129,12 +129,15 @@
           $("#gender").html("<div>Loading...</div>");
           $("#ages").html("<div>Loading...</div>");
           $("#county_outcomes").html("<div>Loading...</div>");
+          $("#poc").html("<div>Loading...</div>");
 
           $("#testing_trends").load("<?php echo base_url();?>charts/poc/testing_trends/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
           $("#vl_outcomes").load("<?php echo base_url();?>charts/poc/vl_outcomes/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
           $("#gender").load("<?php echo base_url();?>charts/poc/gender/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
           $("#ages").load("<?php echo base_url();?>charts/poc/ages/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
           $("#county_outcomes").load("<?php echo base_url();?>charts/poc/county_outcomes/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+          $("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+em);
+
         }
             
     });
@@ -142,19 +145,25 @@
     $("select").change(function(){
         em = $(this).val();
         em = parseInt(em);
+        if (em == 48 || em == "48") {
+          em = 0;
+        }
         localStorage.setItem("my_lab", em);
 
         console.log(em);
+
 
         $("#testing_trends").html("<div>Loading...</div>");
         $("#vl_outcomes").html("<div>Loading...</div>");
         $("#gender").html("<div>Loading...</div>");
         $("#ages").html("<div>Loading...</div>");
+        $("#poc").html("<div>Loading...</div>");
 
         $("#testing_trends").load("<?php echo base_url();?>charts/poc/testing_trends/"+em);
         $("#vl_outcomes").load("<?php echo base_url();?>charts/poc/vl_outcomes/"+em);
         $("#gender").load("<?php echo base_url();?>charts/poc/gender/"+em);
         $("#ages").load("<?php echo base_url();?>charts/poc/ages/"+em);
+        $("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats/"+null+"/"+null+"/"+null+"/"+null+"/"+em);
       
       });
 
@@ -195,6 +204,7 @@ function date_filter(criteria, id)
       $("#gender").html("<div>Loading...</div>");
       $("#ages").html("<div>Loading...</div>");
       $("#county_outcomes").html("<div>Loading...</div>");
+      $("#poc").html("<div>Loading...</div>");
 
       var em = localStorage.getItem("my_lab");
 
@@ -203,6 +213,8 @@ function date_filter(criteria, id)
         $("#gender").load("<?php echo base_url();?>charts/poc/gender/"+em+"/"+obj['year']+"/"+obj['month']);
         $("#ages").load("<?php echo base_url();?>charts/poc/ages/"+em+"/"+obj['year']+"/"+obj['month']);
         $("#county_outcomes").load("<?php echo base_url();?>charts/poc/county_outcomes/"+obj['year']+"/"+obj['month']);
+        $("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats/"+obj['year']+"/"+obj['month']+"/"+null+"/"+null+"/"+em);
+
       });    
   }
 
