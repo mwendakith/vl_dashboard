@@ -195,7 +195,7 @@ function date_filter(criteria, id)
       obj = $.parseJSON(data);
       console.log(obj);
       if(obj['month'] == "null" || obj['month'] == null){
-        // obj['month'] = "";
+        obj['month'] = "";
       }
       $(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
       
@@ -213,7 +213,7 @@ function date_filter(criteria, id)
         $("#gender").load("<?php echo base_url();?>charts/poc/gender/"+em+"/"+obj['year']+"/"+obj['month']);
         $("#ages").load("<?php echo base_url();?>charts/poc/ages/"+em+"/"+obj['year']+"/"+obj['month']);
         $("#county_outcomes").load("<?php echo base_url();?>charts/poc/county_outcomes/"+obj['year']+"/"+obj['month']);
-        $("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats/"+obj['year']+"/"+obj['month']+"/"+null+"/"+null+"/"+em);
+        $("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats/"+year+"/"+month+"/"+null+"/"+null+"/"+em);
       });    
   }
 

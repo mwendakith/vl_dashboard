@@ -55,7 +55,7 @@ class Labs_model extends MY_Model
 		extract($d);
 
 		$sql = "CALL `proc_get_vl_poc_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."','".$county."');";
-		// echo "<pre>";print_r($sql);die();
+		echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);echo "</pre>";die();
 		$ul = '';
