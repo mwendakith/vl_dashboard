@@ -65,6 +65,16 @@
             </div>
         </div>
     </div>
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+             Hub-Spoke Stats <div class="display_date"></div>
+          </div>
+          <div class="panel-body" id="poc">
+            <center><div class="loader"></div></center>
+          </div>
+        </div>
+      </div>
 </div>
 
 
@@ -89,6 +99,7 @@
     $("#gender").load("<?php echo base_url();?>charts/poc/gender");
     $("#ages").load("<?php echo base_url();?>charts/poc/ages");
     $("#county_outcomes").load("<?php echo base_url();?>charts/poc/county_outcomes");
+    $("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats");
 
     $("button").click(function () {
         var first, second;
@@ -193,6 +204,21 @@ function date_filter(criteria, id)
         $("#ages").load("<?php echo base_url();?>charts/poc/ages/"+em+"/"+obj['year']+"/"+obj['month']);
         $("#county_outcomes").load("<?php echo base_url();?>charts/poc/county_outcomes/"+obj['year']+"/"+obj['month']);
       });    
+  }
+
+  function expand_modal(div_name){
+    $(div_name).modal('show');
+  }
+
+  function expand_poc(facility_id)
+  {
+    var year = localStorage.getItem("from_year");
+    var month = localStorage.getItem("from_month");
+
+    var to_year = localStorage.getItem("to_year");
+    var to_month = localStorage.getItem("to_month");
+
+    $("#my_empty_div").load("<?php echo base_url();?>charts/labs/poc_performance_details/"+facility_id+"/"+year+"/"+month+"/"+to_year+"/"+to_month);
   }
    
 </script>
