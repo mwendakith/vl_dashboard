@@ -203,11 +203,6 @@
 
 	function expand_poc(facility_id)
 	{
-		// console.log(facility_id);
-		// console.log(localStorage.getItem("from_year"));
-		// console.log(localStorage.getItem("from_month"));
-		// console.log(localStorage.getItem("to_year"));
-		// console.log(localStorage.getItem("to_month"));
 		var year = localStorage.getItem("from_year");
 		var month = localStorage.getItem("from_month");
 

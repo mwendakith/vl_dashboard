@@ -14,7 +14,6 @@
 		$("#second").hide();
 
 		$("#county").load("<?php echo base_url('charts/summaries/county_outcomes');?>");
-		$("#poc").load("<?php echo base_url();?>charts/labs/poc_performance_stats");
 		$("#county_sites").load("<?php echo base_url('charts/county/county_table');?>");
 		$("#county_outcome_age_gender").load("<?php echo base_url('charts/county/county_outcome_table');?>");
 
@@ -247,24 +246,4 @@
 		});
 	}
 
-	function expand_modal(div_name){
-		$(div_name).modal('show');
-	}
-
-	function expand_poc(facility_id)
-	{
-		console.log(facility_id);
-
-		console.log(localStorage.getItem("from_year"));
-		console.log(localStorage.getItem("from_month"));
-		console.log(localStorage.getItem("to_year"));
-		console.log(localStorage.getItem("to_month"));
-		var year = localStorage.getItem("from_year");
-		var month = localStorage.getItem("from_month");
-
-		var to_year = localStorage.getItem("to_year");
-		var to_month = localStorage.getItem("to_month");
-
-		$("#my_empty_div").load("<?php echo base_url();?>charts/labs/poc_performance_details/"+facility_id+"/"+year+"/"+month+"/"+to_year+"/"+to_month);
-	}
 </script>
