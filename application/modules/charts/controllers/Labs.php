@@ -26,6 +26,7 @@ class Labs extends MY_Controller
 
 	function poc_performance_stats($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$county=NULL)
 	{
+		// echo "<pre>";print_r("<<Year>>" . $year . "<<Month>>" . $month . "<<Count>>" .$county);die();
 		$data['stats'] = $this->labs_model->poc_performance_stat($year,$month,$to_year,$to_month,$county);
 
 		$this->load->view('poc_performance_stats_view', $data);
