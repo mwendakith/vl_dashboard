@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_poc_performance_stats`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_poc_performance_stats`
-(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11), IN county INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
                     `f`.`id`, 
@@ -41,6 +41,10 @@ BEGIN
     END IF;
     ELSE
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+    
+    IF (county!= 0 && county!= '')THEN 
+        SET @QUERY = CONCAT(@QUERY, " AND `county` = '",county,"' ");
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " GROUP BY `f`.`ID` ORDER BY `alltests` DESC ");

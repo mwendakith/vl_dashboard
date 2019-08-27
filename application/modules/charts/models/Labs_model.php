@@ -49,12 +49,12 @@ class Labs_model extends MY_Model
 		return $ul;
 	}
 
-	function poc_performance_stat($year=NULL,$month=NULL,$to_year=null,$to_month=null)
+	function poc_performance_stat($year=NULL,$month=NULL,$to_year=null,$to_month=null,$county=NULL)
 	{
 		$d = $this->extract_variables($year, $month, $to_year, $to_month);
 		extract($d);
 
-		$sql = "CALL `proc_get_vl_poc_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."');";
+		$sql = "CALL `proc_get_vl_poc_performance_stats`('".$year."','".$month."','".$to_year."','".$to_month."','".$county."');";
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);echo "</pre>";die();
@@ -83,7 +83,7 @@ class Labs_model extends MY_Model
 						<td>".number_format((int) $value['confirm2vl'])."</td>
 						<td>".number_format((int) $routine + (int) $value['baseline'] + (int) $value['confirmtx'])."</td>
 						<td>".number_format((int) $routinesus + (int) $value['baselinesustxfail'] + (int) $value['confirm2vl'])."</td>
-						<td> <button class='btn btn-primary'  onclick='expand_poc(" . $value['id'] . ");' style='background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;'>View Spokes</button> </td>						
+						<td> <button class='btn btn-primary' onclick='expand_poc(" . $value['id'] . ");' style='background-color: #1BA39C;color: white; margin-top: 1em;margin-bottom: 1em;'>View Spokes</button> </td>						
 					</tr>";
 		}
 
