@@ -1,4 +1,80 @@
-
+<style type="text/css">
+  .display_date {
+    width: 130px;
+    display: inline;
+  }
+  .display_range {
+    width: 130px;
+    display: inline;
+  }
+  #poctatdiv {
+    background-color: white;
+    margin-right: 1em;
+    margin-left: 1em;
+    margin-bottom: 1em;
+  }
+  .title-name {
+    color: blue;
+  }
+  #title {
+    padding-top: 1.5em;
+  }
+  .key {
+    font-size: 11px;
+    margin-top: 0.5em;
+  }
+  .cr {
+    background-color: rgba(255, 0, 0, 0.498039);
+  }
+  .rp {
+    background-color: rgba(255, 255, 0, 0.498039);
+  }
+  .pd {
+    background-color: rgba(0, 255, 0, 0.498039);
+  }
+  .cd {
+    width: 0px;
+    height: 0px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-top: 8px solid black;
+  }
+</style>
+<div class="row">
+  <div class="col-md-12" id="poctatdiv">
+    <div class="col-md-4">
+      
+    </div>
+    <div class="col-md-5">
+      <div class="col-md-4 title-name" id="title">
+        <center>POC TAT <l style="color:red;">(Days)</l></center>
+      </div>
+      <div class="col-md-8">
+        <div id="poctat"></div>
+      </div>
+      <div id="row">
+          <center>
+              <strong>
+                  <p style="font-size: 12px">TAT calculation is based on working days excluding weekends and public holidays</p>
+              </strong>
+          </center>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="title-name">Key</div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="key cr"><center>Collection Receipt (C-R)</center></div>
+          <div class="key rp"><center>Receipt to Processing (R-P)</center></div>
+        </div>
+        <div class="col-md-6">
+          <div class="key pd"><center>Processing Dispatch (P-D)</center></div>
+          <div class="key"><center><div class="cd"></div>Collection Dispatch (C-D)</center></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="row">
     <div class="col-md-12 col-sm-12 col-xs-12">
         <div class="panel panel-default">
@@ -94,6 +170,7 @@
 
     localStorage.setItem("my_lab", 0);
 
+    $("#poctat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
     $("#testing_trends").load("<?php echo base_url();?>charts/poc/testing_trends");
     $("#vl_outcomes").load("<?php echo base_url();?>charts/poc/vl_outcomes");
     $("#gender").load("<?php echo base_url();?>charts/poc/gender");
@@ -123,7 +200,8 @@
             localStorage.setItem("to_month", to[0]);
 
             var em = localStorage.getItem("my_lab");
-      
+          
+          $("#poctat").html("<div>Loading...</div>");
           $("#testing_trends").html("<div>Loading...</div>");
           $("#vl_outcomes").html("<div>Loading...</div>");
           $("#gender").html("<div>Loading...</div>");
@@ -131,6 +209,7 @@
           $("#county_outcomes").html("<div>Loading...</div>");
           $("#poc").html("<div>Loading...</div>");
 
+          $("#poctat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+from[1]+"/"+from[0]+"/"+county+"/"+to[1]+"/"+to[0]);
           $("#testing_trends").load("<?php echo base_url();?>charts/poc/testing_trends/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
           $("#vl_outcomes").load("<?php echo base_url();?>charts/poc/vl_outcomes/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
           $("#gender").load("<?php echo base_url();?>charts/poc/gender/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
@@ -158,7 +237,9 @@
         $("#gender").html("<div>Loading...</div>");
         $("#ages").html("<div>Loading...</div>");
         $("#poc").html("<div>Loading...</div>");
+        $("#poctat").html("<div>Loading...</div>");
 
+        $("#poctat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
         $("#testing_trends").load("<?php echo base_url();?>charts/poc/testing_trends/"+em);
         $("#vl_outcomes").load("<?php echo base_url();?>charts/poc/vl_outcomes/"+em);
         $("#gender").load("<?php echo base_url();?>charts/poc/gender/"+em);
@@ -199,6 +280,7 @@ function date_filter(criteria, id)
       }
       $(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
       
+      $("#poctat").html("<div>Loading...</div>");
       $("#testing_trends").html("<div>Loading...</div>");
       $("#vl_outcomes").html("<div>Loading...</div>");
       $("#gender").html("<div>Loading...</div>");
@@ -208,6 +290,7 @@ function date_filter(criteria, id)
 
       var em = localStorage.getItem("my_lab");
       
+        $("#poctat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+year+"/"+month);
         $("#testing_trends").load("<?php echo base_url();?>charts/poc/testing_trends/"+em+"/"+obj['year']+"/"+obj['month']);
         $("#vl_outcomes").load("<?php echo base_url();?>charts/poc/vl_outcomes/"+em+"/"+obj['year']+"/"+obj['month']);
         $("#gender").load("<?php echo base_url();?>charts/poc/gender/"+em+"/"+obj['year']+"/"+obj['month']);

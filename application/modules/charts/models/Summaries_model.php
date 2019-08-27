@@ -8,12 +8,16 @@ class Summaries_model extends MY_Model
 		parent:: __construct();
 	}
  
-	function turnaroundtime($year=null,$month=null,$county=null,$to_year=null,$to_month=null)
+	function turnaroundtime($year=null,$month=null,$county=null,$to_year=null,$to_month=null,$nat=null)
 	{
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['county' => $county]);
 		extract($d);
- 
-		$sql = "CALL `proc_get_national_tat`('".$year."','".$month."','".$to_year."','".$to_month."')";
+ 		if ($nat) {
+ 			$sql = "CALL `proc_get_national_tat`('".$year."','".$month."','".$to_year."','".$to_month."')";
+ 		} else {
+ 			$sql = "CALL `proc_get_poc_tat`('".$year."','".$month."','".$to_year."','".$to_month."')";
+ 		}
+ 		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();

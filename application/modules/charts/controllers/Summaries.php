@@ -10,9 +10,9 @@ class Summaries extends MY_Controller {
 		$this->load->model('sites_model');
 	}
 
-	function turnaroundtime($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
+	function turnaroundtime($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL,$nat=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->turnaroundtime($year,$month,$county,$to_year,$to_month);
+		$data['outcomes'] = $this->summaries_model->turnaroundtime($year,$month,$county,$to_year,$to_month,$nat);
 
 		$this->load->view('turnaroundtime_view',$data);
 	}
