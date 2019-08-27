@@ -11,6 +11,14 @@
 </style>
 <div id="first">
 	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<center>
+		        <strong>
+		            <p style="font-size: 12px">TAT calculation is based on working days excluding weekends and public holidays</p>
+		        </strong>
+		    </center>
+		</div>
+	</div>
 	  <div class="col-md-12 col-sm-12 col-xs-12">
 	    <div class="panel panel-default">
 	      <div class="panel-heading">
@@ -164,7 +172,7 @@
 	  <div class="col-md-12 col-sm-12 col-xs-12">
 	    <div class="panel panel-default">
 	      <div class="panel-heading">
-	        POC Stats <div class="display_date"></div>
+	         Hub-Spoke Stats <div class="display_date"></div>
 	      </div>
 	      <div class="panel-body" id="poc">
 	        <center><div class="loader"></div></center>

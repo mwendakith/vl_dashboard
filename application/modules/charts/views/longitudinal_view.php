@@ -15,7 +15,7 @@
 
         ?>
     Total tests - <?php echo number_format($trends['total_tests']) ; ?> <br />
-    Coverage - <?php echo number_format($trends['coverage']) ; ?>% <br />
+    VL Uptake - <?php echo number_format($trends['coverage']) ; ?>% <br />
     </p>
 </div>
 
@@ -95,13 +95,13 @@
             series: [<?php echo json_encode([
                     'data' => [
                         [
-                            'name' => 'Covered',
+                            'name' => 'Got VL test',
                             'y' => $trends['coverage'],
                             'z' => number_format($trends['unique_patients']),
-                            'color' => '#66ff66',
+                            'color' => '#1BA39C',
                         ],
                         [
-                            'name' => 'Not Covered',
+                            'name' => 'No VL done',
                             'y' => (100.0 - $trends['coverage']),
                             'z' => number_format($trends['total_patients'] - $trends['unique_patients']),
                             'color' => '#F2784B',

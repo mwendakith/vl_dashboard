@@ -35,9 +35,19 @@ class Samples_model extends MY_Model
 		$data['categories'][0]					= 'No Data';
 
 		foreach ($result as $key => $value) {
+			if ($key==0 || $key==2) {
+				if (!in_array("Plasma", $data['categories'][0]))
+				{
+					$data['categories'][0] 				= "Plasma";
+				}
+				$data["county_outcomes"][0]["data"][0]	=  (int) ($data["county_outcomes"][0]["data"][0] + $value['nonsuppressed']);
+				$data["county_outcomes"][1]["data"][0]	=  (int) ($data["county_outcomes"][1]["data"][0] + $value['suppressed']);
+			}else{
+			
 			$data['categories'][$key] 					= $value['name'];
 			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
 			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+			}
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
@@ -63,8 +73,8 @@ class Samples_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '&lt;= 400';
-		$data['vl_outcomes']['data'][1]['name'] = '401 - 999';
+		$data['vl_outcomes']['data'][0]['name'] = 'LDL';
+		$data['vl_outcomes']['data'][1]['name'] = 'LLV';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 
 		$count = 0;
@@ -94,21 +104,21 @@ class Samples_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml (HVL):</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
 	    		<td>'.round((@($greater/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt= 400 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt= 400 copies/ml (LDL):</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml (LLV):</td>
 	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
@@ -230,7 +240,6 @@ class Samples_model extends MY_Model
 		
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['sample' => $sample]);
 		extract($d);
-
 		//if ($partner==null || $partner=='null') {
 		$sql = "CALL `proc_get_vl_sample_summary`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		/*} else {
@@ -273,7 +282,6 @@ class Samples_model extends MY_Model
 			//$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
 			
 		}
-		
 		return $data;
 	}
 

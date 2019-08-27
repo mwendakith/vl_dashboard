@@ -82,6 +82,21 @@
 			.filter {
 				margin: 2px 20px;
 			}
+			.filter-div {
+				background-color: white;
+				margin-bottom: 1.2em;
+				margin-right: 0.1em;
+				margin-left: 0.1em;
+				padding-top: 0.5em;
+				padding-bottom: 0.5em;
+			}
+			.div-spacing {
+				margin-bottom: 1.2em;
+				margin-right: 0.1em;
+				margin-left: 0.1em;
+				padding-top: 0.5em;
+				padding-bottom: 0.5em;
+			}
 			#filter {
 				background-color: white;
 				margin-bottom: 1.2em;
@@ -178,6 +193,7 @@
 								<li><a href="<?php echo base_url();?>age">Age Analysis</a></li>
 								<li><a href="<?php echo base_url();?>sample">Sample Analysis</a></li>
 								<li><a href="<?php echo base_url();?>pmtct">PMTCT Analysis</a></li>
+								<li><a href="<?php echo base_url();?>summary/current">Summary Page</a></li>
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>trends">Trends</a></li>

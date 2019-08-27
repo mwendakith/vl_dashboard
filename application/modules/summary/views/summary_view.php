@@ -44,7 +44,7 @@
 	<div class="col-md-12" id="nattatdiv">
 		<div class="col-md-4">
 			<div class="col-md-4 title-name" id="title">
-				<center>VL Coverage (%) </center>
+				<center>VL Uptake (%) </center>
 			</div>
 			<div class="col-md-8">
 				<div id="coverage"><div style="padding-top: 2em;">Loading...</div></div>
@@ -57,6 +57,13 @@
 			<div class="col-md-8">
 				<div id="nattat"></div>
 			</div>
+			<div id="row">
+		    <center>
+		        <strong>
+		            <p style="font-size: 12px">TAT calculation is based on working days excluding weekends and public holidays</p>
+		        </strong>
+		    </center>
+		</div>
 		</div>
 		<div class="col-md-3">
 			<div class="title-name">Key</div>
