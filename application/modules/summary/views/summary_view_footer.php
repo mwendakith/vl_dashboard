@@ -1,5 +1,6 @@
 <script type="text/javascript">
 	$().ready(function(){
+		nat = true;
 		localStorage.setItem("my_var", 0);
 		$.get("<?php echo base_url();?>template/dates", function(data){
     		obj = $.parseJSON(data);
@@ -10,7 +11,7 @@
 			$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 			$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
     	});
-		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
+		$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+nat);
 		$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>");
 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>");
 		$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>"); 
@@ -27,7 +28,7 @@
 			var all = localStorage.getItem("my_var");
 			// Send the data using post
 	        var posting = $.post( "<?php echo base_url();?>template/filter_county_data", { county: em } );
-	     
+	 
 	        // Put the results in a div
 	        posting.done(function( data ) {
 	        	if(data!=""){
@@ -56,7 +57,7 @@
 				$("#ageGroups").html("<center><div class='loader'></div></center>");
 				$("#gender").html("<center><div class='loader'></div></center>");
 				
-				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>");
+				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+null+"/"+nat);
 				if (data!="") {
 					type = 1;
 				} else {
@@ -105,7 +106,7 @@
 			 		$("#county").html("<center><div class='loader'></div></center>");
 
 
-					$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+from[1]+"/"+from[0]+"/"+county+"/"+to[1]+"/"+to[0]);
+					$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+from[1]+"/"+from[0]+"/"+county+"/"+to[1]+"/"+to[0]+"/"+nat);
 					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+type+"/"+county+"/"+all);
 			 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
 					$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]); 
@@ -121,7 +122,7 @@
 	});
 
 	function date_filter(criteria, id)
- 	{
+	{
  		if (criteria === "monthly") {
  			year = null;
  			month = id;
@@ -156,7 +157,7 @@
 				$("#gender").html("<center><div class='loader'></div></center>");
 		 		$("#county").html("<center><div class='loader'></div></center>");
 
-				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+year+"/"+month);
+				$("#nattat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+null+"/"+nat);
 				$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+type+"/"+county+"/"+all);
 		 		$("#vlOutcomes").load("<?php echo base_url('charts/summaries/vl_outcomes'); ?>/"+year+"/"+month);
 				$("#justification").load("<?php echo base_url('charts/summaries/justification'); ?>/"+year+"/"+month); 
