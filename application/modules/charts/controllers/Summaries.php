@@ -8,6 +8,7 @@ class Summaries extends MY_Controller {
 		parent:: __construct();
 		$this->load->model('summaries_model');
 		$this->load->model('sites_model');
+		$this->load->model('currentSuppressionModel');
 	}
 
 	function turnaroundtime($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL,$nat=NULL)
@@ -318,6 +319,23 @@ class Summaries extends MY_Controller {
 		$data['table_div'] = "first_table";
 
     	$this->load->view('counties_table_view',$data);
+	}
+
+	function current_summary_age($type=null,$id=null) {
+		$data['outcomes'] = $this->currentSuppressionModel->current_age($type,$id);
+		$data['div_name'] = 'current_age_pie';
+    	$this->load->view('justification_view',$data);
+	}
+
+	function current_summary_age_breakdown($type=null,$id=null) {
+		$data = $this->currentSuppressionModel->current_age_breakdown($type,$id);
+    	$this->load->view('currentAgeBreakdown',$data);
+	}
+
+	function current_summary_suppression_age($type=null,$id=null,$first=TRUE) {
+		$data['outcomes'] = $this->currentSuppressionModel->current_suppression_age($type,$id,$first);
+		$data['div_name'] = (!$first || $first == 'false') ? 'current_age_suppression_pie_second' : 'current_age_suppression_pie_first';
+    	$this->load->view('justification_view',$data);
 	}
 
 }
