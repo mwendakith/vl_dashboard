@@ -35,7 +35,7 @@ class Samples_model extends MY_Model
 		$data['categories'][0]					= 'No Data';
 
 		foreach ($result as $key => $value) {
-			if ($key==0 || $key==2) {
+			if ($key==0 || $key==1) {
 				if (!in_array("Plasma", $data['categories'][0]))
 				{
 					$data['categories'][0] 				= "Plasma";
