@@ -22,9 +22,8 @@ class Samples_model extends MY_Model
 		} else {
 			$sql = "CALL `proc_get_vl_partner_samples_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		}
-		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
-		// echo "<pre>";print_r($result);die();
+		echo "<pre>";print_r($result);die();
 		$data['county_outcomes'][0]['name'] = 'Not Suppressed';
 		$data['county_outcomes'][1]['name'] = 'Suppressed';
 
@@ -49,7 +48,6 @@ class Samples_model extends MY_Model
 			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
 			}
 		}
-		// echo "<pre>";print_r($data);die();
 		return $data;
 	}
 
@@ -318,10 +316,7 @@ class Samples_model extends MY_Model
 		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
 		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
 
-		$data['title'] = "Outcomes";
-
-
-		
+		$data['title'] = "Outcomes";	
 
 		foreach ($result as $key => $value) {
 			$data['categories'][$key] 					= $value['name'];
