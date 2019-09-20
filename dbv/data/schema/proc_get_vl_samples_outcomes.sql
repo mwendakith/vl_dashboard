@@ -4,7 +4,7 @@ CREATE PROCEDURE `proc_get_vl_samples_outcomes`
 (IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
-						`vs`.`name`, 
+						IF(`vs`.`name` = 'EDTA' OR `vs`.`name` = 'Frozen Plasma', 'Plasma', `vs`.`name`) AS `sample_type_name`, 
 						SUM(`vns`.`less5000`+`vns`.`above5000`) AS `nonsuppressed`, 
 						SUM(`vns`.`Undetected`+`vns`.`less1000`) AS `suppressed` 
 						FROM `vl_national_sampletype` `vns`
@@ -25,7 +25,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY `suppressed` DESC, `nonsuppressed` ");
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `sample_type_name` ORDER BY `suppressed` DESC, `nonsuppressed` ");
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;
