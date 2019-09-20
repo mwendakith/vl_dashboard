@@ -23,7 +23,7 @@ class Samples_model extends MY_Model
 			$sql = "CALL `proc_get_vl_partner_samples_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		}
 		$result = $this->db->query($sql)->result_array();
-		echo "<pre>";print_r($result);die();
+		// echo "<pre>";print_r($result);die();
 		$data['county_outcomes'][0]['name'] = 'Not Suppressed';
 		$data['county_outcomes'][1]['name'] = 'Suppressed';
 
@@ -34,7 +34,7 @@ class Samples_model extends MY_Model
 		$data['categories'][0]					= 'No Data';
 
 		foreach ($result as $key => $value) {
-			if ($key==0 || $key==2) {
+			if ($value['name'] == 'Frozen Plasma' || $value['name'] == 'EDTA') {
 				if (!in_array("Plasma", $data['categories'][0]))
 				{
 					$data['categories'][0] 				= "Plasma";
@@ -42,10 +42,9 @@ class Samples_model extends MY_Model
 				$data["county_outcomes"][0]["data"][0]	=  (int) ($data["county_outcomes"][0]["data"][0] + $value['nonsuppressed']);
 				$data["county_outcomes"][1]["data"][0]	=  (int) ($data["county_outcomes"][1]["data"][0] + $value['suppressed']);
 			}else{
-			
-			$data['categories'][$key] 					= $value['name'];
-			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
-			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+				$data['categories'][$key] 					= $value['name'];
+				$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
+				$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
 			}
 		}
 		return $data;
