@@ -208,8 +208,7 @@
 	  	setFilter: function(filterItem, filterValue) {
 	  		if (!(filterItem == null || filterItem == undefined))
 	    		localStorage.setItem(filterItem, filterValue);
-	  	}
-
+	  	},
 	  	getFilter: function(filterItem) {
 	  		return localStorage.getItem(filterItem);
 	  	}
