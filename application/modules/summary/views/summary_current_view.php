@@ -183,7 +183,8 @@
 		// loadCharts();
 
 		$("select").change(function(){
-			vd.setFilters();
+			// vd.getFilter('partner');
+			console.log(vd.getFilter('partner'));
 			// types = {county:1,subcounty:2,facility:3,partner:4};
 			// elementID = $(this).attr('id');
 			// elementValue = $(this).val();
@@ -204,8 +205,13 @@
 	}
 
 	vd = {
-	  	setFilters: function() {
-	    	console.log(types);
+	  	setFilter: function(filterItem, filterValue) {
+	  		if (!(filterItem == null || filterItem == undefined))
+	    		localStorage.setItem(filterItem, filterValue);
+	  	}
+
+	  	getFilter: function(filterItem) {
+	  		return localStorage.getItem(filterItem);
 	  	}
 	}
 </script>
