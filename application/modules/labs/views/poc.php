@@ -209,7 +209,7 @@
           $("#county_outcomes").html("<div>Loading...</div>");
           $("#poc").html("<div>Loading...</div>");
 
-          $("#poctat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+from[1]+"/"+from[0]+"/"+county+"/"+to[1]+"/"+to[0]);
+          $("#poctat").load("<?php echo base_url('charts/summaries/turnaroundtime'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+to[1]+"/"+to[0]);
           $("#testing_trends").load("<?php echo base_url();?>charts/poc/testing_trends/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
           $("#vl_outcomes").load("<?php echo base_url();?>charts/poc/vl_outcomes/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
           $("#gender").load("<?php echo base_url();?>charts/poc/gender/"+em+"/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);

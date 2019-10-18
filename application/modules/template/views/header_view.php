@@ -194,7 +194,7 @@
 								<li><a href="<?php echo base_url();?>age">Age Analysis</a></li>
 								<li><a href="<?php echo base_url();?>sample">Sample Analysis</a></li>
 								<li><a href="<?php echo base_url();?>pmtct">PMTCT Analysis</a></li>
-								<li><a href="<?php echo base_url();?>summary/current">Summary Page</a></li>
+								<!-- <li><a href="<?php //echo base_url();?>summary/current">Summary Page</a></li> -->
 							</ul>
 						</li>
 						<li><a href="<?php echo base_url();?>trends">Trends</a></li>
