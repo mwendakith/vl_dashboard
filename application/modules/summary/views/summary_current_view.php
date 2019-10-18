@@ -176,15 +176,17 @@
 	</div>	
 </div>
 <script type="text/javascript">
+	var types = {county:1,subcounty:2,facility:3,partner:4};
 	// Events listeners when the document is ready
 	$().ready(function(){
 		// Load the initail charts
-		loadCharts();
+		// loadCharts();
 
 		$("select").change(function(){
-			types = {county:1,subcounty:2,facility:3,partner:4};
-			elementID = $(this).attr('id');
-			elementValue = $(this).val();
+			vd.setFilters();
+			// types = {county:1,subcounty:2,facility:3,partner:4};
+			// elementID = $(this).attr('id');
+			// elementValue = $(this).val();
 		});
 	});
 
@@ -199,5 +201,11 @@
 		// Load from the API takes longer to load
 		$("#total-art").load("<?php echo base_url('charts/summaries/get_patients'); ?>");
 		$("#current-suppression").load("<?php echo base_url('charts/summaries/get_current_suppresion'); ?>");
+	}
+
+	vd = {
+	  	setFilters: function() {
+	    	console.log(types);
+	  	}
 	}
 </script>
