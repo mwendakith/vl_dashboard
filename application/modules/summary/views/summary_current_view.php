@@ -187,7 +187,8 @@
 			elementValue = $(this).val();
 			if (vd.getFilter(elementID) == null)
 				vd.setFilter(elementID, elementValue);
-			console.log(vd.getFilter(elementID));
+			
+			console.log(Object.keys(localStorage));
 		});
 	});
 
