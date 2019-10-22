@@ -187,7 +187,12 @@
 			elementValue = $(this).val();
 			if (vd.getFilter(elementID) == null)
 				vd.setFilter(elementID, elementValue);
+<<<<<<< HEAD
 			console.log(vd.getFilter(elementID));
+=======
+			
+			console.log(Object.keys(localStorage));
+>>>>>>> 96003ff5e7bee19c62c98f953c007490d668e69e
 		});
 	});
 
