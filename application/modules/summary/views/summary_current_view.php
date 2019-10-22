@@ -183,11 +183,11 @@
 		// loadCharts();
 
 		$("select").change(function(){
-			// vd.getFilter('partner');
-			console.log(vd.getFilter('partner'));
-			// types = {county:1,subcounty:2,facility:3,partner:4};
-			// elementID = $(this).attr('id');
-			// elementValue = $(this).val();
+			elementID = $(this).attr('id');
+			elementValue = $(this).val();
+			if (vd.getFilter(elementID) == null)
+				vd.setFilter(elementID, elementValue);
+			console.log(vd.getFilter(elementID));
 		});
 	});
 
