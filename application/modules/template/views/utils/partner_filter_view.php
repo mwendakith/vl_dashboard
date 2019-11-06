@@ -57,6 +57,9 @@
     </div>
   </div>
   <div class="col-md-5" id="year-month-filter">
+    <?php
+      if ($datefilter) {
+    ?>
     <div class="filter">
       Year: 
       <?php
@@ -82,8 +85,14 @@
       <a href='javascript:void(0)' onclick='date_filter("monthly", 11)' class='alert-link'> Nov </a>|
       <a href='javascript:void(0)' onclick='date_filter("monthly", 12)' class='alert-link'> Dec</a>
     </div>
+    <?php
+      }
+    ?>
   </div>
   <div class="col-md-2">
+    <?php
+      if ($daterangefilter) {
+    ?>
         <div class="row" id="range">
             <div class="col-md-4">
                 <input name="startDate" id="startDate" class="date-picker" placeholder="From:" />
@@ -96,6 +105,10 @@
             </div>
         </div>
             <center><div id="errorAlertDateRange"><div id="errorAlert" class="alert alert-danger" role="alert">...</div></div></center>
+            
+    <?php
+      }
+    ?>
     </div>
 </div>
 

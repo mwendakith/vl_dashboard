@@ -30,6 +30,8 @@ class MY_Controller extends MX_Controller
 		$this->data['codes'] = FALSE;
 		$this->data['sample'] = FALSE;
 		$this->data['pmtct'] = FALSE;
+		$this->data['datefilter'] = TRUE;
+		$this->data['daterangefilter'] = TRUE;
 	}
 
 	public function load_libraries($arr){

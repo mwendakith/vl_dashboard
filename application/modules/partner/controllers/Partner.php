@@ -82,6 +82,8 @@ class Partner extends MY_Controller
 		$this->load->module('charts/summaries');
 		$this->clear_all_session_data();
 		$this->data['content_view'] = 'partner/partner_current_view';
+		$this->data['datefilter'] = FALSE;
+		$this->data['daterangefilter'] = FALSE;
 		$this -> template($this->data);
 	}
 
