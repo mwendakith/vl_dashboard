@@ -16,13 +16,13 @@
 
 		$("select").change(function(){
 			em = $(this).val();
-			// console.log(em);
+			console.log("EM" + em);
 			// Send the data using post
 	        var posting = $.post( "<?php echo base_url();?>template/filter_regimen_data", { regimen: em } );
 	     
 	   //      // Put the results in a div
 	        posting.done(function( data ) {
-	        	// console.log(data);
+	        	console.log(data);
 	   //      	$.get("<?php echo base_url();?>template/breadcrum/"+data, function(data){
 	   //      		$("#breadcrum").html(data);
 	   //      	});
