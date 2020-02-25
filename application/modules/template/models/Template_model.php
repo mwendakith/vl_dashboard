@@ -104,7 +104,11 @@ class Template_model extends MY_Model
 		$county_data = $this->db->get('viralregimen')->result_array();
 
 		foreach ($county_data as $key => $value) {
-			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].' ('.$value['code'].')</option>';
+			if (null !== trim($value['code'])) {
+				$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].' ('.$value['code'].')</option>';
+			} else {
+				$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
+			}
 		}
 		
 		return $dropdown;
