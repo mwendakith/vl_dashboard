@@ -101,10 +101,10 @@ class Template_model extends MY_Model
 	{
 		$dropdown = '';
 		$this->db->order_by("name","asc");
-		$county_data = $this->db->get('viralprophylaxis')->result_array();
+		$county_data = $this->db->get('viralregimen')->result_array();
 
 		foreach ($county_data as $key => $value) {
-			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
+			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].' ('.$value['code'].')</option>';
 		}
 		
 		return $dropdown;
