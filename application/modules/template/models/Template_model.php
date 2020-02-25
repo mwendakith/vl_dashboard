@@ -105,9 +105,9 @@ class Template_model extends MY_Model
 
 		foreach ($county_data as $key => $value) {
 			if (null !== trim($value['code'])) {
-				$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].' ('.$value['code'].')</option>';
+				$dropdown .= '<option value="'.$value['id'].'">'.$value['name'].' ('.$value['code'].')</option>';
 			} else {
-				$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
+				$dropdown .= '<option value="'.$value['id'].'">'.$value['name'].'</option>';
 			}
 		}
 		
