@@ -35,7 +35,7 @@
 					$(".display_date").html("( "+obj['year']+" "+obj['month']+" )");
 					$(".display_range").html("( "+obj['prev_year']+" - "+obj['year']+" )");
 	        	});
-	        	if (data=="") {
+	        	if (em=="NA") {
 	        		$("#second").hide();
 	        		$("#first").show();
 
