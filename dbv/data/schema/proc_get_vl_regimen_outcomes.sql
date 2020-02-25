@@ -7,9 +7,9 @@ BEGIN
 						`vp`.`name`, 
 						SUM(`vnr`.`less5000`+`vnr`.`above5000`) AS `nonsuppressed`, 
 						SUM(`vnr`.`Undetected`+`vnr`.`less1000`) AS `suppressed` 
-						FROM `vl_national_regimen` `vnr`
-						LEFT JOIN `viralprophylaxis` `vp` 
-						ON `vnr`.`regimen` = `vp`.`ID`
+						FROM `vl_national_prophylaxis` `vnr`
+						LEFT JOIN `viralregimen` `vp` 
+						ON `vnr`.`regimen` = `vp`.`id`
 					WHERE 1";
 
     IF (from_month != 0 && from_month != '') THEN
