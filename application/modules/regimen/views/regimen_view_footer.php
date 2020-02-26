@@ -42,6 +42,7 @@
 	        		$("#regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>");
 	        	} else {
 	        		data = $.parseJSON(data);
+	        		console.log(data);
 	        		$("#first").hide();
 	        		$("#second").show();
 
