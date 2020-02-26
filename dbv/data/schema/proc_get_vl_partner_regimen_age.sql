@@ -18,7 +18,7 @@ BEGIN
         SUM(`less19_nonsuppressed`) AS `less19_nonsuppressed`,
         SUM(`less24_nonsuppressed`) AS `less24_nonsuppressed`,
         SUM(`over25_nonsuppressed`) AS `over25_nonsuppressed`
-    FROM `vl_partner_regimen`
+    FROM `vl_partner_prophylaxis`
     WHERE 1 ";
 
 

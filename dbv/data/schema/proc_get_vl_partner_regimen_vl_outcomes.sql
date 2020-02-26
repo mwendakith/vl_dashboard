@@ -17,7 +17,7 @@ BEGIN
         SUM(`rejected`) AS `rejected`, 
         SUM(`repeattests`) AS `repeats`, 
         SUM(`invalids`) AS `invalids`
-    FROM `vl_partner_regimen`
+    FROM `vl_partner_prophylaxis`
     WHERE 1 ";
 
     IF (from_month != 0 && from_month != '') THEN
