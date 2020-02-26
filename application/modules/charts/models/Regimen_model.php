@@ -68,7 +68,7 @@ class Regimen_model extends MY_Model
 		} else {
 			$sql = "CALL `proc_get_vl_partner_regimen_vl_outcomes`('".$partner."','".$regimen."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		}
-		echo "<pre>";print_r($result);die();		
+		echo "<pre>";print_r($sql);die();		
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
 		$color = array('#6BB9F0', '#F2784B', '#1BA39C', '#5C97BF');
