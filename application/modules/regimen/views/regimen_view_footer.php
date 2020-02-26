@@ -56,7 +56,7 @@
 					$("#county").html("<center><div class='loader'></div></center>");
 					
 					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+6+"/"+data);
-					$("#vlOutcomes").load("<?php echo base_url('charts/regimen/regimen_vl_outcome'); ?>");
+					$("#vlOutcomes").load("<?php echo base_url('charts/regimen/regimen_vl_outcome'); ?>/"+null+"/"+null+"/"+data);
 					$("#gender").load("<?php echo base_url('charts/regimen/regimen_gender'); ?>/"+null+"/"+null+"/"+data);
 					$("#age").load("<?php echo base_url('charts/regimen/regimen_age'); ?>/"+null+"/"+null+"/"+data);
 					$("#countiesRegimen").load("<?= @base_url('charts/regimen/regimen_breakdowns'); ?>/"+null+"/"+null+"/"+data+"/"+null+"/"+null+"/"+1);
