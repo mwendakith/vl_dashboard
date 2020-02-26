@@ -12,7 +12,7 @@ BEGIN
           (SUM(`Undetected`)+SUM(`less1000`)) AS `suppressed`,
           (SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `tests`,
           (SUM(`Undetected`)+SUM(`less1000`))*100/(SUM(`Undetected`)+SUM(`less1000`)+SUM(`less5000`)+SUM(`above5000`)) AS `suppression`  
-    FROM `vl_partner_regimen`
+    FROM `vl_partner_prophylaxis`
     WHERE 1";
 
     SET @QUERY = CONCAT(@QUERY, " AND `partner` = '",P_id,"' AND `regimen` = '",R_id,"' AND `year` = '",filter_year,"' GROUP BY `month` ORDER BY `year` ASC, `month` ");

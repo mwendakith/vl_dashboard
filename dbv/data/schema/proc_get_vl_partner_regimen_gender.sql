@@ -10,7 +10,7 @@ BEGIN
         SUM(`malenonsuppressed`) AS `malenonsuppressed`,
         SUM(`femalenonsuppressed`) AS `femalenonsuppressed`,
         SUM(`nogendernonsuppressed`) AS `nogendernonsuppressed`
-    FROM `vl_partner_regimen`
+    FROM `vl_partner_prophylaxis`
     WHERE 1 ";
 
 

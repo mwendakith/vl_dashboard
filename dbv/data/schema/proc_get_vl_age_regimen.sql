@@ -24,7 +24,7 @@ BEGIN
       SET @QUERY = CONCAT(@QUERY, " (SUM(`over25`) - SUM(`over25_nonsuppressed`)) as `suppressed`, SUM(`over25_nonsuppressed`) as `nonsuppressed`, ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " name FROM `vl_national_regimen` JOIN `viralprophylaxis` on `viralprophylaxis`.`ID` = `vl_national_regimen`.`regimen` WHERE 1 ");
+    SET @QUERY = CONCAT(@QUERY, " name FROM `vl_national_prophylaxis` JOIN `viralregimen` on `viralregimen`.`id` = `vl_national_prophylaxis`.`regimen` WHERE 1 ");
 
     IF (from_month != 0 && from_month != '') THEN
       IF (to_month != 0 && to_month != '' && filter_year = to_year) THEN
