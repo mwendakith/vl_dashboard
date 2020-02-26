@@ -39,7 +39,7 @@ BEGIN
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_lab_summary` WHERE `lab` = '",id,"' ");
     END IF;
     IF (type = 6) THEN # For the Regimen
-      SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_regimen` WHERE `regimen` = '",id,"' ");
+      SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_prophylaxis` WHERE `regimen` = '",id,"' ");
     END IF;
     IF (type = 7) THEN # For the Age
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_age` WHERE `age` ",multpileID," ");
