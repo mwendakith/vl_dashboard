@@ -49,7 +49,7 @@ class Regimen_model extends MY_Model
 		$data['outcomes'][2]['data'][0] = 0;
  
 		foreach ($result as $key => $value) {
-			$data['categories'][$key] 					= $value['name'];
+			$data['categories'][$key] 					= $value['regimenname'];
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
 			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
