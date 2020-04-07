@@ -75,7 +75,7 @@ class Sites_model extends MY_Model
 		$data['outcomes'][2]['data'][0] = 0;
 		$data['outcomes'][3]['data'][0] = 0;
 		foreach ($result as $key => $value) {
-			$data['categories'][$key] 					= $value['partnername'];
+			$data['categories'][$key] 					= $value['name'];
 			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
 			$data['outcomes'][1]['data'][$key] = (int) $value['less1000'];
 			$data['outcomes'][2]['data'][$key] = (int) $value['undetected'];
