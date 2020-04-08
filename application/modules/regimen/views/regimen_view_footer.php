@@ -12,6 +12,8 @@
 		$("#second").hide();
 
 		$("#regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>");
+		$("#adult_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>");
+		$("#paeds_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>");
 
 
 		$("select").change(function(){
