@@ -17,7 +17,7 @@ class Regimen_model extends MY_Model
 		extract($d);
 
 		if (!$partner) {
-			$sql = "CALL `proc_get_vl_regimen_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."'.'".$group."')";
+			$sql = "CALL `proc_get_vl_regimen_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."','".$group."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_regimen_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		}
