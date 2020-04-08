@@ -11,13 +11,13 @@ class Regimen_model extends MY_Model
 		parent::__construct();
 	}
 
-	function regimens_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null,$partner=NULL)
+	function regimens_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null,$partner=NULL, $group=0)
 	{
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
 		extract($d);
 
 		if (!$partner) {
-			$sql = "CALL `proc_get_vl_regimen_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+			$sql = "CALL `proc_get_vl_regimen_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."'.'".$group."')";
 		} else {
 			$sql = "CALL `proc_get_vl_partner_regimen_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		}
@@ -56,6 +56,11 @@ class Regimen_model extends MY_Model
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
+	}
+
+	function regimens_outcomes_group($group,$year,$month,$to_year,$to_month)
+	{
+
 	}
 
 	function regimen_vl_outcomes($year=NULL,$month=NULL,$regimen=NULL,$to_year=null,$to_month=null,$partner=NULL)

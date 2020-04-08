@@ -1,7 +1,7 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_regimen_outcomes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_regimen_outcomes`
-(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11), IN agegroup INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
 						CONCAT(`vp`.`name`, ' (', `vp`.`code`, ')') AS `regimenname`,
@@ -23,6 +23,10 @@ BEGIN
     END IF;
     ELSE
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
+    END IF;
+
+    IF (agegroup != 0 && agegroup != '') THEN
+        SET @QUERY = CONCAT(@QUERY, " AND `vp`.`age` = '",agegroup,"' ");
     END IF;
 
     SET @QUERY = CONCAT(@QUERY, " GROUP BY `regimenname` ORDER BY `suppressed` DESC, `nonsuppressed` ");

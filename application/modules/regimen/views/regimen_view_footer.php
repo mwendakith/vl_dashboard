@@ -12,8 +12,8 @@
 		$("#second").hide();
 
 		$("#regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>");
-		$("#adult_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>");
-		$("#paeds_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>");
+		$("#adult_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes_group'); ?>/"+1+"/"+null+"/"+null+"/"+null+"/"+null);
+		$("#paeds_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes_group'); ?>/"+2+"/"+null+"/"+null+"/"+null+"/"+null);
 
 
 		$("select").change(function(){
