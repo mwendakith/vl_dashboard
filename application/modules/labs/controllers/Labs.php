@@ -27,6 +27,12 @@ class Labs extends MY_Controller
 		$this -> template($this->data);
 	}
 
+	public function covid()
+	{
+		$this->data['content_view'] = 'labs/covid';
+		$this -> template($this->data);
+	}
+
 	public function test()
 	{
 		// echo eval(APPPATH . 'views/maintenance_view.php');	
