@@ -156,6 +156,7 @@
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
 								<li><a href="<?php echo base_url();?>labs/poc">POC</a></li>
+								<li><a href="<?php echo base_url();?>live">Labs Live</a></li>
 								<li><a href="<?php echo base_url();?>labs/covid">Covid</a></li>
 							</ul>
 						</li>
