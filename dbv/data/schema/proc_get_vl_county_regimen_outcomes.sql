@@ -7,7 +7,7 @@ BEGIN
                     `c`.`name`,
                     (SUM(`vcr`.`undetected`)+SUM(`vcr`.`less1000`)) AS `suppressed`,
                     (SUM(`vcr`.`less5000`)+SUM(`vcr`.`above5000`)) AS `nonsuppressed` 
-                FROM `vl_county_regimen` `vcr`
+                FROM `vl_county_prophylaxis` `vcr`
                     JOIN `countys` `c` ON `vcr`.`county` = `c`.`ID`
     WHERE 1 ";
 

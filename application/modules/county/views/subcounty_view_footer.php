@@ -17,6 +17,7 @@
 	       });
 		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>");
 		$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>");
+		$("#subcounty_outcome_age_gender").load("<?php echo base_url('charts/subcounties/subcounty_outcome_table');?>");
 
 
 		$("select").change(function(){
@@ -50,6 +51,7 @@
 
 	        		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>");
 					$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>");
+					$("#subcounty_outcome_age_gender").load("<?php echo base_url('charts/subcounties/subcounty_outcome_table');?>");
 	        	} else {
 	        		subcounty = JSON.parse(subcounty);
 	        		$("#first").hide();
@@ -64,7 +66,7 @@
 					$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/subcounty_vl_outcomes'); ?>/"+null+"/"+null+"/"+subcounty);
 					$("#gender").load("<?php echo base_url('charts/subcounties/subcounty_gender'); ?>/"+null+"/"+null+"/"+subcounty);
 					$("#age").load("<?php echo base_url('charts/subcounties/subcounty_age'); ?>/"+null+"/"+null+"/"+subcounty); 
-					$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+null+"/"+subcounty+"/"+all);
+					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+2+"/"+subcounty+"/"+all);
 					$("#sub_counties").load("<?php echo base_url('charts/subcounties/subcounty_sites'); ?>/"+null+"/"+null+"/"+subcounty);
 					$("#long_tracking").load("<?php echo base_url('charts/subcounties/get_patients'); ?>/"+null+"/"+null+"/"+subcounty);
 					$("#current_sup_dynamic").load("<?php echo base_url('charts/subcounties/get_current_suppresion'); ?>/"+null+"/"+null+"/"+subcounty);
@@ -99,6 +101,7 @@
 
 		        		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 						$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+						$("#subcounty_outcome_age_gender").load("<?php echo base_url('charts/subcounties/subcounty_outcome_table');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 					} else {
 						$("#first").hide();
 		        		$("#second").show();
@@ -112,7 +115,7 @@
 						$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/subcounty_vl_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
 						$("#gender").load("<?php echo base_url('charts/subcounties/subcounty_gender'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]);
 						$("#age").load("<?php echo base_url('charts/subcounties/subcounty_age'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
-						$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+from[1]+"/"+data+"/"+all);
+						$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+2+"/"+data+"/"+all);
 						$("#subcounties").load("<?php echo base_url('charts/subcounties/subcounty_sites'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
 						$("#long_tracking").load("<?php echo base_url('charts/subcounties/get_patients'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
 						$("#current_sup_dynamic").load("<?php echo base_url('charts/subcounties/get_current_suppresion'); ?>/"+from[1]+"/"+from[0]+"/"+data+"/"+to[1]+"/"+to[0]); 
@@ -154,6 +157,7 @@
 
 	        		$("#regimen_outcomes").load("<?php echo base_url('charts/subcounties/subcounty_outcomes');?>/"+year+"/"+month);
 					$("#subcounty_summary").load("<?php echo base_url('charts/subcounties/subcounties_table');?>/"+year+"/"+month);
+					$("#subcounty_outcome_age_gender").load("<?php echo base_url('charts/subcounties/subcounty_outcome_table');?>/"+year+"/"+month);
 				} else {
 					$("#first").hide();
 	        		$("#second").show();
@@ -167,7 +171,7 @@
 					$("#vlOutcomes").load("<?php echo base_url('charts/subcounties/subcounty_vl_outcomes'); ?>/"+year+"/"+month+"/"+data);
 					$("#gender").load("<?php echo base_url('charts/subcounties/subcounty_gender'); ?>/"+year+"/"+month+"/"+data);
 					$("#age").load("<?php echo base_url('charts/subcounties/subcounty_age'); ?>/"+year+"/"+month+"/"+data); 
-					$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+year+"/"+data+"/"+all);
+					$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+2+"/"+data+"/"+all);
 					$("#subcounties").load("<?php echo base_url('charts/subcounties/subcounty_sites'); ?>/"+year+"/"+month+"/"+data); 
 					$("#long_tracking").load("<?php echo base_url('charts/subcounties/get_patients'); ?>/"+year+"/"+month+"/"+data); 
 					$("#current_sup_dynamic").load("<?php echo base_url('charts/subcounties/get_current_suppresion'); ?>/"+year+"/"+month+"/"+data); 
@@ -194,7 +198,7 @@
 		$.get("<?php echo base_url();?>county/check_subcounty_select", function (data) {
 			data = $.parseJSON(data);
 			if(data == 0){data = null;}
-			$("#samples").load("<?php echo base_url('charts/subcounties/sample_types'); ?>/"+null+"/"+data+"/"+all);
+			$("#samples").load("<?php echo base_url('charts/summaries/sample_types'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+2+"/"+data+"/"+all);
 		});
 	}
 </script>

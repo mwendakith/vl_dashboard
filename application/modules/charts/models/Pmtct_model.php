@@ -71,28 +71,38 @@ class Pmtct_model extends MY_Model
 		extract($d);
 
 		if ($pmtcttype==null || $pmtcttype=='null') {
-			$pmtcttype = $this->session->userdata('pmtct_filter');
+			$pmtcttype = $default;
+			if($this->session->userdata('pmtct_filter'))
+				$pmtcttype = $this->session->userdata('pmtct_filter');
 		}
 
 		if ($partner==null || $partner=='null') {
-			$partner = $this->session->userdata('partner_filter');
+			$partner = $default;
+			if($this->session->userdata('partner_filter'))
+				$partner = $this->session->userdata('partner_filter');
 		}
 		if ($national==null || $national=='null') {
 			$national = $default;
 		}
 		if ($county==null || $county=='null') {
-			$county = $this->session->userdata('county_filter');
+			$county = $default;
+			if($this->session->userdata('county_filter'))
+				$county = $this->session->userdata('county_filter');
 		}
 		if ($subcounty==null || $subcounty=='null') {
-			$subcounty = $this->session->userdata('sub_county_filter');
+			$subcounty = $default;
+			if($this->session->userdata('sub_county_filter'))
+				$subcounty = $this->session->userdata('sub_county_filter');
 		}
 		if ($site==null || $site=='null') {
-			$site = $this->session->userdata('site_filter');
+			$site = $default;
+			if($this->session->userdata('site_filter'))
+				$site = $this->session->userdata('site_filter');
 		}
-		$sql = "CALL `proc_get_vl_pmtct_suppression`('".$pmtcttype."','".$year."','".$default."','".$to_year."','".$default."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
-		// echo "<pre>";print_r($sql);die();
+		$sql = "CALL `proc_get_vl_pmtct_suppression`('".$pmtcttype."','".$year."','".$default."','".$to_month."','".$default."','".$national."','".$county."','".$partner."','".$subcounty."','".$site."')";
+		
 		$result = $this->db->query($sql)->result();
-		// echo "<pre>";print_r($result);die();
+		
 		$data['outcomes'][0]['name'] = "Not Suppressed";
 		$data['outcomes'][1]['name'] = "Suppressed";
 		$data['outcomes'][2]['name'] = "Suppression";
@@ -200,8 +210,8 @@ class Pmtct_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
  
-		$data['vl_outcomes']['data'][0]['name'] = '&lt; 1000';
-		$data['vl_outcomes']['data'][1]['name'] = 'LDL';
+		$data['vl_outcomes']['data'][0]['name'] = '401 - 999 (LLV)';
+		$data['vl_outcomes']['data'][1]['name'] = '&lt;= 400 (LDL)';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 		
 		$data['vl_outcomes']['data'][2]['sliced'] = true;
@@ -234,21 +244,21 @@ class Pmtct_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml (HVL):</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
 	    		<td>'.round((($greater/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt; 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml (LLV):</td>
 	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests LDL:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt;= 400 (LDL):</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Undetectable</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
@@ -278,8 +288,8 @@ class Pmtct_model extends MY_Model
 			$data['vl_outcomes']['data'][1]['y'] = (int) $value['undetected'];
 			$data['vl_outcomes']['data'][2]['y'] = (int) $value['less5000']+(int) $value['above5000'];
  
-			$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
-			$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+			$data['vl_outcomes']['data'][0]['color'] = '#66ff66';
+			$data['vl_outcomes']['data'][1]['color'] = '#1BA39C';
 			$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 		}
 

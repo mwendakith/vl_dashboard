@@ -8,7 +8,7 @@ class County extends MY_Controller {
 	{
 		parent:: __construct();
 		$this->data	=	array_merge($this->data,$this->load_libraries(array('material','custom', 'Kenya', 'tablecloth', 'select2')));
-		$this->session->set_userdata('partner_filter', NULL);
+		// $this->session->set_userdata('partner_filter', NULL);
 		$this->load->module('charts/county');
 		$this->load->module('charts/pmtct');
 	}
@@ -48,11 +48,27 @@ class County extends MY_Controller {
 		$this->template($this->data);
 	}
 
+	public function partner()
+	{
+		$this->clear_all_session_data();
+		$this->load->module('charts/summaries');
+		$this->data['content_view'] = 'county/county_partner_view';
+		$this -> template($this->data);
+	}
+
 	public function subCountytat()
 	{
 		$this->clear_all_session_data();
 		$this->data['sub_county'] = TRUE;
 		$this->data['content_view'] = 'county/subcounty_tat_view';
+
+		$this->template($this->data);
+	}
+
+	public function subcountypmtct() {
+		$this->clear_all_session_data();
+		$this->data['sub_county'] = TRUE;
+		$this->data['content_view'] = 'county/subcounty_pmtct_view';
 
 		$this->template($this->data);
 	}
@@ -66,6 +82,7 @@ class County extends MY_Controller {
 
 	public function check_county_select()
 	{
+		// echo json_encode($this->session->all_userdata());
 		if ($this->session->userdata('county_filter')) {
 			$county = $this->session->userdata('county_filter');
 		} else {

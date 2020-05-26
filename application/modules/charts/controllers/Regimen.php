@@ -21,6 +21,17 @@ class Regimen extends MY_Controller
 		$this->load->view('trends_outcomes_view', $data);
 	}
 
+	function regimen_outcomes_group($group=0,$year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+	{
+		$data['trends']= $this->regimen_model->regimens_outcomes($year,$month,$to_year,$to_month,NULL,$group);
+		if ($group == 1)
+			$data['div_name'] = "regimen_adult_summary_outcomes";
+		else
+			$data['div_name'] = "regimen_paeds_summary_outcomes";
+
+		$this->load->view('trends_outcomes_view', $data);
+	}
+
 	function regimen_county_outcomes($year=NULL,$month=NULL,$regimen=NULL,$to_year=NULL,$to_month=NULL,$partner=NULL)
 	{
 		$data['trends'] = $this->regimen_model->county_outcomes($year,$month,$regimen,$to_year,$to_month,$partner);

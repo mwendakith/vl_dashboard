@@ -7,7 +7,7 @@ BEGIN
                     `c`.`name`,
                     (SUM(`vcr`.`undetected`)+SUM(`vcr`.`less1000`)) AS `suppressed`,
                     (SUM(`vcr`.`less5000`)+SUM(`vcr`.`above5000`)) AS `nonsuppressed` 
-                FROM `vl_partner_regimen` `vcr`
+                FROM `vl_partner_prophylaxis` `vcr`
                     LEFT JOIN view_facilitys vf
                     ON vf.partner = vcr.partner
                   LEFT JOIN countys c

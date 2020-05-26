@@ -2,29 +2,24 @@
 	<table id="poc_table" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="max-width: 100%;">
 		<thead>
 			<tr class="colhead">
-				<th rowspan="2">No</th>
-				<th rowspan="2">Facility</th>
-				<th rowspan="2">MFL</th>
-				<th rowspan="2">Facilities Sending Samples</th>
-				<th rowspan="2">Received Samples at Lab</th>
-				<th rowspan="2">Rejected Samples (on receipt at lab)</th>
-				<th rowspan="2">All Test (plus reruns) Done at Lab</th>
-				<th rowspan="2">Redraw (after testing)</th>
-				<th colspan="2">Routine VL Tests</th>
-				<th colspan="2">Baseline VL Tests</th>
-				<th colspan="2">Confirmatory Repeat Tests</th>
-				<th colspan="2">Total Tests with Valid Outcomes</th>
-				<th rowspan="2">View Details</th>
-			</tr>
-			<tr>
-				<th>Tests</th>
-				<th>&gt; 1000</th>
-				<th>Tests</th>
-				<th>&gt; 1000</th>
-				<th>Tests</th>
-				<th>&gt; 1000</th>
-				<th>Tests</th>
-				<th>&gt; 1000</th>
+				<th>No</th>
+				<th>Hub</th>
+				<th>MFL</th>
+				<th>County</th>
+				<th>Facilities Sending Samples</th>
+				<th>Received Samples at Hub</th>
+				<th>Rejected Samples (on receipt at Hub)</th>
+				<th>All Test Done at Hub</th>
+				<th>Redraw (after testing)</th>
+				<th>Routine VL Tests</th>
+				<th>Routine VL Tests &gt; 1000</th>
+				<th>Baseline VL Tests</th>
+				<th>Baseline VL Tests &gt; 1000</th>
+				<th>Confirmatory Repeat Tests</th>
+				<th>Confirmatory Repeat Tests &gt; 1000</th>
+				<th>Total Tests with Valid Outcomes</th>
+				<th>Total Tests &gt; 1000 with Valid Outcomes</th>
+				<th>View Spoke Details</th>
 			</tr>
 		</thead>
 		<tbody>

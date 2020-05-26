@@ -84,7 +84,7 @@ class County_model extends MY_Model
 		$resultage = $this->db->query($sqlAge)->result();
 		$this->db->close();
 		$resultGender = $this->db->query($sqlGender)->result();
-		// echo "<pre>";print_r($resultage);die();
+		 // echo "<pre>";print_r($resultage);die();
 		$counties = [];
 		$ageData = [];
 		$genderData = [];
@@ -206,7 +206,7 @@ class County_model extends MY_Model
 			$count++;
 		}
 		
-
+		// echo $table;die();
 		return $table;
 	}
 
@@ -647,6 +647,7 @@ class County_model extends MY_Model
 			}
 		}
 
+
 		foreach ($result as $key => $value) {
 			$routine = ((int) $value['undetected'] + (int) $value['less1000'] + (int) $value['less5000'] + (int) $value['above5000']);
 			$routinesus = ((int) $value['less5000'] + (int) $value['above5000']);
@@ -753,4 +754,129 @@ class County_model extends MY_Model
 	    fpassthru($f);
 		
 	}
-}
+
+	function county_outcome_table($year=NULL,$month=NULL,$to_year=null,$to_month=null,$data)
+	{
+		$table = '';
+		$d = $this->extract_variables($year, $month, $to_year, $to_month);
+		extract($d);
+		if(isset($data['subcountyListing'])){
+			$sql = "CALL `proc_get_vl_subcounty_outcomes_age_gender`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
+		else{
+			$sql = "CALL `proc_get_vl_county_outcomes_age_gender`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		}
+		
+		
+		// echo "<pre>";print_r($sql);die();
+		$records = $this->db->query($sql)->result();
+		$this->db->close();
+		// echo "<pre>";print_r($records);die();
+		$region = [];
+		$county = [];
+		
+		foreach ($records as $key => $value) {
+				if (!in_array($value->region, $region))
+				{
+					$region[] = $value->region;
+					if(isset($data['subcountyListing'])){
+						$county[$value->region] = $value->county;
+					}
+				}
+
+				if ($value->gender == 1) {
+					if ($value->age == 6) {
+						$mTestUnder2[$value->region] = $value->tests;
+						$mNonSupUnder2[$value->region] = $value->nonsup;
+					}
+					if ($value->age == 7) { 
+						$mTest2To9[$value->region] = $value->tests;
+						$mNonSup2To9[$value->region] = $value->nonsup;
+					}
+					if ($value->age == 8) { 
+						$mTest10To14[$value->region] = $value->tests;
+						$mNonSup10To14[$value->region] = $value->nonsup;
+					}
+					if ($value->age == 9) { 
+						$mTest15To19[$value->region] = $value->tests;
+						$mNonSup15To19[$value->count] = $value->nonsup;
+					}
+					if ($value->age == 10) { 
+						$mTest20To24[$value->region] = $value->tests;
+						$mNonSup20To24[$value->region] = $value->nonsup;
+					}
+					if ($value->age == 11) { 
+						$mTestAbove25[$value->region] = $value->tests;
+						$mNonSupAbove25[$value->region] = $value->nonsup;
+					}
+				}
+			 if ($value->gender == 2) {
+				if ($value->age == 6) {
+					$fTestUnder2[$value->region] = $value->tests;
+					$fNonSupUnder2[$value->region] = $value->nonsup;
+				}
+				if ($value->age == 7) {
+					$fTest2To9[$value->region] = $value->tests;
+					$fNonSup2To9[$value->region] = $value->nonsup;
+				}
+				if ($value->age == 8) {
+					$fTest10To14[$value->region] = $value->tests;
+					$fNonSup10To14[$value->region] = $value->nonsup;
+				}
+				if ($value->age == 9) {
+					$fTest15To19[$value->region] = $value->tests;
+					$fNonSup15To19[$value->region] = $value->nonsup;
+				}
+				if ($value->age == 10) {
+					$fTest20To24[$value->region] = $value->tests;
+					$fNonSup20To24[$value->region] = $value->nonsup;
+				}
+				if ($value->age == 11) {
+					$fTestAbove25[$value->region] = $value->tests;
+					$fNonSupAbove25[$value->region] = $value->nonsup;
+				}
+			}
+		}
+		// echo "<pre>";print_r($county);die();
+		foreach ($region as $key => $value) {
+			$table .= "<tr>
+						<td>".($key+1)."</td>
+						<td>".$value."</td>";
+						// ((isset($data['subcountyListing'])) ? "<td>".$county[$value]."</td>" : "")
+						if(isset($data['subcountyListing'])){
+							$table .= "<td>".$county[$value]."</td>";
+						}
+			$table .=	"<td>".number_format((int) $mTestUnder2[$value])."</td>
+						<td>".number_format((int) $mNonSupUnder2[$value])."</td>
+						<td>".number_format((int) $mTest2To9[$value]) ."</td>
+						<td>".number_format((int) $mNonSup2To9[$value])."</td>
+						<td>".number_format((int) $mTest10To14[$value])."</td>
+						<td>".number_format((int) $mNonSup10To14[$value])."</td>
+						<td>".number_format((int) $mTest15To19[$value])."</td>
+						<td>".number_format((int) $mNonSup15To19[$value])."</td>
+						<td>".number_format((int) $mTest20To24[$value])."</td>
+						<td>".number_format((int) $mNonSup20To24[$value])."</td>
+						<td>".number_format((int) $mTestAbove25[$value])."</td>
+						<td>".number_format((int) $mNonSupAbove25[$value])."</td>
+
+						<td>".number_format((int) $fTestUnder2[$value])."</td>
+						<td>".number_format((int) $fNonSupUnder2[$value])."</td>
+						<td>".number_format((int) $fTest2To9[$value]) ."</td>
+						<td>".number_format((int) $fNonSup2To9[$value])."</td>
+						<td>".number_format((int) $fTest10To14[$value])."</td>
+						<td>".number_format((int) $fNonSup10To14[$value])."</td>
+						<td>".number_format((int) $fTest15To19[$value])."</td>
+						<td>".number_format((int) $fNonSup15To19[$value])."</td>
+						<td>".number_format((int) $fTest20To24[$value])."</td>
+						<td>".number_format((int) $fNonSup20To24[$value])."</td>
+						<td>".number_format((int) $fTestAbove25[$value])."</td>
+						<td>".number_format((int) $fNonSupAbove25[$value])."</td>";
+			$table .= "</tr>";
+			
+		}
+		// echo $table;die();
+		// echo "<pre>";print_r($region);die();
+		return $table;		
+				
+	}
+} 

@@ -35,9 +35,19 @@ class Samples_model extends MY_Model
 		$data['categories'][0]					= 'No Data';
 
 		foreach ($result as $key => $value) {
-			$data['categories'][$key] 					= $value['name'];
+			// if ($key==0 || $key==1) {
+			// 	if (!in_array("Plasma", $data['categories'][0]))
+			// 	{
+			// 		$data['categories'][0] 				= "Plasma";
+			// 	}
+			// 	$data["county_outcomes"][0]["data"][0]	=  (int) ($data["county_outcomes"][0]["data"][0] + $value['nonsuppressed']);
+			// 	$data["county_outcomes"][1]["data"][0]	=  (int) ($data["county_outcomes"][1]["data"][0] + $value['suppressed']);
+			// }else{
+			
+			$data['categories'][$key] 					= $value['sample_type_name'];
 			$data["county_outcomes"][0]["data"][$key]	=  (int) $value['nonsuppressed'];
 			$data["county_outcomes"][1]["data"][$key]	=  (int) $value['suppressed'];
+			// }
 		}
 		// echo "<pre>";print_r($data);die();
 		return $data;
@@ -63,8 +73,8 @@ class Samples_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '&lt;= 400';
-		$data['vl_outcomes']['data'][1]['name'] = '401 - 999';
+		$data['vl_outcomes']['data'][0]['name'] = 'LDL';
+		$data['vl_outcomes']['data'][1]['name'] = 'LLV';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 
 		$count = 0;
@@ -94,21 +104,21 @@ class Samples_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml (HVL):</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
 	    		<td>'.round((@($greater/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt= 400 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt= 400 copies/ml (LDL):</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml (LLV):</td>
 	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
@@ -161,19 +171,19 @@ class Samples_model extends MY_Model
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
 		// echo "<pre>";print_r($result);die();
-		$data['gender'][0]['name'] = 'Test';
+		$data['ageGnd'][0]['name'] = 'Test';
 
 		$count = 0;
 		
-		$data["gender"][0]["data"][0]	= $count;
-		$data["gender"][0]["data"][1]	= $count;
-		$data['categories'][0]			= 'No Data';
+		$data["ageGnd"][0]["data"][0]	= $count;
+		$data["ageGnd"][0]["data"][1]	= $count;
+		$data['categories'][0] = 'No Data';
 
 		foreach ($result as $key => $value) {
 			$data['categories'][0] 			= 'Male';
 			$data['categories'][1] 			= 'Female';
-			$data["gender"][0]["data"][0]	=  (int) $value['maletest'];
-			$data["gender"][0]["data"][1]	=  (int) $value['femaletest'];
+			$data["ageGnd"][0]["data"][0]	=  (int) $value['maletest'];
+			$data["ageGnd"][0]["data"][1]	=  (int) $value['femaletest'];
 		}
 
 		// $data['gender'][0]['drilldown']['color'] = '#913D88';
@@ -225,22 +235,13 @@ class Samples_model extends MY_Model
 		return $data;
 	}
 
-	function samples_suppression($year=NULL,$sample=NULL)
+	function samples_suppression($year=NULL,$month=NULL,$sample=NULL,$to_year=NULL,$to_month=NULL)
 	{
 		
-		if ($sample==null || $sample=='null') {
-			$sample = $this->session->userdata('sample_filter');
-		}
-		
-		if ($year==null || $year=='null') {
-			$to = $this->session->userdata('filter_year');
-		}else {
-			$to = $year;
-		}
-		$from = $to-1;
-
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['sample' => $sample]);
+		extract($d);
 		//if ($partner==null || $partner=='null') {
-			$sql = "CALL `proc_get_vl_sample_summary`('".$sample."','".$from."','".$to."')";
+		$sql = "CALL `proc_get_vl_sample_summary`('".$sample."','".$year."','".$month."','".$to_year."','".$to_month."')";
 		/*} else {
 			$sql = "CALL `proc_get_vl_partner_samples_sample_types`('".$partner."','".$sample."','".$from."')";
 			$sql2 = "CALL `proc_get_vl_partner_samples_sample_types`('".$partner."','".$sample."','".$to."')";
@@ -261,8 +262,8 @@ class Samples_model extends MY_Model
 		$data['outcomes'][0]['type'] = "column";
 		$data['outcomes'][1]['type'] = "column";
 		$data['outcomes'][2]['type'] = "spline";
-
-		$data['outcomes'][0]['yAxis'] = 1;
+               
+                $data['outcomes'][0]['yAxis'] = 1;
 		$data['outcomes'][1]['yAxis'] = 1;
 
 		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
@@ -274,14 +275,13 @@ class Samples_model extends MY_Model
 		foreach ($result as $key => $value) {
 			
 			$data['categories'][$key] = $this->resolve_month($value['month']).'-'.$value['year'];
-			$data['outcomes'][0]['data'][$key] = (int) $value['nonsuppressed'];
+			$data['outcomes'][0]['data'][$key] = (int) ($value['tests'] - $value['suppressed']);
 			$data['outcomes'][1]['data'][$key] = (int) $value['suppressed'];
 
-			$data['outcomes'][2]['data'][$key] = round(@(((int) $value['suppressed']*100)/((int) $value['suppressed']+(int) $value['nonsuppressed'])),1);
+			$data['outcomes'][2]['data'][$key] = round(@$value['suppression'],1);
 			//$data['outcomes'][2]['data'][$key] = round($value['percentage'], 2);
 			
 		}
-		
 		return $data;
 	}
 

@@ -12,18 +12,6 @@ class Ages_model extends MY_Model
 		parent::__construct();
 	}
 
-	function build_Inarray($array = null)
-	{
-		if (is_null($array)) return null;
-		$query = "IN (";
-		$elements = sizeof($array);
-		foreach ($array as $key => $value) {
-			($key+1 == $elements) ? $query .= $value : $query .= $value . ",";
-		}
-		$query .= ")";
-		return $query;
-	}
-
 	function ages_outcomes($year=NULL,$month=NULL,$to_year=null,$to_month=null,$partner=null)
 	{
 		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
@@ -135,8 +123,8 @@ class Ages_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '&lt; 400';
-		$data['vl_outcomes']['data'][1]['name'] = '401 - 1000';
+		$data['vl_outcomes']['data'][0]['name'] = 'LDL';
+		$data['vl_outcomes']['data'][1]['name'] = 'LLV';
 		$data['vl_outcomes']['data'][2]['name'] = 'Not Suppressed';
 
 		$count = 0;
@@ -170,21 +158,21 @@ class Ages_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml (HVL):</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
 	    		<td>'.round((@($greater/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt= 400 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt= 400 copies/ml (LDL):</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml (LLV):</td>
 	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
@@ -239,31 +227,30 @@ class Ages_model extends MY_Model
 		
 		// echo "<pre>";print_r($sql);die();
 		$result = $this->db->query($sql)->result_array();
+		// echo "<pre>";print_r($result);die();
+		$data['outcomes'][0]['name'] = "Not Suppressed";
+		$data['outcomes'][1]['name'] = "Suppressed";
+		$data['outcomes'][2]['name'] = "Suppression";
+
+		$data['outcomes'][0]['type'] = "column";
+		$data['outcomes'][1]['type'] = "column";
+		$data['outcomes'][2]['type'] = "spline";
+		
+
+		$data['outcomes'][0]['yAxis'] = 1;
+		$data['outcomes'][1]['yAxis'] = 1;
+
+		$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
+		$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
+
+		$data['title'] = "";
+		$data['categories'][0] = 'No Data';
 		
 		if ($partner==null) {
-			// echo "<pre>";print_r($result);die();
-			$data['outcomes'][0]['name'] = "Not Suppressed";
-			$data['outcomes'][1]['name'] = "Suppressed";
-			$data['outcomes'][2]['name'] = "Suppression";
-
-			$data['outcomes'][0]['type'] = "column";
-			$data['outcomes'][1]['type'] = "column";
-			$data['outcomes'][2]['type'] = "spline";
-			
-
-			$data['outcomes'][0]['yAxis'] = 1;
-			$data['outcomes'][1]['yAxis'] = 1;
-
-			$data['outcomes'][0]['tooltip'] = array("valueSuffix" => ' ');
-			$data['outcomes'][1]['tooltip'] = array("valueSuffix" => ' ');
-			$data['outcomes'][2]['tooltip'] = array("valueSuffix" => ' %');
-
-			$data['title'] = "";
-
 			$data['categories'][0] 			= 'Male';
 			$data['categories'][1] 			= 'Female';
 			$data['categories'][2] 			= 'No Data';
-
 			foreach ($result as $key => $value) {
 				$nodata = (int) $value['nodatanonsuppressed'] + (int) $value['nodatasuppressed'];
 				$male = (int) $value['malenonsuppressed'] + (int) $value['malesuppressed'];
@@ -280,20 +267,18 @@ class Ages_model extends MY_Model
 				$data["outcomes"][2]["data"][2]	=  round(((int) $value['nodatasuppressed']/$nodata)*100,1);
 			}
 		} else {
-			// echo "<pre>";print_r($result);die();
-			$data['outcomes'][0]['name'] = "Tests";
-
-			$data['title'] = "";
-
-			$data['categories'][0] 			= 'Male';
-			$data['categories'][1] 			= 'Female';
-			$data['categories'][2] 			= 'No Data';
-
+			$count = 0;
 			foreach ($result as $key => $value) {
-				$data["outcomes"][0]["data"][0]	=  (int) $value['maletest'];
-				$data["outcomes"][0]["data"][1]	=  (int) $value['femaletest'];
-				$data["outcomes"][0]["data"][2]	=  (int) $value['nodata'];
+				$suppressed = (int) ($value['Undetected']+$value['less1000']);
+				$nonsuppressed = (int) ($value['less5000']+$value['above5000']);
+				$totalValidTests = (int) ($suppressed+$nonsuppressed);
+				$data['categories'] = $value['name'];
+				$data["outcomes"][0]["data"][$count]	=  (int) ($nonsuppressed);
+				$data["outcomes"][1]["data"][$count]	=  (int) ($suppressed);
+				$data["outcomes"][2]["data"][$count]	=  round(((int) $suppressed/$totalValidTests)*100,1);
+				$count++;
 			}
+			// echo "<pre>";print_r($data);die();
 		}
 		
 		// $data['gender'][0]['drilldown']['color'] = ;
@@ -313,7 +298,7 @@ class Ages_model extends MY_Model
 			$age_cat = $this->session->userdata('age_category_filter');
 		}
 		$age_cat = $this->build_Inarray($age_cat);
-		
+		// echo "<pre>";print_r($age_cat);die();
 		if ($year==null || $year=='null') {
 			$to = $this->session->userdata('filter_year');
 		}else {

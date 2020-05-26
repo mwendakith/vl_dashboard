@@ -3,11 +3,15 @@ DELIMITER //
 CREATE PROCEDURE `proc_get_vl_partner_age_gender`
 (IN P_Id INT(11), IN A_id VARCHAR(100), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
 BEGIN
-  SET @QUERY =    "SELECT
-        SUM(`maletest`) AS `maletest`,
-        SUM(`femaletest`) AS `femaletest`,
-        SUM(`nogendertest`) AS `nodata`
-    FROM `vl_partner_age`
+  SET @QUERY =    "SELECT 
+      `g`.`name`,
+      SUM(`Undetected`) AS `Undetected`,
+      SUM(`less1000`) AS `less1000`,
+      SUM(`less5000`) AS `less5000`,
+      SUM(`above5000`) AS `above5000`
+    FROM vl_partner_age_gender vpag
+    JOIN agecategory ag ON ag.ID = vpag.age
+    JOIN gender g ON g.ID = vpag.gender
     WHERE 1 ";
 
   
@@ -24,7 +28,7 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `age` ",A_id," AND `partner` = '",P_Id,"' ");
+    SET @QUERY = CONCAT(@QUERY, " AND `vpag`.`age` ",A_id," AND `vpag`.`partner` = '",P_Id,"' GROUP BY `g`.`name` ");
 
 
      PREPARE stmt FROM @QUERY;
