@@ -164,12 +164,8 @@
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url();?>labs">Lab Performance</a></li>
 								<li><a href="<?php echo base_url();?>labs/poc">POC</a></li>
-<<<<<<< HEAD
 								<li><a href="<?php echo base_url();?>live">Labs Live</a></li>
 								<li><a href="<?php echo base_url();?>labs/covid">Covid</a></li>
-=======
-								<li><a href="<?php echo base_url();?>live">Lab Live</a></li>
->>>>>>> 062b0c08c20b0f3e54ac5fc2a9796286a6802abf
 							</ul>
 						</li>
 						<li class="dropdown">
