@@ -15,7 +15,7 @@ class Sites extends MY_Controller
 
 	function site_outcomes($year=NULL,$month=NULL,$partner=NULL,$to_year=NULL,$to_month=NULL)
 	{
-		$data['trends'] = $this->sites_model->sites_outcomes($year,$month,$partner,$to_year,$to_month);
+		$data['trends'] = $this->sites_model->sites_outcomes($year,$month,$partner,$county,$to_year,$to_month,$data);
 		$data['div_name'] = "site_sites_outcomes";		
 
 		$this->load->view('trends_outcomes_view', $data);
@@ -48,7 +48,7 @@ class Sites extends MY_Controller
 	function site_outcomes_chart($year=null,$month=null,$site=null,$to_year=NULL,$to_month=NULL)
 	{
 		$data['trends'] = $this->sites_model->site_outcomes_chart($year,$month,$site,$to_year,$to_month);
-
+		
 		$this->load->view('labs_sample_types',$data);
 	}
 

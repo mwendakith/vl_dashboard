@@ -9,7 +9,11 @@
 	}else if ($sit) {
 		$this->load->view('utils/site_filter_view');
 	}else if ($cout) {
-		$this->load->view('utils/filter_view');
+		if ($current_summary){
+			$this->load->view('utils/current_filter_view');
+		} else {
+			$this->load->view('utils/filter_view');
+		}
 	}else if ($reg) {
 		$this->load->view('utils/regimen_filter_view');
 	}else if ($age) {

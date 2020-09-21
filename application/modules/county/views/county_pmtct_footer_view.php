@@ -248,7 +248,7 @@
 						$("#pmtct_counties_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+county);
 						$("#pmtct_partners_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+county);
 						$("#pmtct_sites_listing_div").load("<?= @base_url('charts/pmtct/pmtct_breakdown');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+county);
-						$("#pmtct_counties_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+"/"+county);
+						$("#pmtct_counties_outcomes_div").load("<?= @base_url('charts/pmtct/pmtct');?>/"+year+"/"+month+"/"+all+"/"+null+"/"+null+"/"+county);
 					}
 				}
 			});

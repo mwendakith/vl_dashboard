@@ -72,9 +72,8 @@ class Template_model extends MY_Model
 		$this->db->order_by("name","asc");
 		$lab_data = $this->db->get('viralsampletypedetails')->result_array();
 
-		foreach ($lab_data as $key => $value) {
-			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
-		}
+			$dropdown .= '<option value=1>Plasma</option>
+						  <option value=2>DBS</option>';
 		
 		return $dropdown;
 	}
@@ -102,10 +101,14 @@ class Template_model extends MY_Model
 	{
 		$dropdown = '';
 		$this->db->order_by("name","asc");
-		$county_data = $this->db->get('viralprophylaxis')->result_array();
+		$county_data = $this->db->get('viralregimen')->result_array();
 
 		foreach ($county_data as $key => $value) {
-			$dropdown .= '<option value="'.$value['ID'].'">'.$value['name'].'</option>';
+			if (null !== trim($value['code'])) {
+				$dropdown .= '<option value="'.$value['id'].'">'.$value['name'].' ('.$value['code'].')</option>';
+			} else {
+				$dropdown .= '<option value="'.$value['id'].'">'.$value['name'].'</option>';
+			}
 		}
 		
 		return $dropdown;

@@ -190,5 +190,17 @@ class MY_Model extends CI_Model
 		}
 		return $str;
 	}
+
+	public function build_Inarray($array = null)
+	{
+		if (is_null($array)) return null;
+		$query = "IN (";
+		$elements = sizeof($array);
+		foreach ($array as $key => $value) {
+			($key+1 == $elements) ? $query .= $value : $query .= $value . ",";
+		}
+		$query .= ")";
+		return $query;
+	}
 }
 ?>

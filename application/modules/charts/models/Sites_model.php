@@ -13,16 +13,28 @@ class Sites_model extends MY_Model
 	}
 
 
-	function sites_outcomes($year=null,$month=null,$partner=null,$to_year=null,$to_month=null)
+	function sites_outcomes($year=null,$month=null,$partner=null,$county=null,$to_year=null,$to_month=null,$data)
 	{
-		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner]);
+		$d = $this->extract_variables($year, $month, $to_year, $to_month, ['partner' => $partner, 'county' => $county]);
 		extract($d);
 
-		if ($partner) {
-			$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
-		}  else {
-			$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+		if (isset($data['partners'])) {
+			$county = $data['county'];
+			if ($county) {
+				$sql = "CALL `proc_get_vl_county_partner_outcomes`('".$county."','".$year."','".$month."','".$to_year."','".$to_month."')";
+			}  else {
+				$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+			}
+		} else {
+			
+			if ($partner) {
+				$sql = "CALL `proc_get_partner_sites_outcomes`('".$partner."','".$year."','".$month."','".$to_year."','".$to_month."')";
+			}  else {
+				$sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."','".$to_year."','".$to_month."')";
+			}
 		}
+		
+
 		// $sql = "CALL `proc_get_all_sites_outcomes`('".$year."','".$month."')";
 		
 		// echo "<pre>";print_r($sql);die();
@@ -30,7 +42,7 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($result);die();
 
 		$data['outcomes'][0]['name'] = "Not Suppressed";
-		$data['outcomes'][1]['name'] = "&lt; 1000";
+		$data['outcomes'][1]['name'] = "LLV";
 		$data['outcomes'][2]['name'] = "LDL";
 		$data['outcomes'][3]['name'] = "Suppression";
 		$data['outcomes'][4]['name'] = "90% Target";
@@ -42,8 +54,8 @@ class Sites_model extends MY_Model
 		$data['outcomes'][4]['type'] = "spline"; 
 
 		$data['outcomes'][0]['color'] = '#F2784B';
-		$data['outcomes'][1]['color'] = '#1BA39C';
-		$data['outcomes'][2]['color'] = '#66ff66';
+		$data['outcomes'][1]['color'] = '#66ff66';
+		$data['outcomes'][2]['color'] = '#1BA39C';
 		
 
 		$data['outcomes'][0]['yAxis'] = 1;
@@ -301,23 +313,20 @@ class Sites_model extends MY_Model
 		// echo "<pre>";print_r($result);die();
 		$months = array(1,2,3,4,5,6,7,8,9,10,11,12);
 
-		$data['sample_types'][0]['name'] = 'EDTA';
-		$data['sample_types'][1]['name'] = 'DBS';
-		$data['sample_types'][2]['name'] = 'Plasma';
+		$data['sample_types'][0]['name'] = 'DBS';
+		$data['sample_types'][1]['name'] = 'Plasma';
 
 		$count = 0;
 		
 		$data['categories'] = array('Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec');
 		$data["sample_types"][0]["data"][0]	= $count;
 		$data["sample_types"][1]["data"][0]	= $count;
-		$data["sample_types"][2]["data"][0]	= $count;
 
 		foreach ($months as $key => $value) {
 			foreach ($result as $key1 => $value1) {
 				if ((int) $value == (int) $value1['month']) {
-					$data["sample_types"][0]["data"][$key]	= (int) $value1['edta'];
-					$data["sample_types"][1]["data"][$key]	= (int) $value1['dbs'];
-					$data["sample_types"][2]["data"][$key]	= (int) $value1['plasma'];
+					$data["sample_types"][0]["data"][$key]	= (int) $value1['dbs'];
+					$data["sample_types"][1]["data"][$key]	= (int) ($value1['plasma'] + $value1['edta']);
 
 					$count++;
 				}
@@ -381,21 +390,21 @@ class Sites_model extends MY_Model
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &gt;= 1000 copies/ml (HVL):</td>
 	    		<td>'.number_format($greater).'</td>
 	    		<td>Percentage Non Suppression</td>
 	    		<td>'.round((($greater/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt= 400 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests &lt= 400 copies/ml (LDL):</td>
 	    		<td>'.number_format($value['undetected']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['undetected']/$total)*100),1).'%</td>
 	    	</tr>
  
 	    	<tr>
-	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml:</td>
+	    		<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Valid Tests 401 - 999 copies/ml (LLV):</td>
 	    		<td>'.number_format($value['less1000']).'</td>
 	    		<td>Percentage Suppression</td>
 	    		<td>'.round((@($value['less1000']/$total)*100),1).'%</td>
@@ -641,7 +650,7 @@ class Sites_model extends MY_Model
  
 		foreach ($result as $key => $value) {
 			if($value['name'] == 'Routine VL'){
-				$data['justification']['data'][$key]['color'] = '#5C97BF';
+				$data['justification']['data'][$key]['color'] = '#1BA39C';
 			}
 			$data['justification']['data'][$key]['y'] = $count;
 			
@@ -786,9 +795,9 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['colorByPoint'] = true;
 		$data['ul'] = '';
 
-		$data['vl_outcomes']['data'][0]['name'] = '<= 400 copies/ml';
-		$data['vl_outcomes']['data'][1]['name'] = '401 - 999 copies/ml';
-		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml';
+		$data['vl_outcomes']['data'][0]['name'] = '<= 400 copies/ml (LDL)';
+		$data['vl_outcomes']['data'][1]['name'] = '401 - 999 copies/ml (LLV)';
+		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml (HVL)';
 		
 		$data['vl_outcomes']['data'][0]['y'] = (int) $result->rcategory1;
 		$data['vl_outcomes']['data'][1]['y'] = (int) $result->rcategory2;
@@ -798,8 +807,8 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['z'] = number_format($result->rcategory2);
 		$data['vl_outcomes']['data'][2]['z'] = number_format($result->rcategory3 + $result->rcategory4);
 
-		$data['vl_outcomes']['data'][0]['color'] = '#66ff66';
-		$data['vl_outcomes']['data'][1]['color'] = '#1BA39C';
+		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
+		$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
 		$data['vl_outcomes']['data'][2]['color'] = '#F2784B';
 
 		$data['vl_outcomes']['data'][0]['sliced'] = true;
@@ -833,9 +842,9 @@ class Sites_model extends MY_Model
 		$data['ul'] = '';
 
 
-		$data['vl_outcomes']['data'][0]['name'] = '401 - 999 copies/ml';
-		$data['vl_outcomes']['data'][1]['name'] = '<= 400 copies/ml';
-		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml';
+		$data['vl_outcomes']['data'][0]['name'] = '401 - 999 copies/ml (LLV)';
+		$data['vl_outcomes']['data'][1]['name'] = '<= 400 copies/ml (LDL)';
+		$data['vl_outcomes']['data'][2]['name'] = '>= 1000 copies/ml (HVL)';
 
 		$data['vl_outcomes']['data'][0]['y'] = (int) $result->less1000;
 		$data['vl_outcomes']['data'][1]['y'] = (int) $result->undetected;
@@ -845,8 +854,8 @@ class Sites_model extends MY_Model
 		$data['vl_outcomes']['data'][1]['z'] = number_format($result->undetected);
 		$data['vl_outcomes']['data'][2]['z'] = number_format($result->nonsuppressed);
 
-		$data['vl_outcomes']['data'][0]['color'] = '#1BA39C';
-		$data['vl_outcomes']['data'][1]['color'] = '#66ff66';
+		$data['vl_outcomes']['data'][0]['color'] = '#66ff66';
+		$data['vl_outcomes']['data'][1]['color'] = '#1BA39C';
 		$data['vl_outcomes']['data'][2]['color'] = '#F2784B';		
 
 		$data['vl_outcomes']['data'][1]['sliced'] = true;

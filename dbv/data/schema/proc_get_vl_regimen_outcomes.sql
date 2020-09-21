@@ -1,15 +1,15 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_regimen_outcomes`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_regimen_outcomes`
-(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11))
+(IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11), IN agegroup INT(11))
 BEGIN
   SET @QUERY =    "SELECT 
-						`vp`.`name`, 
+						CONCAT(`vp`.`name`, ' (', `vp`.`code`, ')') AS `regimenname`,
 						SUM(`vnr`.`less5000`+`vnr`.`above5000`) AS `nonsuppressed`, 
 						SUM(`vnr`.`Undetected`+`vnr`.`less1000`) AS `suppressed` 
-						FROM `vl_national_regimen` `vnr`
-						LEFT JOIN `viralprophylaxis` `vp` 
-						ON `vnr`.`regimen` = `vp`.`ID`
+						FROM `vl_national_prophylaxis` `vnr`
+						LEFT JOIN `viralregimen` `vp` 
+						ON `vnr`.`regimen` = `vp`.`id`
 					WHERE 1";
 
     IF (from_month != 0 && from_month != '') THEN
@@ -25,7 +25,11 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `name` ORDER BY `suppressed` DESC, `nonsuppressed` ");
+    IF (agegroup != 0 && agegroup != '') THEN
+        SET @QUERY = CONCAT(@QUERY, " AND `vp`.`age` = '",agegroup,"' ");
+    END IF;
+
+    SET @QUERY = CONCAT(@QUERY, " GROUP BY `regimenname` ORDER BY `suppressed` DESC, `nonsuppressed` ");
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

@@ -11,7 +11,7 @@
     	});
 		$("#partner_counties").hide();
 		$("#partners_all").show();
-		$("#partnerOutcomes").load("<?php echo base_url('charts/sites/site_outcomes');?>");
+		$("#partnerOutcomes").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+1);
 		
 		$("select").change(function(){
 			$("#partnerCounties").html("<center><div class='loader'></div></center>");

@@ -11,6 +11,7 @@ class Subcounties extends MY_Controller
 	{
 		parent::__construct();
 		$this->load->model('subcounty_model');
+		$this->load->model('county_model');
 	}
 
 	function subcounty_outcomes($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
@@ -57,20 +58,20 @@ class Subcounties extends MY_Controller
     	$this->load->view('agegroup_view',$data);
 	}
 
-	function sample_types($year=NULL,$subcounty=NULL, $all=NULL)
-	{
-		$data['outcomes'] = $this->subcounty_model->subcounty_samples($year,$subcounty, $all);
-		$link = $year . '/' . $subcounty;
+	// function sample_types($year=NULL,$subcounty=NULL, $all=NULL)
+	// {
+	// 	$data['outcomes'] = $this->subcounty_model->subcounty_samples($year,$subcounty, $all);
+	// 	$link = $year . '/' . $subcounty;
 
-		$data['link'] = base_url('charts/subcounties/download_sampletypes/' . $link);
+	// 	$data['link'] = base_url('charts/subcounties/download_sampletypes/' . $link);
 
-    	$this->load->view('national_sample_types',$data);
-	}
+ //    	$this->load->view('national_sample_types',$data);
+	// }
 
-	function download_sampletypes($year=NULL,$subcounty=NULL)
-	{
-		$this->subcounty_model->download_sampletypes($year,$subcounty);
-	}
+	// function download_sampletypes($year=NULL,$subcounty=NULL)
+	// {
+	// 	$this->subcounty_model->download_sampletypes($year,$subcounty);
+	// }
 
 	function subcounty_sites($year=NULL,$month=NULL,$subcounty=NULL,$to_year=NULL,$to_month=NULL)
 	{
@@ -101,5 +102,18 @@ class Subcounties extends MY_Controller
 		$data['div_name'] = "current_suppression_pie";
 		$this->load->view('pie_chart_view',$data);
 	}
+
+	function subcounty_outcome_table($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL)
+		{
+			$data['subcountyListing'] = TRUE;
+			$data['outcomes']= $this->county_model->county_outcome_table($year,$month,$to_year,$to_month,$data);
+					
+
+			$link = $year . '/' . $month . '/' . $to_year . '/' . $to_month;
+
+			// $data['link'] =  base_url('charts/county/download_county_table/' . $link);
+
+	    	$this->load->view('counties_outcome_table_view', $data);
+		}
 }
 ?>

@@ -27,7 +27,7 @@
 		<div class="col-md-12 col-sm-12 col-xs-12">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    Testing Trends <div class="display_range"></div>
+			    Testing Trends <div class="display_date"></div>
 			  </div>
 			  <div class="panel-body" id="pmtct_testing_trends">
 			    <center><div class="loader"></div></center>

@@ -29,7 +29,12 @@ BEGIN
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
 
-    SET @QUERY = CONCAT(@QUERY, " AND `sampletype` = '",S_id,"' ");
+    IF (S_id = 1) THEN
+        SET @QUERY = CONCAT(@QUERY, " AND `sampletype` IN (1, 3) ");
+    ELSE
+        SET @QUERY = CONCAT(@QUERY, " AND `sampletype` = '",S_id,"' ");
+    END IF;
+
 
      PREPARE stmt FROM @QUERY;
      EXECUTE stmt;

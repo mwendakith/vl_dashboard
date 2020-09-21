@@ -7,14 +7,26 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title"> POC Site Details </h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="overflow-x: scroll;">
         <table id="poc_site_table_details" cellspacing="1" cellpadding="3" class="tablehead table table-striped table-bordered" style="max-width: 100%;">
         	<thead>
         		<tr>
         			<th>#</th>
               <th>Name</th>
               <th>MFL Code</th>
-              <th>Tests</th>
+              <th>County</th>
+              <th>Received Samples at Hub</th>
+              <th>Rejected Samples (on receipt at Hub)</th>
+              <th>All Test Done at Hub</th>
+              <th>Redraw (after testing)</th>
+              <th>Routine VL Tests</th>
+              <th>Routine VL Tests &gt; 1000</th>
+              <th>Baseline VL Tests</th>
+              <th>Baseline VL Tests &gt; 1000</th>
+              <th>Confirmatory Repeat Tests</th>
+              <th>Confirmatory Repeat Tests &gt; 1000</th>
+              <th>Total Tests with Valid Outcomes</th>
+              <th>Total Tests &gt; 1000 with Valid Outcomes</th>
               <th>Suppressed</th>
               <th>Suppression</th>
               <th>Adults</th>

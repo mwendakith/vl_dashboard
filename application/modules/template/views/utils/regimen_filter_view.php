@@ -38,7 +38,7 @@
             <!-- </optgroup> -->
           </select>
           <?php } else {?>
-          <select class="btn js-example-basic-single" style="width:220px;background-color: #C5EFF7;" name="partner">
+          <select class="btn js-example-basic-single" style="width:220px;background-color: #C5EFF7;" name="regimen">
             <option value="0" disabled="true" selected="true">Select Regimen:</option>
             <option value="NA">All Regimen</option>
             <!-- <optgroup value="Counties"> -->

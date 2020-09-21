@@ -7,18 +7,20 @@ class Summaries extends MY_Controller {
 	{
 		parent:: __construct();
 		$this->load->model('summaries_model');
+		$this->load->model('sites_model');
+		$this->load->model('currentSuppressionModel');
 	}
 
-	function turnaroundtime($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL)
+	function turnaroundtime($year=NULL,$month=NULL,$county=NULL,$to_year=NULL,$to_month=NULL,$nat=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->turnaroundtime($year,$month,$county,$to_year,$to_month);
+		$data['outcomes'] = $this->summaries_model->turnaroundtime($year,$month,$county,$to_year,$to_month,$nat);
 
 		$this->load->view('turnaroundtime_view',$data);
 	}
 
-	function vl_coverage($type=NULL,$ID=NULL)
+	function vl_coverage($year=null,$month=null,$to_year=null,$to_month=null,$type=null,$id=null)
 	{
-		$data['outcomes'] = $this->summaries_model->vl_coverage($type,$ID);
+		$data['outcomes'] = $this->summaries_model->vl_coverage($year,$month,$to_year,$to_month,$type,$id);
 
 		$this->load->view('vl_coverage_view',$data);
 	}
@@ -75,12 +77,16 @@ class Summaries extends MY_Controller {
     	$this->load->view('gender_view',$data);
 	}
 
-	function sample_types($year=NULL,$county=NULL,$partner=NULL, $all=NULL)
+	function sample_types($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$type=NULL,$id=NULL,$all=NULL)
 	{
-		$data['outcomes'] = $this->summaries_model->sample_types($year,$county,$partner, $all);
-		$link = $year . '/' . $county . '/' . $partner;
+		if ($type == 7)
+			$id = $this->split_ages($id);
+		
+		$data['outcomes'] = $this->summaries_model->sample_types($year,$month,$to_year,$to_month,$type,$id,$all);
+		// $link = $year . '/' . $county . '/' . $partner;
 
-		$data['link'] = base_url('charts/summaries/download_sampletypes/' . $link);
+		// $data['link'] = base_url('charts/summaries/download_sampletypes/' . $link);
+		$data['link'] = "#";
 
     	$this->load->view('national_sample_types',$data);
 	}
@@ -290,6 +296,46 @@ class Summaries extends MY_Controller {
 	function display_range()
 	{
 		echo "(".($this->session->userdata('filter_year')-1)." - ".$this->session->userdata('filter_year').")";
+	}
+
+	function county_partner_outcomes($year=null,$month=null,$partner=null,$county=null,$to_year=null,$to_month=null)
+	{
+		$data['partners'] = true;
+		$data['county'] = $county;
+		$data['trends'] = $this->sites_model->sites_outcomes($year,$month,$partner,$county,$to_year,$to_month,$data);
+		$data['div_name'] = "county_partner_outcomes";
+		$this->load->view('trends_outcomes_view', $data);
+	}
+
+	function county_partner_table($year=NULL,$month=NULL,$to_year=NULL,$to_month=NULL,$county=null)
+	{
+		$data['county'] = $county;
+		$data['outcomes']= $this->summaries_model->county_partner_table($year,$month,$to_year,$to_month,$county,$data);
+		$data['partner'] = TRUE;		
+
+		$link = $year . '/' . $month . '/' . $to_year . '/' . $to_month;
+
+		$data['link'] =  base_url('charts/county/download_county_table/' . $link);
+		$data['table_div'] = "first_table";
+
+    	$this->load->view('counties_table_view',$data);
+	}
+
+	function current_summary_age($type=null,$id=null) {
+		$data['outcomes'] = $this->currentSuppressionModel->current_age($type,$id);
+		$data['div_name'] = 'current_age_pie';
+    	$this->load->view('justification_view',$data);
+	}
+
+	function current_summary_age_breakdown($type=null,$id=null) {
+		$data = $this->currentSuppressionModel->current_age_breakdown($type,$id);
+    	$this->load->view('currentAgeBreakdown',$data);
+	}
+
+	function current_summary_suppression_age($type=null,$id=null,$first=TRUE) {
+		$data['outcomes'] = $this->currentSuppressionModel->current_suppression_age($type,$id,$first);
+		$data['div_name'] = (!$first || $first == 'false') ? 'current_age_suppression_pie_second' : 'current_age_suppression_pie_first';
+    	$this->load->view('justification_view',$data);
 	}
 
 }

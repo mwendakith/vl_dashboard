@@ -15,6 +15,7 @@
 
 		$("#county").load("<?php echo base_url('charts/summaries/county_outcomes');?>");
 		$("#county_sites").load("<?php echo base_url('charts/county/county_table');?>");
+		$("#county_outcome_age_gender").load("<?php echo base_url('charts/county/county_outcome_table');?>");
 
 		$("select").change(function(){
 			em = $(this).val();
@@ -58,6 +59,9 @@
 
 					$("#county_sites").html("<center><div class='loader'></div></center>");
 					$("#county_sites").load("<?php echo base_url('charts/county/county_table'); ?>"); 
+
+					$("#county_outcome_age_gender").html("<center><div class='loader'></div></center>");
+					$("#county_outcome_age_gender").load("<?php echo base_url('charts/county/county_outcome_table');?>");
 	        	}
 	        	else{
 	        		
@@ -113,6 +117,12 @@
 		    var error_check = check_error_date_range(from, to);
 		    
 		    if (!error_check) {
+		  //   	localStorage.setItem("from_year", from[1]);
+				// localStorage.setItem("from_month", from[0]);
+
+				// localStorage.setItem("to_year", to[1]);
+				// localStorage.setItem("to_month", to[0]);
+
 			    $.get("<?php echo base_url('county/check_county_select');?>", function(county) {
 					//Checking if county was previously selected and calling the relevant views
 					if (county==0) {
@@ -126,6 +136,9 @@
 				
 						$("#county_sites").html("<center><div class='loader'></div></center>");
 						$("#county_sites").load("<?php echo base_url('charts/county/county_table'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+
+						$("#county_outcome_age_gender").html("<center><div class='loader'></div></center>");
+						$("#county_outcome_age_gender").load("<?php echo base_url('charts/county/county_outcome_table'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 
 					} else {
 						county = JSON.parse(county);
@@ -198,6 +211,9 @@
 					$("#county_sites").html("<center><div class='loader'></div></center>");
 					$("#county_sites").load("<?php echo base_url('charts/county/county_table'); ?>/"+year+"/"+month);
 
+					$("#county_outcome_age_gender").html("<center><div class='loader'></div></center>");
+					$("#county_outcome_age_gender").load("<?php echo base_url('charts/county/county_outcome_table'); ?>/"+year+"/"+month);
+
 				} else {
 					county = JSON.parse(county);
 					$("#second").show();
@@ -229,4 +245,5 @@
 			});
 		});
 	}
+
 </script>

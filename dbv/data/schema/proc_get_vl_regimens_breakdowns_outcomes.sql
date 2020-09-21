@@ -11,16 +11,16 @@ BEGIN
                     ((SUM(`vca`.`undetected`+`vca`.`less1000`)/SUM(`vca`.`undetected`+`vca`.`less1000`+`vca`.`less5000`+`vca`.`above5000`))*100) AS `percentage` ";
 
     IF (county != 0 && county != '') THEN
-      SET @QUERY = CONCAT(@QUERY, " FROM `vl_county_regimen` `vca` JOIN `countys` `c` ON `vca`.`county` = `c`.`ID` WHERE 1 ");
+      SET @QUERY = CONCAT(@QUERY, " FROM `vl_county_prophylaxis` `vca` JOIN `countys` `c` ON `vca`.`county` = `c`.`ID` WHERE 1 ");
     END IF;
     IF (partner != 0 && partner != '') THEN
-      SET @QUERY = CONCAT(@QUERY, " FROM `vl_partner_regimen` `vca` JOIN `partners` `c` ON `vca`.`partner` = `c`.`ID` WHERE 1 ");
+      SET @QUERY = CONCAT(@QUERY, " FROM `vl_partner_prophylaxis` `vca` JOIN `partners` `c` ON `vca`.`partner` = `c`.`ID` WHERE 1 ");
     END IF;
     IF (subcounty != 0 && subcounty != '') THEN
-      SET @QUERY = CONCAT(@QUERY, " FROM `vl_subcounty_regimen` `vca` JOIN `districts` `c` ON `vca`.`subcounty` = `c`.`ID` WHERE 1 ");
+      SET @QUERY = CONCAT(@QUERY, " FROM `vl_subcounty_prophylaxis` `vca` JOIN `districts` `c` ON `vca`.`subcounty` = `c`.`ID` WHERE 1 ");
     END IF;
     IF (site != 0 && site != '') THEN
-      SET @QUERY = CONCAT(@QUERY, " FROM `vl_site_regimen` `vca` JOIN `facilitys` `c` ON `vca`.`facility` = `c`.`ID` WHERE 1 ");
+      SET @QUERY = CONCAT(@QUERY, " FROM `vl_site_prophylaxis` `vca` JOIN `facilitys` `c` ON `vca`.`facility` = `c`.`ID` WHERE 1 ");
     END IF;
 
     IF (from_month != 0 && from_month != '') THEN
