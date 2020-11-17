@@ -142,22 +142,23 @@
 							<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url();?>county">County</a></li>
-								<li><a href="<?php echo base_url();?>county/pmtct">County PMTCT</a></li>
+								<!-- <li><a href="<?php echo base_url();?>county/pmtct">County PMTCT</a></li> -->
 								<li><a href="<?php echo base_url();?>county/tat">County TAT</a></li>
 								<li><a href="<?php echo base_url();?>county/partner">County Partner</a></li>
 								<li><a href="<?php echo base_url();?>county/subCounty">Sub-County</a></li>
-								<li><a href="<?php echo base_url();?>county/subcountypmtct">Sub-County PMTCT</a></li>
+								<!-- <li><a href="<?php echo base_url();?>county/subcountypmtct">Sub-County PMTCT</a></li> -->
 								<li><a href="<?php echo base_url();?>county/subCountytat">Sub-County TAT</a></li>
 							</ul>
 						</li>
-						<li class="dropdown">
+						<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
+						<!-- <li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Facilities
 							<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
 								<li><a href="<?php echo base_url();?>sites/pmtct">Facilities PMTCT</a></li>
 							</ul>
-						</li>
+						</li> -->
 						<li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Labs
 							<b class="caret"></b></a>
@@ -173,15 +174,15 @@
 							<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url();?>partner">Summary</a></li>
-								<li><a href="<?php echo base_url();?>partner/trends">Trends</a></li>
+								<!-- <li><a href="<?php //echo base_url();?>partner/trends">Trends</a></li> -->
 								<li><a href="<?php echo base_url();?>partner/sites">Partner Facilities</a></li>
-								<li><a href="<?php echo base_url();?>partner/age">Partner Age</a></li>
-								<li><a href="<?php echo base_url();?>partner/regimen">Partner Regimen</a></li>
+								<!-- <li><a href="<?php //echo base_url();?>partner/age">Partner Age</a></li>
+								<li><a href="<?php //echo base_url();?>partner/regimen">Partner Regimen</a></li> -->
 								<li><a href="<?php echo base_url();?>partner/counties">Partner Counties</a></li>
-								<li><a href="<?php echo base_url();?>partner/pmtct">Partner PMTCT</a></li>
-								<li><a href="<?php echo base_url();?>partner/current">Partner Current Suppression</a></li>
+								<!-- <li><a href="<?php //echo base_url();?>partner/pmtct">Partner PMTCT</a></li>
+								<li><a href="<?php //echo base_url();?>partner/current">Partner Current Suppression</a></li> -->
 								<li><a href="<?php echo base_url();?>partner/tat">Partner TAT</a></li>
-								<li><a href="<?php echo base_url();?>partner/agencies">Funding Agencies</a></li>
+								<!-- <li><a href="<?php //echo base_url();?>partner/agencies">Funding Agencies</a></li> -->
 							</ul>
 						</li>
 						
@@ -198,7 +199,7 @@
 								<!-- <li><a href="<?php //echo base_url();?>summary/current">Summary Page</a></li> -->
 							</ul>
 						</li>
-						<li><a href="<?php echo base_url();?>trends">Trends</a></li>
+						<!-- <li><a href="<?php //echo base_url();?>trends">Trends</a></li> -->
 						<li><a href="https://nascop.org">Resources</a></li>
 						<li><a href="https://eid.nascop.org">EID View</a></li>
 						<!-- <li><a href="<?php echo base_url();?>live">Live Data</a></li> -->
