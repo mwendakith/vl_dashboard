@@ -143,6 +143,29 @@
 		  </div>
 		</div>
 	</div>
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  County Outcomes <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body" id="partnerCountyOutcomes">
+		  		<center><div class="loader"></div></center>
+		  	</div>
+		</div>
+	</div>
+
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Partner Counties <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body" id="partnerCounties">
+		  		<center><div class="loader"></div></center>
+		  	</div>
+		  	<hr>
+		  	<hr>
+		</div>
+	</div>
 
 </div>
 
