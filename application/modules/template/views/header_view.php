@@ -158,9 +158,11 @@
 								<li><a href="<?php echo base_url();?>county/subCounty">Sub-County</a></li>
 								<!-- <li><a href="<?php echo base_url();?>county/subcountypmtct">Sub-County PMTCT</a></li> -->
 								<li><a href="<?php echo base_url();?>county/subCountytat">Sub-County TAT</a></li>
+								<li><a href="<?php echo base_url();?>partner">Summary</a></li>
+								<li><a href="<?php echo base_url();?>partner/sites">Partner Facilities</a></li>
+								<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
 							</ul>
 						</li>
-						<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
 						<!-- <li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Facilities
 							<b class="caret"></b></a>
@@ -179,22 +181,22 @@
 								<li><a href="<?php echo base_url();?>labs/covid">Covid</a></li>
 							</ul>
 						</li>
-						<li class="dropdown">
+						<!-- <li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Partners
 							<b class="caret"></b></a>
-							<ul class="dropdown-menu">
-								<li><a href="<?php echo base_url();?>partner">Summary</a></li>
+							<ul class="dropdown-menu"> -->
+								<!-- <li><a href="<?php // echo base_url();?>partner">Summary</a></li> -->
 								<!-- <li><a href="<?php //echo base_url();?>partner/trends">Trends</a></li> -->
-								<li><a href="<?php echo base_url();?>partner/sites">Partner Facilities</a></li>
+								<!-- <li><a href="<?php // echo base_url();?>partner/sites">Partner Facilities</a></li> -->
 								<!-- <li><a href="<?php //echo base_url();?>partner/age">Partner Age</a></li>
 								<li><a href="<?php //echo base_url();?>partner/regimen">Partner Regimen</a></li> -->
-								<li><a href="<?php echo base_url();?>partner/counties">Partner Counties</a></li>
+								<!-- <li><a href="<?php echo base_url();?>partner/counties">Partner Counties</a></li> -->
 								<!-- <li><a href="<?php //echo base_url();?>partner/pmtct">Partner PMTCT</a></li>
 								<li><a href="<?php //echo base_url();?>partner/current">Partner Current Suppression</a></li> -->
-								<li><a href="<?php echo base_url();?>partner/tat">Partner TAT</a></li>
+								<!-- <li><a href="<?php echo base_url();?>partner/tat">Partner TAT</a></li> -->
 								<!-- <li><a href="<?php //echo base_url();?>partner/agencies">Funding Agencies</a></li> -->
-							</ul>
-						</li>
+							<!-- </ul>
+						</li> -->
 						
 						<!-- <li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Current Suppression
