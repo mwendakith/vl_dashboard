@@ -99,6 +99,12 @@
 
 					$("#county_tat_outcomes").load("<?php echo base_url('charts/tat/outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+0+"/"+county);
 					$("#county_tat_details").load("<?php echo base_url('charts/tat/details'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+0+"/"+county);
+
+					$("#county_partners").html("<center><div class='loader'></div></center>");
+					$("#county_partners").load("<?php echo base_url('charts/summaries/county_partner_outcomes');?>/"+null+"/"+null+"/"+null+"/"+county);
+
+					$("#partners").html("<center><div class='loader'></div></center>");
+					$("#partners").load("<?php echo base_url('charts/summaries/county_partner_table');?>/"+null+"/"+null+"/"+null+"/"+null+"/"+county);
 	        	}
 
 		         
@@ -179,6 +185,12 @@
 						
 					    $("#county_tat_details").html("<center><div class='loader'></div></center>");				        
 						$("#county_tat_details").load("<?php echo base_url('charts/tat/details'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+0+"/"+county);
+						
+						$("#county_partners").html("<center><div class='loader'></div></center>"); 
+		 				$("#county_partners").load("<?php echo base_url('charts/summaries/county_partner_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+null+"/"+county+"/"+to[1]+"/"+to[0]);
+
+		 				$("#partners").html("<center><div class='loader'></div></center>"); 
+		 				$("#partners").load("<?php echo base_url('charts/summaries/county_partner_table'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+county);
 					}
 				});
 			}
@@ -257,6 +269,12 @@
 					$("#county_tat_outcomes").load("<?php echo base_url('charts/tat/outcomes');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+0+"/"+county); 
 			 		$("#county_tat_details").html("<center><div class='loader'></div></center>");    	
 					$("#county_tat_details").load("<?php echo base_url('charts/tat/details');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+0+"/"+county); 
+
+					$("#county_partners").html("<center><div class='loader'></div></center>"); 
+	 				$("#county_partners").load("<?php echo base_url('charts/summaries/county_partner_outcomes'); ?>/"+year+"/"+month+"/"+null+"/"+county);
+
+	 				$("#partners").html("<center><div class='loader'></div></center>"); 
+	 				$("#partners").load("<?php echo base_url('charts/summaries/county_partner_table'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+county);
 				}
 			});
 		});
