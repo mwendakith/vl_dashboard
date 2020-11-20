@@ -136,9 +136,19 @@
 						</div>
 					</form> -->
 					<ul class="nav navbar-nav navbar-right">
-						<li><a href="<?php echo base_url();?>">Summary</a></li>
 						<li class="dropdown">
-							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">County/Sub-County
+							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Summary
+							<b class="caret"></b></a>
+							<ul class="dropdown-menu">
+								<li><a href="<?php echo base_url();?>">Summary</a></li>
+								<li><a href="<?php echo base_url();?>current">Current Suppression</a></li>
+								<li><a href="<?php echo base_url();?>regimen">Regimen Analysis</a></li>
+								<li><a href="<?php echo base_url();?>age">Age Analysis</a></li>
+							</ul>
+						</li>
+						<!-- <li><a href="<?php // echo base_url();?>">Summary</a></li> -->
+						<li class="dropdown">
+							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">County / Sub County / Facility / Partner
 							<b class="caret"></b></a>
 							<ul class="dropdown-menu">
 								<li><a href="<?php echo base_url();?>county">County</a></li>
@@ -186,19 +196,18 @@
 							</ul>
 						</li>
 						
-						<li class="dropdown">
+						<!-- <li class="dropdown">
 							<a href="bootstrap-elements.html" data-target="#" class="dropdown-toggle" data-toggle="dropdown">Current Suppression
 							<b class="caret"></b></a>
 							<ul class="dropdown-menu">
-								<li><a href="<?php echo base_url();?>current">Current Suppression</a></li>
-								<li><a href="<?php echo base_url();?>suppression/nosuppression">Non-suppression</a></li>
-								<li><a href="<?php echo base_url();?>regimen">Regimen Analysis</a></li>
-								<li><a href="<?php echo base_url();?>age">Age Analysis</a></li>
-								<li><a href="<?php echo base_url();?>sample">Sample Analysis</a></li>
-								<li><a href="<?php echo base_url();?>pmtct">PMTCT Analysis</a></li>
-								<!-- <li><a href="<?php //echo base_url();?>summary/current">Summary Page</a></li> -->
+								<li><a href="<?php // echo base_url();?>current">Current Suppression</a></li>
+								<li><a href="<?php // echo base_url();?>suppression/nosuppression">Non-suppression</a></li>
+								<li><a href="<?php // echo base_url();?>regimen">Regimen Analysis</a></li>
+								<li><a href="<?php // echo base_url();?>age">Age Analysis</a></li>
+								<li><a href="<?php // echo base_url();?>sample">Sample Analysis</a></li>
+								<li><a href="<?php // echo base_url();?>pmtct">PMTCT Analysis</a></li>
 							</ul>
-						</li>
+						</li> -->
 						<!-- <li><a href="<?php //echo base_url();?>trends">Trends</a></li> -->
 						<li><a href="https://nascop.org">Resources</a></li>
 						<li><a href="https://eid.nascop.org">EID View</a></li>
