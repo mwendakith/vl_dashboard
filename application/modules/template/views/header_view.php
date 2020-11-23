@@ -159,7 +159,7 @@
 								<!-- <li><a href="<?php // echo base_url();?>county/subcountypmtct">Sub-County PMTCT</a></li> -->
 								<!-- <li><a href="<?php // echo base_url();?>county/subCountytat">Sub-County TAT</a></li> -->
 								<li><a href="<?php echo base_url();?>partner">Partner Summary</a></li>
-								<li><a href="<?php echo base_url();?>partner/sites">Partner Facilities</a></li>
+								<!-- <li><a href="<?php // echo base_url();?>partner/sites">Partner Facilities</a></li> -->
 								<li><a href="<?php echo base_url();?>sites">Facilities</a></li>
 							</ul>
 						</li>
