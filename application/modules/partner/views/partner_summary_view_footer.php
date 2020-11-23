@@ -17,7 +17,9 @@
 		$("#third").hide();
 		// fetching the partner outcomes
 		$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+1);
-		
+		$("#partner_tat_outcomes").load("<?= @base_url('charts/tat/outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
+		$("#partner_tat_details").load("<?= @base_url('charts/tat/details'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
+
 		// fetching the data for a specific partner
 		$("select").change(function(){
 			var all = localStorage.getItem("my_var");
@@ -49,6 +51,11 @@
 					// fetching the partner outcomes
 					$("#partner_div").html("<center><div class='loader'></div></center>");
 					$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+null+"/"+null+"/"+1);
+					$("#partner_tat_outcomes").html("<center><div class='loader'></div></center>");
+		        	$("#partner_tat_details").html("<center><div class='loader'></div></center>");
+
+					$("#partner_tat_outcomes").load("<?= @base_url('charts/tat/outcomes'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
+					$("#partner_tat_details").load("<?= @base_url('charts/tat/details'); ?>/"+null+"/"+null+"/"+null+"/"+null+"/"+1);
 	        	} else {
 	        		$("#first").hide();
 	        		$("#second").show();
@@ -126,6 +133,11 @@
 						// fetching the partner outcomes
 						$("#partner_div").html("<center><div class='loader'></div></center>");
 						$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+1+"/"+null+"/"+null+"/"+to[1]+"/"+to[0]);
+						$("#partner_tat_outcomes").html("<center><div class='loader'></div></center>");
+				        $("#partner_tat_details").html("<center><div class='loader'></div></center>");
+				        
+						$("#partner_tat_outcomes").load("<?= @base_url('charts/tat/outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+1);
+						$("#partner_tat_details").load("<?= @base_url('charts/tat/details'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+1);
 					} else {
 						partner = $.parseJSON(partner);
 						$("#first").hide();
@@ -208,6 +220,11 @@
 					// fetching the partner outcomes
 					$("#partner_div").html("<center><div class='loader'></div></center>");
 					$("#partner_div").load("<?php echo base_url('charts/summaries/county_outcomes'); ?>/"+year+"/"+month+"/"+1);
+					$("#partner_tat_outcomes").html("<center><div class='loader'></div></center>");
+			 		$("#partner_tat_details").html("<center><div class='loader'></div></center>");
+			    	
+					$("#partner_tat_outcomes").load("<?= @base_url('charts/tat/outcomes');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+1);
+					$("#partner_tat_details").load("<?= @base_url('charts/tat/details'); ?>/"+year+"/"+month+"/"+null+"/"+null+"/"+1)
 				} else {
 					partner = $.parseJSON(partner);
 					$("#first").hide();
