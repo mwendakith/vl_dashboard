@@ -12,10 +12,13 @@
 
     	$("#first").show();
 		$("#second").hide();
+		$("#third").show();
 
 		$("#county").load("<?php echo base_url('charts/summaries/county_outcomes');?>");
 		$("#county_sites").load("<?php echo base_url('charts/county/county_table');?>");
 		$("#county_outcome_age_gender").load("<?php echo base_url('charts/county/county_outcome_table');?>");
+		$("#county_tat_outcomes").load("<?= @base_url('charts/tat/outcomes'); ?>");
+		$("#county_tat_details").load("<?= @base_url('charts/tat/details'); ?>");
 
 		$("select").change(function(){
 			em = $(this).val();
@@ -51,6 +54,7 @@
 	        		
 	        		$("#first").show();
 					$("#second").hide();
+					$("#third").show();
 
 					$('#heading').html('Counties Outcomes <div class="display_date"></div>');
 
@@ -62,11 +66,17 @@
 
 					$("#county_outcome_age_gender").html("<center><div class='loader'></div></center>");
 					$("#county_outcome_age_gender").load("<?php echo base_url('charts/county/county_outcome_table');?>");
+
+					$("#county_tat_outcomes").html("<center><div class='loader'></div></center>");
+		        	$("#county_tat_details").html("<center><div class='loader'></div></center>");
+		        	$("#county_tat_outcomes").load("<?= @base_url('charts/tat/outcomes'); ?>");
+					$("#county_tat_details").load("<?= @base_url('charts/tat/details'); ?>");
 	        	}
 	        	else{
 	        		
 	        		$("#second").show();
 					$("#first").hide();
+					$("#third").show();
 
 					// $("#county_sites").empty();
 
@@ -139,6 +149,7 @@
 					if (county==0) {
 						$("#first").show();
 						$("#second").hide();
+						$("#third").show();
 
 						$('#heading').html('Counties Outcomes <div class="display_date"></div>');
 
@@ -151,10 +162,17 @@
 						$("#county_outcome_age_gender").html("<center><div class='loader'></div></center>");
 						$("#county_outcome_age_gender").load("<?php echo base_url('charts/county/county_outcome_table'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 
+						$("#county_tat_outcomes").html("<center><div class='loader'></div></center>");
+					    $("#county_tat_details").html("<center><div class='loader'></div></center>");
+				        
+						$("#county_tat_outcomes").load("<?php echo base_url('charts/tat/outcomes'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+0);
+						$("#county_tat_details").load("<?php echo base_url('charts/tat/details'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]+"/"+0);
+
 					} else {
 						county = JSON.parse(county);
 						$("#second").show();
 						$("#first").hide();
+						$("#third").show();
 
 						$('#heading').html('Sub-Counties Outcomes <div class="display_date"></div>');
 
@@ -225,6 +243,7 @@
 				if (county==0) {
 					$("#first").show();
 					$("#second").hide();
+					$("#third").show();
 
 					$('#heading').html('Counties Outcomes <div class="display_date"></div>');
 
@@ -237,10 +256,17 @@
 					$("#county_outcome_age_gender").html("<center><div class='loader'></div></center>");
 					$("#county_outcome_age_gender").load("<?php echo base_url('charts/county/county_outcome_table'); ?>/"+year+"/"+month);
 
+					$("#county_tat_outcomes").html("<center><div class='loader'></div></center>");
+			 		$("#county_tat_details").html("<center><div class='loader'></div></center>");
+			    	
+					$("#county_tat_outcomes").load("<?php echo base_url('charts/tat/outcomes');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+0); 
+					$("#county_tat_details").load("<?php echo base_url('charts/tat/details');?>/"+year+"/"+month+"/"+null+"/"+null+"/"+0);
+
 				} else {
 					county = JSON.parse(county);
 					$("#second").show();
 					$("#first").hide();
+					$("#third").show();
 
 					$('#heading').html('Sub-Counties Outcomes <div class="display_date"></div>');
 
