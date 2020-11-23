@@ -89,6 +89,8 @@
 					$("#partnerCountyOutcomes").html("<center><div class='loader'></div></center>");
 					$("#partnerCountyOutcomes").load("<?php echo base_url('charts/partner_summaries/partner_counties_outcomes');?>/"+null+"/"+null+"/"+data);
 
+					$("#partnerSites").html("<center><div class='loader'></div></center>");
+					$("#partnerSites").load("<?php echo base_url('charts/sites/partner_sites');?>/"+null+"/"+null+"/"+data);
 					//$("#pat_stats").load("<?php //echo base_url('charts/summaries/get_patients');?>/"+null+"/"+null+"/"+null+"/"+data);
 					//$("#pat_out").load("<?php //echo base_url('charts/summaries/get_patients_outcomes');?>/"+null+"/"+null+"/"+null+"/"+data);
 					//$("#pat_graph").load("<?php //echo base_url('charts/summaries/get_patients_graph');?>/"+null+"/"+null+"/"+null+"/"+data);
@@ -163,6 +165,9 @@
 
 						$("#partnerCounties").html("<center><div class='loader'></div></center>");
 						$("#partnerCounties").load("<?php echo base_url('charts/partner_summaries/partner_counties_table');?>/"+from[1]+"/"+from[0]+"/"+partner+"/"+to[1]+"/"+to[0]);
+
+						$("#partnerSites").html("<center><div class='loader'></div></center>");
+						$("#partnerSites").load("<?php echo base_url('charts/sites/partner_sites');?>/"+from[1]+"/"+from[0]+"/"+partner+"/"+to[1]+"/"+to[0]);
 					}
 				});
 			}
@@ -244,6 +249,9 @@
 
 					$("#partnerCounties").html("<center><div class='loader'></div></center>");
 					$("#partnerCounties").load("<?php echo base_url('charts/partner_summaries/partner_counties_table');?>/"+year+"/"+month+"/"+partner);
+
+					$("#partnerSites").html("<center><div class='loader'></div></center>");
+					$("#partnerSites").load("<?php echo base_url('charts/sites/partner_sites');?>/"+year+"/"+month+"/"+partner);
 				}
 			});
 		});
