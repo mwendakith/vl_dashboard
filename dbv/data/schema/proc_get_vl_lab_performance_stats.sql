@@ -5,7 +5,8 @@ CREATE PROCEDURE `proc_get_vl_lab_performance_stats`
 BEGIN
   SET @QUERY =    "SELECT 
                     `l`.`labname` AS `name`, 
-                    AVG(`ls`.`sitessending`) AS `sitesending`, 
+                    AVG(`ls`.`sitessending`) AS `sitesending`,
+                    AVG(`ls`.`sitesremotelogging`) AS `sitesremotelogging`,
                     SUM(`ls`.`received`) AS `received`, 
                     SUM(`ls`.`rejected`) AS `rejected`,  
                     SUM(`ls`.`invalids`) AS `invalids`,

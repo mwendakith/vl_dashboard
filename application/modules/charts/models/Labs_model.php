@@ -26,6 +26,8 @@ class Labs_model extends MY_Model
 						<td>".($key+1)."</td>
 						<td>".$name."</td>
 						<td>".number_format((int) $value['sitesending'])."</td>
+						<td>".number_format((int) $value['sitesremotelogging'])."</td>
+						<td>".round((((int) $value['sitesremotelogging'] /((int) $value['sitesremotelogging'] + (int) $value['sitesending'])) * 100), 2)."%</td>
 						<td>".number_format((int) $value['received'])."</td>
 						<td>".number_format((int) $value['rejected']) . " (" . 
 							round((($value['rejected']*100)/$value['received']), 1, PHP_ROUND_HALF_UP)."%)</td>

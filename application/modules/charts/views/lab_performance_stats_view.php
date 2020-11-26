@@ -4,7 +4,9 @@
 			<tr class="colhead">
 				<th>No</th>
 				<th>Lab</th>
-				<th>Facilities Sending Samples</th>
+				<th>Facilities Sending Samples to Lab/Hub</th>
+				<th>Facilities Doing Remote Site Entry</th>
+				<th>Remote Site Entry %</th>
 				<th>Received Samples at Lab</th>
 				<th>Rejected Samples (on receipt at lab)</th>
 				<th>All Test (plus reruns) Done at Lab</th>
