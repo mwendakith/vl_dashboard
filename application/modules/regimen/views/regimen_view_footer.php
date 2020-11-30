@@ -37,6 +37,8 @@
 	        		$("#first").show();
 
 	        		$("#regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>");
+					$("#adult_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes_group'); ?>/");
+					$("#paeds_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes_group'); ?>/");
 	        	} else {
 	        		data = $.parseJSON(data);
 	        		console.log(data);
@@ -91,6 +93,8 @@
 		        		$("#first").show();
 
 		        		$("#regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+						$("#adult_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes_group'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
+						$("#paeds_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes_group'); ?>/"+from[1]+"/"+from[0]+"/"+to[1]+"/"+to[0]);
 					} else {
 						$("#first").hide();
 		        		$("#second").show();
@@ -150,6 +154,8 @@
 	        		$("#first").show();
 
 	        		$("#regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes');?>/"+year+"/"+month);
+					$("#adult_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes_group'); ?>/"+1+"/"+year+"/"+month);
+					$("#paeds_regimen_outcomes").load("<?php echo base_url('charts/regimen/regimen_outcomes_group'); ?>/"+2+"/"+year+"/"+month);
 				} else {
 					$("#first").hide();
 	        		$("#second").show();
