@@ -125,7 +125,7 @@
 			  	</div>
 			</div>
 		</div> -->
-		<div class="col-md-12">
+		<!-- <div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 				  Facilities PMTCT <div class="display_date"></div>
@@ -133,6 +133,52 @@
 			  	<div class="panel-body" id="facilities_pmtct">
 			  		<center><div class="loader"></div></center>
 			  	</div>
+			</div>
+		</div> -->
+		
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+			  		County Partners Outcomes <div class="display_date"></div>
+			  	</div>
+			  	<div class="panel-body" id="county_partners">
+			    	<center><div class="loader"></div></center>
+			  	</div>
+			</div>
+		</div>
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+				 County Partners <div class="display_date"></div>
+				</div>
+			  	<div class="panel-body" id="partners">
+			  		<center><div class="loader"></div></center>
+			  	</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="third">
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading" id="heading">
+			  	County TAT Outcomes <div class="display_date"></div>
+			  </div>
+			  <div class="panel-body" id="county_tat_outcomes">
+			    <center><div class="loader"></div></center>
+			  </div>
+			</div>
+		</div>
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+			  <div class="panel-heading" id="heading">
+			  	County TAT Details <div class="display_date"></div>
+			  </div>
+			  <div class="panel-body" id="county_tat_details">
+			    <center><div class="loader"></div></center>
+			  </div>
 			</div>
 		</div>
 	</div>

@@ -116,6 +116,40 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Partner County Outcomes <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body" id="partnerCountyOutcomes">
+		  		<center><div class="loader"></div></center>
+		  	</div>
+		</div>
+	</div>
+
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Partner Counties <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body" id="partnerCounties">
+		  		<center><div class="loader"></div></center>
+		  	</div>
+		  	<hr>
+		  	<hr>
+		</div>
+	</div>
+	<div class="col-md-12">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+			  Partner Sites <div class="display_date"></div>
+			</div>
+		  	<div class="panel-body" id="partnerSites">
+		  		<center><div class="loader"></div></center>
+		  	</div>
+		</div>
+	</div>
 
 </div>
 
@@ -131,6 +165,36 @@
 		  </div>
 		</div>
 	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<center>
+	        <strong>
+	            <p style="font-size: 12px">TAT calculation is based on working days excluding weekends and public holidays</p>
+	        </strong>
+	    </center>
+	</div>
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading" id="heading">
+		  	Partner TAT Outcomes <div class="display_date"></div>
+		  </div>
+		  <div class="panel-body" id="partner_tat_outcomes">
+		    <center><div class="loader"></div></center>
+		  </div>
+		</div>
+	</div>
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		<div class="panel panel-default">
+		  <div class="panel-heading" id="heading">
+		  	Partner TAT Details <div class="display_date"></div>
+		  </div>
+		  <div class="panel-body" id="partner_tat_details">
+		    <center><div class="loader"></div></center>
+		  </div>
+		</div>
+	</div>	
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" id="agemodal">
