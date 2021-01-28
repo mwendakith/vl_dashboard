@@ -1,40 +1,55 @@
 DROP PROCEDURE IF EXISTS `proc_get_vl_pmtct_suppression`;
 DELIMITER //
 CREATE PROCEDURE `proc_get_vl_pmtct_suppression`
-(IN Pm_id INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11), IN national INT(11), IN county INT(11), IN partner INT(11), IN subcounty INT(11), IN site INT(11))
+(IN Pm_id INT(11), IN groupby INT(11), IN filter_year INT(11), IN from_month INT(11), IN to_year INT(11), IN to_month INT(11), IN national INT(11), IN county INT(11), IN partner INT(11), IN subcounty INT(11), IN site INT(11))
 BEGIN
   SET @QUERY =    "SELECT
           `vcs`.`month`,
           `vcs`.`year`,
+          SUM(`vcs`.`undetected`) AS `undetected`,
+          SUM(`vcs`.`less1000`) AS `less1000`,
           (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`)) AS `suppressed`,
           (SUM(`vcs`.`less5000`)+SUM(`vcs`.`above5000`)) AS `nonsuppressed`,
           (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`)+SUM(`vcs`.`less5000`)+SUM(`vcs`.`above5000`)) AS `tests`,
           (SUM(`vcs`.`undetected`)+SUM(`vcs`.`less1000`))*100/SUM(`vcs`.`undetected`+`vcs`.`less1000`+`vcs`.`less5000`+`vcs`.`above5000`) AS `suppression`
                   ";
 
+
     IF (national != 0 && national != '') THEN
       SET @QUERY = CONCAT(@QUERY, " FROM `vl_national_pmtct` `vcs`
                   JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID`  WHERE 1 ");
     END IF;
-    IF (county != 0 && county != '') THEN
+    IF ((county != 0 && county != '') OR groupby = 1) THEN
       SET @QUERY = CONCAT(@QUERY, " ,
                   `ac`.`name` FROM `vl_county_pmtct` `vcs`
-                  JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID` JOIN `countys` `ac` ON `ac`.`ID` = `vcs`.`county`  WHERE `vcs`.`county` = '",county,"' ");
+                  JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID` JOIN `countys` `ac` ON `ac`.`ID` = `vcs`.`county`  WHERE 1 ");
+      IF (county != 0 && county != '') THEN
+        SET @QUERY = CONCAT(@QUERY, " AND `vcs`.`county` = '",county,"' ");
+      END IF;
     END IF;
-    IF (partner != 0 && partner != '') THEN
+    IF ((partner != 0 && partner != '') OR groupby = 3) THEN
       SET @QUERY = CONCAT(@QUERY, " ,
                   `ac`.`name` FROM `vl_partner_pmtct` `vcs`
-                  JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID` JOIN `partners` `ac` ON `ac`.`ID` = `vcs`.`partner`  WHERE `vcs`.`partner` = '",partner,"' ");
+                  JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID` JOIN `partners` `ac` ON `ac`.`ID` = `vcs`.`partner`  WHERE 1 ");
+      IF (partner != 0 && partner != '') THEN
+        SET @QUERY = CONCAT(@QUERY, " AND `vcs`.`partner` = '",partner,"' ");
+      END IF;
     END IF;
-    IF (subcounty != 0 && subcounty != '') THEN
+    IF ((subcounty != 0 && subcounty != '') OR groupby = 2) THEN
       SET @QUERY = CONCAT(@QUERY, " ,
                   `ac`.`name` FROM `vl_subcounty_pmtct` `vcs`
-                  JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID` JOIN `districts` `ac` ON `ac`.`ID` = `vcs`.`subcounty`  WHERE `vcs`.`subcounty` = '",subcounty,"' ");
+                  JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID` JOIN `districts` `ac` ON `ac`.`ID` = `vcs`.`subcounty`  WHERE 1 ");
+      IF (subcounty != 0 && subcounty != '') THEN
+        SET @QUERY = CONCAT(@QUERY, " AND `vcs`.`subcounty` = '",subcounty,"' ");
+      END IF;
     END IF;
-    IF (site != 0 && site != '') THEN
+    IF ((site != 0 && site != '') OR groupby = 4) THEN
       SET @QUERY = CONCAT(@QUERY, " ,
                   `ac`.`name` FROM `vl_site_pmtct` `vcs`
-                  JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID` JOIN `view_facilitys` `ac` ON `ac`.`ID` = `vcs`.`facility`  WHERE `vcs`.`facility` = '",site,"' ");
+                  JOIN `viralpmtcttype` `pt` ON `vcs`.`pmtcttype` = `pt`.`ID` JOIN `view_facilitys` `ac` ON `ac`.`ID` = `vcs`.`facility`  WHERE 1 ");
+      IF (site != 0 && site != '') THEN
+        SET @QUERY = CONCAT(@QUERY, " `vcs`.`facility` = '",site,"' ");
+      END IF;
     END IF;
 
     IF (Pm_id != 0 && Pm_id != '') THEN
@@ -53,8 +68,14 @@ BEGIN
     ELSE
         SET @QUERY = CONCAT(@QUERY, " AND `year` = '",filter_year,"' ");
     END IF;
+
+    IF (groupby = 0) THEN
+      SET @QUERY = CONCAT(@QUERY, " GROUP BY `year`, `month` ORDER BY `year` ASC, `month` ");
+    ELSE
+      SET @QUERY = CONCAT(@QUERY, " GROUP BY `ac`.`ID` ORDER BY `suppressed` DESC ");
+    END IF;
     
-    SET @QUERY = CONCAT(@QUERY, " GROUP BY `year`, `month` ORDER BY `year` ASC, `month` ");
+    SET @QUERY = CONCAT(@QUERY, "  ");
     
     PREPARE stmt FROM @QUERY;
     EXECUTE stmt;

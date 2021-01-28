@@ -6,6 +6,10 @@ BEGIN
   SET @QUERY =    "SELECT
                     `ac`.`name`, 
                     SUM(`vca`.`tests`) AS `agegroups`, 
+                    SUM(`vca`.`undetected`) AS `undetected`,
+                    SUM(`vca`.`less1000`) AS `less1000`,
+                    SUM(`vca`.`less5000`) AS `less5000`,
+                    SUM(`vca`.`above5000`) AS `above5000`,
                     (SUM(`vca`.`undetected`)+SUM(`vca`.`less1000`)) AS `suppressed`,
                     (SUM(`vca`.`less5000`)+SUM(`vca`.`above5000`)) AS `nonsuppressed`
                 FROM `vl_county_age` `vca`

@@ -5,6 +5,10 @@ CREATE PROCEDURE `proc_get_vl_regimen_outcomes`
 BEGIN
   SET @QUERY =    "SELECT 
 						CONCAT(`vp`.`name`, ' (', `vp`.`code`, ')') AS `regimenname`,
+                        SUM(`vnr`.`less5000`) AS `less5000`,
+                        SUM(`vnr`.`above5000`) AS `above5000`,
+                        SUM(`vnr`.`Undetected`) AS `undetected`,
+                        SUM(`vnr`.`less1000`) AS `less1000`,
 						SUM(`vnr`.`less5000`+`vnr`.`above5000`) AS `nonsuppressed`, 
 						SUM(`vnr`.`Undetected`+`vnr`.`less1000`) AS `suppressed` 
 						FROM `vl_national_prophylaxis` `vnr`
